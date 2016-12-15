@@ -105,21 +105,13 @@ public class ClickerBotService extends Service
     {
         Log.d(ClickerBotService.class.getSimpleName(), "fakeTouch");
 
-        /*try {
+        try {
             Process process = Runtime.getRuntime().exec("su");
             DataOutputStream os = new DataOutputStream(process.getOutputStream());
             String cmd = "/system/bin/input tap 500 500\n";
-            String cmd2 = "/system/bin/input tap 700 700\n";
             boolean first =true;
             while (working) {
-                if (first) {
-                    os.write(cmd.getBytes());
-                    first = false;
-                }
-                else {
-                    os.write(cmd2.getBytes());
-                    first = true;
-                }
+                os.write(cmd.getBytes());
                 os.flush();
                 Log.d(ClickerBotService.class.getSimpleName(), "sendfakeTouch");
                 Thread.sleep(200);
@@ -132,14 +124,14 @@ public class ClickerBotService extends Service
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }*/
+        }
 
 
-        Instrumentation m_Instrumentation = new Instrumentation();
+        /*Instrumentation m_Instrumentation = new Instrumentation();
         m_Instrumentation.sendPointerSync(MotionEvent.obtain(SystemClock.uptimeMillis(),
                 SystemClock.uptimeMillis(),MotionEvent.ACTION_DOWN,pozx, pozy, 0));
         m_Instrumentation.sendPointerSync(MotionEvent.obtain(SystemClock.uptimeMillis(),
-                SystemClock.uptimeMillis(),MotionEvent.ACTION_UP,pozx, pozy, 0));
+                SystemClock.uptimeMillis(),MotionEvent.ACTION_UP,pozx, pozy, 0));*/
 
         /*m_WndManager.injectPointerEvent(MotionEvent.obtain(SystemClock.uptimeMillis(),
                 SystemClock.uptimeMillis(),MotionEvent.ACTION_DOWN,pozx, pozy, 0),false);
