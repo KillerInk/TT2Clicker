@@ -1,28 +1,18 @@
 package clickerbot.com.troop.clickerbot;
-
-import android.app.Instrumentation;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.ServiceManager;
-import android.os.SystemClock;
-import android.renderscript.ScriptGroup;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.IWindowManager;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
-
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Created by troop on 15.12.2016.
@@ -31,12 +21,86 @@ import java.io.IOException;
 public class ClickerBotService extends Service
 {
 
+    private final String TAG = ClickerBotService.class.getSimpleName();
+
     private WindowManager windowManager;
     private Button startStopButton;
-    private boolean working = false;
-    private int pozx = 700, pozy = 700;
-    IBinder wmbinder;
-    IWindowManager m_WndManager;
+    private Button closeButton;
+    private volatile boolean working = false;
+    final String cmd = "/system/bin/input tap 700 700\n";
+    private int workerCount = 6;
+    private int sleepTimeBetweenWorker = 400;
+    Random r = new Random();
+
+    @Override public void onCreate() {
+        super.onCreate();
+        windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+        startStopButton = new Button(this);
+        startStopButton.setBackgroundResource(R.drawable.play);
+
+        startStopButton.setText("");
+        startStopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!working)
+                {
+                    working = true;
+                    startStopButton.setBackgroundResource(R.drawable.stop);
+                    doWork();
+                }
+                else {
+                    working = false;
+                    startStopButton.setBackgroundResource(R.drawable.play);
+                    stopWork();
+                }
+            }
+        });
+
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                convertDpiToPixel(50),
+                convertDpiToPixel(50),
+                WindowManager.LayoutParams.TYPE_PHONE,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                PixelFormat.TRANSLUCENT);
+
+        params.gravity = Gravity.TOP | Gravity.LEFT;
+        params.x = 0;
+        params.y = 300;
+
+        windowManager.addView(startStopButton, params);
+
+        closeButton = new Button(this);
+        closeButton.setText("");
+        closeButton.setBackgroundResource(R.drawable.close);
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                stopSelf();
+            }
+        });
+
+        params = new WindowManager.LayoutParams(
+                convertDpiToPixel(50),
+                convertDpiToPixel(50),
+                WindowManager.LayoutParams.TYPE_PHONE,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                PixelFormat.TRANSLUCENT);
+
+        params.gravity = Gravity.TOP | Gravity.LEFT;
+        params.x = 0;
+        params.y = 500;
+
+        windowManager.addView(closeButton, params);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        working = false;
+        //events.Release();
+        if (startStopButton != null) windowManager.removeView(startStopButton);
+        if (closeButton != null) windowManager.removeView(closeButton);
+    }
 
     @Nullable
     @Override
@@ -44,102 +108,59 @@ public class ClickerBotService extends Service
         return null;
     }
 
-
-    @Override public void onCreate() {
-        super.onCreate();
-        windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
-        /*wmbinder = ServiceManager.getService( "window" );
-        m_WndManager = IWindowManager.Stub.asInterface( wmbinder );*/
-
-        startStopButton = new Button(this);
-        startStopButton.setText("Start");
-        startStopButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!working)
-                {
-                    working = true;
-                    startStopButton.setText("Stop");
-                    doWork();
-                }
-                else {
-                    working = false;
-                    startStopButton.setText("Start");
-                }
-            }
-        });
-
-        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.TYPE_PHONE,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                PixelFormat.TRANSLUCENT);
-
-        params.gravity = Gravity.TOP | Gravity.LEFT;
-        params.x = 0;
-        params.y = 200;
-
-        windowManager.addView(startStopButton, params);
+    private int convertDpiToPixel(int dpi)
+    {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpi, getResources().getDisplayMetrics());
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (startStopButton != null) windowManager.removeView(startStopButton);
+    private int getRandomSleep()
+    {
+
+        return r.nextInt(sleepTimeBetweenWorker - 100) + 100;
     }
 
 
     private void doWork()
     {
-        new Thread(new Runnable() {
-            @Override
-            public void run()
-            {
-                fakeTouch();
-            }
-        }).start();
+        Log.d(TAG,"SendTouch");
+        createthread();
+
     }
 
-    private void fakeTouch()
+    private void stopWork()
     {
-        Log.d(ClickerBotService.class.getSimpleName(), "fakeTouch");
+    }
 
-        try {
-            Process process = Runtime.getRuntime().exec("su");
-            DataOutputStream os = new DataOutputStream(process.getOutputStream());
-            String cmd = "/system/bin/input tap 500 500\n";
-            boolean first =true;
-            while (working) {
-                os.write(cmd.getBytes());
-                os.flush();
-                Log.d(ClickerBotService.class.getSimpleName(), "sendfakeTouch");
-                Thread.sleep(200);
+
+
+    private void createthread()
+    {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List<RootTouch> rootTouches = new ArrayList<>();
+                for (int i = 0; i< workerCount; i++){
+                    rootTouches.add(new RootTouch(i));
+                }
+                while (ClickerBotService.this.working)
+                {
+                    for (RootTouch rt : rootTouches)
+                    {
+                        if (ClickerBotService.this.working) {
+                            rt.SendCMD(cmd);
+                            try {
+                                Thread.sleep(getRandomSleep());
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                    }
+                }
+                for (RootTouch rt : rootTouches)
+                    rt.Close();
+                rootTouches.clear();
             }
-            os.writeBytes("exit\n");
-            os.flush();
-            os.close();
-            process.waitFor();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-
-        /*Instrumentation m_Instrumentation = new Instrumentation();
-        m_Instrumentation.sendPointerSync(MotionEvent.obtain(SystemClock.uptimeMillis(),
-                SystemClock.uptimeMillis(),MotionEvent.ACTION_DOWN,pozx, pozy, 0));
-        m_Instrumentation.sendPointerSync(MotionEvent.obtain(SystemClock.uptimeMillis(),
-                SystemClock.uptimeMillis(),MotionEvent.ACTION_UP,pozx, pozy, 0));*/
-
-        /*m_WndManager.injectPointerEvent(MotionEvent.obtain(SystemClock.uptimeMillis(),
-                SystemClock.uptimeMillis(),MotionEvent.ACTION_DOWN,pozx, pozy, 0),false);
-        m_WndManager.injectPointerEvent(MotionEvent.obtain(SystemClock.uptimeMillis(),
-                SystemClock.uptimeMillis(),MotionEvent.ACTION_UP,pozx, pozy, 0),false);*/
-        /*// key down
-        m_WndManager.injectKeyEvent( new KeyEvent( KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_A ),false );
-        // key up
-        m_WndManager.injectKeyEvent( new KeyEvent( KeyEvent.ACTION_UP, KeyEvent.KEYCODE_A ),false );*/
+        }).start();
     }
 }
