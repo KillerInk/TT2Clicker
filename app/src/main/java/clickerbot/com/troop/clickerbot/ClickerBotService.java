@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -28,15 +29,20 @@ public class ClickerBotService extends Service
     private Button closeButton;
     private volatile boolean working = false;
     final String cmd = "/system/bin/input tap 700 700\n";
-    private int workerCount = 6;
-    private int sleepTimeBetweenWorker = 400;
+    private int workerCount = 15;
+    private int sleepTimeBetweenWorker = 20;
+    private int sleepAfterOneRound = 0;
     Random r = new Random();
+
+
+
 
     @Override public void onCreate() {
         super.onCreate();
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         startStopButton = new Button(this);
         startStopButton.setBackgroundResource(R.drawable.play);
+
 
         startStopButton.setText("");
         startStopButton.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +69,7 @@ public class ClickerBotService extends Service
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
 
-        params.gravity = Gravity.TOP | Gravity.LEFT;
+        params.gravity = Gravity.TOP | Gravity.RIGHT;
         params.x = 0;
         params.y = 300;
 
@@ -86,11 +92,12 @@ public class ClickerBotService extends Service
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
 
-        params.gravity = Gravity.TOP | Gravity.LEFT;
+        params.gravity = Gravity.TOP | Gravity.RIGHT;
         params.x = 0;
         params.y = 500;
 
         windowManager.addView(closeButton, params);
+
     }
 
     @Override
@@ -101,6 +108,8 @@ public class ClickerBotService extends Service
         if (startStopButton != null) windowManager.removeView(startStopButton);
         if (closeButton != null) windowManager.removeView(closeButton);
     }
+
+
 
     @Nullable
     @Override
@@ -115,8 +124,8 @@ public class ClickerBotService extends Service
 
     private int getRandomSleep()
     {
-
-        return r.nextInt(sleepTimeBetweenWorker - 100) + 100;
+        return sleepTimeBetweenWorker;
+        //return r.nextInt(sleepTimeBetweenWorker - sleepTimeBetweenWorker/4) + sleepTimeBetweenWorker/4;
     }
 
 
@@ -124,6 +133,7 @@ public class ClickerBotService extends Service
     {
         Log.d(TAG,"SendTouch");
         createthread();
+        //createthread(sendcmddevInput2);
 
     }
 
@@ -138,29 +148,36 @@ public class ClickerBotService extends Service
         new Thread(new Runnable() {
             @Override
             public void run() {
-                List<RootTouch> rootTouches = new ArrayList<>();
+                List<RootShell> rootShells = new ArrayList<>();
                 for (int i = 0; i< workerCount; i++){
-                    rootTouches.add(new RootTouch(i));
+                        rootShells.add(new RootShell(i));
                 }
                 while (ClickerBotService.this.working)
                 {
-                    for (RootTouch rt : rootTouches)
+                    for (RootShell rt : rootShells)
                     {
                         if (ClickerBotService.this.working) {
-                            rt.SendCMD(cmd);
+
+                            rt.SendCMD();
                             try {
                                 Thread.sleep(getRandomSleep());
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
                         }
-
+                    }
+                    try {
+                        Thread.sleep(sleepAfterOneRound);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
-                for (RootTouch rt : rootTouches)
+                for (RootShell rt : rootShells)
                     rt.Close();
-                rootTouches.clear();
+                rootShells.clear();
             }
         }).start();
     }
+
+
 }
