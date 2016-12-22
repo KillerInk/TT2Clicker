@@ -1,8 +1,10 @@
 package clickerbot.com.troop.clickerbot;
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.TypedValue;
@@ -32,6 +34,7 @@ public class ClickerBotService extends Service
     private int workerCount = 15;
     private int sleepTimeBetweenWorker = 20;
     private int sleepAfterOneRound = 0;
+    private int cmdsleep;
     Random r = new Random();
 
 
@@ -39,6 +42,11 @@ public class ClickerBotService extends Service
 
     @Override public void onCreate() {
         super.onCreate();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        workerCount = preferences.getInt(ClickerBotActivity.PREFERENCES_WORKERCOUNT,15);
+        sleepTimeBetweenWorker = preferences.getInt(ClickerBotActivity.PREFERENCES_SLEEPTIME_BETWEEN_WORKERS,20);
+        sleepTimeBetweenWorker = preferences.getInt(ClickerBotActivity.PREFERENCES_CMDSLEEP,10);
+
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         startStopButton = new Button(this);
         startStopButton.setBackgroundResource(R.drawable.play);
@@ -80,7 +88,11 @@ public class ClickerBotService extends Service
         closeButton.setBackgroundResource(R.drawable.close);
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(ClickerBotService.this, ClickerBotActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getApplicationContext().startActivity(intent);
                 stopSelf();
             }
         });
@@ -150,7 +162,7 @@ public class ClickerBotService extends Service
             public void run() {
                 List<RootShell> rootShells = new ArrayList<>();
                 for (int i = 0; i< workerCount; i++){
-                        rootShells.add(new RootShell(i));
+                        rootShells.add(new RootShell(i,cmdsleep));
                 }
                 while (ClickerBotService.this.working)
                 {
