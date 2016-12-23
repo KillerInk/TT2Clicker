@@ -20,12 +20,12 @@ public class RootShell
     private int cmdsleep;
 
 
-    public RootShell(int id, int cmdsleep)
+    public RootShell(int id, int cmdsleep, int x, int y)
     {
         this.id =id;
         this.cmdsleep = cmdsleep;
         //if ((id % 2) == 0 )
-            cmdDown = CmdBuilder.getTouchDown(700,900,id);
+            cmdDown = CmdBuilder.getTouchDown(x,y,id);
         //else
         //    cmdDown = CmdBuilder.getTouchDown(600,800,id);
         cmdUp = CmdBuilder.getTouchUp();
@@ -55,10 +55,10 @@ public class RootShell
     }
 
     private void sendTouchDownUp() throws IOException, InterruptedException {
-        os.writeChars(CmdBuilder.getTouchDown(700,900,id));
+        os.writeChars(cmdDown);
         os.flush();
         Thread.sleep(cmdsleep);
-        os.writeChars(CmdBuilder.getTouchUp());
+        os.writeChars(cmdUp);
         os.flush();
     }
 

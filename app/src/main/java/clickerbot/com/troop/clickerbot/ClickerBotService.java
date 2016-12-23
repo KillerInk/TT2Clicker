@@ -37,6 +37,8 @@ public class ClickerBotService extends Service
     private int cmdsleep;
     Random r = new Random();
 
+    private int x,y;
+
 
 
 
@@ -46,6 +48,9 @@ public class ClickerBotService extends Service
         workerCount = preferences.getInt(ClickerBotActivity.PREFERENCES_WORKERCOUNT,15);
         sleepTimeBetweenWorker = preferences.getInt(ClickerBotActivity.PREFERENCES_SLEEPTIME_BETWEEN_WORKERS,20);
         sleepTimeBetweenWorker = preferences.getInt(ClickerBotActivity.PREFERENCES_CMDSLEEP,10);
+
+        x = preferences.getInt(ClickerBotActivity.PREFERENCES_TAPX,700);
+        y = preferences.getInt(ClickerBotActivity.PREFERENCES_TAPY,900);
 
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         startStopButton = new Button(this);
@@ -162,7 +167,7 @@ public class ClickerBotService extends Service
             public void run() {
                 List<RootShell> rootShells = new ArrayList<>();
                 for (int i = 0; i< workerCount; i++){
-                        rootShells.add(new RootShell(i,cmdsleep));
+                        rootShells.add(new RootShell(i,cmdsleep,x,y));
                 }
                 while (ClickerBotService.this.working)
                 {

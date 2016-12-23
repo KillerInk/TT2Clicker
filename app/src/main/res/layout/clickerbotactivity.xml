@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <Button
+        android:text="Select TabArea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_taparea" />
+
     <TextView
-        android:text="WorkerCount"
+        android:text="Tap Worker Count"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textView" />
@@ -17,7 +30,7 @@
         android:id="@+id/editText_worker" />
 
     <TextView
-        android:text="SleepTime Between Workers"
+        android:text="Duration Between Taps"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textView2" />
@@ -30,7 +43,7 @@
         android:id="@+id/editText_sleeptimebetweenworkers" />
 
     <TextView
-        android:text="Command sleep time after execution"
+        android:text="Tab Duration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textView3" />
@@ -47,4 +60,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button_startbot" />
-</LinearLayout>
+        </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/imageView_taparea" />
+</RelativeLayout>
