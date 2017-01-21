@@ -13,6 +13,7 @@ import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -136,6 +137,7 @@ public class ClickerBotActivity extends Activity {
             }
         });
 
+
         tapareaselect = (Button)findViewById(R.id.button_taparea);
         tapareaselect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,7 +169,6 @@ public class ClickerBotActivity extends Activity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if (hasFocus)
             HIDENAVBAR();
     }
 
@@ -208,7 +209,7 @@ public class ClickerBotActivity extends Activity {
 
     private void startClickerBackgroundService()
     {
-        if(checkDrawOverlayPermission()) {
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP || checkDrawOverlayPermission()) {
             Intent intent = new Intent(this, ClickerBotService.class);
             startService(intent);
             finish();
