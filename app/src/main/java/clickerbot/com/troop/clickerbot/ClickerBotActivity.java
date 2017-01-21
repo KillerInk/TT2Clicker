@@ -21,6 +21,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+
 /**
  * Created by troop on 15.12.2016.
  */
@@ -42,6 +44,8 @@ public class ClickerBotActivity extends Activity {
     private EditText cmdsleeptime;
     private Button tapareaselect;
     private ImageView taparea;
+    private ArrayList<String> touchAreas;
+    private Button closeImageViewButton;
 
     private final int flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -142,10 +146,29 @@ public class ClickerBotActivity extends Activity {
         tapareaselect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                touchAreas = new ArrayList<String>();
                 taparea.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.taptitans));
                 taparea.setVisibility(View.VISIBLE);
+                closeImageViewButton.setVisibility(View.VISIBLE);
             }
         });
+
+        closeImageViewButton =(Button)findViewById(R.id.button_closeImageView);
+        closeImageViewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                taparea.setVisibility(View.GONE);
+                closeImageViewButton.setVisibility(View.GONE);
+                String save = "";
+                for (String s : touchAreas)
+                {
+                    save += s+";";
+                }
+                preferences.edit().putString(PREFERENCES_TAPX, save).commit();
+            }
+        });
+        closeImageViewButton.setVisibility(View.GONE);
+
         taparea = (ImageView)findViewById(R.id.imageView_taparea);
         taparea.setVisibility(View.GONE);
         taparea.setOnTouchListener(new View.OnTouchListener() {
@@ -156,9 +179,7 @@ public class ClickerBotActivity extends Activity {
                 {
                     case MotionEvent.ACTION_UP:
                     {
-                        preferences.edit().putInt(PREFERENCES_TAPX, (int)event.getX()).commit();
-                        preferences.edit().putInt(PREFERENCES_TAPY, (int)event.getY()).commit();
-                        taparea.setVisibility(View.GONE);
+                        touchAreas.add((int)event.getX()+","+(int)event.getY());
                     }
                 }
                 return true;

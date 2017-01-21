@@ -40,10 +40,22 @@ public class ClickerBotService extends Service
     private int cmdsleep;
     private ClickerThread clickerThread;
 
-    private int x,y;
     private long lastClick;
 
     List<RootShell> rootShells;
+    private TouchPoint touchePoints[];
+
+    public class TouchPoint
+    {
+
+        public TouchPoint(String x, String y)
+        {
+            this.x = Integer.parseInt(x);
+            this.y = Integer.parseInt(y);
+        }
+        int x = 0;
+        int y = 0;
+    }
 
 
 
@@ -54,9 +66,14 @@ public class ClickerBotService extends Service
         sleepTimeBetweenWorker = preferences.getInt(ClickerBotActivity.PREFERENCES_SLEEPTIME_BETWEEN_WORKERS,20);
         sleepTimeBetweenWorker = preferences.getInt(ClickerBotActivity.PREFERENCES_CMDSLEEP,10);
 
-
-        x = preferences.getInt(ClickerBotActivity.PREFERENCES_TAPX,700);
-        y = preferences.getInt(ClickerBotActivity.PREFERENCES_TAPY,900);
+        String tmp[] = preferences.getString(ClickerBotActivity.PREFERENCES_TAPX,"").split(";");
+        touchePoints = new TouchPoint[tmp.length];
+        int c = 0;
+        for (String s:tmp)
+        {
+            String t[] = s.split(",");
+            touchePoints[c++] = new TouchPoint(t[0],t[1]);
+        }
 
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         startStopButton = new Button(this);
@@ -138,9 +155,27 @@ public class ClickerBotService extends Service
         });
 
         rootShells = new ArrayList<>();
-        for (int i = 0; i< workerCount; i++){
-            rootShells.add(new RootShell(i,cmdsleep,x,y));
-        }
+        startStopButton.setVisibility(View.GONE);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int to =0;
+                for (int i = 0; i< workerCount; i++){
+                    rootShells.add(new RootShell(i,cmdsleep,touchePoints[to].x,touchePoints[to].y));
+                    to++;
+                    if (to == touchePoints.length)
+                        to = 0;
+
+                }
+                startStopButton.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        startStopButton.setVisibility(View.VISIBLE);
+                    }
+                });
+            }
+        }).start();
+
     }
 
     @Override

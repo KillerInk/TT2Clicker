@@ -27,7 +27,7 @@ public class RootShell
         //if ((id % 2) == 0 )
             cmdDown = CmdBuilder.getTouchDown(x,y,id);
         //else
-        //    cmdDown = CmdBuilder.getTouchDown(600,800,id);
+        //   cmdDown = CmdBuilder.getTouchDown(x,y-200,id);
         cmdUp = CmdBuilder.getTouchUp();
         try {
             process = Runtime.getRuntime().exec("su");
@@ -50,7 +50,7 @@ public class RootShell
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Log.d(TAG,"sendCMD ID:" + id);
+        //Log.d(TAG,"sendCMD ID:" + id);
 
     }
 
