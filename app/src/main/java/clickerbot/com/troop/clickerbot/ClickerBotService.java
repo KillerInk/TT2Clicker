@@ -111,9 +111,9 @@ public class ClickerBotService extends Service
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
 
-        params.gravity = Gravity.TOP | Gravity.RIGHT;
-        params.x = 0;
-        params.y = metrics.heightPixels/2 - (iconsize + 5);
+        params.gravity = Gravity.TOP|Gravity.LEFT;
+        params.x = (metrics.widthPixels/2) - (iconsize + 5);
+        params.y = 0;
 
         windowManager.addView(startStopButton, params);
 
@@ -138,9 +138,9 @@ public class ClickerBotService extends Service
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
 
-        params.gravity = Gravity.TOP | Gravity.RIGHT;
-        params.x = 0;
-        params.y = metrics.heightPixels/2;
+        params.gravity = Gravity.TOP| Gravity.LEFT ;
+        params.x = (metrics.widthPixels/2) +(iconsize+5);
+        params.y = 10;
 
         windowManager.addView(closeButton, params);
 
