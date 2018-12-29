@@ -13,6 +13,7 @@ import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class ClickerBotActivity extends Activity {
 
+    private final String TAG = ClickerBotActivity.class.getSimpleName();
 
     public static String PREFERENCES_WORKERCOUNT = "workercount";
     public static String PREFERENCES_SLEEPTIME_BETWEEN_WORKERS = "sleeptimebetweenworkers";
@@ -150,6 +152,7 @@ public class ClickerBotActivity extends Activity {
                 taparea.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.taptitans));
                 taparea.setVisibility(View.VISIBLE);
                 closeImageViewButton.setVisibility(View.VISIBLE);
+                closeImageViewButton.bringToFront();
             }
         });
 
@@ -201,7 +204,7 @@ public class ClickerBotActivity extends Activity {
 
     private boolean checkDrawOverlayPermission() {
         /** check if we already  have permission to draw over other apps */
-        if (!Settings.canDrawOverlays(getApplicationContext())) {
+        if (Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(getApplicationContext())) {
             /** if not construct intent to request permission */
             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                     Uri.parse("package:" + getPackageName()));
@@ -259,5 +262,11 @@ public class ClickerBotActivity extends Activity {
                 }
             });
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Log.d(TAG,"onKeyDown");
+        return super.onKeyDown(keyCode, event);
     }
 }

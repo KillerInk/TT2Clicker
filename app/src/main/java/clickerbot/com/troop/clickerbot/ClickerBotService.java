@@ -3,6 +3,7 @@ import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
@@ -17,10 +18,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Random;
+
+import clickerbot.com.troop.clickerbot.tt2.TT2Bot;
 
 /**
  * Created by troop on 15.12.2016.
@@ -38,26 +38,36 @@ public class ClickerBotService extends Service
     private int sleepTimeBetweenWorker = 20;
     private int sleepAfterOneRound = 0;
     private int cmdsleep;
-    private ClickerThread clickerThread;
+    private TT2Bot tt2Bot;
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        private int callCount = 0;
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            callCount++;
+            Log.d(TAG, "on Recieve ");
+            if (callCount == 2)
+            {
+                if (tt2Bot.getIsRunning())
+                {
+                    tt2Bot.stop();
+                    while (tt2Bot.getIsRunning()) {
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                else
+                    tt2Bot.start();
+                callCount = 0;
+            }
+        }
+    };
+
 
     private long lastClick;
-
-    List<RootShell> rootShells;
-    private TouchPoint touchePoints[];
-
-    public class TouchPoint
-    {
-
-        public TouchPoint(String x, String y)
-        {
-            this.x = Integer.parseInt(x);
-            this.y = Integer.parseInt(y);
-        }
-        int x = 0;
-        int y = 0;
-    }
-
-
 
     @Override public void onCreate() {
         super.onCreate();
@@ -66,20 +76,15 @@ public class ClickerBotService extends Service
         sleepTimeBetweenWorker = preferences.getInt(ClickerBotActivity.PREFERENCES_SLEEPTIME_BETWEEN_WORKERS,20);
         sleepTimeBetweenWorker = preferences.getInt(ClickerBotActivity.PREFERENCES_CMDSLEEP,10);
 
-        String tmp[] = preferences.getString(ClickerBotActivity.PREFERENCES_TAPX,"").split(";");
-        touchePoints = new TouchPoint[tmp.length];
-        int c = 0;
-        for (String s:tmp)
-        {
-            String t[] = s.split(",");
-            touchePoints[c++] = new TouchPoint(t[0],t[1]);
-        }
+        Log.d(TAG,"Register ACTION_MEDIA_BUTTON");
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.media.VOLUME_CHANGED_ACTION");
+        registerReceiver(broadcastReceiver,filter);
 
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         startStopButton = new Button(this);
         startStopButton.setBackgroundResource(R.drawable.play);
-
-
+        tt2Bot = new TT2Bot(getApplicationContext());
         startStopButton.setText("");
         startStopButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,13 +93,23 @@ public class ClickerBotService extends Service
                 long currentTime = new Date().getTime();
                 if (currentTime - lastClick > 1000) {
                     lastClick = currentTime;
-                    if (clickerThread == null) {
-                        clickerThread = new ClickerThread();
-                        clickerThread.Start();
+                    if (!tt2Bot.getIsRunning()) {
+                        Log.d(TAG,"startBot");
+                        tt2Bot.start();
                         startStopButton.setBackgroundResource(R.drawable.stop);
                     } else {
+                        Log.d(TAG,"stopBot");
                         startStopButton.setBackgroundResource(R.drawable.play);
-                        killThread();
+                        tt2Bot.stop();
+                        while (tt2Bot.getIsRunning())
+                        {
+                            try {
+                                Thread.sleep(100);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        Log.d(TAG,"bot stopped");
                     }
                 }
             }
@@ -116,6 +131,7 @@ public class ClickerBotService extends Service
         params.y = 0;
 
         windowManager.addView(startStopButton, params);
+        startStopButton.bringToFront();
 
         closeButton = new Button(this);
         closeButton.setText("");
@@ -144,50 +160,46 @@ public class ClickerBotService extends Service
 
         windowManager.addView(closeButton, params);
 
+
         closeButton.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
+                Log.d(TAG, "onKey " + event.getCharacters() );
                 if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN )
-                    killThread();
+                {
+                    if (tt2Bot.getIsRunning()) {
+                        tt2Bot.stop();
+                        while (tt2Bot.getIsRunning()) {
+                            try {
+                                Thread.sleep(100);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    else
+                        tt2Bot.start();
+                }
                 return false;
             }
         });
 
-        rootShells = new ArrayList<>();
-        startStopButton.setVisibility(View.GONE);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int to =0;
-                for (int i = 0; i< workerCount; i++){
-                    rootShells.add(new RootShell(i,cmdsleep,touchePoints[to].x,touchePoints[to].y));
-                    to++;
-                    if (to == touchePoints.length)
-                        to = 0;
 
-                }
-                startStopButton.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        startStopButton.setVisibility(View.VISIBLE);
-                    }
-                });
-            }
-        }).start();
+        startStopButton.setVisibility(View.GONE);
+
 
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        killThread();
-        for (RootShell rt : rootShells)
-            rt.Close();
-        rootShells.clear();
-        rootShells = null;
+        if (tt2Bot.getIsRunning())
+            tt2Bot.stop();
+        tt2Bot.destroy();
         if (startStopButton != null) windowManager.removeView(startStopButton);
         if (closeButton != null) windowManager.removeView(closeButton);
+        unregisterReceiver(broadcastReceiver);
     }
 
 
@@ -201,71 +213,5 @@ public class ClickerBotService extends Service
     {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpi, getResources().getDisplayMetrics());
     }
-
-    private int getRandomSleep()
-    {
-        return sleepTimeBetweenWorker;
-        //return r.nextInt(sleepTimeBetweenWorker - sleepTimeBetweenWorker/4) + sleepTimeBetweenWorker/4;
-    }
-
-
-    private void killThread() {
-        if (clickerThread != null) {
-            clickerThread.Stop();
-            while (clickerThread.isWorking) {
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            clickerThread = null;
-        }
-    }
-
-    private class ClickerThread  extends Thread
-    {
-        private volatile boolean isWorking = false;
-        private volatile boolean doWork = false;
-
-        public void Start()
-        {
-            doWork = true;
-            start();
-        }
-
-        public void Stop()
-        {
-            doWork = false;
-        }
-
-        @Override
-        public void run() {
-            isWorking = true;
-
-            while (doWork)
-            {
-                for (RootShell rt : rootShells)
-                {
-                    if (doWork) {
-
-                        rt.SendCMD();
-                        try {
-                            Thread.sleep(getRandomSleep());
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                try {
-                    Thread.sleep(sleepAfterOneRound);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            isWorking = false;
-        }
-    }
-
 
 }

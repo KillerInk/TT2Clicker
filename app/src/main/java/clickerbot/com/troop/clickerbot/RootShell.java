@@ -1,5 +1,7 @@
 package clickerbot.com.troop.clickerbot;
 
+import android.graphics.Point;
+import android.os.Environment;
 import android.util.Log;
 
 import java.io.DataOutputStream;
@@ -39,6 +41,22 @@ public class RootShell
 
     }
 
+    public RootShell(int id, int cmdsleep)
+    {
+        this.id =id;
+        this.cmdsleep = cmdsleep;
+
+        cmdUp = CmdBuilder.getTouchUp();
+        try {
+            process = Runtime.getRuntime().exec("su");
+            os = new DataOutputStream(process.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.d(TAG,"created ID:" + id);
+
+    }
+
     public void SendCMD()
     {
         try {
@@ -54,11 +72,37 @@ public class RootShell
 
     }
 
+    public void sendCommand(String command) throws IOException {
+        os.writeChars(command);
+        os.flush();
+    }
+
+    public void doTap(Point p) throws IOException {
+        sendCommand(CmdBuilder.gettap(p.x,p.y));
+    }
+
+    public void doSwipe(Point p, Point p2) throws IOException {
+        sendCommand(CmdBuilder.getswipe(p.x,p.y, p2.x,p2.y, 50));
+    }
+
     private void sendTouchDownUp() throws IOException, InterruptedException {
         os.writeChars(cmdDown);
         os.flush();
         Thread.sleep(cmdsleep);
         os.writeChars(cmdUp);
+        os.flush();
+    }
+
+    public void sendTouchDownUp(int x, int y) throws IOException, InterruptedException {
+        os.writeChars(CmdBuilder.getTouchDown(x,y,id));
+        os.flush();
+        Thread.sleep(cmdsleep);
+        os.writeChars(cmdUp);
+        os.flush();
+    }
+
+    public void captureScreen() throws IOException {
+        os.writeChars("screencap -p >/sdcard/screen.png\n");
         os.flush();
     }
 

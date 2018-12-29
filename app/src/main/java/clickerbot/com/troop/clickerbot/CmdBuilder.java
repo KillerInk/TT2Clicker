@@ -91,6 +91,16 @@ public class CmdBuilder
                 createSendEvent(EV_SYN, SYN_REPORT,0);
     }
 
+    public static String gettap(int x, int y)
+    {
+        return "input tap " + x + " " +y +"\n";
+    }
+
+    public static String getswipe(int x, int y, int x2, int y2, int duration)
+    {
+        return "input swipe " + x + " " +y + " " + x2 + " " +y2 + " "+duration+"\n";
+    }
+
     public static String getTouchUp()
     {
         return cmdUp;
