@@ -28,7 +28,7 @@ public abstract class AbstractBot implements IBot
     private long lastTick = 0;
     private volatile boolean isRunning = false;
     //sleep times
-    private final long screenDumpSleepTime = 500;
+    private final long screenDumpSleepTime = 300;
     private final int tickSleepTime = 100;
     private RootShell dumpScreenShell;
     private Bitmap screenDump;
@@ -85,6 +85,11 @@ public abstract class AbstractBot implements IBot
             e.printStackTrace();
         }
         dumpScreenShell.Close();
+    }
+
+    public void resetTickCounter()
+    {
+        tickCounter = 0;
     }
 
     private void tick()

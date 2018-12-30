@@ -57,31 +57,37 @@ public class Skills extends Menu {
     public void init() throws InterruptedException, IOException {
         closeMenu();
         checkSkillsUnlocked();
+        if (!skipLevelUpSkills()) {
 
-        openSwordMasterMenu();
-        Thread.sleep(20);
+            openSwordMasterMenu();
 
-        maximiseMenu();
-        Thread.sleep(50);
+            maximiseMenu();
 
-        swipeUp();
-        Thread.sleep(500);
+            swipeUp();
+            Thread.sleep(500);
 
         /*bot.dumpScreen();
         Log.d(TAG, (Coordinates.dsLvlArea.right - Coordinates.dsLvlArea.left) + (Coordinates.dsLvlArea.bottom -Coordinates.dsLvlArea.top) +"" );
         String dsLvl = bot.getOcr().getOCRResult(bot.getAreaFromScreen(Coordinates.dsLvlArea));*/
 
-        levelSkills();
-        Thread.sleep(50);
-
-        minimiseMenu();
-        Thread.sleep(50);
-
-        closeMenu();
-        Thread.sleep(50);
+            levelUpSkills();
+            Thread.sleep(50);
+            minimiseMenu();
+            closeMenu();
+        }
     }
 
-    private void levelSkills()
+    private boolean skipLevelUpSkills()
+    {
+        if (!hsUnlocked && !useHS && dsUnlocked && homUnlocked && fsUnlocked && wcUnlocked && scUnlocked)
+            return true;
+        else if (hsUnlocked && useHS && dsUnlocked && homUnlocked && fsUnlocked && wcUnlocked && scUnlocked)
+            return true;
+        else
+            return false;
+    }
+
+    private void levelUpSkills()
     {
         try {
             rootShellClick[0].doTap(Coordinates.Menu_SwordMasterPos);

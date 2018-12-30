@@ -21,11 +21,23 @@ public class Coordinates
     public static final Point Menu_WCMPos = new Point(408,537);
     public static final Point Menu_SCMPos = new Point(408,614);
 
+    public static final Point lvlHeroButton = new Point(340,520);
+    public static final Point lvlNextHeroButton = new Point(340,597);
+
+    public static final Point fightBossButton = new Point(430,46);
+    public static final Point prestigeMenuButton = new Point(401,734);
+    public static final Point prestigeButton = new Point(239,630);
+    public static final Point prestigeAcceptButton = new Point(326,539);
+
 
     public static final Rect dsLvlArea = new Rect(92,302,114,318);
 
 
     public static final Point CO_Pos = new Point(175,410);
+    public static final Point Phom_Pos = new Point(270 ,370); //phom
+    public static final Point accept_Pos = new Point(300 ,630);
+    public static final Point decline_Pos = new Point(200 ,630);
+
 
     public static final Point Hs_Pos = new Point(40 ,710);
     public static final Point DS_Pos = new Point(120 ,710);
@@ -34,13 +46,6 @@ public class Coordinates
     public static final Point WC_Pos = new Point(360 ,710);
     public static final Point SC_Pos = new Point(430, 710);
 
-    public static final Point randomClicks[] = new Point[]{
-      new Point(240,400),
-      new Point(200,400),
-      new Point(280,400),
-      new Point(240,350),
-      new Point(240,450),
-    };
 
     public static final Point AAW_Areas[] = new Point[]{
             new Point(350, 400), //Maya

@@ -82,7 +82,7 @@ public class RootShell
     }
 
     public void doSwipe(Point p, Point p2) throws IOException {
-        sendCommand(CmdBuilder.getswipe(p.x,p.y, p2.x,p2.y, 50));
+        sendCommand(CmdBuilder.getswipe(p.x,p.y, p2.x,p2.y, 200));
     }
 
     private void sendTouchDownUp() throws IOException, InterruptedException {
