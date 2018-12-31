@@ -8,9 +8,13 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.RequiresApi;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -23,31 +27,22 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by troop on 15.12.2016.
  */
 
 @RequiresApi(api = Build.VERSION_CODES.M)
-public class ClickerBotActivity extends Activity {
+public class ClickerBotActivity extends AppCompatActivity {
 
     private final String TAG = ClickerBotActivity.class.getSimpleName();
 
-    public static String PREFERENCES_WORKERCOUNT = "workercount";
-    public static String PREFERENCES_SLEEPTIME_BETWEEN_WORKERS = "sleeptimebetweenworkers";
-    public static String PREFERENCES_CMDSLEEP = "cmdsleep";
-    public static String PREFERENCES_TAPX = "tapx";
-    public static String PREFERENCES_TAPY = "tapy";
     public final static int REQUEST_CODE = -1010101;
-    private EditText workercount;
-    private EditText sleeptimebetweenworker;
+
     private Button startbot;
     private SharedPreferences preferences;
-    private EditText cmdsleeptime;
-    private Button tapareaselect;
-    private ImageView taparea;
-    private ArrayList<String> touchAreas;
-    private Button closeImageViewButton;
+    private SettingsFragment fragment;
 
     private final int flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -61,79 +56,10 @@ public class ClickerBotActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.clickerbotactivity);
+
+
         HIDENAVBAR();
         preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-
-        sleeptimebetweenworker = (EditText) findViewById(R.id.editText_sleeptimebetweenworkers);
-        int t= preferences.getInt(PREFERENCES_SLEEPTIME_BETWEEN_WORKERS, 20);
-        sleeptimebetweenworker.setText(t +"");
-        sleeptimebetweenworker.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String tmp = sleeptimebetweenworker.getText().toString();
-                int t = 0;
-                if (!tmp.equals(""))
-                    t = Integer.parseInt(tmp);
-
-                preferences.edit().putInt(PREFERENCES_SLEEPTIME_BETWEEN_WORKERS,t).commit();
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        workercount = (EditText) findViewById(R.id.editText_worker);
-        workercount.setText(preferences.getInt(PREFERENCES_WORKERCOUNT, 15)+"");
-        workercount.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String tmp = workercount.getText().toString();
-                int t = 0;
-                if (!tmp.equals(""))
-                    t = Integer.parseInt(tmp);
-                preferences.edit().putInt(PREFERENCES_WORKERCOUNT,t).commit();
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-
-        cmdsleeptime = (EditText) findViewById(R.id.editText_commandsleeptime);
-        cmdsleeptime.setText(preferences.getInt(PREFERENCES_CMDSLEEP, 10)+"");
-        cmdsleeptime.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String tmp = cmdsleeptime.getText().toString();
-                int t = 0;
-                if (!tmp.equals(""))
-                    t = Integer.parseInt(tmp);
-                preferences.edit().putInt(PREFERENCES_CMDSLEEP,t).commit();
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
 
         startbot = (Button)findViewById(R.id.button_startbot);
         startbot.setOnClickListener(new View.OnClickListener() {
@@ -143,51 +69,21 @@ public class ClickerBotActivity extends Activity {
             }
         });
 
+        /*getFragmentManager().beginTransaction()
+                .replace(R.id.setting_fragment, new PrefsFragment())
+                .commit();*/
 
-        tapareaselect = (Button)findViewById(R.id.button_taparea);
-        tapareaselect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                touchAreas = new ArrayList<String>();
-                taparea.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.taptitans));
-                taparea.setVisibility(View.VISIBLE);
-                closeImageViewButton.setVisibility(View.VISIBLE);
-                closeImageViewButton.bringToFront();
-            }
-        });
+    }
 
-        closeImageViewButton =(Button)findViewById(R.id.button_closeImageView);
-        closeImageViewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                taparea.setVisibility(View.GONE);
-                closeImageViewButton.setVisibility(View.GONE);
-                String save = "";
-                for (String s : touchAreas)
-                {
-                    save += s+";";
-                }
-                preferences.edit().putString(PREFERENCES_TAPX, save).commit();
-            }
-        });
-        closeImageViewButton.setVisibility(View.GONE);
+    @Override
+    protected void onPause() {
 
-        taparea = (ImageView)findViewById(R.id.imageView_taparea);
-        taparea.setVisibility(View.GONE);
-        taparea.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                switch (event.getAction())
-                {
-                    case MotionEvent.ACTION_UP:
-                    {
-                        touchAreas.add((int)event.getX()+","+(int)event.getY());
-                    }
-                }
-                return true;
-            }
-        });
+        getSupportFragmentManager()
+                .beginTransaction()
+                .remove(fragment)
+                .commit();
+        fragment = null;
+        super.onPause();
     }
 
     @Override
@@ -198,6 +94,11 @@ public class ClickerBotActivity extends Activity {
 
     @Override
     protected void onResume() {
+        fragment = new SettingsFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.setting_fragment_container, fragment)
+                .commit();
         super.onResume();
         HIDENAVBAR();
     }
@@ -236,7 +137,7 @@ public class ClickerBotActivity extends Activity {
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP || checkDrawOverlayPermission()) {
             Intent intent = new Intent(this, ClickerBotService.class);
             startService(intent);
-            finish();
+            onBackPressed();
         }
     }
 
@@ -269,4 +170,5 @@ public class ClickerBotActivity extends Activity {
         Log.d(TAG,"onKeyDown");
         return super.onKeyDown(keyCode, event);
     }
+
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="useHs">useHs</string>
+    <string name="useDS">useDS</string>
+    <string name="useHom">useHom</string>
+    <string name="useFS">useFS</string>
+    <string name="useWC">useWC</string>
+    <string name="auto_prestige">auto_prestige</string>
+    <string name="prestige_after_time">prestige_after_time</string>
+    <string name="after_boss_failed">after_boss_failed</string>
+    <string name="useSC">useSC</string>
+    <string name="autoTap">autoTap</string>
+    <string name="autolvlheros">autolvlheros</string>
+    <string name="autolvlskills">autolvlskills</string>
+    <string name="clickonfairyadds">clickonfairyadds</string>
+    <string name="acceptfairyadds">acceptfairyadds</string>
+    <string name="autolvlswordmaster">autolvlswordmaster</string>
+</resources>

@@ -20,6 +20,7 @@ import android.widget.Button;
 
 import java.util.Date;
 
+import clickerbot.com.troop.clickerbot.tt2.BotSettings;
 import clickerbot.com.troop.clickerbot.tt2.TT2Bot;
 
 /**
@@ -34,10 +35,6 @@ public class ClickerBotService extends Service
     private WindowManager windowManager;
     private Button startStopButton;
     private Button closeButton;
-    private int workerCount = 15;
-    private int sleepTimeBetweenWorker = 20;
-    private int sleepAfterOneRound = 0;
-    private int cmdsleep;
     private TT2Bot tt2Bot;
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -72,9 +69,7 @@ public class ClickerBotService extends Service
     @Override public void onCreate() {
         super.onCreate();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        workerCount = preferences.getInt(ClickerBotActivity.PREFERENCES_WORKERCOUNT,15);
-        sleepTimeBetweenWorker = preferences.getInt(ClickerBotActivity.PREFERENCES_SLEEPTIME_BETWEEN_WORKERS,20);
-        sleepTimeBetweenWorker = preferences.getInt(ClickerBotActivity.PREFERENCES_CMDSLEEP,10);
+
 
         Log.d(TAG,"Register ACTION_MEDIA_BUTTON");
         IntentFilter filter = new IntentFilter();
@@ -84,7 +79,8 @@ public class ClickerBotService extends Service
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         startStopButton = new Button(this);
         startStopButton.setBackgroundResource(R.drawable.play);
-        tt2Bot = new TT2Bot(getApplicationContext());
+        BotSettings botSettings = new BotSettings(preferences, getApplicationContext());
+        tt2Bot = new TT2Bot(getApplicationContext(),botSettings);
         startStopButton.setText("");
         startStopButton.setOnClickListener(new View.OnClickListener() {
             @Override

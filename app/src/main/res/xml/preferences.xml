@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Misc">
+
+        <SwitchPreferenceCompat
+
+        android:defaultValue="false"
+            android:key="@string/autolvlheros"
+            android:title="Auto lvl heros" />
+        <SwitchPreferenceCompat
+
+        android:defaultValue="false"
+            android:key="@string/autolvlskills"
+            android:title="Auto lvl skills" />
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/autoTap"
+            android:title="Auto Tap" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Skills">
+
+        <SwitchPreferenceCompat
+
+            android:defaultValue="true"
+            android:key="@string/useHom"
+            android:title="Use Hom " />
+        <SwitchPreferenceCompat
+
+            android:defaultValue="true"
+            android:key="@string/useWC"
+            android:title="Use Wc" />
+        <SwitchPreferenceCompat
+
+            android:defaultValue="true"
+            android:key="@string/useDS"
+            android:title="Use DS" />
+        <SwitchPreferenceCompat
+
+            android:defaultValue="true"
+            android:key="@string/useFS"
+            android:title="Use FS" />
+        <SwitchPreferenceCompat
+
+            android:defaultValue="true"
+            android:key="@string/useSC"
+            android:title="Use Sc" />
+        <SwitchPreferenceCompat
+
+            android:defaultValue="false"
+            android:key="@string/useHs"
+            android:title="Use HS" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Auto Prestige">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/auto_prestige"
+            android:title="Auto Prestige" />
+        <EditTextPreference
+            android:defaultValue="00:60:00"
+            android:inputType="time"
+            android:key="@string/prestige_after_time"
+            android:singleLine="true"
+            android:title="Prestige after time" />
+        <EditTextPreference
+            android:defaultValue="3"
+            android:digits="0123456789."
+            android:inputType="numberDecimal"
+            android:key="@string/after_boss_failed"
+            android:singleLine="true"
+            android:title="After Boss failed" />
+    </PreferenceCategory>
+</PreferenceScreen>

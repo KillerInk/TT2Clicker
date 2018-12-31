@@ -1,7 +1,10 @@
 package clickerbot.com.troop.clickerbot;
 
 import android.graphics.Point;
+import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.util.Log;
 
 import java.io.DataOutputStream;
@@ -20,6 +23,8 @@ public class RootShell
     private String cmdDown;
     private String cmdUp;
     private int cmdsleep;
+    private HandlerThread handlerThread;
+    private Handler handler;
 
 
     public RootShell(int id, int cmdsleep, int x, int y)
@@ -45,6 +50,9 @@ public class RootShell
     {
         this.id =id;
         this.cmdsleep = cmdsleep;
+        handlerThread = new HandlerThread("Rooshell" + id);
+        handlerThread.start();
+        handler = new Handler(handlerThread.getLooper());
 
         cmdUp = CmdBuilder.getTouchUp();
         try {
@@ -53,6 +61,9 @@ public class RootShell
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+
         Log.d(TAG,"created ID:" + id);
 
     }
@@ -73,8 +84,14 @@ public class RootShell
     }
 
     public void sendCommand(String command) throws IOException {
-        os.writeChars(command);
-        os.flush();
+
+            try {
+                os.writeChars(command);
+                os.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
     }
 
     public void doTap(Point p) throws IOException {
@@ -101,9 +118,13 @@ public class RootShell
         os.flush();
     }
 
-    public void captureScreen() throws IOException {
-        os.writeChars("screencap -p >/sdcard/screen.png\n");
-        os.flush();
+    public synchronized void captureScreen() throws IOException {
+        if (os != null) {
+            os.writeChars("screencap -p >/sdcard/screen.png\n");
+            os.flush();
+        }
+        else
+            Log.d(TAG, "captureScreen outputstream is null");
     }
 
     public void Close()
@@ -113,6 +134,11 @@ public class RootShell
             os.flush();
             os.close();
             process.waitFor();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                handlerThread.quitSafely();
+            }
+            else
+                handlerThread.quit();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

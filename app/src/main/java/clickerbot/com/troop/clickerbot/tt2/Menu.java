@@ -4,10 +4,19 @@ import android.graphics.Point;
 
 import java.io.IOException;
 
+import clickerbot.com.troop.clickerbot.IBot;
 import clickerbot.com.troop.clickerbot.RootShell;
 
 public class Menu
 {
+    protected IBot bot;
+    protected BotSettings botSettings;
+    public Menu(IBot bot, BotSettings botSettings)
+    {
+        this.bot = bot;
+        this.botSettings = botSettings;
+    }
+
     protected RootShell rootShellClick[];
 
     private final int menuOpenCloseDelay = 1000;

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Switch
+        android:id="@+id/autolevelheros"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="Auto lvl Heros" />
+    <Switch
+        android:id="@+id/autolevelskills"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="Auto lvl Skills" />
+    <Switch
+        android:id="@+id/autotap"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="Auto Tap" />
+    <Switch
+        android:id="@+id/usehs"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="UseHS" />
+    <Switch
+        android:id="@+id/useds"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="UseDS" />
+
+    <Switch
+        android:id="@+id/usehom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="UseHom" />
+    <Switch
+        android:id="@+id/usefs"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="UseFS" />
+    <Switch
+        android:id="@+id/usewc"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="UseWC" />
+    <Switch
+        android:id="@+id/usesc"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="UseSC" />
+    <Switch
+        android:id="@+id/autoprestige"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="Auto Prestige" />
+    <Switch
+        android:id="@+id/clickOnFairys"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="Click On Fairys" />
+    <Switch
+        android:id="@+id/clickOnAcceptFairyAdds"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="Accecpt Fairy Adds" />
+    <Switch
+        android:id="@+id/autoLvlSwordMaster"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="Auto level Swormaster" />
+</LinearLayout>

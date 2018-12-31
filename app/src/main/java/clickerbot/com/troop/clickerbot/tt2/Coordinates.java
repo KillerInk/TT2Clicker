@@ -10,6 +10,7 @@ public class Coordinates
     public final static Point Menu_Minimise = new Point(390,13);
     public static final Point Menu_Heros = new Point(120,780);
     public static final Point Menu_SwordMaster = new Point(46,780);
+    public static final Point Menu_Minimized_SwordMaster = new Point(403,575);
 
     public static final Point Menu_Close = new Point(466,455);
 
@@ -23,11 +24,21 @@ public class Coordinates
 
     public static final Point lvlHeroButton = new Point(340,520);
     public static final Point lvlNextHeroButton = new Point(340,597);
+    public static final Point lvlFIrsHeroButton_color = new Point(340,573);
+    public static final Point lvlFIrsHeroButton_click = new Point(406,573);
+
+    public static final Point lvlSecondHeroButton_color = new Point(340,648);
+    public static final Point lvlSecondHeroButton_click = new Point(406,648);
+
+    public static final Point lvlThirdHeroButton_color = new Point(340,724);
+    public static final Point lvlThirdHeroButton_click = new Point(406,724);
 
     public static final Point fightBossButton = new Point(430,46);
+    public static final Point fightBossButton_Color = new Point(375,21);
     public static final Point prestigeMenuButton = new Point(401,734);
     public static final Point prestigeButton = new Point(239,630);
     public static final Point prestigeAcceptButton = new Point(326,539);
+    public static final Point activeBossFightColor = new Point(435,45);
 
 
     public static final Rect dsLvlArea = new Rect(92,302,114,318);
@@ -45,6 +56,12 @@ public class Coordinates
     public static final Point FS_Pos = new Point(280, 710);
     public static final Point WC_Pos = new Point(360 ,710);
     public static final Point SC_Pos = new Point(430, 710);
+
+
+
+    public static final Point crazy_touch_pos = new Point(73, 360);
+
+
 
 
     public static final Point AAW_Areas[] = new Point[]{

@@ -11,7 +11,6 @@ import clickerbot.com.troop.clickerbot.IBot;
 public class Skills extends Menu {
     private final String TAG = Skills.class.getSimpleName();
 
-    private boolean useHS = false;
 
     private boolean hsUnlocked = false;
     private boolean dsUnlocked = false;
@@ -19,11 +18,9 @@ public class Skills extends Menu {
     private boolean fsUnlocked = false;
     private boolean wcUnlocked = false;
     private boolean scUnlocked = false;
-    private IBot bot;
 
-    public void setIBot(IBot iBot)
-    {
-        this.bot = iBot;
+    public Skills(IBot bot, BotSettings botSettings) {
+        super(bot, botSettings);
     }
 
     public void activateAllSkills() throws IOException, InterruptedException {
@@ -57,34 +54,55 @@ public class Skills extends Menu {
     public void init() throws InterruptedException, IOException {
         closeMenu();
         checkSkillsUnlocked();
-        if (!skipLevelUpSkills()) {
+        Log.d(TAG,"init autolvl skills:" + botSettings.autoLvlSkills);
+        if (botSettings.autoLvlSkills) {
+            if (!skipLevelUpSkills()) {
 
-            openSwordMasterMenu();
+                openSwordMasterMenu();
 
-            maximiseMenu();
+                maximiseMenu();
 
-            swipeUp();
-            Thread.sleep(500);
+                swipeUp();
+                Thread.sleep(500);
 
         /*bot.dumpScreen();
         Log.d(TAG, (Coordinates.dsLvlArea.right - Coordinates.dsLvlArea.left) + (Coordinates.dsLvlArea.bottom -Coordinates.dsLvlArea.top) +"" );
         String dsLvl = bot.getOcr().getOCRResult(bot.getAreaFromScreen(Coordinates.dsLvlArea));*/
 
-            levelUpSkills();
-            Thread.sleep(50);
-            minimiseMenu();
-            closeMenu();
+                levelUpSkills();
+                Thread.sleep(50);
+                minimiseMenu();
+                closeMenu();
+            }
         }
     }
 
     private boolean skipLevelUpSkills()
     {
-        if (!hsUnlocked && !useHS && dsUnlocked && homUnlocked && fsUnlocked && wcUnlocked && scUnlocked)
+        if (!hsUnlocked && !botSettings.useHS && dsUnlocked && homUnlocked && fsUnlocked && wcUnlocked && scUnlocked)
             return true;
-        else if (hsUnlocked && useHS && dsUnlocked && homUnlocked && fsUnlocked && wcUnlocked && scUnlocked)
+        else if (hsUnlocked && botSettings.useHS && dsUnlocked && homUnlocked && fsUnlocked && wcUnlocked && scUnlocked)
             return true;
         else
             return false;
+    }
+
+    public void lvlSwordMaster()
+    {
+        Log.d(TAG,"lvlSwordMaster");
+        openSwordMasterMenu();
+        try {
+            swipeUp(200);
+            Thread.sleep(300);
+            rootShellClick[0].doTap(Coordinates.Menu_Minimized_SwordMaster);
+            rootShellClick[0].doTap(Coordinates.Menu_Minimized_SwordMaster);
+            Thread.sleep(50);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        closeMenu();
     }
 
     private void levelUpSkills()
@@ -98,7 +116,7 @@ public class Skills extends Menu {
             e.printStackTrace();
         }
 
-        if (useHS && !hsUnlocked)
+        if (botSettings.useHS && !hsUnlocked)
             levelSkill(25,Coordinates.Menu_HSPos);
         if (!dsUnlocked)
             levelSkill(25,Coordinates.Menu_DSPos);
@@ -140,7 +158,7 @@ public class Skills extends Menu {
             e.printStackTrace();
         }
         Log.d(TAG,"checkSkillsUnlocked");
-        if (useHS)
+        if (botSettings.useHS)
             hsUnlocked = isSkillUnlocked(bot.getColor(Coordinates.Hs_Pos));
         dsUnlocked = isSkillUnlocked(bot.getColor(Coordinates.DS_Pos));
         homUnlocked = isSkillUnlocked(bot.getColor(Coordinates.HOM_Pos));

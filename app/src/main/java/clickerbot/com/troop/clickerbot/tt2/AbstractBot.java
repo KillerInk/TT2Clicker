@@ -28,7 +28,7 @@ public abstract class AbstractBot implements IBot
     private long lastTick = 0;
     private volatile boolean isRunning = false;
     //sleep times
-    private final long screenDumpSleepTime = 300;
+    private final long screenDumpSleepTime = 700;
     private final int tickSleepTime = 100;
     private RootShell dumpScreenShell;
     private Bitmap screenDump;
@@ -60,20 +60,20 @@ public abstract class AbstractBot implements IBot
         }
         ).start();
 
-      /* new Thread(()->{
+        new Thread(()->{
             while (doWork)
             {
                 try {
                     dumpScreen();
-
-                    Thread.sleep(screenDumpSleepTime);
+                    onScreenDump();
+                    Thread.sleep(1);
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-        }).start();*/
+        }).start();
     }
 
     @Override
@@ -100,7 +100,7 @@ public abstract class AbstractBot implements IBot
         onTick(tickCounter);
         long sleep = 100 - (System.currentTimeMillis() - lastTick);
         if (sleep > 0) {
-            Log.d(TAG, "do tick sleep " + sleep);
+            //Log.d(TAG, "do tick sleep " + sleep);
             try {
                 Thread.sleep(sleep);
             } catch (InterruptedException e) {
@@ -110,6 +110,7 @@ public abstract class AbstractBot implements IBot
     }
 
     abstract void onTick(long tickCounter);
+    abstract void onScreenDump();
 
     @Override
     public synchronized void dumpScreen() throws InterruptedException, IOException {
