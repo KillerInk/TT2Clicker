@@ -40,6 +40,7 @@ public class ClickerBotService extends Service
     private Button closeButton;
     private TT2Bot tt2Bot;
     private TextView prestigeCounterView;
+    private static String botRunningSettingKey = "botRunning";
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         private int callCount = 0;
@@ -69,6 +70,11 @@ public class ClickerBotService extends Service
 
 
     private long lastClick;
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return START_STICKY;
+    }
 
     @Override public void onCreate() {
         super.onCreate();
@@ -221,6 +227,8 @@ public class ClickerBotService extends Service
 
 
         startStopButton.setVisibility(View.GONE);
+        if (preferences.getBoolean(botRunningSettingKey,false))
+            tt2Bot.start();
 
 
     }
@@ -228,8 +236,11 @@ public class ClickerBotService extends Service
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (tt2Bot.getIsRunning())
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        preferences.edit().putBoolean(botRunningSettingKey,tt2Bot.getIsRunning());
+        if (tt2Bot.getIsRunning()) {
             tt2Bot.stop();
+        }
         tt2Bot.destroy();
         if (startStopButton != null) windowManager.removeView(startStopButton);
         if (closeButton != null) windowManager.removeView(closeButton);

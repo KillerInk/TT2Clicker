@@ -8,11 +8,13 @@ import java.io.IOException;
 
 import clickerbot.com.troop.clickerbot.IBot;
 import clickerbot.com.troop.clickerbot.RootShell;
+import clickerbot.com.troop.clickerbot.ScreenCapture;
 import clickerbot.com.troop.clickerbot.tt2.tasks.LevelHerosTask;
 
 public class Heros extends Menu {
 
     public static final String TAG = Heros.class.getSimpleName();
+    private final boolean debug = true;
     private Boss boss;
     private final int runHeroActivator = 60000;//ms
     private long lastHerossActivated = 0;
@@ -33,15 +35,15 @@ public class Heros extends Menu {
     boolean rdToExecute() {
         if (boss.getBossState() != Boss.BossState.BossFightActive
                 && botSettings.autoLvlHeros && timeOver()) {
-
-                Log.d(TAG, "level Heros");
+                if (debug)
+                    Log.d(TAG, "level Heros");
                 bot.execute(levelHerosTask);
                 lastHerossActivated = System.currentTimeMillis();
                 return true;
 
         }
-        else {Log.d(TAG, "not rdy to execute " + boss.getBossState() + "timeover:"+timeOver());}
-
+       /* else if (debug) {
+            Log.d(TAG, "not rdy to execute " + boss.getBossState() + " timeover: "+timeOver());}*/
         return false;
     }
 
@@ -62,7 +64,8 @@ public class Heros extends Menu {
         Thread.sleep(200);
         swipeUp(200);
         Thread.sleep(500);
-
+        if (debug)
+            ScreenCapture.debug = true;
         lvlUpHero(Coordinates.lvlFIrsHeroButton_click, Coordinates.lvlFIrsHeroButton_color);
         lvlUpHero(Coordinates.lvlSecondHeroButton_click, Coordinates.lvlSecondHeroButton_color);
         lvlUpHero(Coordinates.lvlThirdHeroButton_click, Coordinates.lvlThirdHeroButton_color);
@@ -73,6 +76,8 @@ public class Heros extends Menu {
         Thread.sleep(200);
         closeMenu();
         Thread.sleep(200);
+        if (debug)
+            ScreenCapture.debug = false;
 
 
     }
@@ -82,22 +87,20 @@ public class Heros extends Menu {
 
         if (boss.isActivebossFight())
             return;
-        int color = bot.getScreeCapture().getColorFromNextFrame(p_color);
-        Log.d(TAG, "lvl up Hero color:"+ color +" r:" + Color.red(color) + " g:"+Color.green(color) + " b:"+ Color.blue(color));
-        if (Color.red(color) > 170) {
+        if (debug)
             Log.d(TAG,"Click on Hero button");
-            rootShells[0].doTap(point);
-            Thread.sleep(1);
-            rootShells[0].doTap(point);
-            Thread.sleep(50);
-        }
+        rootShells[0].doTap(point);
+        Thread.sleep(1);
+        rootShells[0].doTap(point);
+        Thread.sleep(50);
     }
 
     private boolean canlevelNextHero() throws IOException, InterruptedException {
         swipeUp(-37);
         Thread.sleep(200);
-        //bot.dumpScreen();
         int color = bot.getScreeCapture().getColorFromNextFrame(Coordinates.lvlThirdHeroButton_click);
+        if (debug)
+            Log.d(TAG,"canlevelNextHero(): " + (Color.red(color) > 170) +" " +ScreenCapture.getColorString(color));
         if (Color.red(color) > 170)
             return true;
         else

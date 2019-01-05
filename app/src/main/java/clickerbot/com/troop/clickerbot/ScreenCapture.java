@@ -2,6 +2,7 @@ package clickerbot.com.troop.clickerbot;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Environment;
 import android.os.Handler;
@@ -11,6 +12,8 @@ import android.util.Log;
 import java.io.IOException;
 
 public class ScreenCapture {
+
+    public static boolean debug = false;
 
     public interface ScreenCaptureCallBack{
 
@@ -80,14 +83,16 @@ public class ScreenCapture {
             screenDumpBmp = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().getAbsolutePath() + "/screen.png");
             bitmapLock.notifyAll();
         }
-        Log.d(TAG,"ScreenDumped");
+        if (debug)
+            Log.d(TAG,"ScreenDumped");
     }
 
     public int getColor(Point point)
     {
         int color =0;
         synchronized (bitmapLock) {
-            Log.d(TAG, "getColor");
+            if (debug)
+                Log.d(TAG, "getColor");
             if (screenDumpBmp != null)
                 color = screenDumpBmp.getPixel(point.x, point.y);
         }
@@ -100,7 +105,8 @@ public class ScreenCapture {
         int color = 0;
         synchronized (bitmapLock) {
             lastframe = frameCount;
-            Log.d(TAG, "WaitForFrame");
+            if (debug)
+                Log.d(TAG, "WaitForFrame");
             try {
                 bitmapLock.wait();
             } catch (InterruptedException e) {
@@ -108,7 +114,8 @@ public class ScreenCapture {
             }
             if (lastframe +2 != frameCount)
             {
-                Log.d(TAG,"wait for next frame");
+                if (debug)
+                    Log.d(TAG,"wait for next frame");
                 try {
                     bitmapLock.wait();
                 } catch (InterruptedException e) {
@@ -118,8 +125,14 @@ public class ScreenCapture {
 
             if (screenDumpBmp != null)
                 color = screenDumpBmp.getPixel(point.x, point.y);
-            Log.d(TAG, "getColorFromNextFrame" + color);
+            if (debug)
+                Log.d(TAG,"getColorFromNextFrame() " + getColorString(color));
         }
         return color;
+    }
+
+    public static String getColorString(int color)
+    {
+        return "color " + color + " r:" +Color.red(color) + " g:"+Color.green(color) + " b:" +Color.blue(color);
     }
 }

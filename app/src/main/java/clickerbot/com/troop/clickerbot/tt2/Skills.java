@@ -110,7 +110,12 @@ public class Skills extends Menu {
 
     private boolean skipLevelUpSkills()
     {
-        if (!hsUnlocked && !botSettings.useHS && dsUnlocked && homUnlocked && fsUnlocked && wcUnlocked && scUnlocked)
+        if (!hsUnlocked && !botSettings.useHS
+                && dsUnlocked
+                && homUnlocked
+                && fsUnlocked
+                && wcUnlocked
+                && scUnlocked)
             return true;
         else if (hsUnlocked && botSettings.useHS && dsUnlocked && homUnlocked && fsUnlocked && wcUnlocked && scUnlocked)
             return true;
@@ -124,8 +129,11 @@ public class Skills extends Menu {
         openSwordMasterMenu();
         try {
             swipeUp(200);
-            Thread.sleep(300);
+            Thread.sleep(200);
+            swipeUp(200);
+            Thread.sleep(200);
             rootShells[0].doTap(Coordinates.Menu_Minimized_SwordMaster);
+            Thread.sleep(1);
             rootShells[0].doTap(Coordinates.Menu_Minimized_SwordMaster);
             Thread.sleep(50);
         } catch (IOException e) {
@@ -149,15 +157,15 @@ public class Skills extends Menu {
 
         if (botSettings.useHS && !hsUnlocked)
             levelSkill(25,Coordinates.Menu_HSPos);
-        if (!dsUnlocked)
+        if (!dsUnlocked && botSettings.useDS)
             levelSkill(25,Coordinates.Menu_DSPos);
-        if (!homUnlocked)
+        if (!homUnlocked && botSettings.useHOM)
             levelSkill(25,Coordinates.Menu_HOMPos);
-        if (!fsUnlocked)
+        if (!fsUnlocked && botSettings.useFS)
             levelSkill(25,Coordinates.Menu_FSMPos);
-        if (!wcUnlocked)
+        if (!wcUnlocked && botSettings.useWC)
             levelSkill(25,Coordinates.Menu_WCMPos);
-        if (!wcUnlocked)
+        if (!scUnlocked && botSettings.useSC)
             levelSkill(25,Coordinates.Menu_SCMPos);
     }
 
@@ -167,7 +175,7 @@ public class Skills extends Menu {
         {
             try {
                 rootShells[0].doTap(pos);
-                Thread.sleep(20);
+                Thread.sleep(40);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
