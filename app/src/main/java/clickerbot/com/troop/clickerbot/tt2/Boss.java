@@ -7,6 +7,7 @@ import android.util.Log;
 import java.io.IOException;
 
 import clickerbot.com.troop.clickerbot.IBot;
+import clickerbot.com.troop.clickerbot.RootShell;
 
 // boss icon boss fight active -12826035 60 74 77
 //boss icons boss fight failed -1085168 239 113 16
@@ -14,34 +15,80 @@ import clickerbot.com.troop.clickerbot.IBot;
 public class Boss extends Menu {
     private final String TAG = Boss.class.getSimpleName();
     private int bossFailedCounter = 0;
-    private boolean isActiveBossFight = false;
 
+    private BossState bossState = BossState.NoneFight;
 
-    public Boss(IBot bot, BotSettings botSettings) {
-        super(bot, botSettings);
+    public Boss(IBot ibot, BotSettings botSettings, RootShell[] rootShell) {
+        super(ibot, botSettings, rootShell);
     }
+
+    @Override
+    void init() {
+
+    }
+
+    @Override
+    boolean rdToExecute() {
+
+        return false;
+    }
+
+    enum BossState {
+        BossFightActive,
+        BossFightFailed,
+        NoneFight
+    }
+
+    public synchronized void setBossState(BossState state)
+    {
+        this.bossState = state;
+    }
+
+    public synchronized BossState getBossState()
+    {
+        return bossState;
+    }
+
+
     private int bossFightActiveColor = Color.argb(255,69,85,89);
+    private int bossFightFailedColor = Color.argb(255,239,113,16);
 
-    public boolean isActiveBossFight() {
-        return isActiveBossFight;
-    }
 
     public void checkIfActiveBossFight()
     {
-        int color = bot.getColor(Coordinates.fightBossButton_Color);
+        int color = bot.getScreeCapture().getColor(Coordinates.fightBossButton_Color);
         if (color ==  bossFightActiveColor)
-            isActiveBossFight = true;
-        else //if (Color.red(color) > 230)
         {
-            isActiveBossFight = false;
+            if (bossState == BossState.NoneFight)
+                if (bossFailedCounter > 0)
+                    bossFailedCounter--;
+            setBossState(BossState.BossFightActive);
+
         }
-        Log.d(TAG,"isActiveBossFight:"+ isActiveBossFight + " " + color + " " +Color.red(color) + " "+Color.green(color) + " " +Color.blue(color));
+        else if(color == bossFightFailedColor)
+        {
+            if (bossState == BossState.BossFightActive)
+                if (bossFailedCounter < botSettings.bossFailedCount)
+                    bossFailedCounter++;
+            setBossState(BossState.BossFightFailed);
+
+        }
+        else if (color != bossFightActiveColor && color != bossFightFailedColor && color != 0){
+            setBossState(BossState.NoneFight);
+        }
+        Log.d(TAG,"isActiveBossFight:"+ bossState.toString() + " " + color + " " +Color.red(color) + " "+Color.green(color) + " " +Color.blue(color));
 
     }
 
+    public boolean isActivebossFight()
+    {
+        return getBossState() == BossState.BossFightActive;
+    }
+
+
 
     public void checkIfLockedOnBoss() throws IOException, InterruptedException {
-        int color = bot.getColor(Coordinates.fightBossButton);
+        int color = bot.getScreeCapture().getColor(Coordinates.fightBossButton_Color);
         if (Color.red(color) > 230)
         {
             bossFailedCounter++;
@@ -64,6 +111,6 @@ public class Boss extends Menu {
     }
 
     private void clickOnBossFight() throws IOException {
-        rootShellClick[0].doTap(Coordinates.fightBossButton);
+        rootShells[0].doTap(Coordinates.fightBossButton);
     }
 }

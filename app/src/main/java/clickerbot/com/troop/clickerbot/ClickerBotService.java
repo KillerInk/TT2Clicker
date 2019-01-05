@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -17,9 +18,11 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.Date;
 
+import clickerbot.com.troop.clickerbot.tt2.AbstractBot;
 import clickerbot.com.troop.clickerbot.tt2.BotSettings;
 import clickerbot.com.troop.clickerbot.tt2.TT2Bot;
 
@@ -36,6 +39,7 @@ public class ClickerBotService extends Service
     private Button startStopButton;
     private Button closeButton;
     private TT2Bot tt2Bot;
+    private TextView prestigeCounterView;
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         private int callCount = 0;
@@ -77,10 +81,45 @@ public class ClickerBotService extends Service
         registerReceiver(broadcastReceiver,filter);
 
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        windowManager.getDefaultDisplay().getMetrics(metrics);
+
+        prestigeCounterView =new TextView(this);
+        WindowManager.LayoutParams paramsPrestigeView = new WindowManager.LayoutParams(
+                convertDpiToPixel(140),
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.TYPE_PHONE,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                PixelFormat.TRANSLUCENT);
+
+        paramsPrestigeView.gravity = Gravity.TOP|Gravity.LEFT;
+        paramsPrestigeView.x = (metrics.widthPixels/2) - (convertDpiToPixel(140) + 5);
+        paramsPrestigeView.y = 0;
+        prestigeCounterView.setBackgroundColor(Color.argb(180,0,0,0));
+        prestigeCounterView.setSingleLine(false);
+
+
+
+        windowManager.addView(prestigeCounterView, paramsPrestigeView);
+        prestigeCounterView.bringToFront();
+
         startStopButton = new Button(this);
         startStopButton.setBackgroundResource(R.drawable.play);
         BotSettings botSettings = new BotSettings(preferences, getApplicationContext());
         tt2Bot = new TT2Bot(getApplicationContext(),botSettings);
+        tt2Bot.setUpdateUiCallBack(new AbstractBot.UpdateUi() {
+            @Override
+            public void updatePrestigeTime(String time) {
+                prestigeCounterView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        prestigeCounterView.setText(time);
+                        prestigeCounterView.invalidate();
+                    }
+                });
+            }
+        });
         startStopButton.setText("");
         startStopButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,8 +151,7 @@ public class ClickerBotService extends Service
         });
 
         int iconsize = convertDpiToPixel(45);
-        DisplayMetrics metrics = new DisplayMetrics();
-        windowManager.getDefaultDisplay().getMetrics(metrics);
+
 
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 iconsize,

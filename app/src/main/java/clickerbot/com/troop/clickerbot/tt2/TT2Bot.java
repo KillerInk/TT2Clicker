@@ -5,22 +5,29 @@ import android.graphics.Point;
 import android.util.Log;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
 import clickerbot.com.troop.clickerbot.OCR;
 import clickerbot.com.troop.clickerbot.RootShell;
+import clickerbot.com.troop.clickerbot.ScreenCapture;
+import clickerbot.com.troop.clickerbot.tt2.tasks.CrazyTapTask;
+import clickerbot.com.troop.clickerbot.tt2.tasks.InitTask;
+import clickerbot.com.troop.clickerbot.tt2.tasks.LevelSwordMasterTask;
+import clickerbot.com.troop.clickerbot.tt2.tasks.RandomTapTask;
 
 public class TT2Bot extends AbstractBot
 {
 
     private static final String TAG = TT2Bot.class.getSimpleName();
-    private final int CLICK_DELAY = 5;//ms
+    private final int CLICK_DELAY = 40;//ms
 
 
-    private final static int ROOTSHELLS_CLICKERCOUNT = 8;
+    private final static int ROOTSHELLS_CLICKERCOUNT = 4;
 
     private RootShell rootShellClick[] = new RootShell[ROOTSHELLS_CLICKERCOUNT];
     private Skills skills;
@@ -29,11 +36,13 @@ public class TT2Bot extends AbstractBot
     private Prestige prestige;
     private OCR ocr;
 
-    private final int runSkillsActivator = 30000;//ms
-    private long lastSkillsActivated = 0;
 
-    private final int runHeroActivator = 60000;//ms
-    private long lastHerossActivated = 0;
+
+    private LevelSwordMasterTask lvlswordMasterTask;
+    private RandomTapTask randomTapTask;
+    private CrazyTapTask crazyTapTask;
+    private InitTask initTask;
+
 
     private int randomTapCount =0;
     private int crazyTapCount =0;
@@ -41,10 +50,9 @@ public class TT2Bot extends AbstractBot
     private final int runRandomTapActivator = 1000;//ms
     private long lastRandomTapActivated = 0;
 
-    private final long runPrestigeCheckActivator =convertMinToMs(1);
-    private long lastPrestigeCheck = 0;
-    //private int prestigeTime = 60;
-    private long timeSinceLastPrestige = 0;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+
+
 
     private boolean useAAW = false;
     private boolean usePhom = true;
@@ -59,7 +67,7 @@ public class TT2Bot extends AbstractBot
     private List<Point> crazyTouchPoints;
     private final BotSettings botSettings;
 
-    private static long convertMinToMs(int min)
+    public static long convertMinToMs(int min)
     {
         return min*60*1000;
     }
@@ -67,12 +75,24 @@ public class TT2Bot extends AbstractBot
 
     public TT2Bot(Context context,BotSettings botSettings)
     {
+        super();
         this.botSettings = botSettings;
-        skills = new Skills(this,botSettings);
-        heros = new Heros(this,botSettings);
-        boss = new Boss(this,botSettings);
-        prestige = new Prestige(this,botSettings);
+        for (int i = 0; i < ROOTSHELLS_CLICKERCOUNT; i++)
+        {
+            rootShellClick[i] = new RootShell(i);
+        }
+        boss = new Boss(this,botSettings,rootShellClick);
+        skills = new Skills(this,botSettings,rootShellClick);
+        heros = new Heros(this,botSettings,rootShellClick,boss);
+
+        prestige = new Prestige(this,botSettings,rootShellClick,boss);
         ocr = new OCR(context,"eng");
+
+        lvlswordMasterTask = new LevelSwordMasterTask(skills);
+        randomTapTask = new RandomTapTask(this);
+        crazyTapTask = new CrazyTapTask(this);
+        initTask = new InitTask(this);
+
         Log.d(TAG,"TT2Bot()");
     }
 
@@ -80,6 +100,16 @@ public class TT2Bot extends AbstractBot
     {
         Log.d(TAG,"destroy");
         ocr.destroy();
+        getScreeCapture().destroy();
+        for (int i = 0; i < ROOTSHELLS_CLICKERCOUNT; i++)
+        {
+            rootShellClick[i].Close();
+        }
+    }
+
+    public InitTask getInitTask()
+    {
+        return initTask;
     }
 
     @Override
@@ -88,20 +118,14 @@ public class TT2Bot extends AbstractBot
     }
 
 
+
     public void start()
     {
         Log.d(TAG,"start");
         createRandomTaps();
 
-        for (int i = 0; i < ROOTSHELLS_CLICKERCOUNT; i++)
-        {
-            rootShellClick[i] = new RootShell(i,80);
-        }
-        skills.setRootShellClick(rootShellClick);
-        heros.setRootShellClick(rootShellClick);
-        boss.setRootShellClick(rootShellClick);
-        prestige.setRootShellClick(rootShellClick);
         super.start();
+
 
     }
 
@@ -109,91 +133,68 @@ public class TT2Bot extends AbstractBot
     {
         Log.d(TAG,"stop");
         super.stop();
-        for (int i = 0; i < ROOTSHELLS_CLICKERCOUNT; i++)
-        {
-            rootShellClick[i].Close();
-        }
+
+
 
     }
 
     long lastBossActiveFightCheck = 0;
     long lastSwordMasterLeveled =0;
 
+    long lastUiUpdate = 0;
+
 
     @Override
     void onTick(long tickCounter) {
         if (tickCounter == 1) {
-            init();
+            execute(initTask);
+            //init();
         }
         else {
-            if(!boss.isActiveBossFight() && System.currentTimeMillis() - lastPrestigeCheck > runPrestigeCheckActivator)
+            if(!prestige.rdToExecute())
             {
-                Log.d(TAG, "check if boss failed or time to prestige");
-
-                try {
-                    boss.checkIfLockedOnBoss();
-                    if (System.currentTimeMillis() - timeSinceLastPrestige > botSettings.timeToPrestige + timeSinceLastPrestige || boss.getBossFailedCounter() >= botSettings.bossFailedCount) {
-                        Log.d(TAG,"reason to prestige: bossfailed:" +boss.getBossFailedCounter()+ " time toprestige:" + (System.currentTimeMillis() - timeSinceLastPrestige > botSettings.timeToPrestige));
-                        prestige.doPrestige();
-                        resetTickCounter();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                if (System.currentTimeMillis() - lastUiUpdate > 1000) {
+                    long now = System.currentTimeMillis();
+                    long dif =  prestige.getTimeSinceLastPrestige() - now -(8*60*60*1000);
+                    String out = "Prestige:" + dateFormat.format(new Date(dif))+"\n";
+                    Log.d(TAG, out);
+                    out += "BossFailed:" + boss.getBossFailedCounter() + "\n";
+                    UpdatePrestigeTime(out);
+                    lastUiUpdate = System.currentTimeMillis();
                 }
-                lastPrestigeCheck = System.currentTimeMillis();
-            }
-            else if (botSettings.autoLvlSwordMaster && System.currentTimeMillis() - lastSwordMasterLeveled > 60000)
-            {
-                skills.lvlSwordMaster();
-                lastSwordMasterLeveled = System.currentTimeMillis();
-            }
-            else if (System.currentTimeMillis() - lastSkillsActivated > runSkillsActivator) {
+                swordMasterRdyToExecute();
+                skills.rdToExecute();
+                heros.rdToExecute();
+                if (System.currentTimeMillis() - lastRandomTapActivated > runRandomTapActivator){
 
-                try {
-                    Log.d(TAG,"activate Skills");
-                    skills.activateAllSkills();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                lastSkillsActivated = System.currentTimeMillis();
-            }
-            else if (!boss.isActiveBossFight() && botSettings.autoLvlHeros && System.currentTimeMillis() - lastHerossActivated > runHeroActivator) {
-                lastHerossActivated = System.currentTimeMillis();
-                try {
-                    Log.d(TAG,"level Heros");
-                    heros.levelHeros();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            else if (System.currentTimeMillis() - lastRandomTapActivated > runRandomTapActivator){
+                    execute(randomTapTask);
+                    lastRandomTapActivated = System.currentTimeMillis();
 
-                doTap();
-                lastRandomTapActivated = System.currentTimeMillis();
-            }
-            else if (botSettings.doAutoTap)
-            {
-                doCrazyTap();
+                }
+                else if (botSettings.doAutoTap)
+                {
+                    execute(crazyTapTask);
+
+                }
             }
 
         }
         //doTap();
     }
 
-    @Override
-    void onScreenDump() {
-        synchronized (this)
+    private boolean swordMasterRdyToExecute()
+    {
+        if (botSettings.autoLvlSwordMaster && System.currentTimeMillis() - lastSwordMasterLeveled > 60000)
         {
-            this.notify();
+            execute(lvlswordMasterTask);
+            lastSwordMasterLeveled = System.currentTimeMillis();
+            return true;
         }
-        boss.checkIfActiveBossFight();
+        return false;
     }
+
+
+
 
     private void createRandomTaps() {
         randomTaps = new ArrayList<>();
@@ -221,9 +222,10 @@ public class TT2Bot extends AbstractBot
         return rand.nextInt(maxYFairyPos - minYFairyPos) + minYFairyPos;
     }
 
-    private void init()
+    public void init()
     {
-        timeSinceLastPrestige = System.currentTimeMillis();
+        prestige.init();
+
         boss.resetBossFailedCounter();
         if (botSettings.doAutoTap)
         {
@@ -233,14 +235,8 @@ public class TT2Bot extends AbstractBot
                 crazyTouchPoints.add(new Point(getRandomX(),getRandomY()));
             }
         }
-        try {
-            Log.d(TAG,"init");
-                skills.init();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Log.d(TAG,"init");
+        skills.init();
     }
 
     private int getRandomX()
@@ -254,7 +250,7 @@ public class TT2Bot extends AbstractBot
 
 
 
-    private void doTap()
+    public void doTap()
     {
         Log.d(TAG,"doRandomTap");
         for (int i = 0; i < ROOTSHELLS_CLICKERCOUNT; i++)
@@ -277,9 +273,10 @@ public class TT2Bot extends AbstractBot
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
     }
 
-    private void doCrazyTap()
+    public void doCrazyTap()
     {
         Log.d(TAG,"doCrazyTap");
         for (int i = 0; i < ROOTSHELLS_CLICKERCOUNT; i++)
@@ -304,10 +301,8 @@ public class TT2Bot extends AbstractBot
     }
 
 
-
-
-
-
-
-
+    @Override
+    public void onScreenCapture() {
+        boss.checkIfActiveBossFight();
+    }
 }

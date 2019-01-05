@@ -7,29 +7,25 @@ import java.io.IOException;
 import clickerbot.com.troop.clickerbot.IBot;
 import clickerbot.com.troop.clickerbot.RootShell;
 
-public class Menu
+public abstract class Menu extends Item
 {
-    protected IBot bot;
-    protected BotSettings botSettings;
-    public Menu(IBot bot, BotSettings botSettings)
-    {
-        this.bot = bot;
-        this.botSettings = botSettings;
-    }
 
-    protected RootShell rootShellClick[];
+
+
 
     private final int menuOpenCloseDelay = 1000;
 
-    public void setRootShellClick(RootShell rootShellClick[])
-    {
-        this.rootShellClick = rootShellClick;
+    public Menu(IBot ibot, BotSettings botSettings, RootShell[] rootShell) {
+        super(ibot, botSettings, rootShell);
     }
+
 
     public void closeMenu()
     {
         try {
-            rootShellClick[0].doTap(Coordinates.Menu_Close);
+            rootShells[0].doTap(Coordinates.Menu_Close);
+            Thread.sleep(10);
+            rootShells[0].doTap(Coordinates.Menu_Close);
             Thread.sleep(menuOpenCloseDelay);
         } catch (IOException e) {
             e.printStackTrace();
@@ -41,7 +37,7 @@ public class Menu
     public void openSwordMasterMenu()
     {
         try {
-            rootShellClick[0].doTap(Coordinates.Menu_SwordMaster);
+            rootShells[0].doTap(Coordinates.Menu_SwordMaster);
             Thread.sleep(menuOpenCloseDelay);
         } catch (IOException e) {
             e.printStackTrace();
@@ -53,7 +49,7 @@ public class Menu
     public void openHeroMenu()
     {
         try {
-            rootShellClick[0].doTap(Coordinates.Menu_Heros);
+            rootShells[0].doTap(Coordinates.Menu_Heros);
             Thread.sleep(menuOpenCloseDelay);
         } catch (IOException e) {
             e.printStackTrace();
@@ -65,7 +61,7 @@ public class Menu
     public void maximiseMenu()
     {
         try {
-            rootShellClick[0].doTap(Coordinates.Menu_Maximise);
+            rootShells[0].doTap(Coordinates.Menu_Maximise);
             Thread.sleep(menuOpenCloseDelay);
         } catch (IOException e) {
             e.printStackTrace();
@@ -77,7 +73,7 @@ public class Menu
     public void minimiseMenu()
     {
         try {
-            rootShellClick[0].doTap(Coordinates.Menu_Minimise);
+            rootShells[0].doTap(Coordinates.Menu_Minimise);
             Thread.sleep(menuOpenCloseDelay);
         } catch (IOException e) {
             e.printStackTrace();
@@ -94,9 +90,10 @@ public class Menu
     public void swipeUp(int pixel)
     {
         try {
-            rootShellClick[0].doSwipe(new Point(280 ,600),new Point(280,600+pixel));
+            rootShells[0].doSwipe(new Point(280 ,600),new Point(280,600+pixel));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }

@@ -7,10 +7,13 @@ import android.util.Log;
 import java.io.IOException;
 
 import clickerbot.com.troop.clickerbot.IBot;
+import clickerbot.com.troop.clickerbot.RootShell;
 
 public class Skills extends Menu {
     private final String TAG = Skills.class.getSimpleName();
 
+    private final int runSkillsActivator = 30000;//ms
+    private long lastSkillsActivated = 0;
 
     private boolean hsUnlocked = false;
     private boolean dsUnlocked = false;
@@ -19,39 +22,41 @@ public class Skills extends Menu {
     private boolean wcUnlocked = false;
     private boolean scUnlocked = false;
 
-    public Skills(IBot bot, BotSettings botSettings) {
-        super(bot, botSettings);
+    public Skills(IBot ibot, BotSettings botSettings, RootShell[] rootShell) {
+        super(ibot, botSettings, rootShell);
     }
+
 
     public void activateAllSkills() throws IOException, InterruptedException {
         if (scUnlocked) {
-            rootShellClick[0].doTap(Coordinates.SC_Pos);
+            rootShells[0].doTap(Coordinates.SC_Pos);
             Thread.sleep(20);
         }
         if (wcUnlocked) {
-            rootShellClick[0].doTap(Coordinates.WC_Pos);
+            rootShells[0].doTap(Coordinates.WC_Pos);
             Thread.sleep(20);
         }
         if (fsUnlocked) {
-            rootShellClick[0].doTap(Coordinates.FS_Pos);
+            rootShells[0].doTap(Coordinates.FS_Pos);
             Thread.sleep(20);
         }
         if (homUnlocked) {
-            rootShellClick[0].doTap(Coordinates.HOM_Pos);
+            rootShells[0].doTap(Coordinates.HOM_Pos);
             Thread.sleep(20);
         }
         if (dsUnlocked) {
-            rootShellClick[0].doTap(Coordinates.DS_Pos);
+            rootShells[0].doTap(Coordinates.DS_Pos);
             Thread.sleep(20);
         }
         if (hsUnlocked) {
-            rootShellClick[0].doTap(Coordinates.Hs_Pos);
+            rootShells[0].doTap(Coordinates.Hs_Pos);
             Thread.sleep(20);
         }
 
     }
 
-    public void init() throws InterruptedException, IOException {
+    @Override
+    public void init() {
         closeMenu();
         checkSkillsUnlocked();
         Log.d(TAG,"init autolvl skills:" + botSettings.autoLvlSkills);
@@ -63,18 +68,44 @@ public class Skills extends Menu {
                 maximiseMenu();
 
                 swipeUp();
-                Thread.sleep(500);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
         /*bot.dumpScreen();
         Log.d(TAG, (Coordinates.dsLvlArea.right - Coordinates.dsLvlArea.left) + (Coordinates.dsLvlArea.bottom -Coordinates.dsLvlArea.top) +"" );
         String dsLvl = bot.getOcr().getOCRResult(bot.getAreaFromScreen(Coordinates.dsLvlArea));*/
 
                 levelUpSkills();
-                Thread.sleep(50);
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 minimiseMenu();
                 closeMenu();
             }
         }
+    }
+
+    @Override
+    boolean rdToExecute() {
+        if (System.currentTimeMillis() - lastSkillsActivated > runSkillsActivator) {
+
+            try {
+                Log.d(TAG, "activate Skills");
+                activateAllSkills();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            lastSkillsActivated = System.currentTimeMillis();
+            return true;
+        }
+        return false;
     }
 
     private boolean skipLevelUpSkills()
@@ -94,8 +125,8 @@ public class Skills extends Menu {
         try {
             swipeUp(200);
             Thread.sleep(300);
-            rootShellClick[0].doTap(Coordinates.Menu_Minimized_SwordMaster);
-            rootShellClick[0].doTap(Coordinates.Menu_Minimized_SwordMaster);
+            rootShells[0].doTap(Coordinates.Menu_Minimized_SwordMaster);
+            rootShells[0].doTap(Coordinates.Menu_Minimized_SwordMaster);
             Thread.sleep(50);
         } catch (IOException e) {
             e.printStackTrace();
@@ -108,7 +139,7 @@ public class Skills extends Menu {
     private void levelUpSkills()
     {
         try {
-            rootShellClick[0].doTap(Coordinates.Menu_SwordMasterPos);
+            rootShells[0].doTap(Coordinates.Menu_SwordMasterPos);
             Thread.sleep(20);
         } catch (IOException e) {
             e.printStackTrace();
@@ -135,7 +166,7 @@ public class Skills extends Menu {
         for (int i = 0; i< lvl; i++)
         {
             try {
-                rootShellClick[0].doTap(pos);
+                rootShells[0].doTap(pos);
                 Thread.sleep(20);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -150,21 +181,15 @@ public class Skills extends Menu {
 
     private void checkSkillsUnlocked()
     {
-        try {
-            bot.dumpScreen();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        bot.getScreeCapture().getColorFromNextFrame(new Point(1,1));
         Log.d(TAG,"checkSkillsUnlocked");
         if (botSettings.useHS)
-            hsUnlocked = isSkillUnlocked(bot.getColor(Coordinates.Hs_Pos));
-        dsUnlocked = isSkillUnlocked(bot.getColor(Coordinates.DS_Pos));
-        homUnlocked = isSkillUnlocked(bot.getColor(Coordinates.HOM_Pos));
-        fsUnlocked = isSkillUnlocked(bot.getColor(Coordinates.FS_Pos));
-        wcUnlocked = isSkillUnlocked(bot.getColor(Coordinates.WC_Pos));
-        scUnlocked = isSkillUnlocked(bot.getColor(Coordinates.SC_Pos));
+            hsUnlocked = isSkillUnlocked(bot.getScreeCapture().getColor(Coordinates.Hs_Pos));
+        dsUnlocked = isSkillUnlocked(bot.getScreeCapture().getColor(Coordinates.DS_Pos));
+        homUnlocked = isSkillUnlocked(bot.getScreeCapture().getColor(Coordinates.HOM_Pos));
+        fsUnlocked = isSkillUnlocked(bot.getScreeCapture().getColor(Coordinates.FS_Pos));
+        wcUnlocked = isSkillUnlocked(bot.getScreeCapture().getColor(Coordinates.WC_Pos));
+        scUnlocked = isSkillUnlocked(bot.getScreeCapture().getColor(Coordinates.SC_Pos));
         Log.d(TAG, "Skills Unlocked HS:" + hsUnlocked + " DS:" + dsUnlocked+" Hom:"+homUnlocked+" FS:" + fsUnlocked + " WC:"+wcUnlocked +" SC: "+scUnlocked);
 
     }

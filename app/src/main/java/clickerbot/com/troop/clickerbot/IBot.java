@@ -10,8 +10,12 @@ public interface IBot {
     boolean getIsRunning();
     void start();
     void stop();
-    void dumpScreen() throws InterruptedException, IOException;
-    int getColor(Point point);
+
     OCR getOcr();
-    Bitmap getAreaFromScreen(Rect rect);
+
+    ScreenCapture getScreeCapture();
+    public void resetTickCounter();
+
+    void execute(Runnable runnable);
+    void clearExecuterQueue();
 }

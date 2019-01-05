@@ -13,12 +13,17 @@ import android.os.Environment;
 import android.util.Log;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
+import clickerbot.com.troop.clickerbot.Executer;
 import clickerbot.com.troop.clickerbot.IBot;
 import clickerbot.com.troop.clickerbot.OCR;
 import clickerbot.com.troop.clickerbot.RootShell;
+import clickerbot.com.troop.clickerbot.ScreenCapture;
 
-public abstract class AbstractBot implements IBot
+public abstract class AbstractBot implements IBot ,ScreenCapture.ScreenCaptureCallBack
 {
     private final static String TAG = AbstractBot.class.getSimpleName();
     private volatile boolean doWork = false;
@@ -28,10 +33,47 @@ public abstract class AbstractBot implements IBot
     private long lastTick = 0;
     private volatile boolean isRunning = false;
     //sleep times
-    private final long screenDumpSleepTime = 700;
-    private final int tickSleepTime = 100;
-    private RootShell dumpScreenShell;
-    private Bitmap screenDump;
+    private final int tickSleepTime = 300;
+    private ScreenCapture screenCapture;
+
+
+    private Executer executer;
+
+    public interface UpdateUi
+    {
+        void updatePrestigeTime(String time);
+    }
+
+    private UpdateUi updateUi;
+
+    public void setUpdateUiCallBack(UpdateUi updateUiCallBack)
+    {
+        this.updateUi = updateUiCallBack;
+    }
+
+    public void UpdatePrestigeTime(String out)
+    {
+        if (updateUi != null)
+        {
+            updateUi.updatePrestigeTime(out);
+        }
+    }
+
+
+    public AbstractBot(){
+        screenCapture = new ScreenCapture(this);
+        executer = new Executer();
+    }
+
+    @Override
+    public void execute(Runnable runnable) {
+        executer.putRunnable(runnable);
+    }
+
+    @Override
+    public void clearExecuterQueue() {
+        executer.clear();
+    }
 
     @Override
     public boolean getIsRunning()
@@ -40,10 +82,16 @@ public abstract class AbstractBot implements IBot
     }
 
     @Override
+    public ScreenCapture getScreeCapture() {
+        return screenCapture;
+    }
+
+    @Override
     public void start() {
         doWork = true;
         tickCounter =0;
-        dumpScreenShell = new RootShell(4,80);
+        Log.d(TAG, "start");
+        executer.start();
         new Thread(()->{
             threadstarttime = System.currentTimeMillis();
             isRunning = true;
@@ -59,32 +107,21 @@ public abstract class AbstractBot implements IBot
             isRunning = false;
         }
         ).start();
+        screenCapture.start();
 
-        new Thread(()->{
-            while (doWork)
-            {
-                try {
-                    dumpScreen();
-                    onScreenDump();
-                    Thread.sleep(1);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
     }
 
     @Override
     public void stop() {
         this.doWork = false;
+        executer.stop();
+        screenCapture.stop();
         try {
             Thread.sleep(tickSleepTime);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        dumpScreenShell.Close();
+        executer.clear();
     }
 
     public void resetTickCounter()
@@ -110,27 +147,9 @@ public abstract class AbstractBot implements IBot
     }
 
     abstract void onTick(long tickCounter);
-    abstract void onScreenDump();
 
-    @Override
-    public synchronized void dumpScreen() throws InterruptedException, IOException {
-        dumpScreenShell.captureScreen();
-        Thread.sleep(screenDumpSleepTime);
-        screenDump = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().getAbsolutePath()+"/screen.png");
-        Log.d(TAG,"ScreenDumped");
-    }
 
-    @Override
-    public synchronized int getColor(Point point)
-    {
-        Log.d(TAG,"getColor");
-        if (screenDump != null)
-            return screenDump.getPixel(point.x,point.y);
-        else
-            return 0;
-    }
-
-    public Bitmap getAreaFromScreen(Rect rect)
+    /*public Bitmap getAreaFromScreen(Rect rect)
     {
         int width = rect.right -rect.left;
         int height = rect.bottom -rect.top;
@@ -152,7 +171,7 @@ public abstract class AbstractBot implements IBot
         Rect desRect = new Rect(0, 0, rect.width(), rect.height());
 
         return areaCut;
-    }
+    }*/
 
 
 }
