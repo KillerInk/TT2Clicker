@@ -6,7 +6,6 @@ import android.util.Log;
 
 import java.io.IOException;
 
-import clickerbot.com.troop.clickerbot.IBot;
 import clickerbot.com.troop.clickerbot.RootShell;
 
 public class Skills extends Menu {
@@ -22,7 +21,7 @@ public class Skills extends Menu {
     private boolean wcUnlocked = false;
     private boolean scUnlocked = false;
 
-    public Skills(IBot ibot, BotSettings botSettings, RootShell[] rootShell) {
+    public Skills(TT2Bot ibot, BotSettings botSettings, RootShell[] rootShell) {
         super(ibot, botSettings, rootShell);
     }
 

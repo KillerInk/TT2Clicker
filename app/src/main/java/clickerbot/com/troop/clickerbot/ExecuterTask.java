@@ -7,6 +7,7 @@ public abstract class ExecuterTask implements Runnable, ITask {
     private Thread thread;
     @Override
     public void run() {
+        cancelTask = false;
         thread = Thread.currentThread();
         doTask();
         thread = null;

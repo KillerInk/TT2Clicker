@@ -1,7 +1,6 @@
 package clickerbot.com.troop.clickerbot.tt2.tasks;
 
 import clickerbot.com.troop.clickerbot.ExecuterTask;
-import clickerbot.com.troop.clickerbot.IBot;
 import clickerbot.com.troop.clickerbot.tt2.TT2Bot;
 
 public class RandomTapTask extends ExecuterTask {

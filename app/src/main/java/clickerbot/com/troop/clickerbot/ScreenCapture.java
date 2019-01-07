@@ -2,14 +2,12 @@ package clickerbot.com.troop.clickerbot;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Point;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.util.Log;
 
 import java.io.IOException;
+
+import clickerbot.com.troop.clickerbot.tt2.BotSettings;
 
 public class ScreenCapture {
 
@@ -31,11 +29,13 @@ public class ScreenCapture {
     private long frameCount;
 
     private ScreenCaptureCallBack screenCaptureCallBack;
+    private BotSettings botSettings;
 
-    public ScreenCapture(ScreenCaptureCallBack screenCaptureCallBack)
+    public ScreenCapture(ScreenCaptureCallBack screenCaptureCallBack, BotSettings botSettings)
     {
         rootShell = new RootShell(99);
         this.screenCaptureCallBack = screenCaptureCallBack;
+        this.botSettings = botSettings;
     }
 
     public void destroy()
@@ -49,6 +49,7 @@ public class ScreenCapture {
             return;
         doWork =true;
         frameCount= 0;
+        rootShell.startProcess();
         new Thread(()->{
             while (doWork)
             {
@@ -59,7 +60,7 @@ public class ScreenCapture {
 
                     if (screenCaptureCallBack != null)
                         screenCaptureCallBack.onScreenCapture();
-                    Thread.sleep(10);
+                    Thread.sleep(botSettings.captureFrameSleepTime);
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -73,18 +74,25 @@ public class ScreenCapture {
     public void stop()
     {
         doWork =false;
+        rootShell.stopProcess();
     }
 
 
     private void dumpScreen() throws InterruptedException, IOException {
-        synchronized (bitmapLock) {
+
             rootShell.captureScreen();
-            Thread.sleep(600);
-            screenDumpBmp = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().getAbsolutePath() + "/screen.png");
+
+        synchronized (bitmapLock) {
+            screenDumpBmp = BitmapFactory.decodeStream(rootShell.getInputStream());
             bitmapLock.notifyAll();
         }
         if (debug)
             Log.d(TAG,"ScreenDumped");
+    }
+
+    public Bitmap getScreenDumpBmp()
+    {
+        return screenDumpBmp;
     }
 
     public int getColor(Point point)
@@ -112,7 +120,7 @@ public class ScreenCapture {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (lastframe +2 != frameCount)
+            while (lastframe +3 != frameCount)
             {
                 if (debug)
                     Log.d(TAG,"wait for next frame");
@@ -126,13 +134,10 @@ public class ScreenCapture {
             if (screenDumpBmp != null)
                 color = screenDumpBmp.getPixel(point.x, point.y);
             if (debug)
-                Log.d(TAG,"getColorFromNextFrame() " + getColorString(color));
+                Log.d(TAG,"getColorFromNextFrame() " + ColorUtils.getColorString(color));
         }
         return color;
     }
 
-    public static String getColorString(int color)
-    {
-        return "color " + color + " r:" +Color.red(color) + " g:"+Color.green(color) + " b:" +Color.blue(color);
-    }
+
 }

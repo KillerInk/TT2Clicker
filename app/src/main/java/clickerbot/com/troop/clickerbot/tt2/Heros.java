@@ -6,7 +6,7 @@ import android.util.Log;
 
 import java.io.IOException;
 
-import clickerbot.com.troop.clickerbot.IBot;
+import clickerbot.com.troop.clickerbot.ColorUtils;
 import clickerbot.com.troop.clickerbot.RootShell;
 import clickerbot.com.troop.clickerbot.ScreenCapture;
 import clickerbot.com.troop.clickerbot.tt2.tasks.LevelHerosTask;
@@ -20,7 +20,9 @@ public class Heros extends Menu {
     private long lastHerossActivated = 0;
     private LevelHerosTask levelHerosTask;
 
-    public Heros(IBot ibot, BotSettings botSettings, RootShell[] rootShell,Boss boss) {
+    private final int hero_button_red_min = 160;
+
+    public Heros(TT2Bot ibot, BotSettings botSettings, RootShell[] rootShell,Boss boss) {
         super(ibot, botSettings, rootShell);
         this.boss = boss;
         levelHerosTask = new LevelHerosTask(this);
@@ -58,11 +60,11 @@ public class Heros extends Menu {
     public void levelHeros() throws InterruptedException, IOException {
         openHeroMenu();
         //make sure we are on top
-        swipeUp(200);
+        swipeUp(300);
         Thread.sleep(200);
-        swipeUp(200);
+        swipeUp(300);
         Thread.sleep(200);
-        swipeUp(200);
+        swipeUp(300);
         Thread.sleep(500);
         if (debug)
             ScreenCapture.debug = true;
@@ -70,8 +72,10 @@ public class Heros extends Menu {
         lvlUpHero(Coordinates.lvlSecondHeroButton_click, Coordinates.lvlSecondHeroButton_color);
         lvlUpHero(Coordinates.lvlThirdHeroButton_click, Coordinates.lvlThirdHeroButton_color);
 
-        while (canlevelNextHero() && !boss.isActivebossFight())
+        while (canlevelNextHero() && !(boss.isActivebossFight() && botSettings.doAutoTap) && !levelHerosTask.cancelTask){
             lvlUpHero(Coordinates.lvlThirdHeroButton_click, Coordinates.lvlThirdHeroButton_color);
+        }
+        //lvlUpHero(Coordinates.lvlThirdHeroButton_click, Coordinates.lvlThirdHeroButton_color);
 
         Thread.sleep(200);
         closeMenu();
@@ -85,8 +89,10 @@ public class Heros extends Menu {
 
     private void lvlUpHero(Point point, Point p_color) throws IOException, InterruptedException {
 
-        if (boss.isActivebossFight())
+        if ((boss.isActivebossFight() && botSettings.doAutoTap) || levelHerosTask.cancelTask) {
+            Log.d(TAG,"BossFight abort lvlup");
             return;
+        }
         if (debug)
             Log.d(TAG,"Click on Hero button");
         rootShells[0].doTap(point);
@@ -96,12 +102,13 @@ public class Heros extends Menu {
     }
 
     private boolean canlevelNextHero() throws IOException, InterruptedException {
-        swipeUp(-37);
-        Thread.sleep(200);
+        swipe(-38,200);
+        Thread.sleep(210);
+
         int color = bot.getScreeCapture().getColorFromNextFrame(Coordinates.lvlThirdHeroButton_click);
         if (debug)
-            Log.d(TAG,"canlevelNextHero(): " + (Color.red(color) > 170) +" " +ScreenCapture.getColorString(color));
-        if (Color.red(color) > 170)
+            Log.d(TAG,"canlevelNextHero(): " + (Color.red(color) > hero_button_red_min) +" " +ColorUtils.getColorString(color));
+        if (Color.red(color) > hero_button_red_min)
             return true;
         else
             return false;

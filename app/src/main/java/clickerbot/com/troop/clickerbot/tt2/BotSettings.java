@@ -4,10 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import clickerbot.com.troop.clickerbot.R;
 
 public class BotSettings {
@@ -20,9 +16,13 @@ public class BotSettings {
     public final boolean useFS;
     public final boolean useWC;
     public final boolean useSC;
-
+    /**
+     * time till prestige in ms
+     */
     public final long timeToPrestige;
 
+    // after how many boss fails it should prestige.
+    //this overrides the prestigetime,
     public final int bossFailedCount;
 
     public final boolean doAutoTap;
@@ -32,6 +32,9 @@ public class BotSettings {
     public final boolean acceptFairyAdds;
     public final boolean autoPrestige;
     public final boolean autoLvlSwordMaster;
+
+    public final long mainLooperSleepTime;
+    public final long captureFrameSleepTime;
 
     public BotSettings(SharedPreferences sharedPreferences,Context context)
     {
@@ -48,32 +51,13 @@ public class BotSettings {
         acceptFairyAdds = sharedPreferences.getBoolean(context.getString(R.string.acceptfairyadds),false);
         autoPrestige = sharedPreferences.getBoolean(context.getString(R.string.auto_prestige),false);
         autoLvlSwordMaster = sharedPreferences.getBoolean(context.getString(R.string.autolvlswordmaster),false);
-        String presTime = sharedPreferences.getString(context.getString(R.string.prestige_after_time),"00:60:00");
-        String split[] = presTime.split(":");
-
-        if (split.length == 3)
-        {
-            int h = Integer.parseInt(split[0]);
-            int m = Integer.parseInt(split[1]);
-            int s = Integer.parseInt(split[2]);
-            timeToPrestige = (((h * 60 +m)*60)+s)*1000;
-        }
-        else if (split.length == 2)
-        {
-            int m = Integer.parseInt(split[0]);
-            int s = Integer.parseInt(split[1]);
-            timeToPrestige =((m*60)+s)*1000;
-        }
-        else
-        {
-            int h = Integer.parseInt(split[0]);
-            timeToPrestige = (h * 60 *60 *1000);
-        }
-
-        bossFailedCount = Integer.parseInt(sharedPreferences.getString(context.getString(R.string.after_boss_failed),"3"));
+        timeToPrestige = sharedPreferences.getInt(context.getString(R.string.prestigetime),60)*60*1000;
+        bossFailedCount = sharedPreferences.getInt(context.getString(R.string.prestigeafterbossfail),3);
+        mainLooperSleepTime = sharedPreferences.getLong(context.getString(R.string.mainLooperSleep),500);
+        captureFrameSleepTime = sharedPreferences.getLong(context.getString(R.string.captureFrameSleep),800);
         Log.d(TAG, "Skills used HS:" + useHS + " DS:" + useDS+" Hom:"+useHOM+" FS:" + useFS + " WC:"+useWC +" SC: "+useSC);
         Log.d(TAG,"auto lvl heros:" + autoLvlHeros + " auto Tap:" + doAutoTap + " auto lvl skills"+ autoLvlSkills);
-        Log.d(TAG, "time to prestige:" + presTime + " ms:" + timeToPrestige + " bossfailed:" + bossFailedCount);
+        Log.d(TAG, "time to prestige ms:" + timeToPrestige + " bossfailed:" + bossFailedCount);
 
     }
 

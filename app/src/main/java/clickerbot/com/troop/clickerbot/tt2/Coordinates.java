@@ -2,7 +2,6 @@ package clickerbot.com.troop.clickerbot.tt2;
 
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.util.Size;
 
 public class Coordinates
 {
@@ -24,14 +23,14 @@ public class Coordinates
 
     public static final Point lvlHeroButton = new Point(340,520);
     public static final Point lvlNextHeroButton = new Point(340,597);
-    public static final Point lvlFIrsHeroButton_color = new Point(340,573);
-    public static final Point lvlFIrsHeroButton_click = new Point(406,573);
+    public static final Point lvlFIrsHeroButton_color = new Point(335,579);
+    public static final Point lvlFIrsHeroButton_click = new Point(424,579);
 
-    public static final Point lvlSecondHeroButton_color = new Point(340,648);
-    public static final Point lvlSecondHeroButton_click = new Point(406,648);
+    public static final Point lvlSecondHeroButton_color = new Point(335,652);
+    public static final Point lvlSecondHeroButton_click = new Point(424,652);
 
-    public static final Point lvlThirdHeroButton_color = new Point(340,724);
-    public static final Point lvlThirdHeroButton_click = new Point(406,724);
+    public static final Point lvlThirdHeroButton_color = new Point(335,726);
+    public static final Point lvlThirdHeroButton_click = new Point(424,726);
 
     public static final Point fightBossButton = new Point(430,46);
     public static final Point fightBossButton_Color = new Point(375,21);

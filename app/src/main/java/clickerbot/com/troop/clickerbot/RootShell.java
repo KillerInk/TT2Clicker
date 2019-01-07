@@ -1,14 +1,11 @@
 package clickerbot.com.troop.clickerbot;
 
 import android.graphics.Point;
-import android.os.Build;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.util.Log;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by troop on 17.12.2016.
@@ -20,27 +17,29 @@ public class RootShell
     private Process process;
     private DataOutputStream os;
     private int id;
-    private HandlerThread handlerThread;
-    private Handler handler;
 
 
 
     public RootShell(int id)
     {
         this.id =id;
-        handlerThread = new HandlerThread("Rooshell" + id);
-        handlerThread.start();
-        handler = new Handler(handlerThread.getLooper());
+        Log.d(TAG,"created ID:" + id);
+    }
 
+    public InputStream getInputStream()
+    {
+        return process.getInputStream();
+    }
+
+    public void startProcess()
+    {
         try {
             process = Runtime.getRuntime().exec("su");
             os = new DataOutputStream(process.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.d(TAG,"created ID:" + id);
     }
-
 
     private void sendCommand(String command) throws IOException {
 
@@ -58,7 +57,11 @@ public class RootShell
     }
 
     public void doSwipe(Point p, Point p2) throws IOException {
-        sendCommand(CmdBuilder.getswipe(p.x,p.y, p2.x,p2.y, 200));
+        doSwipe(p,p2,200);
+    }
+
+    public void doSwipe(Point p, Point p2,int dur) throws IOException {
+        sendCommand(CmdBuilder.getswipe(p.x,p.y, p2.x,p2.y, dur));
     }
 
 
@@ -66,30 +69,33 @@ public class RootShell
 
     public synchronized void captureScreen() throws IOException {
         if (os != null) {
-            os.writeChars("screencap -p >/sdcard/screen.png\n");
+            //os.writeChars("screencap -p >/sdcard/screen.png\n");
+            os.writeChars("screencap -p\n");
             os.flush();
         }
         else
             Log.d(TAG, "captureScreen outputstream is null");
     }
 
-    public void Close()
+    public void stopProcess()
     {
+
         try {
             os.writeBytes("exit\n");
             os.flush();
             os.close();
             process.waitFor();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                handlerThread.quitSafely();
-            }
-            else
-                handlerThread.quit();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+    }
+
+    public void Close()
+    {
+        stopProcess();
         Log.d(TAG,"closed ID:" + id);
     }
 }

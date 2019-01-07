@@ -1,39 +1,26 @@
 package clickerbot.com.troop.clickerbot;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.annotation.RequiresApi;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 
-import java.util.ArrayList;
-import java.util.List;
+import clickerbot.com.troop.clickerbot.settings.SettingsFragment;
 
 /**
  * Created by troop on 15.12.2016.
  */
 
-@RequiresApi(api = Build.VERSION_CODES.M)
+
 public class ClickerBotActivity extends AppCompatActivity {
 
     private final String TAG = ClickerBotActivity.class.getSimpleName();

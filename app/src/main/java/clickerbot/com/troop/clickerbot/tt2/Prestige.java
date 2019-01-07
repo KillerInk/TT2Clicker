@@ -4,7 +4,6 @@ import android.util.Log;
 
 import java.io.IOException;
 
-import clickerbot.com.troop.clickerbot.IBot;
 import clickerbot.com.troop.clickerbot.RootShell;
 import clickerbot.com.troop.clickerbot.tt2.tasks.PrestigeTask;
 
@@ -21,7 +20,7 @@ public class Prestige extends Menu {
     private Boss boss;
     private PrestigeTask prestigeTask;
 
-    public Prestige(IBot ibot, BotSettings botSettings, RootShell[] rootShell, Boss boss) {
+    public Prestige(TT2Bot ibot, BotSettings botSettings, RootShell[] rootShell, Boss boss) {
         super(ibot, botSettings, rootShell);
         this.boss = boss;
         prestigeTask = new PrestigeTask(this);

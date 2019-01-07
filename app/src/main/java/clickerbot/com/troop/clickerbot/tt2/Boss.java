@@ -6,9 +6,8 @@ import android.util.Log;
 
 import java.io.IOException;
 
-import clickerbot.com.troop.clickerbot.IBot;
+import clickerbot.com.troop.clickerbot.ColorUtils;
 import clickerbot.com.troop.clickerbot.RootShell;
-import clickerbot.com.troop.clickerbot.ScreenCapture;
 
 // boss icon boss fight active -12826035 60 74 77
 //boss icons boss fight failed -1085168 239 113 16
@@ -20,7 +19,7 @@ public class Boss extends Menu {
 
     private BossState bossState = BossState.NoneFight;
 
-    public Boss(IBot ibot, BotSettings botSettings, RootShell[] rootShell) {
+    public Boss(TT2Bot ibot, BotSettings botSettings, RootShell[] rootShell) {
         super(ibot, botSettings, rootShell);
     }
 
@@ -79,7 +78,7 @@ public class Boss extends Menu {
             setBossState(BossState.NoneFight);
         }
         if (debug)
-            Log.d(TAG,"isActiveBossFight: "+ bossState.toString() + " " + ScreenCapture.getColorString(color));
+            Log.d(TAG,"isActiveBossFight: "+ bossState.toString() + " " + ColorUtils.getColorString(color));
 
     }
 

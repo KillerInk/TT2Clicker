@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Switch
+        android:id="@+id/autolevelheros"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="Auto lvl Heros" />
+
+    <Switch
+        android:id="@+id/autotap"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="Auto Tap" />
+
+
+    <Switch
+        android:id="@+id/clickOnFairys"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="Click On Fairys" />
+    <Switch
+        android:id="@+id/clickOnAcceptFairyAdds"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="Accecpt Fairy Adds" />
+    <Switch
+        android:id="@+id/autoLvlSwordMaster"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="Auto level Swormaster" />
+
+</LinearLayout>

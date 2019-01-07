@@ -15,4 +15,8 @@
     <string name="clickonfairyadds">clickonfairyadds</string>
     <string name="acceptfairyadds">acceptfairyadds</string>
     <string name="autolvlswordmaster">autolvlswordmaster</string>
+    <string name="prestigetime">prestigetime</string>
+    <string name="prestigeafterbossfail">prestigeafterbossfail</string>
+    <string name="mainLooperSleep">mainloopersleep</string>
+    <string name="captureFrameSleep">captureFrameSleep</string>
 </resources>

@@ -1,26 +1,11 @@
 package clickerbot.com.troop.clickerbot.tt2;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
-import android.graphics.Paint;
-import android.graphics.Point;
-import android.graphics.Rect;
-import android.os.Environment;
 import android.util.Log;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
-
 import clickerbot.com.troop.clickerbot.Executer;
+import clickerbot.com.troop.clickerbot.ExecuterTask;
 import clickerbot.com.troop.clickerbot.IBot;
-import clickerbot.com.troop.clickerbot.OCR;
-import clickerbot.com.troop.clickerbot.RootShell;
 import clickerbot.com.troop.clickerbot.ScreenCapture;
 
 public abstract class AbstractBot implements IBot ,ScreenCapture.ScreenCaptureCallBack
@@ -32,9 +17,8 @@ public abstract class AbstractBot implements IBot ,ScreenCapture.ScreenCaptureCa
     private long tickCounter = 0;
     private long lastTick = 0;
     private volatile boolean isRunning = false;
-    //sleep times
-    private final int tickSleepTime = 300;
     private ScreenCapture screenCapture;
+    protected final BotSettings botSettings;
 
 
     private Executer executer;
@@ -42,6 +26,7 @@ public abstract class AbstractBot implements IBot ,ScreenCapture.ScreenCaptureCa
     public interface UpdateUi
     {
         void updatePrestigeTime(String time);
+        void updateImage(Bitmap bitmap);
     }
 
     private UpdateUi updateUi;
@@ -59,15 +44,29 @@ public abstract class AbstractBot implements IBot ,ScreenCapture.ScreenCaptureCa
         }
     }
 
+    public void UpdateImage(Bitmap bitmap)
+    {
+        if (updateUi != null)
+        {
+            updateUi.updateImage(bitmap);
+        }
+    }
 
-    public AbstractBot(){
-        screenCapture = new ScreenCapture(this);
+
+    public AbstractBot(BotSettings botSettings){
+        this.botSettings = botSettings;
+        screenCapture = new ScreenCapture(this,botSettings);
         executer = new Executer();
     }
 
     @Override
-    public void execute(Runnable runnable) {
+    public void execute(ExecuterTask runnable) {
         executer.putRunnable(runnable);
+    }
+
+    @Override
+    public void putFirstAndExecute(ExecuterTask runnable) {
+        executer.putFirstAndExecute(runnable);
     }
 
     @Override
@@ -99,7 +98,7 @@ public abstract class AbstractBot implements IBot ,ScreenCapture.ScreenCaptureCa
             {
                 tick();
                 try {
-                    Thread.sleep(tickSleepTime);
+                    Thread.sleep(botSettings.mainLooperSleepTime);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -117,7 +116,7 @@ public abstract class AbstractBot implements IBot ,ScreenCapture.ScreenCaptureCa
         executer.stop();
         screenCapture.stop();
         try {
-            Thread.sleep(tickSleepTime);
+            Thread.sleep(botSettings.mainLooperSleepTime);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

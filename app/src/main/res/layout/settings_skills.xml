@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Switch
+        android:id="@+id/autolevelskills"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="Auto lvl Skills" />
+    <Switch
+        android:id="@+id/usehs"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="UseHS" />
+    <Switch
+        android:id="@+id/useds"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="UseDS" />
+
+    <Switch
+        android:id="@+id/usehom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="UseHom" />
+    <Switch
+        android:id="@+id/usefs"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="UseFS" />
+    <Switch
+        android:id="@+id/usewc"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="UseWC" />
+    <Switch
+        android:id="@+id/usesc"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="UseSC" />
+</LinearLayout>

@@ -4,18 +4,15 @@ import android.graphics.Point;
 
 import java.io.IOException;
 
-import clickerbot.com.troop.clickerbot.IBot;
 import clickerbot.com.troop.clickerbot.RootShell;
 
 public abstract class Menu extends Item
 {
-
-
-
+    public static boolean MenuOpen = false;
 
     private final int menuOpenCloseDelay = 1000;
 
-    public Menu(IBot ibot, BotSettings botSettings, RootShell[] rootShell) {
+    public Menu(TT2Bot ibot, BotSettings botSettings, RootShell[] rootShell) {
         super(ibot, botSettings, rootShell);
     }
 
@@ -32,10 +29,12 @@ public abstract class Menu extends Item
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        MenuOpen = false;
     }
 
     public void openSwordMasterMenu()
     {
+        MenuOpen = true;
         try {
             rootShells[0].doTap(Coordinates.Menu_SwordMaster);
             Thread.sleep(menuOpenCloseDelay);
@@ -48,6 +47,7 @@ public abstract class Menu extends Item
 
     public void openHeroMenu()
     {
+        MenuOpen =true;
         try {
             rootShells[0].doTap(Coordinates.Menu_Heros);
             Thread.sleep(menuOpenCloseDelay);
@@ -56,6 +56,7 @@ public abstract class Menu extends Item
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
     }
 
     public void maximiseMenu()
@@ -91,6 +92,15 @@ public abstract class Menu extends Item
     {
         try {
             rootShells[0].doSwipe(new Point(280 ,600),new Point(280,600+pixel));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void swipe(int pixel,int duration)
+    {
+        try {
+            rootShells[0].doSwipe(new Point(280 ,600),new Point(280,600+pixel),duration);
         } catch (IOException e) {
             e.printStackTrace();
         }
