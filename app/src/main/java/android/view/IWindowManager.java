@@ -1,8 +1,6 @@
 package android.view;
 
-import android.os.Binder;
 import android.os.IBinder;
-import android.view.KeyEvent;
 
 public interface IWindowManager {
     public static class Stub {
