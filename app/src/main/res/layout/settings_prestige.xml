@@ -1,36 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Switch
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/autoprestige"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
-        android:text="Auto Prestige" />
+        android:text="Auto Prestige"
+        custom:settingkey_ids="@string/auto_prestige"
+        custom:setting_defaults="false"/>
 
-    <TextView
-        android:id="@+id/textView"
+
+    <clickerbot.com.troop.clickerbot.views.LongEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Prestige after xx min" />
+        custom:header_txt="Prestige after xx min"
+        custom:settingkey_id="@string/prestigetime"
+        custom:setting_default="60"/>
 
-    <EditText
-        android:id="@+id/editText_presstigeTime"
+    <clickerbot.com.troop.clickerbot.views.LongEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="time" />
+        custom:header_txt="Prestige after xx bossFails"
+        custom:settingkey_id="@string/prestigeafterbossfail"
+        custom:setting_default="3"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Prestige after xx bossFails" />
-
-    <EditText
-        android:id="@+id/editText_presstigeBossFail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="time" />
 </LinearLayout>

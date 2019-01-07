@@ -1,29 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
+    <clickerbot.com.troop.clickerbot.views.LongEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Main Looper Sleep Time in ms" />
+        custom:header_txt="Main Looper Sleep Time in ms"
+        custom:settingkey_id="@string/mainLooperSleep"
+        custom:setting_default="500"/>
 
-    <EditText
-        android:id="@+id/editText_mainLooperSleep"
+    <clickerbot.com.troop.clickerbot.views.LongEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="time" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Capture a frame each xx ms" />
-
-    <EditText
-        android:id="@+id/editText_screenCaptureSleep"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="time" />
+        custom:header_txt="Capture a frame each xx ms"
+        custom:settingkey_id="@string/captureFrameSleep"
+        custom:setting_default="800"/>
 </LinearLayout>

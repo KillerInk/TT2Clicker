@@ -23,7 +23,7 @@ public class BotSettings {
 
     // after how many boss fails it should prestige.
     //this overrides the prestigetime,
-    public final int bossFailedCount;
+    public final long bossFailedCount;
 
     public final boolean doAutoTap;
     public final boolean autoLvlHeros;
@@ -51,8 +51,8 @@ public class BotSettings {
         acceptFairyAdds = sharedPreferences.getBoolean(context.getString(R.string.acceptfairyadds),false);
         autoPrestige = sharedPreferences.getBoolean(context.getString(R.string.auto_prestige),false);
         autoLvlSwordMaster = sharedPreferences.getBoolean(context.getString(R.string.autolvlswordmaster),false);
-        timeToPrestige = sharedPreferences.getInt(context.getString(R.string.prestigetime),60)*60*1000;
-        bossFailedCount = sharedPreferences.getInt(context.getString(R.string.prestigeafterbossfail),3);
+        timeToPrestige = sharedPreferences.getLong(context.getString(R.string.prestigetime),60)*60*1000;
+        bossFailedCount = sharedPreferences.getLong(context.getString(R.string.prestigeafterbossfail),3);
         mainLooperSleepTime = sharedPreferences.getLong(context.getString(R.string.mainLooperSleep),500);
         captureFrameSleepTime = sharedPreferences.getLong(context.getString(R.string.captureFrameSleep),800);
         Log.d(TAG, "Skills used HS:" + useHS + " DS:" + useDS+" Hom:"+useHOM+" FS:" + useFS + " WC:"+useWC +" SC: "+useSC);

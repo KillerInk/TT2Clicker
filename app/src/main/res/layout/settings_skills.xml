@@ -1,41 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <Switch
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/autolevelskills"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
-        android:text="Auto lvl Skills" />
-    <Switch
+        android:text="Auto lvl Skills"
+        custom:settingkey_ids="@string/autolvlskills"
+        custom:setting_defaults="false"/>
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/usehs"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
-        android:text="UseHS" />
-    <Switch
+        android:text="UseHS"
+        custom:settingkey_ids="@string/useHs"
+        custom:setting_defaults="false"/>
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/useds"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
-        android:text="UseDS" />
+        android:text="UseDS"
+        custom:settingkey_ids="@string/useDS"
+        custom:setting_defaults="false"/>
 
-    <Switch
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/usehom"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
-        android:text="UseHom" />
-    <Switch
+        android:text="UseHom"
+        custom:settingkey_ids="@string/useHom"
+        custom:setting_defaults="false"/>
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/usefs"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
-        android:text="UseFS" />
-    <Switch
+        android:text="UseFS"
+        custom:settingkey_ids="@string/useFS"
+        custom:setting_defaults="false"/>
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/usewc"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
-        android:text="UseWC" />
-    <Switch
+        android:text="UseWC"
+        custom:settingkey_ids="@string/useWC"
+        custom:setting_defaults="false"/>
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/usesc"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
-        android:text="UseSC" />
+        android:text="UseSC"
+        custom:settingkey_ids="@string/useSC"
+        custom:setting_defaults="false"/>
 </LinearLayout>

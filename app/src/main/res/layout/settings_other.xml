@@ -1,34 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <Switch
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/autolevelheros"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
-        android:text="Auto lvl Heros" />
+        android:text="Auto lvl Heros"
+        custom:settingkey_ids="@string/autolvlheros"
+        custom:setting_defaults="false"/>
 
-    <Switch
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/autotap"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
-        android:text="Auto Tap" />
+        android:text="Auto Tap"
+        custom:settingkey_ids="@string/autoTap"
+        custom:setting_defaults="false"/>
 
 
-    <Switch
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/clickOnFairys"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
-        android:text="Click On Fairys" />
-    <Switch
+        android:text="Click On Fairys"
+        custom:settingkey_ids="@string/clickonfairyadds"
+        custom:setting_defaults="false"/>
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/clickOnAcceptFairyAdds"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
-        android:text="Accecpt Fairy Adds" />
-    <Switch
+        android:text="Accecpt Fairy Adds"
+        custom:settingkey_ids="@string/acceptfairyadds"
+        custom:setting_defaults="false"/>
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/autoLvlSwordMaster"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
-        android:text="Auto level Swormaster" />
+        android:text="Auto level Swormaster"
+        custom:settingkey_ids="@string/autolvlswordmaster"
+        custom:setting_defaults="false"/>
 
 </LinearLayout>

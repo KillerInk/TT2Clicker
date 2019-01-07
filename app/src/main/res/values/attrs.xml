@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LongEditText">
+        <attr name="header_txt" format="string" />
+        <attr name="settingkey_id" format="string"/>
+        <attr name="setting_default" format="integer"/>
+    </declare-styleable>
+    <declare-styleable name="SettingsSwitch">
+        <attr name="settingkey_ids" format="string"/>
+        <attr name="setting_defaults" format="boolean"/>
+    </declare-styleable>
+
+</resources>
