@@ -35,6 +35,7 @@ public class SettingsFragment extends Fragment {
     }
 
     private void setupViewPager(ViewPager viewPager) {
+        viewPager.setOffscreenPageLimit(4);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
         adapter.addFragment(new SettingPrestigeFragment(), "Prestige");
         adapter.addFragment(new SettingSkillFragment(), "Skills");

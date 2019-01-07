@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <clickerbot.com.troop.clickerbot.views.LongEditText
+        android:id="@+id/mainloopersleep"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         custom:header_txt="Main Looper Sleep Time in ms"
@@ -12,6 +13,7 @@
         custom:setting_default="500"/>
 
     <clickerbot.com.troop.clickerbot.views.LongEditText
+        android:id="@+id/captureframesleep"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         custom:header_txt="Capture a frame each xx ms"
