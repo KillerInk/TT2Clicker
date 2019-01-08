@@ -1,5 +1,6 @@
 package clickerbot.com.troop.clickerbot;
 
+import android.app.Notification;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -63,13 +64,14 @@ public class ClickerBotService extends Service
 
     private long lastClick;
 
-  /*  @Override
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         return START_STICKY;
-    }*/
+    }
 
     @Override public void onCreate() {
         super.onCreate();
+        startForeground(1, new Notification());
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
 
