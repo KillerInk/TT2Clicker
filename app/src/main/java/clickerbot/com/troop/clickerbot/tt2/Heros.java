@@ -65,7 +65,7 @@ public class Heros extends Menu {
         swipeUp(300);
         Thread.sleep(200);
         swipeUp(300);
-        Thread.sleep(500);
+        Thread.sleep(200);
         if (debug)
             ScreenCapture.debug = true;
         lvlUpHero(Coordinates.lvlFIrsHeroButton_click, Coordinates.lvlFIrsHeroButton_color);
@@ -102,7 +102,7 @@ public class Heros extends Menu {
     }
 
     private boolean canlevelNextHero() throws IOException, InterruptedException {
-        swipe(-38,200);
+        swipe(-37,200);
         Thread.sleep(210);
 
         int color = bot.getScreeCapture().getColorFromNextFrame(Coordinates.lvlThirdHeroButton_click);

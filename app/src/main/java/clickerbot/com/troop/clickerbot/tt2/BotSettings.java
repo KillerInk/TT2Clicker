@@ -32,9 +32,13 @@ public class BotSettings {
     public final boolean acceptFairyAdds;
     public final boolean autoPrestige;
     public final boolean autoLvlSwordMaster;
+    public final boolean useAAW;
+    public final boolean useCO;
+    public final boolean usePHOM;
 
     public final long mainLooperSleepTime;
     public final long captureFrameSleepTime;
+    public final long clickSleepTime;
 
     public BotSettings(SharedPreferences sharedPreferences,Context context)
     {
@@ -51,10 +55,14 @@ public class BotSettings {
         acceptFairyAdds = sharedPreferences.getBoolean(context.getString(R.string.acceptfairyadds),false);
         autoPrestige = sharedPreferences.getBoolean(context.getString(R.string.auto_prestige),false);
         autoLvlSwordMaster = sharedPreferences.getBoolean(context.getString(R.string.autolvlswordmaster),false);
+        useAAW = sharedPreferences.getBoolean(context.getString(R.string.useaaw),false);
+        useCO = sharedPreferences.getBoolean(context.getString(R.string.useco),false);
+        usePHOM = sharedPreferences.getBoolean(context.getString(R.string.usephom),false);
         timeToPrestige = sharedPreferences.getLong(context.getString(R.string.prestigetime),60)*60*1000;
         bossFailedCount = sharedPreferences.getLong(context.getString(R.string.prestigeafterbossfail),3);
         mainLooperSleepTime = sharedPreferences.getLong(context.getString(R.string.mainLooperSleep),500);
         captureFrameSleepTime = sharedPreferences.getLong(context.getString(R.string.captureFrameSleep),800);
+        clickSleepTime = sharedPreferences.getLong(context.getString(R.string.clicksleeptime),80);
         Log.d(TAG, "Skills used HS:" + useHS + " DS:" + useDS+" Hom:"+useHOM+" FS:" + useFS + " WC:"+useWC +" SC: "+useSC);
         Log.d(TAG,"auto lvl heros:" + autoLvlHeros + " auto Tap:" + doAutoTap + " auto lvl skills"+ autoLvlSkills);
         Log.d(TAG, "time to prestige ms:" + timeToPrestige + " bossfailed:" + bossFailedCount);

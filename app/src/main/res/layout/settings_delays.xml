@@ -19,4 +19,12 @@
         custom:header_txt="Capture a frame each xx ms"
         custom:settingkey_id="@string/captureFrameSleep"
         custom:setting_default="800"/>
+
+    <clickerbot.com.troop.clickerbot.views.LongEditText
+        android:id="@+id/clickdelaysleep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        custom:header_txt="SleepTime in ms between clicks used for RandomTaps and CrazyTaps"
+        custom:settingkey_id="@string/clicksleeptime"
+        custom:setting_default="80"/>
 </LinearLayout>
