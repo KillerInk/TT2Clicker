@@ -51,12 +51,11 @@ public class Executer {
 
     public void putRunnable(ExecuterTask runnable)
     {
-        if (!runnableLinkedList.contains(runnable)) {
-            if (run != runnable)
-                runnableLinkedList.add(runnable);
-            Log.d(TAG,"putRunnable"+runnable.getClass().getSimpleName());
+        if (!runnableLinkedList.contains(runnable) && run != runnable) {
+            runnableLinkedList.add(runnable);
+            Log.d(TAG,"putRunnable "+runnable.getClass().getSimpleName());
         }
-        else Log.d(TAG, "Runnable already added");
+        else Log.d(TAG, "Runnable already added " +runnable.getClass().getSimpleName());
     }
 
     public void putFirstAndExecute(ExecuterTask executerTask)

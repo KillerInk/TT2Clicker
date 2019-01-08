@@ -120,7 +120,7 @@ public class ScreenCapture {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            while (lastframe +3 != frameCount)
+            while (lastframe +3 > frameCount)
             {
                 if (debug)
                     Log.d(TAG,"wait for next frame");
