@@ -79,6 +79,11 @@ public class Fairy extends Menu {
             e.printStackTrace();
         }
         tapOnFairyVipWindow();
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void tapOnFairyVipWindow()

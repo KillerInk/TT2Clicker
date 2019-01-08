@@ -27,27 +27,27 @@ public class Skills extends Menu {
 
 
     public void activateAllSkills() throws IOException, InterruptedException {
-        if (scUnlocked) {
+        if (scUnlocked && !Menu.MenuOpen) {
             rootShells[0].doTap(Coordinates.SC_Pos);
             Thread.sleep(20);
         }
-        if (wcUnlocked) {
+        if (wcUnlocked && !Menu.MenuOpen) {
             rootShells[0].doTap(Coordinates.WC_Pos);
             Thread.sleep(20);
         }
-        if (fsUnlocked) {
+        if (fsUnlocked && !Menu.MenuOpen) {
             rootShells[0].doTap(Coordinates.FS_Pos);
             Thread.sleep(20);
         }
-        if (homUnlocked) {
+        if (homUnlocked && !Menu.MenuOpen) {
             rootShells[0].doTap(Coordinates.HOM_Pos);
             Thread.sleep(20);
         }
-        if (dsUnlocked) {
+        if (dsUnlocked && !Menu.MenuOpen) {
             rootShells[0].doTap(Coordinates.DS_Pos);
             Thread.sleep(20);
         }
-        if (hsUnlocked) {
+        if (hsUnlocked && !Menu.MenuOpen) {
             rootShells[0].doTap(Coordinates.Hs_Pos);
             Thread.sleep(20);
         }
