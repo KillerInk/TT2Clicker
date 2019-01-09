@@ -3,13 +3,7 @@
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/autolevelheros"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/settingitem_height"
-        android:text="Auto lvl Heros"
-        custom:settingkey_ids="@string/autolvlheros"
-        custom:setting_defaults="false"/>
+
 
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/autotap"
@@ -41,6 +35,13 @@
         android:text="Auto level Swormaster"
         custom:settingkey_ids="@string/autolvlswordmaster"
         custom:setting_defaults="false"/>
+    <clickerbot.com.troop.clickerbot.views.LongEditText
+        android:id="@+id/levelswordmastertime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        custom:header_txt="Level SworMaster every XX min"
+        custom:settingkey_id="@string/levelswordmastertime"
+        custom:setting_default="3"/>
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/autoCollectEgg"
         android:layout_width="match_parent"
@@ -49,6 +50,13 @@
         custom:settingkey_ids="@string/autocollectegg"
         custom:setting_defaults="false"/>
 
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/runTests"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="Run Tests instead of botting,ONLY FOR DEVELOPING!"
+        custom:settingkey_ids="@string/runtests"
+        custom:setting_defaults="false"/>
 
 
 </LinearLayout>

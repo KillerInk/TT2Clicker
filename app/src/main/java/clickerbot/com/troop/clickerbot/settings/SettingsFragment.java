@@ -35,12 +35,13 @@ public class SettingsFragment extends Fragment {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        viewPager.setOffscreenPageLimit(4);
+        viewPager.setOffscreenPageLimit(5);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
-        adapter.addFragment(new SettingPrestigeFragment(), "Prestige");
-        adapter.addFragment(new SettingSkillFragment(), "Skills");
-        adapter.addFragment(new SettingOtherFragment(), "Other");
-        adapter.addFragment(new SettingDelayFragment(), "Delays");
+        adapter.addFragment(BaseSettingFragment.getFragment(R.layout.settings_prestige), "Prestige");
+        adapter.addFragment(BaseSettingFragment.getFragment(R.layout.settings_skills), "Skills");
+        adapter.addFragment(BaseSettingFragment.getFragment(R.layout.settings_other), "Other");
+        adapter.addFragment(BaseSettingFragment.getFragment(R.layout.settings_delays), "Delays");
+        adapter.addFragment(BaseSettingFragment.getFragment(R.layout.settings_heros), "Heros");
         viewPager.setAdapter(adapter);
     }
 

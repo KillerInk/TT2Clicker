@@ -26,4 +26,9 @@
     <string name="shellcount">shellcount</string>
     <string name="autocollectegg">autocollectegg</string>
     <string name="useflashzip">useflashzip</string>
+    <string name="runtests">runtests</string>
+    <string name="swipelength">swipelength</string>
+    <string name="levelherostime">levelherostime</string>
+    <string name="levelallherostime">levelallherostime</string>
+    <string name="levelswordmastertime">levelswordmastertime</string>
 </resources>

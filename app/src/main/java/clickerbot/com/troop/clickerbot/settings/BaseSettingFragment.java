@@ -10,12 +10,20 @@ import android.view.ViewGroup;
 
 import clickerbot.com.troop.clickerbot.R;
 
-public class SettingDelayFragment extends Fragment {
+public class BaseSettingFragment extends Fragment {
+    private int layoutID;
+
+    public static BaseSettingFragment getFragment(int layoutID)
+    {
+        BaseSettingFragment bsf = new BaseSettingFragment();
+        bsf.layoutID = layoutID;
+        return bsf;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater,container,savedInstanceState);
-        return inflater.inflate(R.layout.settings_delays, container, false);
+        return inflater.inflate(layoutID, container, false);
     }
 
     @Override

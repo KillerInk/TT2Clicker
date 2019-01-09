@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/autolevelheros"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="Auto lvl Heros"
+        custom:settingkey_ids="@string/autolvlheros"
+        custom:setting_defaults="false"/>
+
+    <clickerbot.com.troop.clickerbot.views.LongEditText
+        android:id="@+id/levelherotime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        custom:header_txt="Level Top6 Heros every XX min"
+        custom:settingkey_id="@string/levelherostime"
+        custom:setting_default="3"/>
+
+    <clickerbot.com.troop.clickerbot.views.LongEditText
+        android:id="@+id/levelALLherotime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        custom:header_txt="Level ALL Heros every XX min"
+        custom:settingkey_id="@string/levelallherostime"
+        custom:setting_default="10"/>
+</LinearLayout>
