@@ -59,8 +59,20 @@ public class Coordinates
 
 
     public static final Point crazy_touch_pos = new Point(73, 360);
+    public static final Point egg_to_collect_pos = new Point(31, 285);
 
 
+    public static final Point FLASH_ZIP_Areas[] = new Point[]
+    {
+            new Point(353,175),
+            new Point(411,265),
+            new Point(76,292),
+            new Point(371,246),
+            new Point(71,183),
+            new Point(239,157),
+            new Point(112,185),
+
+    };
 
 
     public static final Point AAW_Areas[] = new Point[]{

@@ -35,10 +35,14 @@ public class BotSettings {
     public final boolean useAAW;
     public final boolean useCO;
     public final boolean usePHOM;
+    public final boolean collectEggs;
+    public final boolean useFlashZip;
 
     public final long mainLooperSleepTime;
     public final long captureFrameSleepTime;
     public final long clickSleepTime;
+
+    public final long shellcount;
 
     public BotSettings(SharedPreferences sharedPreferences,Context context)
     {
@@ -58,14 +62,17 @@ public class BotSettings {
         useAAW = sharedPreferences.getBoolean(context.getString(R.string.useaaw),false);
         useCO = sharedPreferences.getBoolean(context.getString(R.string.useco),false);
         usePHOM = sharedPreferences.getBoolean(context.getString(R.string.usephom),false);
+        collectEggs = sharedPreferences.getBoolean(context.getString(R.string.autocollectegg),false);
+        useFlashZip = sharedPreferences.getBoolean(context.getString(R.string.useflashzip),false);
         timeToPrestige = sharedPreferences.getLong(context.getString(R.string.prestigetime),60)*60*1000;
         bossFailedCount = sharedPreferences.getLong(context.getString(R.string.prestigeafterbossfail),3);
         mainLooperSleepTime = sharedPreferences.getLong(context.getString(R.string.mainLooperSleep),500);
         captureFrameSleepTime = sharedPreferences.getLong(context.getString(R.string.captureFrameSleep),800);
         clickSleepTime = sharedPreferences.getLong(context.getString(R.string.clicksleeptime),80);
-        Log.d(TAG, "Skills used HS:" + useHS + " DS:" + useDS+" Hom:"+useHOM+" FS:" + useFS + " WC:"+useWC +" SC: "+useSC);
-        Log.d(TAG,"auto lvl heros:" + autoLvlHeros + " auto Tap:" + doAutoTap + " auto lvl skills"+ autoLvlSkills);
-        Log.d(TAG, "time to prestige ms:" + timeToPrestige + " bossfailed:" + bossFailedCount);
+        shellcount = sharedPreferences.getLong(context.getString(R.string.shellcount),10) +1;
+        Log.i(TAG, "Skills used HS:" + useHS + " DS:" + useDS+" Hom:"+useHOM+" FS:" + useFS + " WC:"+useWC +" SC: "+useSC);
+        Log.i(TAG,"auto lvl heros:" + autoLvlHeros + " auto Tap:" + doAutoTap + " auto lvl skills"+ autoLvlSkills);
+        Log.i(TAG, "time to prestige ms:" + timeToPrestige + " bossfailed:" + bossFailedCount);
 
     }
 

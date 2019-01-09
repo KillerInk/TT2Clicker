@@ -9,6 +9,6 @@ public class TapOnFairysTask extends TapOnFairyVipWindowTask {
 
     @Override
     public void doTask() {
-        fairy.tapFairys();
+        fairy.tapFairys(this);
     }
 }

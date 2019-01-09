@@ -9,6 +9,6 @@ public class CrazyTapTask extends RandomTapTask {
 
     @Override
     public void doTask() {
-        bot.doCrazyTap();
+        bot.doCrazyTap(this);
     }
 }

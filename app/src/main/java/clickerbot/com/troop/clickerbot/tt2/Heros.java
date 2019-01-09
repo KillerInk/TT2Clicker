@@ -14,7 +14,6 @@ import clickerbot.com.troop.clickerbot.tt2.tasks.LevelHerosTask;
 public class Heros extends Menu {
 
     public static final String TAG = Heros.class.getSimpleName();
-    private final boolean debug = true;
     private Boss boss;
     private final int runHeroActivator = 60000;//ms
     private long lastHerossActivated = 0;
@@ -37,8 +36,7 @@ public class Heros extends Menu {
     boolean rdToExecute() {
         if (boss.getBossState() != Boss.BossState.BossFightActive
                 && botSettings.autoLvlHeros && timeOver()) {
-                if (debug)
-                    Log.d(TAG, "level Heros");
+                Log.v(TAG, "level Heros");
                 bot.execute(levelHerosTask);
                 lastHerossActivated = System.currentTimeMillis();
                 return true;
@@ -66,13 +64,11 @@ public class Heros extends Menu {
         Thread.sleep(200);
         swipeUp(300);
         Thread.sleep(200);
-        if (debug)
-            ScreenCapture.debug = true;
         lvlUpHero(Coordinates.lvlFIrsHeroButton_click, Coordinates.lvlFIrsHeroButton_color);
         lvlUpHero(Coordinates.lvlSecondHeroButton_click, Coordinates.lvlSecondHeroButton_color);
         lvlUpHero(Coordinates.lvlThirdHeroButton_click, Coordinates.lvlThirdHeroButton_color);
 
-        while (canlevelNextHero() && !(boss.isActivebossFight() && botSettings.doAutoTap) && !levelHerosTask.cancelTask){
+        while (!(boss.isActivebossFight() && botSettings.doAutoTap) && !levelHerosTask.cancelTask && canlevelNextHero()){
             lvlUpHero(Coordinates.lvlThirdHeroButton_click, Coordinates.lvlThirdHeroButton_color);
         }
         //lvlUpHero(Coordinates.lvlThirdHeroButton_click, Coordinates.lvlThirdHeroButton_color);
@@ -80,8 +76,6 @@ public class Heros extends Menu {
         Thread.sleep(200);
         closeMenu();
         Thread.sleep(200);
-        if (debug)
-            ScreenCapture.debug = false;
 
 
     }
@@ -93,8 +87,7 @@ public class Heros extends Menu {
             Log.d(TAG,"BossFight abort lvlup");
             return;
         }
-        if (debug)
-            Log.d(TAG,"Click on Hero button");
+            Log.v(TAG,"Click on Hero button");
         rootShells[0].doTap(point);
         Thread.sleep(1);
         rootShells[0].doTap(point);
@@ -106,8 +99,7 @@ public class Heros extends Menu {
         Thread.sleep(210);
 
         int color = bot.getScreeCapture().getColorFromNextFrame(Coordinates.lvlThirdHeroButton_click);
-        if (debug)
-            Log.d(TAG,"canlevelNextHero(): " + (Color.red(color) > hero_button_red_min) +" " +ColorUtils.getColorString(color));
+        Log.v(TAG,"canlevelNextHero(): " + (Color.red(color) > hero_button_red_min) +" " +ColorUtils.getColorString(color));
         if (Color.red(color) > hero_button_red_min)
             return true;
         else

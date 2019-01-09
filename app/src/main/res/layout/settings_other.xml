@@ -41,29 +41,14 @@
         android:text="Auto level Swormaster"
         custom:settingkey_ids="@string/autolvlswordmaster"
         custom:setting_defaults="false"/>
-
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/useAAW"
+        android:id="@+id/autoCollectEgg"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
-        android:text="use AstralAwakening"
-        custom:settingkey_ids="@string/useaaw"
+        android:text="Auto collect Eggs"
+        custom:settingkey_ids="@string/autocollectegg"
         custom:setting_defaults="false"/>
 
-    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/useCO"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/settingitem_height"
-        android:text="use Coordinated Offensive"
-        custom:settingkey_ids="@string/useco"
-        custom:setting_defaults="false"/>
 
-    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/usephom"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/settingitem_height"
-        android:text="use Heart of Midas (PHOM)"
-        custom:settingkey_ids="@string/usephom"
-        custom:setting_defaults="false"/>
 
 </LinearLayout>

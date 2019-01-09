@@ -11,8 +11,6 @@ import clickerbot.com.troop.clickerbot.tt2.BotSettings;
 
 public class ScreenCapture {
 
-    public static boolean debug = false;
-
     public interface ScreenCaptureCallBack{
 
         void onScreenCapture();
@@ -86,8 +84,7 @@ public class ScreenCapture {
             screenDumpBmp = BitmapFactory.decodeStream(rootShell.getInputStream());
             bitmapLock.notifyAll();
         }
-        if (debug)
-            Log.d(TAG,"ScreenDumped");
+        Log.v(TAG,"ScreenDumped");
     }
 
     public Bitmap getScreenDumpBmp()
@@ -99,10 +96,11 @@ public class ScreenCapture {
     {
         int color =0;
         synchronized (bitmapLock) {
-            if (debug)
-                Log.d(TAG, "getColor");
+
             if (screenDumpBmp != null)
                 color = screenDumpBmp.getPixel(point.x, point.y);
+
+            Log.v(TAG, "getColor:" + ColorUtils.getColorString(color));
         }
         return color;
     }
@@ -113,17 +111,22 @@ public class ScreenCapture {
         int color = 0;
         synchronized (bitmapLock) {
             lastframe = frameCount;
-            if (debug)
-                Log.d(TAG, "WaitForFrame");
+            Log.v(TAG, "WaitForFrame");
             try {
                 bitmapLock.wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            while (lastframe +3 > frameCount)
+            while (lastframe +2 > frameCount)
             {
-                if (debug)
-                    Log.d(TAG,"wait for next frame");
+
+
+
+                if (screenDumpBmp != null)
+                    color = screenDumpBmp.getPixel(point.x, point.y);
+                Log.v(TAG,"getColorFromCurrentFrame() " + lastframe+2 +"/"+ frameCount +" " + ColorUtils.getColorString(color));
+                Log.v(TAG, "wait for next frame");
+
                 try {
                     bitmapLock.wait();
                 } catch (InterruptedException e) {
@@ -133,8 +136,7 @@ public class ScreenCapture {
 
             if (screenDumpBmp != null)
                 color = screenDumpBmp.getPixel(point.x, point.y);
-            if (debug)
-                Log.d(TAG,"getColorFromNextFrame() " + ColorUtils.getColorString(color));
+            Log.v(TAG,"getColorFromNextFrame() "+ lastframe+2 +"/"+ + frameCount +" " + ColorUtils.getColorString(color));
         }
         return color;
     }

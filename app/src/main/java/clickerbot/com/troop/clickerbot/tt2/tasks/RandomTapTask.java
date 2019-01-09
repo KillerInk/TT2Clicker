@@ -13,6 +13,6 @@ public class RandomTapTask extends ExecuterTask {
 
     @Override
     public void doTask() {
-        bot.doTap();
+        bot.doTap(this);
     }
 }

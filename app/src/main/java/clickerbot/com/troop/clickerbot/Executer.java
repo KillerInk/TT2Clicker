@@ -28,10 +28,12 @@ public class Executer {
             while (doWork)
             {
                      run = runnableLinkedList.pollFirst();
-                     if (run != null)
-                        run.run();
+                     if (run != null) {
+                         Log.i(TAG, "run:  " + run.getClass().getSimpleName());
+                         run.run();
+                     }
                 try {
-                    Thread.sleep(1);
+                    Thread.sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -53,9 +55,9 @@ public class Executer {
     {
         if (!runnableLinkedList.contains(runnable) && run != runnable) {
             runnableLinkedList.add(runnable);
-            Log.d(TAG,"putRunnable "+runnable.getClass().getSimpleName());
+            Log.v(TAG,"putRunnable "+runnable.getClass().getSimpleName());
         }
-        else Log.d(TAG, "Runnable already added " +runnable.getClass().getSimpleName());
+        else Log.v(TAG, "Runnable already added " +runnable.getClass().getSimpleName());
     }
 
     public void putFirstAndExecute(ExecuterTask executerTask)

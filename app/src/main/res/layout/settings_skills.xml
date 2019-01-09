@@ -53,4 +53,36 @@
         android:text="UseSC"
         custom:settingkey_ids="@string/useSC"
         custom:setting_defaults="false"/>
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/useAAW"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="use AstralAwakening"
+        custom:settingkey_ids="@string/useaaw"
+        custom:setting_defaults="false"/>
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/useCO"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="use Coordinated Offensive"
+        custom:settingkey_ids="@string/useco"
+        custom:setting_defaults="false"/>
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/usephom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="use Heart of Midas (PHOM)"
+        custom:settingkey_ids="@string/usephom"
+        custom:setting_defaults="false"/>
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/useFLashZip"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:text="use FLash Zip"
+        custom:settingkey_ids="@string/useflashzip"
+        custom:setting_defaults="false"/>
 </LinearLayout>

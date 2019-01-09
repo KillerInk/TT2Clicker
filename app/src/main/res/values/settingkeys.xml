@@ -23,4 +23,7 @@
     <string name="useco">useco</string>
     <string name="useaaw">useaaw</string>
     <string name="usephom">usephom</string>
+    <string name="shellcount">shellcount</string>
+    <string name="autocollectegg">autocollectegg</string>
+    <string name="useflashzip">useflashzip</string>
 </resources>

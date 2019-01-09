@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 import clickerbot.com.troop.clickerbot.ColorUtils;
+import clickerbot.com.troop.clickerbot.ExecuterTask;
 import clickerbot.com.troop.clickerbot.RootShell;
 import clickerbot.com.troop.clickerbot.tt2.tasks.TapOnFairyVipWindowTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.TapOnFairysTask;
@@ -15,6 +16,7 @@ import clickerbot.com.troop.clickerbot.tt2.tasks.TapOnFairysTask;
 public class Fairy extends Menu {
 
     private final String TAG = Fairy.class.getSimpleName();
+    private final boolean debug = false;
 
     private Random rand;
     private List<Point> fairyTaps;
@@ -69,21 +71,10 @@ public class Fairy extends Menu {
             bot.execute(tapOnFairysTask);
     }
 
-    public void tapFairys()
+    public void tapFairys(ExecuterTask task)
     {
         if (botSettings.clickOnFairys)
-            bot.tapOnPoints(fairyTaps);
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        tapOnFairyVipWindow();
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            bot.tapOnPoints(fairyTaps,task);
     }
 
     public void tapOnFairyVipWindow()
@@ -94,14 +85,21 @@ public class Fairy extends Menu {
             else
                 doSingelTap(Coordinates.decline_Pos);
         }
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (Menu.MenuOpen)
+            closeMenu();
     }
 
     public void checkIfFairyWindowOpen()
     {
         int color = bot.getScreeCapture().getColor(fairyColorDecline);//-294644
-        Log.d(TAG,"checkIfFairyWindowOpen color decline " + ColorUtils.getColorString(color));
+        Log.v(TAG,"checkIfFairyWindowOpen color decline " + ColorUtils.getColorString(color));
         int color2 = bot.getScreeCapture().getColor(fairyColorAccept); // -13981229
-        Log.d(TAG,"checkIfFairyWindowOpen color accept " + ColorUtils.getColorString(color2));
+        Log.v(TAG,"checkIfFairyWindowOpen color accept " + ColorUtils.getColorString(color2));
         Log.d(TAG, "fairy window open: "  + (ColorUtils.redEquals(color,251) && ColorUtils.blueIsInRange(color2,194,262)));
         if (ColorUtils.redEquals(color,251) && ColorUtils.blueIsInRange(color2,194,262))
         {

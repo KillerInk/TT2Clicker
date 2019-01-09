@@ -23,7 +23,7 @@ public class RootShell
     public RootShell(int id)
     {
         this.id =id;
-        Log.d(TAG,"created ID:" + id);
+        Log.i(TAG,"created ID:" + id);
     }
 
     public InputStream getInputStream()

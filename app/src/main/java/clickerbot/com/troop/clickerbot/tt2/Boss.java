@@ -13,7 +13,6 @@ import clickerbot.com.troop.clickerbot.RootShell;
 //boss icons boss fight failed -1085168 239 113 16
 
 public class Boss extends Menu {
-    private final boolean debug = false;
     private final String TAG = Boss.class.getSimpleName();
     private int bossFailedCounter = 0;
 
@@ -77,8 +76,7 @@ public class Boss extends Menu {
         else if (color != bossFightActiveColor && color != bossFightFailedColor && color != 0){
             setBossState(BossState.NoneFight);
         }
-        if (debug)
-            Log.d(TAG,"isActiveBossFight: "+ bossState.toString() + " " + ColorUtils.getColorString(color));
+        Log.v(TAG,"isActiveBossFight: "+ bossState.toString() + " " + ColorUtils.getColorString(color));
 
     }
 
@@ -94,12 +92,11 @@ public class Boss extends Menu {
         if (Color.red(color) > 230)
         {
             bossFailedCounter++;
-            if (debug)
-                Log.d(TAG,"bossfailed:" +bossFailedCounter);
+            Log.d(TAG,"bossfailed:" +bossFailedCounter);
             clickOnBossFight();
             Thread.sleep(20);
         }
-        else if (debug)
+        else
             Log.d(TAG, "not stucked on boss");
     }
 

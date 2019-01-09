@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import clickerbot.com.troop.clickerbot.ExecuterTask;
 import clickerbot.com.troop.clickerbot.OCR;
 import clickerbot.com.troop.clickerbot.RootShell;
 import clickerbot.com.troop.clickerbot.tt2.tasks.CrazyTapTask;
@@ -22,9 +23,8 @@ import clickerbot.com.troop.clickerbot.tt2.tasks.RandomTapTask;
 public class TT2Bot extends AbstractBot
 {
     private static final String TAG = TT2Bot.class.getSimpleName();
-    private final static int ROOTSHELLS_CLICKERCOUNT = 4;
 
-    private RootShell rootShellClick[] = new RootShell[ROOTSHELLS_CLICKERCOUNT];
+    private RootShell rootShells[];
 
     private Skills skills;
     private Heros heros;
@@ -59,17 +59,18 @@ public class TT2Bot extends AbstractBot
     public TT2Bot(Context context,BotSettings botSettings)
     {
         super(botSettings);
-        for (int i = 0; i < ROOTSHELLS_CLICKERCOUNT; i++)
+        rootShells = new RootShell[(int)botSettings.shellcount];
+        for (int i = 0; i < rootShells.length; i++)
         {
-            rootShellClick[i] = new RootShell(i);
+            rootShells[i] = new RootShell(i);
         }
-        boss = new Boss(this,botSettings,rootShellClick);
-        skills = new Skills(this,botSettings,rootShellClick);
-        heros = new Heros(this,botSettings,rootShellClick,boss);
+        boss = new Boss(this,botSettings, rootShells);
+        skills = new Skills(this,botSettings, rootShells);
+        heros = new Heros(this,botSettings, rootShells,boss);
 
-        prestige = new Prestige(this,botSettings,rootShellClick,boss);
+        prestige = new Prestige(this,botSettings, rootShells,boss);
         ocr = new OCR(context,"eng");
-        fairy = new Fairy(this,botSettings,rootShellClick);
+        fairy = new Fairy(this,botSettings, rootShells);
 
         lvlswordMasterTask = new LevelSwordMasterTask(skills);
         randomTapTask = new RandomTapTask(this);
@@ -84,9 +85,9 @@ public class TT2Bot extends AbstractBot
         Log.d(TAG,"destroy");
         ocr.destroy();
         getScreeCapture().destroy();
-        for (int i = 0; i < ROOTSHELLS_CLICKERCOUNT; i++)
+        for (int i = 0; i < rootShells.length; i++)
         {
-            rootShellClick[i].Close();
+            rootShells[i].Close();
         }
     }
 
@@ -104,8 +105,8 @@ public class TT2Bot extends AbstractBot
     {
         Log.d(TAG,"start");
         createRandomTaps();
-        for (int i=0; i < rootShellClick.length; i++)
-            rootShellClick[i].startProcess();
+        for (int i = 0; i < rootShells.length; i++)
+            rootShells[i].startProcess();
         super.start();
     }
 
@@ -113,8 +114,8 @@ public class TT2Bot extends AbstractBot
     {
         Log.d(TAG,"stop");
         super.stop();
-        for (int i=0; i < rootShellClick.length; i++)
-            rootShellClick[i].stopProcess();
+        for (int i = 0; i < rootShells.length; i++)
+            rootShells[i].stopProcess();
     }
 
     @Override
@@ -129,7 +130,7 @@ public class TT2Bot extends AbstractBot
                     long now = System.currentTimeMillis();
                     long dif =  prestige.getTimeSinceLastPrestige() - now -(8*60*60*1000);
                     String out = "Prestige:" + dateFormat.format(new Date(dif))+"\n";
-                    Log.d(TAG, out);
+                    //Log.d(TAG, out);
                     out += "BossFailed:" + boss.getBossFailedCounter();
                     UpdatePrestigeTime(out);
                     lastUiUpdate = System.currentTimeMillis();
@@ -163,6 +164,7 @@ public class TT2Bot extends AbstractBot
     }
 
     private void createRandomTaps() {
+        Log.i(TAG, "createRandomTaps()");
         randomTaps = new ArrayList<>();
         if (botSettings.useAAW)
             randomTaps.addAll(Arrays.asList(Coordinates.AAW_Areas));
@@ -170,6 +172,10 @@ public class TT2Bot extends AbstractBot
             randomTaps.add(Coordinates.Phom_Pos);
         if (botSettings.useCO)
             randomTaps.add(Coordinates.CO_Pos);
+        if (botSettings.collectEggs)
+            randomTaps.add(Coordinates.egg_to_collect_pos);
+        if (botSettings.useFlashZip)
+            randomTaps.addAll(Arrays.asList(Coordinates.FLASH_ZIP_Areas));
 
     }
 
@@ -186,7 +192,7 @@ public class TT2Bot extends AbstractBot
                 crazyTouchPoints.add(new Point(getRandomX(),getRandomY()));
             }
         }
-        Log.d(TAG,"init");
+        Log.i(TAG,"init");
         skills.init();
     }
 
@@ -199,28 +205,30 @@ public class TT2Bot extends AbstractBot
         return rand.nextInt(20) + 20 + Coordinates.crazy_touch_pos.y;
     }
 
-    public void doTap()
+    public void doTap(ExecuterTask task)
     {
-        Log.d(TAG,"doRandomTap");
-        tapOnPoints(randomTaps);
+        //Log.d(TAG,"doRandomTap");
+        tapOnPoints(randomTaps,task);
     }
 
-    public void doCrazyTap()
+    public void doCrazyTap(ExecuterTask task)
     {
-        Log.d(TAG,"doCrazyTap");
-        tapOnPoints(crazyTouchPoints);
+        //Log.d(TAG,"doCrazyTap");
+        tapOnPoints(crazyTouchPoints,task);
     }
 
-    public void tapOnPoints(List<Point> points)
+    public void tapOnPoints(List<Point> points, ExecuterTask task)
     {
-        for (int i=0; i < points.size(); i+=rootShellClick.length)
+        for (int i=0; i < points.size(); i+= rootShells.length-1)
         {
-            for(int s = 0; s<rootShellClick.length;s++)
+            for(int s = 1; s< rootShells.length; s++)
             {
-                int pos = i+s;
+                if (task.cancelTask)
+                    return;
+                int pos = i+s-1;
                 if (pos < points.size()) {
                     try {
-                        rootShellClick[s].doTap(points.get(pos));
+                        rootShells[s].doTap(points.get(pos));
                         try {
                             Thread.sleep(botSettings.clickSleepTime);
                         } catch (InterruptedException e) {
@@ -232,6 +240,8 @@ public class TT2Bot extends AbstractBot
                         //e.printStackTrace();
                     }
                 }
+                else
+                    break;
             }
         }
     }
@@ -240,6 +250,6 @@ public class TT2Bot extends AbstractBot
     public void onScreenCapture() {
         //UpdateImage(getScreeCapture().getScreenDumpBmp());
         boss.checkIfActiveBossFight();
-        //fairy.checkIfFairyWindowOpen();
+        fairy.checkIfFairyWindowOpen();
     }
 }
