@@ -5,6 +5,7 @@ import android.util.Log;
 import java.io.IOException;
 
 import clickerbot.com.troop.clickerbot.RootShell;
+import clickerbot.com.troop.clickerbot.tt2.tasks.InitTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.PrestigeTask;
 
 import static clickerbot.com.troop.clickerbot.tt2.TT2Bot.convertMinToMs;
@@ -18,12 +19,10 @@ public class Prestige extends Menu {
     //private int prestigeTime = 60;
     private long timeSinceLastPrestige = 0;
     private Boss boss;
-    private PrestigeTask prestigeTask;
 
     public Prestige(TT2Bot ibot, BotSettings botSettings, RootShell[] rootShell, Boss boss) {
         super(ibot, botSettings, rootShell);
         this.boss = boss;
-        prestigeTask = new PrestigeTask(this);
     }
 
     @Override
@@ -46,7 +45,7 @@ public class Prestige extends Menu {
                         || boss.getBossFailedCounter() >= botSettings.bossFailedCount) {
                     Log.d(TAG, "reason to prestige: bossfailed:" + boss.getBossFailedCounter() + " time toprestige:" + (System.currentTimeMillis() - timeSinceLastPrestige > botSettings.timeToPrestige));
                     bot.clearExecuterQueue();
-                    bot.execute(prestigeTask);
+                    bot.executeTask(PrestigeTask.class);
                     bot.resetTickCounter();
                 }
             } catch (IOException e) {
@@ -82,7 +81,7 @@ public class Prestige extends Menu {
             Thread.sleep(300);
             rootShells[0].doTap(Coordinates.prestigeAcceptButton);
             Thread.sleep(5000);
-            bot.execute(((TT2Bot)bot).getInitTask());
+            bot.executeTask(InitTask.class);
         }
     }
 }

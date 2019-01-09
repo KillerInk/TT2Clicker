@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import clickerbot.com.troop.clickerbot.R;
-
 public class BaseSettingFragment extends Fragment {
     private int layoutID;
 

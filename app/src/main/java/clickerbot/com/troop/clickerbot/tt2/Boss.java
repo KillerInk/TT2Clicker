@@ -18,18 +18,29 @@ public class Boss extends Menu {
 
     private BossState bossState = BossState.NoneFight;
 
+    private final int bossFightClickCheck = 10000;
+    private int bossFightClickCheckLast=0;
+
     public Boss(TT2Bot ibot, BotSettings botSettings, RootShell[] rootShell) {
         super(ibot, botSettings, rootShell);
     }
 
     @Override
     void init() {
-
+        bossFightClickCheckLast = 0;
     }
 
     @Override
     boolean rdToExecute() {
+        /*if (System.currentTimeMillis() - bossFightClickCheckLast > bossFightClickCheck)
+        {
+            if (bossState == BossState.BossFightFailed)
+            {
+                if (botSettings.autoLvlSwordMaster)
+                    bot.execute(sw);
+            }
 
+        }*/
         return false;
     }
 

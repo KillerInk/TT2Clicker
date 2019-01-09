@@ -5,11 +5,11 @@ import java.io.IOException;
 import clickerbot.com.troop.clickerbot.ExecuterTask;
 import clickerbot.com.troop.clickerbot.tt2.Heros;
 
-public class LevelHerosTask extends ExecuterTask {
+public class LevelTop6HerosTask extends ExecuterTask {
 
-    private final Heros heros;
+    protected final Heros heros;
 
-    public LevelHerosTask(Heros heros)
+    public LevelTop6HerosTask(Heros heros)
     {
         this.heros = heros;
     }
@@ -17,7 +17,7 @@ public class LevelHerosTask extends ExecuterTask {
     @Override
     public void doTask() {
         try {
-            heros.levelHeros();
+            heros.levelTop6Heros();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (IOException e) {

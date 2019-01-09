@@ -119,9 +119,6 @@ public class ScreenCapture {
             }
             while (lastframe +2 > frameCount)
             {
-
-
-
                 if (screenDumpBmp != null)
                     color = screenDumpBmp.getPixel(point.x, point.y);
                 Log.v(TAG,"getColorFromCurrentFrame() " + lastframe+2 +"/"+ frameCount +" " + ColorUtils.getColorString(color));

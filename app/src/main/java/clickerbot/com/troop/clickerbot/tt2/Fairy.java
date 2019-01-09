@@ -20,8 +20,6 @@ public class Fairy extends Menu {
 
     private Random rand;
     private List<Point> fairyTaps;
-    private TapOnFairyVipWindowTask tapOnFairyVipWindowTask;
-    private TapOnFairysTask tapOnFairysTask;
 
     private final int minYFairyPos = 110;
     private final int maxYFairyPos = 181;
@@ -41,8 +39,6 @@ public class Fairy extends Menu {
                 fairyTaps.add(new Point(400, getRandomFairyY()));
             }
         }
-        tapOnFairyVipWindowTask = new TapOnFairyVipWindowTask(this);
-        tapOnFairysTask = new TapOnFairysTask(this);
     }
 
     @Override
@@ -68,7 +64,7 @@ public class Fairy extends Menu {
     public void executeTapFairys()
     {
         if (botSettings.clickOnFairys)
-            bot.execute(tapOnFairysTask);
+            bot.executeTask(TapOnFairysTask.class);
     }
 
     public void tapFairys(ExecuterTask task)
@@ -104,7 +100,7 @@ public class Fairy extends Menu {
         if (ColorUtils.redEquals(color,251) && ColorUtils.blueIsInRange(color2,194,262))
         {
             Log.d(TAG,"Tap on Fairy Ads Window");
-            bot.putFirstAndExecute(tapOnFairyVipWindowTask);
+            bot.putFirstAndExecuteTask(TapOnFairyVipWindowTask.class);
         }
     }
 

@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -17,12 +18,16 @@ import clickerbot.com.troop.clickerbot.OCR;
 import clickerbot.com.troop.clickerbot.RootShell;
 import clickerbot.com.troop.clickerbot.tt2.tasks.CrazyTapTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.InitTask;
+import clickerbot.com.troop.clickerbot.tt2.tasks.LevelAllHerosTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.LevelSwordMasterTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.RandomTapTask;
+import clickerbot.com.troop.clickerbot.tt2.tasks.TaskFactory;
 
 public class TT2Bot extends AbstractBot
 {
     private static final String TAG = TT2Bot.class.getSimpleName();
+
+    private HashMap<Class, ExecuterTask> executerTaskHashMap;
 
     private RootShell rootShells[];
 
@@ -32,11 +37,6 @@ public class TT2Bot extends AbstractBot
     private Prestige prestige;
     private Fairy fairy;
     private OCR ocr;
-
-    private LevelSwordMasterTask lvlswordMasterTask;
-    private RandomTapTask randomTapTask;
-    private CrazyTapTask crazyTapTask;
-    private InitTask initTask;
 
     private final int runRandomTapActivator = 1000;//ms
     private long lastRandomTapActivated = 0;
@@ -72,12 +72,18 @@ public class TT2Bot extends AbstractBot
         ocr = new OCR(context,"eng");
         fairy = new Fairy(this,botSettings, rootShells);
 
-        lvlswordMasterTask = new LevelSwordMasterTask(skills);
-        randomTapTask = new RandomTapTask(this);
-        crazyTapTask = new CrazyTapTask(this);
-        initTask = new InitTask(this);
+        executerTaskHashMap = new TaskFactory().getTasksmap(this,heros,skills,prestige,fairy);
 
         Log.d(TAG,"TT2Bot()");
+    }
+
+    public void executeTask(Class task)
+    {
+        execute(executerTaskHashMap.get(task));
+    }
+
+    public void putFirstAndExecuteTask(Class task) {
+        putFirstAndExecute(executerTaskHashMap.get(task));
     }
 
     public void destroy()
@@ -91,10 +97,6 @@ public class TT2Bot extends AbstractBot
         }
     }
 
-    public InitTask getInitTask()
-    {
-        return initTask;
-    }
 
     @Override
     public OCR getOcr() {
@@ -105,6 +107,7 @@ public class TT2Bot extends AbstractBot
     {
         Log.d(TAG,"start");
         createRandomTaps();
+        lastTestExecuted = 0;
         for (int i = 0; i < rootShells.length; i++)
             rootShells[i].startProcess();
         super.start();
@@ -121,7 +124,11 @@ public class TT2Bot extends AbstractBot
     @Override
     void onTick(long tickCounter) {
         if (tickCounter == 1) {
-            execute(initTask);
+           executeTask(InitTask.class);
+        }
+        else if (botSettings.runTests)
+        {
+            executeTests();
         }
         else {
             if(!prestige.rdToExecute())
@@ -139,24 +146,31 @@ public class TT2Bot extends AbstractBot
                 skills.rdToExecute();
                 heros.rdToExecute();
                 if (System.currentTimeMillis() - lastRandomTapActivated > runRandomTapActivator){
-
-                    execute(randomTapTask);
+                    executeTask(RandomTapTask.class);
                     fairy.executeTapFairys();
                     lastRandomTapActivated = System.currentTimeMillis();
                 }
                 else if (botSettings.doAutoTap)
                 {
-                    execute(crazyTapTask);
+                    executeTask(CrazyTapTask.class);
                 }
             }
         }
     }
 
+    private long lastTestExecuted;
+    private void executeTests() {
+        if (System.currentTimeMillis() - lastTestExecuted > 20000) {
+            execute(new LevelAllHerosTask(heros));
+            lastTestExecuted = System.currentTimeMillis();
+        }
+    }
+
     private boolean swordMasterRdyToExecute()
     {
-        if (botSettings.autoLvlSwordMaster && System.currentTimeMillis() - lastSwordMasterLeveled > 60000)
+        if (botSettings.autoLvlSwordMaster && System.currentTimeMillis() - lastSwordMasterLeveled > botSettings.levelSwordMasterTime)
         {
-            execute(lvlswordMasterTask);
+            executeTask(LevelSwordMasterTask.class);
             lastSwordMasterLeveled = System.currentTimeMillis();
             return true;
         }

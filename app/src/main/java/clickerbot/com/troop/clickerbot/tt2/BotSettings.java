@@ -38,11 +38,20 @@ public class BotSettings {
     public final boolean collectEggs;
     public final boolean useFlashZip;
 
+
+    public final boolean runTests;
+
     public final long mainLooperSleepTime;
     public final long captureFrameSleepTime;
     public final long clickSleepTime;
 
+    public final  long levelTop6HeroTime;
+    public final  long levelAllHeroTime;
+    public final  long levelSwordMasterTime;
+
     public final long shellcount;
+
+    public final long swipeLength;
 
     public BotSettings(SharedPreferences sharedPreferences,Context context)
     {
@@ -64,12 +73,17 @@ public class BotSettings {
         usePHOM = sharedPreferences.getBoolean(context.getString(R.string.usephom),false);
         collectEggs = sharedPreferences.getBoolean(context.getString(R.string.autocollectegg),false);
         useFlashZip = sharedPreferences.getBoolean(context.getString(R.string.useflashzip),false);
+        runTests = sharedPreferences.getBoolean(context.getString(R.string.runtests),false);
         timeToPrestige = sharedPreferences.getLong(context.getString(R.string.prestigetime),60)*60*1000;
         bossFailedCount = sharedPreferences.getLong(context.getString(R.string.prestigeafterbossfail),3);
         mainLooperSleepTime = sharedPreferences.getLong(context.getString(R.string.mainLooperSleep),500);
         captureFrameSleepTime = sharedPreferences.getLong(context.getString(R.string.captureFrameSleep),800);
         clickSleepTime = sharedPreferences.getLong(context.getString(R.string.clicksleeptime),80);
         shellcount = sharedPreferences.getLong(context.getString(R.string.shellcount),10) +1;
+        swipeLength = sharedPreferences.getLong(context.getString(R.string.swipelength),100);
+        levelTop6HeroTime = sharedPreferences.getLong(context.getString(R.string.levelherostime),3)*60*1000;
+        levelAllHeroTime = sharedPreferences.getLong(context.getString(R.string.levelallherostime),9)*60*1000;
+        levelSwordMasterTime = sharedPreferences.getLong(context.getString(R.string.levelswordmastertime),3)*60*1000;
         Log.i(TAG, "Skills used HS:" + useHS + " DS:" + useDS+" Hom:"+useHOM+" FS:" + useFS + " WC:"+useWC +" SC: "+useSC);
         Log.i(TAG,"auto lvl heros:" + autoLvlHeros + " auto Tap:" + doAutoTap + " auto lvl skills"+ autoLvlSkills);
         Log.i(TAG, "time to prestige ms:" + timeToPrestige + " bossfailed:" + bossFailedCount);

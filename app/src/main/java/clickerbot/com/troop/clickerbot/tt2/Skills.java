@@ -29,27 +29,27 @@ public class Skills extends Menu {
     public void activateAllSkills() throws IOException, InterruptedException {
         if (scUnlocked && !Menu.MenuOpen) {
             rootShells[0].doTap(Coordinates.SC_Pos);
-            Thread.sleep(20);
+            Thread.sleep(100);
         }
         if (wcUnlocked && !Menu.MenuOpen) {
             rootShells[0].doTap(Coordinates.WC_Pos);
-            Thread.sleep(20);
+            Thread.sleep(100);
         }
         if (fsUnlocked && !Menu.MenuOpen) {
             rootShells[0].doTap(Coordinates.FS_Pos);
-            Thread.sleep(20);
+            Thread.sleep(100);
         }
         if (homUnlocked && !Menu.MenuOpen) {
             rootShells[0].doTap(Coordinates.HOM_Pos);
-            Thread.sleep(20);
+            Thread.sleep(100);
         }
         if (dsUnlocked && !Menu.MenuOpen) {
             rootShells[0].doTap(Coordinates.DS_Pos);
-            Thread.sleep(20);
+            Thread.sleep(100);
         }
         if (hsUnlocked && !Menu.MenuOpen) {
             rootShells[0].doTap(Coordinates.Hs_Pos);
-            Thread.sleep(20);
+            Thread.sleep(100);
         }
 
     }
@@ -84,7 +84,7 @@ public class Skills extends Menu {
                     e.printStackTrace();
                 }
                 minimiseMenu();
-                closeMenu();
+                closeSwordMasterMenu();
             }
         }
     }
@@ -140,7 +140,7 @@ public class Skills extends Menu {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        closeMenu();
+        closeSwordMasterMenu();
     }
 
     private void levelUpSkills()
