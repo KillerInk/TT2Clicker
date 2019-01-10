@@ -71,6 +71,11 @@ public class Coordinates
             new Point(71,183),
             new Point(239,157),
             new Point(112,185),
+            new Point(402,278),
+            new Point(367,176),
+            new Point(400,343),
+            new Point(399,362),
+            new Point(69,338),
 
     };
 
