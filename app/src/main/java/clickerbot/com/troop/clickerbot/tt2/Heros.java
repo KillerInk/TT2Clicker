@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import clickerbot.com.troop.clickerbot.ColorUtils;
 import clickerbot.com.troop.clickerbot.RootShell;
+import clickerbot.com.troop.clickerbot.tt2.tasks.ClickOnBossFightTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.LevelAllHerosTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.LevelTop6HerosTask;
 
@@ -87,6 +88,8 @@ public class Heros extends Menu {
         closeHeroMenu();
         Thread.sleep(200);
 
+        if (boss.getBossState() == Boss.BossState.BossFightFailed)
+            bot.executeTask(ClickOnBossFightTask.class);
 
     }
 
@@ -140,7 +143,8 @@ public class Heros extends Menu {
         }
         closeHeroMenu();
 
-
+        if (boss.getBossState() == Boss.BossState.BossFightFailed)
+            bot.executeTask(ClickOnBossFightTask.class);
     }
 
     private void tapOnHero(int times,Point point) throws IOException, InterruptedException {

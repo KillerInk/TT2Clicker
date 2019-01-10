@@ -7,6 +7,7 @@ import android.util.Log;
 import java.io.IOException;
 
 import clickerbot.com.troop.clickerbot.RootShell;
+import clickerbot.com.troop.clickerbot.tt2.tasks.MenuCloseTask;
 
 public abstract class Menu extends Item
 {
@@ -22,6 +23,18 @@ public abstract class Menu extends Item
         super(ibot, botSettings, rootShell);
     }
 
+    private int colorMenuOpen = Color.argb(255,84,76,76);
+    private Point menuOpenCheckPoint = new Point(471,449);
+
+    public void checkIfMenuOpen()
+    {
+        if (!MenuOpen) {
+            int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
+            if (color == colorMenuOpen) {
+                bot.putFirstAndExecuteTask(MenuCloseTask.class);
+            }
+        }
+    }
 
     public void closeMenu()
     {

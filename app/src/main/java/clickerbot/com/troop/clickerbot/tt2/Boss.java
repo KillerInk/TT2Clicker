@@ -121,7 +121,12 @@ public class Boss extends Menu {
         bossFailedCounter = 0;
     }
 
-    private void clickOnBossFight() throws IOException {
+    public void clickOnBossFight() throws IOException {
         rootShells[0].doTap(Coordinates.fightBossButton);
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

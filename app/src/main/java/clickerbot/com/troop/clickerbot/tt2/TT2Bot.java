@@ -72,7 +72,7 @@ public class TT2Bot extends AbstractBot
         ocr = new OCR(context,"eng");
         fairy = new Fairy(this,botSettings, rootShells);
 
-        executerTaskHashMap = new TaskFactory().getTasksmap(this,heros,skills,prestige,fairy);
+        executerTaskHashMap = new TaskFactory().getTasksmap(this,heros,skills,prestige,fairy,boss);
 
         Log.d(TAG,"TT2Bot()");
     }
@@ -265,5 +265,6 @@ public class TT2Bot extends AbstractBot
         //UpdateImage(getScreeCapture().getScreenDumpBmp());
         boss.checkIfActiveBossFight();
         fairy.checkIfFairyWindowOpen();
+        heros.checkIfMenuOpen();
     }
 }
