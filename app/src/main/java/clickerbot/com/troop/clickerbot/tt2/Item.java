@@ -21,7 +21,7 @@ public abstract class Item {
     }
 
     abstract void init();
-    abstract boolean rdToExecute();
+    abstract boolean checkIfRdyToExecute();
 
     public void doSingelTap(Point point)
     {

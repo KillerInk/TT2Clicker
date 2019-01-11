@@ -35,23 +35,16 @@ public class Prestige extends Menu {
     }
 
     @Override
-    boolean rdToExecute() {
-        if(boss.getBossState() != Boss.BossState.BossFightActive && System.currentTimeMillis() - lastPrestigeCheck > runPrestigeCheckActivator) {
+    boolean checkIfRdyToExecute() {
+        if(System.currentTimeMillis() - lastPrestigeCheck > runPrestigeCheckActivator) {
             Log.d(TAG, "check if boss failed or time to prestige");
 
-            try {
-                boss.checkIfLockedOnBoss();
-                if (System.currentTimeMillis() - timeSinceLastPrestige > botSettings.timeToPrestige + timeSinceLastPrestige
-                        || boss.getBossFailedCounter() >= botSettings.bossFailedCount) {
-                    Log.d(TAG, "reason to prestige: bossfailed:" + boss.getBossFailedCounter() + " time toprestige:" + (System.currentTimeMillis() - timeSinceLastPrestige > botSettings.timeToPrestige));
-                    bot.clearExecuterQueue();
-                    bot.executeTask(PrestigeTask.class);
-                    bot.resetTickCounter();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if (System.currentTimeMillis() - timeSinceLastPrestige > botSettings.timeToPrestige + timeSinceLastPrestige
+                    || boss.getBossFailedCounter() >= botSettings.bossFailedCount) {
+                Log.d(TAG, "reason to prestige: bossfailed:" + boss.getBossFailedCounter() + " time toprestige:" + (System.currentTimeMillis() - timeSinceLastPrestige > botSettings.timeToPrestige));
+                bot.clearExecuterQueue();
+                bot.executeTask(PrestigeTask.class);
+
             }
             lastPrestigeCheck = System.currentTimeMillis();
             return true;
@@ -81,7 +74,9 @@ public class Prestige extends Menu {
             Thread.sleep(300);
             rootShells[0].doTap(Coordinates.prestigeAcceptButton);
             Thread.sleep(5000);
+            bot.resetTickCounter();
             bot.executeTask(InitTask.class);
+            lastPrestigeCheck = System.currentTimeMillis();
         }
     }
 }

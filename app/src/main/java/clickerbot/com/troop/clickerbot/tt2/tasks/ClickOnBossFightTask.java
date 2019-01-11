@@ -19,6 +19,8 @@ public class ClickOnBossFightTask extends ExecuterTask {
             boss.clickOnBossFight();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }

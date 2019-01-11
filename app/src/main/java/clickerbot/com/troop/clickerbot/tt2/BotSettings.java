@@ -10,47 +10,132 @@ public class BotSettings {
 
     private final String TAG = BotSettings.class.getSimpleName();
 
+    /**
+     * activate heavenly strike
+     */
     public final boolean useHS;
+    /**
+     * activate deadly strike
+     */
     public final boolean useDS;
+    /**
+     * activate hand of midas
+     */
     public final boolean useHOM;
+    /**
+     * activate fire sword
+     */
     public final boolean useFS;
+    /**
+     * activate war cry
+     */
     public final boolean useWC;
+    /**
+     * activate shadowclone
+     */
     public final boolean useSC;
     /**
      * time till prestige in ms
      */
     public final long timeToPrestige;
 
-    // after how many boss fails it should prestige.
-    //this overrides the prestigetime,
+    /**
+     *after how many boss fails it should prestige.
+     *this overrides the prestigetime,
+     */
     public final long bossFailedCount;
 
+    /**
+     * do crazytap(mainly used for petbuilds?)
+     */
     public final boolean doAutoTap;
+    /**
+     * autmatic level up heros
+     */
     public final boolean autoLvlHeros;
+    /**
+     * automatic level up skills
+     * need later to add specfic wich skill should get level about how many levels
+     */
     public final boolean autoLvlSkills;
+    /**
+     * click on fairys, if true fairy taps gets added to random taps
+     */
     public final boolean clickOnFairys;
+    /**
+     * accept fairy adds, should get used with VIP!
+     */
     public final boolean acceptFairyAdds;
+    /**
+     * do auto prestige
+     */
     public final boolean autoPrestige;
+    /**
+     * continouse level up swordmaster
+     */
     public final boolean autoLvlSwordMaster;
+    /**
+     * if true astral awakening touch points gets added to randomtaps
+     */
     public final boolean useAAW;
+    /**
+     * if true coordinate offensive touch points get added to randomtaps
+     */
     public final boolean useCO;
+    /**
+     * if true heart of midas touch point get added to randomtaps
+     */
     public final boolean usePHOM;
+    /**
+     * if true egg touch point get added to randomtaps
+     */
     public final boolean collectEggs;
+    /**
+     * if true flashzip touch points get added to randomtaps
+     */
     public final boolean useFlashZip;
 
-
+    /**
+     * if true only the added test executed.
+     * it help to test new ExecuterTasks/Functions
+     */
     public final boolean runTests;
 
+    /**
+     * time how often the mainLoop should trigger in ms
+     */
     public final long mainLooperSleepTime;
+    /**
+     * time how often a screenCapture should trigger
+     */
     public final long captureFrameSleepTime;
+    /**
+     * the delay between clicks for random and crazy taps
+     * if its to fast it can happen that the rootshells get flooded and die.
+     * for 1 shell you should take a value around 120-150ms.
+     * with using more shells you can decrase the time
+     */
     public final long clickSleepTime;
 
-    public final  long levelTop6HeroTime;
-    public final  long levelAllHeroTime;
-    public final  long levelSwordMasterTime;
-
+    /**
+     * number of shells that get created to run random and crazy taps
+     */
     public final long shellcount;
 
+    /**
+     * time after that the first 6 heros gets leveld
+     */
+    public final  long levelTop6HeroTime;
+    /**
+     * time after that all heros gets leveld
+     */
+    public final  long levelAllHeroTime;
+    /**
+     * time after that the swordmaster gets leveld
+     */
+    public final  long levelSwordMasterTime;
+
+    //unused
     public final long swipeLength;
 
     public BotSettings(SharedPreferences sharedPreferences,Context context)

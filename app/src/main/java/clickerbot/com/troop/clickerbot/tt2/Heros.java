@@ -33,7 +33,7 @@ public class Heros extends Menu {
     }
 
     @Override
-    boolean rdToExecute() {
+    boolean checkIfRdyToExecute() {
         if (botSettings.autoLvlHeros && System.currentTimeMillis() - lastAllHerosLeveld > botSettings.levelAllHeroTime)
         {
             Log.v(TAG, "level ALL Heros");
@@ -53,13 +53,10 @@ public class Heros extends Menu {
         return false;
     }
 
-
     private boolean timeOver()
     {
         return System.currentTimeMillis() - lastTop6HerosLeveld > botSettings.levelTop6HeroTime;
     }
-
-
 
     public void levelTop6Heros() throws InterruptedException, IOException {
         openHeroMenu();
@@ -88,37 +85,12 @@ public class Heros extends Menu {
         closeHeroMenu();
         Thread.sleep(200);
 
-        if (boss.getBossState() == Boss.BossState.BossFightFailed)
-            bot.executeTask(ClickOnBossFightTask.class);
+        lastTop6HerosLeveld = System.currentTimeMillis();
+
+       /* if (boss.getBossState() == Boss.BossState.BossFightFailed)
+            bot.executeTask(ClickOnBossFightTask.class);*/
 
     }
-
-
-    private void lvlUpHero(Point point, Point p_color) throws IOException, InterruptedException {
-
-        if ((boss.isActivebossFight() && botSettings.doAutoTap)) {
-            Log.d(TAG,"BossFight abort lvlup");
-            return;
-        }
-            Log.v(TAG,"Click on Hero button");
-        rootShells[0].doTap(point);
-        Thread.sleep(1);
-        rootShells[0].doTap(point);
-        Thread.sleep(50);
-    }
-
-    private boolean canlevelNextHero() throws IOException, InterruptedException {
-        swipe(-37,200);
-        Thread.sleep(210);
-
-        int color = bot.getScreeCapture().getColorFromNextFrame(Coordinates.lvlThirdHeroButton_color);
-        Log.v(TAG,"canlevelNextHero(): " + (Color.red(color) > hero_button_red_min) +" " +ColorUtils.getColorString(color));
-        if (Color.red(color) > hero_button_red_min)
-            return true;
-        else
-            return false;
-    }
-
 
     final int tapOnHerosXtimes = 5;
 
@@ -143,8 +115,11 @@ public class Heros extends Menu {
         }
         closeHeroMenu();
 
-        if (boss.getBossState() == Boss.BossState.BossFightFailed)
-            bot.executeTask(ClickOnBossFightTask.class);
+        lastAllHerosLeveld = System.currentTimeMillis();
+        lastTop6HerosLeveld = System.currentTimeMillis();
+
+        /*if (boss.getBossState() == Boss.BossState.BossFightFailed)
+            bot.executeTask(ClickOnBossFightTask.class);*/
     }
 
     private void tapOnHero(int times,Point point) throws IOException, InterruptedException {
@@ -156,10 +131,11 @@ public class Heros extends Menu {
 
     private boolean canLevelHero(int color)
     {
+        boolean canlvl = false;
         if (Color.red(color) > hero_button_red_min)
-            return true;
-        else
-            return false;
+            canlvl = true;
+        Log.v(TAG,"canLevelHero: " + canlvl + " " +ColorUtils.getColorString(color));
+        return canlvl;
     }
 
 }

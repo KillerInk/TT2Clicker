@@ -69,6 +69,11 @@ public abstract class AbstractBot implements IBot ,ScreenCapture.ScreenCaptureCa
         executer.putFirstAndExecute(runnable);
     }
 
+    public void putAtPos(ExecuterTask task, int pos)
+    {
+        executer.putAt(task,pos);
+    }
+
     @Override
     public void clearExecuterQueue() {
         executer.clear();

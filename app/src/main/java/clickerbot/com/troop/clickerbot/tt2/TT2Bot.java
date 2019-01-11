@@ -27,28 +27,70 @@ public class TT2Bot extends AbstractBot
 {
     private static final String TAG = TT2Bot.class.getSimpleName();
 
+    /**
+     * Holds the tasks to execute
+     */
     private HashMap<Class, ExecuterTask> executerTaskHashMap;
-
+    /**
+     * Hold the root shells that get used to send commands
+     */
     private RootShell rootShells[];
 
+    /**
+     * handels everything releated about skills
+     */
     private Skills skills;
+    /**
+     * handels everthing releated about heros
+     */
     private Heros heros;
+    /**
+     * handels everything releated about bossfights
+     */
     private Boss boss;
+    /**
+     * handels everything releated about prestige
+     */
     private Prestige prestige;
+    /**
+     * handels everything releated about fairys
+     */
     private Fairy fairy;
+    /**
+     * can get used to extract text from images.
+     * but its not trained yet, so its non functional
+     */
     private OCR ocr;
 
+    /**
+     * time after a randomtap gets executed
+     */
     private final int runRandomTapActivator = 1000;//ms
+    /**
+     * last time a randomtap got activated
+     */
     private long lastRandomTapActivated = 0;
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
     Random rand = new Random();
 
+    /**
+     * hold all randomtap points
+     */
     private List<Point> randomTaps;
+    /**
+     * hold all crazytouchpoints
+     */
     private List<Point> crazyTouchPoints;
 
+    /**
+     * holds the time last swordmaster lvl got executed
+     */
     private long lastSwordMasterLeveled =0;
+    /**
+     * holds time last ui got updated
+     */
     private long lastUiUpdate = 0;
 
     public static long convertMinToMs(int min)
@@ -85,6 +127,10 @@ public class TT2Bot extends AbstractBot
     public void putFirstAndExecuteTask(Class task) {
         putFirstAndExecute(executerTaskHashMap.get(task));
     }
+    public void putTaskAtPos(Class task, int pos)
+    {
+        putAtPos(executerTaskHashMap.get(task),pos);
+    }
 
     public void destroy()
     {
@@ -103,6 +149,9 @@ public class TT2Bot extends AbstractBot
         return ocr;
     }
 
+    /**
+     * start the bot
+     */
     public void start()
     {
         Log.d(TAG,"start");
@@ -113,6 +162,9 @@ public class TT2Bot extends AbstractBot
         super.start();
     }
 
+    /**
+     * stop the bot
+     */
     public void stop()
     {
         Log.d(TAG,"stop");
@@ -121,6 +173,10 @@ public class TT2Bot extends AbstractBot
             rootShells[i].stopProcess();
     }
 
+    /**
+     * runs every xxx ms to fill the executer queue with tasks
+     * @param tickCounter how often it has triggered
+     */
     @Override
     void onTick(long tickCounter) {
         if (tickCounter == 1) {
@@ -131,7 +187,7 @@ public class TT2Bot extends AbstractBot
             executeTests();
         }
         else {
-            if(!prestige.rdToExecute())
+            if(!prestige.checkIfRdyToExecute())
             {
                 if (System.currentTimeMillis() - lastUiUpdate > 1000) {
                     long now = System.currentTimeMillis();
@@ -143,8 +199,8 @@ public class TT2Bot extends AbstractBot
                     lastUiUpdate = System.currentTimeMillis();
                 }
                 swordMasterRdyToExecute();
-                skills.rdToExecute();
-                heros.rdToExecute();
+                skills.checkIfRdyToExecute();
+                heros.checkIfRdyToExecute();
                 if (System.currentTimeMillis() - lastRandomTapActivated > runRandomTapActivator){
                     executeTask(RandomTapTask.class);
                     fairy.executeTapFairys();
@@ -193,15 +249,21 @@ public class TT2Bot extends AbstractBot
 
     }
 
+    /**
+     * init the bot
+     */
     public void init()
     {
         prestige.init();
 
         boss.resetBossFailedCounter();
+        int startTapPoints = 40;
+        if (botSettings.useFlashZip || botSettings.useAAW)
+            startTapPoints -=30;
         if (botSettings.doAutoTap)
         {
             crazyTouchPoints = new ArrayList<>();
-            for (int i=0; i< 40;i++)
+            for (int i=0; i< startTapPoints;i++)
             {
                 crazyTouchPoints.add(new Point(getRandomX(),getRandomY()));
             }
@@ -219,18 +281,31 @@ public class TT2Bot extends AbstractBot
         return rand.nextInt(20) + 20 + Coordinates.crazy_touch_pos.y;
     }
 
+    /**
+     * execute randomtaps
+     * @param task that execute it
+     */
     public void doTap(ExecuterTask task)
     {
         //Log.d(TAG,"doRandomTap");
         tapOnPoints(randomTaps,task);
     }
 
+    /**
+     * execute fast clicking on screen
+     * @param task that execute it
+     */
     public void doCrazyTap(ExecuterTask task)
     {
         //Log.d(TAG,"doCrazyTap");
         tapOnPoints(crazyTouchPoints,task);
     }
 
+    /**
+     * Taps fast on screen
+     * @param points to touch
+     * @param task task that execute it
+     */
     public void tapOnPoints(List<Point> points, ExecuterTask task)
     {
         for (int i=0; i < points.size(); i+= rootShells.length-1)
@@ -260,6 +335,10 @@ public class TT2Bot extends AbstractBot
         }
     }
 
+    /**
+     * gets repeating called by the Screencapture
+     * after a new frame is availible
+     */
     @Override
     public void onScreenCapture() {
         //UpdateImage(getScreeCapture().getScreenDumpBmp());

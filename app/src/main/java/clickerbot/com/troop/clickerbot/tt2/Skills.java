@@ -90,7 +90,7 @@ public class Skills extends Menu {
     }
 
     @Override
-    boolean rdToExecute() {
+    boolean checkIfRdyToExecute() {
         if (System.currentTimeMillis() - lastSkillsActivated > runSkillsActivator) {
 
             try {

@@ -8,6 +8,10 @@ import java.io.IOException;
 
 import clickerbot.com.troop.clickerbot.ColorUtils;
 import clickerbot.com.troop.clickerbot.RootShell;
+import clickerbot.com.troop.clickerbot.tt2.tasks.ClickOnBossFightTask;
+import clickerbot.com.troop.clickerbot.tt2.tasks.LevelAllHerosTask;
+import clickerbot.com.troop.clickerbot.tt2.tasks.LevelSwordMasterTask;
+import clickerbot.com.troop.clickerbot.tt2.tasks.LevelTop6HerosTask;
 
 // boss icon boss fight active -12826035 60 74 77
 //boss icons boss fight failed -1085168 239 113 16
@@ -31,7 +35,7 @@ public class Boss extends Menu {
     }
 
     @Override
-    boolean rdToExecute() {
+    boolean checkIfRdyToExecute() {
         /*if (System.currentTimeMillis() - bossFightClickCheckLast > bossFightClickCheck)
         {
             if (bossState == BossState.BossFightFailed)
@@ -64,6 +68,7 @@ public class Boss extends Menu {
     private int bossFightActiveColor = Color.argb(255,69,85,89);
     private int bossFightFailedColor = Color.argb(255,239,113,16);
 
+    private boolean waitForNextFail = true;
 
     public void checkIfActiveBossFight()
     {
@@ -74,6 +79,7 @@ public class Boss extends Menu {
                 if (bossFailedCounter > 0)
                     bossFailedCounter--;
             setBossState(BossState.BossFightActive);
+            waitForNextFail = true;
 
         }
         else if(color == bossFightFailedColor)
@@ -82,6 +88,18 @@ public class Boss extends Menu {
                 if (bossFailedCounter < botSettings.bossFailedCount)
                     bossFailedCounter++;
             setBossState(BossState.BossFightFailed);
+
+            if (waitForNextFail) {
+                waitForNextFail = false;
+                int pos = 0;
+                if (botSettings.autoLvlSwordMaster) {
+                    bot.putTaskAtPos(LevelSwordMasterTask.class, pos++);
+                }
+                if (botSettings.autoLvlHeros) {
+                    bot.putTaskAtPos(LevelTop6HerosTask.class, pos++);
+                }
+                bot.putTaskAtPos(ClickOnBossFightTask.class, pos++);
+            }
 
         }
         else if (color != bossFightActiveColor && color != bossFightFailedColor && color != 0){
@@ -121,12 +139,17 @@ public class Boss extends Menu {
         bossFailedCounter = 0;
     }
 
-    public void clickOnBossFight() throws IOException {
+    public void clickOnBossFight() throws IOException, InterruptedException {
         rootShells[0].doTap(Coordinates.fightBossButton);
-        try {
+        Thread.sleep(100);
+        Thread.sleep(300);
+        int color = bot.getScreeCapture().getColorFromNextFrame(Coordinates.fightBossButton_Color);
+        if(color == bossFightFailedColor)
+        {
+            rootShells[0].doTap(Coordinates.fightBossButton);
+            Thread.sleep(100);
             Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
+
     }
 }

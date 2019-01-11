@@ -57,7 +57,7 @@ public class Fairy extends Menu {
     }
 
     @Override
-    boolean rdToExecute() {
+    boolean checkIfRdyToExecute() {
         return !Menu.MenuOpen;
     }
 

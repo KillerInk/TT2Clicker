@@ -69,13 +69,25 @@ public class Coordinates
             new Point(76,292),
             new Point(371,246),
             new Point(71,183),
-            new Point(239,157),
             new Point(112,185),
             new Point(402,278),
             new Point(367,176),
             new Point(400,343),
             new Point(399,362),
             new Point(69,338),
+            new Point(107,321),
+            new Point(359,287),
+            new Point(398,414),
+            new Point(114,208),
+            new Point(110,250),
+            new Point(100,340),
+            new Point(406,186),
+            new Point(398,203),
+            new Point(107,284),
+            new Point(78,215),
+            new Point(345,366),
+            new Point(335,179),
+            new Point(239,157),//center
 
     };
 

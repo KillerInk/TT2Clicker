@@ -8,7 +8,6 @@ import java.util.LinkedList;
 public class Executer {
 
     private String TAG = Executer.class.getSimpleName();
-    private final int KEEP_ALIVE_TIME = 500;
     private boolean doWork;
     LinkedList<ExecuterTask> runnableLinkedList;
     private Thread exeThread;
@@ -55,14 +54,13 @@ public class Executer {
     {
         if (!runnableLinkedList.contains(runnable) && run != runnable) {
             runnableLinkedList.add(runnable);
-            Log.v(TAG,"putRunnable "+runnable.getClass().getSimpleName());
+            Log.i(TAG,"putRunnable "+runnable.getClass().getSimpleName());
         }
         else Log.v(TAG, "Runnable already added " +runnable.getClass().getSimpleName());
     }
 
     public void putFirstAndExecute(ExecuterTask executerTask)
     {
-
         try {
             if (run != null)
                 run.cancelTask = true;
@@ -72,6 +70,13 @@ public class Executer {
         {
         }
 
+    }
+
+    public void putAt(ExecuterTask executerTask, int pos)
+    {
+        if (runnableLinkedList.contains(executerTask))
+            runnableLinkedList.remove(executerTask);
+        runnableLinkedList.add(pos, executerTask);
     }
 
     public void clear()
