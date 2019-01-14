@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Random;
 
 import clickerbot.com.troop.clickerbot.ExecuterTask;
+import clickerbot.com.troop.clickerbot.MediaProjectionScreenCapture;
 import clickerbot.com.troop.clickerbot.OCR;
 import clickerbot.com.troop.clickerbot.RootShell;
 import clickerbot.com.troop.clickerbot.tt2.tasks.CrazyTapTask;
@@ -98,9 +99,9 @@ public class TT2Bot extends AbstractBot
         return min*60*1000;
     }
 
-    public TT2Bot(Context context,BotSettings botSettings)
+    public TT2Bot(Context context, BotSettings botSettings, MediaProjectionScreenCapture mediaProjectionScreenCapture)
     {
-        super(botSettings);
+        super(botSettings,mediaProjectionScreenCapture);
         rootShells = new RootShell[(int)botSettings.shellcount];
         for (int i = 0; i < rootShells.length; i++)
         {
@@ -115,6 +116,7 @@ public class TT2Bot extends AbstractBot
         fairy = new Fairy(this,botSettings, rootShells);
 
         executerTaskHashMap = new TaskFactory().getTasksmap(this,heros,skills,prestige,fairy,boss);
+        mediaProjectionScreenCapture.setScreenCaptureCallBack(this::onScreenCapture);
 
         Log.d(TAG,"TT2Bot()");
     }
@@ -136,7 +138,7 @@ public class TT2Bot extends AbstractBot
     {
         Log.d(TAG,"destroy");
         ocr.destroy();
-        getScreeCapture().destroy();
+        //getScreeCapture().destroy();
         for (int i = 0; i < rootShells.length; i++)
         {
             rootShells[i].Close();
@@ -224,7 +226,7 @@ public class TT2Bot extends AbstractBot
 
     private boolean swordMasterRdyToExecute()
     {
-        if (botSettings.autoLvlSwordMaster && System.currentTimeMillis() - lastSwordMasterLeveled > botSettings.levelSwordMasterTime)
+        if (botSettings.autoLvlSwordMaster && System.currentTimeMillis() - lastSwordMasterLeveled > botSettings.levelSwordMasterTime && boss.getBossState() != Boss.BossState.BossFightActive)
         {
             executeTask(LevelSwordMasterTask.class);
             lastSwordMasterLeveled = System.currentTimeMillis();
@@ -255,7 +257,7 @@ public class TT2Bot extends AbstractBot
     public void init()
     {
         prestige.init();
-
+        heros.init();
         boss.resetBossFailedCounter();
         int startTapPoints = 40;
         if (botSettings.useFlashZip || botSettings.useAAW)
@@ -333,6 +335,11 @@ public class TT2Bot extends AbstractBot
                     break;
             }
         }
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -341,9 +348,9 @@ public class TT2Bot extends AbstractBot
      */
     @Override
     public void onScreenCapture() {
-        //UpdateImage(getScreeCapture().getScreenDumpBmp());
+        //UpdateImage(getScreeCapture().getBitmap());
         boss.checkIfActiveBossFight();
         fairy.checkIfFairyWindowOpen();
-        heros.checkIfMenuOpen();
+        //heros.checkIfMenuOpen();
     }
 }

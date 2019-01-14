@@ -62,6 +62,8 @@ public class Executer {
     public void putFirstAndExecute(ExecuterTask executerTask)
     {
         try {
+            if (run == executerTask)
+                return;
             if (run != null)
                 run.cancelTask = true;
             runnableLinkedList.addFirst(executerTask);

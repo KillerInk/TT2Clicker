@@ -22,8 +22,6 @@ public class Boss extends Menu {
 
     private BossState bossState = BossState.NoneFight;
 
-    private final int bossFightClickCheck = 10000;
-    private int bossFightClickCheckLast=0;
 
     public Boss(TT2Bot ibot, BotSettings botSettings, RootShell[] rootShell) {
         super(ibot, botSettings, rootShell);
@@ -31,20 +29,11 @@ public class Boss extends Menu {
 
     @Override
     void init() {
-        bossFightClickCheckLast = 0;
+        bossState = BossState.NoneFight;
     }
 
     @Override
     boolean checkIfRdyToExecute() {
-        /*if (System.currentTimeMillis() - bossFightClickCheckLast > bossFightClickCheck)
-        {
-            if (bossState == BossState.BossFightFailed)
-            {
-                if (botSettings.autoLvlSwordMaster)
-                    bot.execute(sw);
-            }
-
-        }*/
         return false;
     }
 
@@ -75,58 +64,41 @@ public class Boss extends Menu {
         int color = bot.getScreeCapture().getColor(Coordinates.fightBossButton_Color);
         if (color ==  bossFightActiveColor)
         {
-            if (bossState == BossState.NoneFight)
+            if (bossState == BossState.NoneFight) {
                 if (bossFailedCounter > 0)
                     bossFailedCounter--;
-            setBossState(BossState.BossFightActive);
-            waitForNextFail = true;
-
+                setBossState(BossState.BossFightActive);
+                waitForNextFail = true;
+                Log.i(TAG, "bossFightActiveColor Wait for next fail: true");
+            }
         }
         else if(color == bossFightFailedColor)
         {
-            if (bossState == BossState.BossFightActive)
+            if (bossState == BossState.BossFightActive) {
                 if (bossFailedCounter < botSettings.bossFailedCount)
                     bossFailedCounter++;
-            setBossState(BossState.BossFightFailed);
+                setBossState(BossState.BossFightFailed);
 
-            if (waitForNextFail) {
-                waitForNextFail = false;
-                int pos = 0;
-                if (botSettings.autoLvlSwordMaster) {
-                    bot.putTaskAtPos(LevelSwordMasterTask.class, pos++);
+                if (waitForNextFail) {
+                    Log.i(TAG, "bossFightFailedColor Wait for next fail: false");
+                    waitForNextFail = false;
+                    int pos = 0;
+                    if (botSettings.autoLvlSwordMaster) {
+                        bot.putTaskAtPos(LevelSwordMasterTask.class, pos++);
+                    }
+                    if (botSettings.autoLvlHeros) {
+                        bot.putTaskAtPos(LevelTop6HerosTask.class, pos++);
+                    }
+                    bot.putTaskAtPos(ClickOnBossFightTask.class, pos++);
                 }
-                if (botSettings.autoLvlHeros) {
-                    bot.putTaskAtPos(LevelTop6HerosTask.class, pos++);
-                }
-                bot.putTaskAtPos(ClickOnBossFightTask.class, pos++);
             }
 
         }
-        else if (color != bossFightActiveColor && color != bossFightFailedColor && color != 0){
+        else if (color != bossFightActiveColor && color != bossFightFailedColor && color != 0 && bossState != BossState.NoneFight){
             setBossState(BossState.NoneFight);
         }
         Log.v(TAG,"isActiveBossFight: "+ bossState.toString() + " " + ColorUtils.getColorString(color));
 
-    }
-
-    public boolean isActivebossFight()
-    {
-        return getBossState() == BossState.BossFightActive;
-    }
-
-
-
-    public void checkIfLockedOnBoss() throws IOException, InterruptedException {
-        int color = bot.getScreeCapture().getColor(Coordinates.fightBossButton_Color);
-        if (Color.red(color) > 230)
-        {
-            bossFailedCounter++;
-            Log.d(TAG,"bossfailed:" +bossFailedCounter);
-            clickOnBossFight();
-            Thread.sleep(20);
-        }
-        else
-            Log.d(TAG, "not stucked on boss");
     }
 
     public int getBossFailedCounter()
@@ -140,16 +112,20 @@ public class Boss extends Menu {
     }
 
     public void clickOnBossFight() throws IOException, InterruptedException {
+        Thread.sleep(100);
         rootShells[0].doTap(Coordinates.fightBossButton);
         Thread.sleep(100);
-        Thread.sleep(300);
-        int color = bot.getScreeCapture().getColorFromNextFrame(Coordinates.fightBossButton_Color);
+        rootShells[0].doTap(Coordinates.fightBossButton);
+        Thread.sleep(100);
+        rootShells[0].doTap(Coordinates.fightBossButton);
+        Thread.sleep(500);
+        /*int color = bot.getScreeCapture().getColor(Coordinates.fightBossButton_Color);
         if(color == bossFightFailedColor)
         {
             rootShells[0].doTap(Coordinates.fightBossButton);
             Thread.sleep(100);
             Thread.sleep(300);
-        }
-
+        }*/
+        waitForNextFail = true;
     }
 }

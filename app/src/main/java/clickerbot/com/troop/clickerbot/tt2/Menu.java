@@ -12,7 +12,7 @@ import clickerbot.com.troop.clickerbot.tt2.tasks.MenuCloseTask;
 public abstract class Menu extends Item
 {
     private final String TAG = Menu.class.getSimpleName();
-    public static boolean MenuOpen = false;
+    public static volatile boolean MenuOpen = false;
 
     private final int menuOpenCloseDelay = 1000;
 
@@ -25,12 +25,14 @@ public abstract class Menu extends Item
 
     private int colorMenuOpen = Color.argb(255,84,76,76);
     private Point menuOpenCheckPoint = new Point(471,449);
+    private boolean menuTaskRunning = false;
 
     public void checkIfMenuOpen()
     {
-        if (!MenuOpen) {
+        if (!MenuOpen && !menuTaskRunning) {
             int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
             if (color == colorMenuOpen) {
+                menuTaskRunning = true;
                 bot.putFirstAndExecuteTask(MenuCloseTask.class);
             }
         }
@@ -50,11 +52,17 @@ public abstract class Menu extends Item
             e.printStackTrace();
         }
         MenuOpen = false;
+        menuTaskRunning = false;
         Log.d(TAG, "closedMenu");
     }
 
     public void openSwordMasterMenu()
     {
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Log.d(TAG, "openSwordMasterMenu");
         MenuOpen = true;
         try {
@@ -69,6 +77,11 @@ public abstract class Menu extends Item
 
     public void closeSwordMasterMenu()
     {
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Log.d(TAG, "openSwordMasterMenu");
         MenuOpen = false;
         try {
@@ -83,6 +96,11 @@ public abstract class Menu extends Item
 
     public void openHeroMenu()
     {
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Log.d(TAG, "openHeroMenu");
         MenuOpen =true;
         try {

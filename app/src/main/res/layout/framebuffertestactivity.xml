@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/button_dumpFrame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dump Frame" />
+
+    <SurfaceView
+        android:id="@+id/textureView_screendump"
+        android:layout_width="400px"
+        android:layout_height="320px" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/imageview_dumpframe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

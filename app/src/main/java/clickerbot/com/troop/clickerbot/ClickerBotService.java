@@ -1,5 +1,6 @@
 package clickerbot.com.troop.clickerbot;
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -9,12 +10,17 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
+import android.hardware.display.DisplayManager;
+import android.hardware.display.VirtualDisplay;
+import android.media.projection.MediaProjection;
+import android.media.projection.MediaProjectionManager;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.SurfaceView;
 import android.view.WindowManager;
 
 import clickerbot.com.troop.clickerbot.tt2.AbstractBot;
@@ -34,6 +40,10 @@ public class ClickerBotService extends Service
     private TT2Bot tt2Bot;
     private static String botRunningSettingKey = "botRunning";
     private BotServiceView serviceView;
+    private MediaProjectionScreenCapture mediaProjectionScreenCapture;
+
+
+    private int mScreenDensity;
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         private int callCount = 0;
@@ -84,6 +94,7 @@ public class ClickerBotService extends Service
 
         DisplayMetrics metrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(metrics);
+        mScreenDensity = metrics.densityDpi;
 
         serviceView =new BotServiceView(getApplicationContext());
         serviceView.setClickerBotService(this);
@@ -101,8 +112,14 @@ public class ClickerBotService extends Service
         windowManager.addView(serviceView, paramsPrestigeView);
         serviceView.bringToFront();
 
+        mediaProjectionScreenCapture = new MediaProjectionScreenCapture(getApplicationContext()
+                ,ClickerBotActivity.mResultData
+                ,ClickerBotActivity.mResultCode
+                ,serviceView.getSurfaceView()
+                ,mScreenDensity);
+
         BotSettings botSettings = new BotSettings(preferences, getApplicationContext());
-        tt2Bot = new TT2Bot(getApplicationContext(),botSettings);
+        tt2Bot = new TT2Bot(getApplicationContext(),botSettings,mediaProjectionScreenCapture);
         tt2Bot.setUpdateUiCallBack(new AbstractBot.UpdateUi() {
             @Override
             public void updatePrestigeTime(String time) {
@@ -114,6 +131,7 @@ public class ClickerBotService extends Service
                 serviceView.post(() -> serviceView.setBitmap(bitmap));
             }
         });
+
 
 
         if (preferences.getBoolean(botRunningSettingKey,false))
@@ -131,6 +149,7 @@ public class ClickerBotService extends Service
             tt2Bot.stop();
         }
         tt2Bot.destroy();
+        mediaProjectionScreenCapture.close();
         if (serviceView != null) windowManager.removeView(serviceView);
         unregisterReceiver(broadcastReceiver);
     }
@@ -145,5 +164,7 @@ public class ClickerBotService extends Service
     {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpi, getResources().getDisplayMetrics());
     }
+
+
 
 }

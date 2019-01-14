@@ -3,8 +3,11 @@ package clickerbot.com.troop.clickerbot;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.SurfaceView;
+import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,7 +18,8 @@ public class BotServiceView extends LinearLayout {
     private Button closeButton;
     private ClickerBotService clickerBotService;
     private TextView textView;
-    private ImageView imageView;
+    private ImageView surfaceView;
+
 
     public void setClickerBotService(ClickerBotService clickerBotService)
     {
@@ -52,8 +56,9 @@ public class BotServiceView extends LinearLayout {
                 clickerBotService.stopSelf();
             }
         });
-        imageView = findViewById(R.id.dump_screen_view);
+        surfaceView = findViewById(R.id.dump_screen_view);
         textView = findViewById(R.id.logview);
+
     }
 
     public void setTextViewText(String txt)
@@ -64,6 +69,12 @@ public class BotServiceView extends LinearLayout {
 
     public void setBitmap(Bitmap bitmap)
     {
-        this.imageView.setImageBitmap(bitmap);
+        surfaceView.setImageBitmap(bitmap);
+        //this.imageView.setImageBitmap(bitmap);
+    }
+
+    public TextureView getSurfaceView()
+    {
+        return null;
     }
 }

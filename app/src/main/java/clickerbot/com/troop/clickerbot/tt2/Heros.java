@@ -34,7 +34,7 @@ public class Heros extends Menu {
 
     @Override
     boolean checkIfRdyToExecute() {
-        if (botSettings.autoLvlHeros && System.currentTimeMillis() - lastAllHerosLeveld > botSettings.levelAllHeroTime)
+        if (botSettings.autoLvlHeros && System.currentTimeMillis() - lastAllHerosLeveld > botSettings.levelAllHeroTime && boss.getBossState() != Boss.BossState.BossFightActive)
         {
             Log.v(TAG, "level ALL Heros");
             bot.executeTask(LevelAllHerosTask.class);
@@ -67,19 +67,19 @@ public class Heros extends Menu {
         Thread.sleep(200);
         swipeUp(300);
         Thread.sleep(200);
-        if (canLevelHero(bot.getScreeCapture().getColorFromNextFrame(Coordinates.lvlFIrsHeroButton_color)))
-            tapOnHero(tapOnHerosXtimes, Coordinates.lvlFIrsHeroButton_click);
+        if (canLevelHero(bot.getScreeCapture().getColor(Coordinates.lvlFIrsHeroButton_color)))
+            tapOnHero(1, Coordinates.lvlFIrsHeroButton_click);
         if (canLevelHero(bot.getScreeCapture().getColor(Coordinates.lvlSecondHeroButton_color)))
-            tapOnHero(tapOnHerosXtimes, Coordinates.lvlSecondHeroButton_click);
+            tapOnHero(1, Coordinates.lvlSecondHeroButton_click);
         if (canLevelHero(bot.getScreeCapture().getColor(Coordinates.lvlThirdHeroButton_color)))
-            tapOnHero(tapOnHerosXtimes, Coordinates.lvlThirdHeroButton_click);
+            tapOnHero(1, Coordinates.lvlThirdHeroButton_click);
         swipeDown3xHeros();
-        if (canLevelHero(bot.getScreeCapture().getColorFromNextFrame(Coordinates.lvlFIrsHeroButton_color)))
-            tapOnHero(tapOnHerosXtimes, Coordinates.lvlFIrsHeroButton_click);
+        if (canLevelHero(bot.getScreeCapture().getColor(Coordinates.lvlFIrsHeroButton_color)))
+            tapOnHero(1, Coordinates.lvlFIrsHeroButton_click);
         if (canLevelHero(bot.getScreeCapture().getColor(Coordinates.lvlSecondHeroButton_color)))
-            tapOnHero(tapOnHerosXtimes, Coordinates.lvlSecondHeroButton_click);
+            tapOnHero(1, Coordinates.lvlSecondHeroButton_click);
         if (canLevelHero(bot.getScreeCapture().getColor(Coordinates.lvlThirdHeroButton_color)))
-            tapOnHero(tapOnHerosXtimes, Coordinates.lvlThirdHeroButton_click);
+            tapOnHero(1, Coordinates.lvlThirdHeroButton_click);
 
         Thread.sleep(200);
         closeHeroMenu();
@@ -104,7 +104,7 @@ public class Heros extends Menu {
         Thread.sleep(200);
         swipeUp(-400);
         Thread.sleep(400);
-        while (bot.getScreeCapture().getColorFromNextFrame(MenuMaxButtonColorPosition) != MenuMaxButtonBackgroundColor) {
+        while (bot.getScreeCapture().getColor(MenuMaxButtonColorPosition) != MenuMaxButtonBackgroundColor) {
             if (canLevelHero(bot.getScreeCapture().getColor(Coordinates.lvlFIrsHeroButton_color)))
                 tapOnHero(tapOnHerosXtimes, Coordinates.lvlFIrsHeroButton_click);
             if (canLevelHero(bot.getScreeCapture().getColor(Coordinates.lvlSecondHeroButton_color)))

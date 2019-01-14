@@ -1,7 +1,10 @@
 package clickerbot.com.troop.clickerbot;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.projection.MediaProjectionManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,6 +34,14 @@ public class ClickerBotActivity extends AppCompatActivity {
     private SharedPreferences preferences;
     private SettingsFragment fragment;
 
+    private static final String STATE_RESULT_CODE = "result_code";
+    private static final String STATE_RESULT_DATA = "result_data";
+
+    private static final int REQUEST_MEDIA_PROJECTION = 1;
+
+    public static Intent mResultData;
+    public static int mResultCode;
+
     private final int flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -55,21 +66,22 @@ public class ClickerBotActivity extends AppCompatActivity {
                 startClickerBackgroundService();
             }
         });
-
-        /*getFragmentManager().beginTransaction()
-                .replace(R.id.setting_fragment, new PrefsFragment())
-                .commit();*/
+        fragment = new SettingsFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.setting_fragment_container, fragment)
+                .commit();
 
     }
 
     @Override
     protected void onPause() {
 
-        getSupportFragmentManager()
+        /*getSupportFragmentManager()
                 .beginTransaction()
                 .remove(fragment)
                 .commit();
-        fragment = null;
+        fragment = null;*/
         super.onPause();
     }
 
@@ -81,12 +93,9 @@ public class ClickerBotActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        fragment = new SettingsFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.setting_fragment_container, fragment)
-                .commit();
         super.onResume();
+        if (mResultData == null)
+            checkMediaProjectionPermission();
         HIDENAVBAR();
     }
 
@@ -104,6 +113,16 @@ public class ClickerBotActivity extends AppCompatActivity {
             return true;
     }
 
+    private void checkMediaProjectionPermission()
+    {
+        Log.i(TAG, "Requesting confirmation");
+        // This initiates a prompt dialog for the user to confirm screen projection.
+        startActivityForResult(
+                ((MediaProjectionManager)
+                        getSystemService(Context.MEDIA_PROJECTION_SERVICE)).createScreenCaptureIntent(),
+                REQUEST_MEDIA_PROJECTION);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode,  Intent data) {
         /** check if received result code
@@ -117,10 +136,20 @@ public class ClickerBotActivity extends AppCompatActivity {
                 finish();
             }
         }
+        if (requestCode == REQUEST_MEDIA_PROJECTION) {
+            if (resultCode != Activity.RESULT_OK) {
+                return;
+            }
+
+            Log.i(TAG, "Starting screen capture");
+            mResultCode = resultCode;
+            mResultData = (Intent)data.clone();
+        }
     }
 
     private void startClickerBackgroundService()
     {
+
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP || checkDrawOverlayPermission()) {
             Intent intent = new Intent(this, ClickerBotService.class);
             startService(intent);

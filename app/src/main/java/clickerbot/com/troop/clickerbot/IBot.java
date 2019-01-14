@@ -7,7 +7,7 @@ public interface IBot {
 
     OCR getOcr();
 
-    ScreenCapture getScreeCapture();
+    MediaProjectionScreenCapture getScreeCapture();
     public void resetTickCounter();
 
     void execute(ExecuterTask runnable);

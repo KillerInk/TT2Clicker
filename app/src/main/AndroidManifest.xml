@@ -19,6 +19,11 @@
             <action android:name="android.intent.action.MAIN" />
         </intent-filter>
     </activity>
+        <activity android:name=".test.FrameBufferTestActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+        </intent-filter>
+    </activity>
         <service
             android:name=".ClickerBotService"
             android:exported="false"/>

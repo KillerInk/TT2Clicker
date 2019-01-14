@@ -65,6 +65,7 @@ public class Coordinates
     public static final Point FLASH_ZIP_Areas[] = new Point[]
     {
             new Point(353,175),
+            new Point(363,339),
             new Point(411,265),
             new Point(76,292),
             new Point(371,246),

@@ -52,6 +52,10 @@ public class RootShell
 
     }
 
+    public void chmodFB0() throws IOException {
+        sendCommand("chmod 666 /dev/fb0\n");
+    }
+
     public void doTap(Point p) throws IOException {
         sendCommand(CmdBuilder.gettap(p.x,p.y));
     }

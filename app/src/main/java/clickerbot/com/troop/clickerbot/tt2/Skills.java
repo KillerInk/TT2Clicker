@@ -188,7 +188,7 @@ public class Skills extends Menu {
 
     private void checkSkillsUnlocked()
     {
-        bot.getScreeCapture().getColorFromNextFrame(new Point(1,1));
+        bot.getScreeCapture().getColor(new Point(1,1));
         Log.d(TAG,"checkSkillsUnlocked");
         if (botSettings.useHS)
             hsUnlocked = isSkillUnlocked(bot.getScreeCapture().getColor(Coordinates.Hs_Pos));

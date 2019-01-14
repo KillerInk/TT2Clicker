@@ -6,6 +6,7 @@ import android.util.Log;
 import clickerbot.com.troop.clickerbot.Executer;
 import clickerbot.com.troop.clickerbot.ExecuterTask;
 import clickerbot.com.troop.clickerbot.IBot;
+import clickerbot.com.troop.clickerbot.MediaProjectionScreenCapture;
 import clickerbot.com.troop.clickerbot.ScreenCapture;
 
 public abstract class AbstractBot implements IBot ,ScreenCapture.ScreenCaptureCallBack
@@ -17,8 +18,9 @@ public abstract class AbstractBot implements IBot ,ScreenCapture.ScreenCaptureCa
     private long tickCounter = 0;
     private long lastTick = 0;
     private volatile boolean isRunning = false;
-    private ScreenCapture screenCapture;
+    /*private ScreenCapture screenCapture;*/
     protected final BotSettings botSettings;
+    protected MediaProjectionScreenCapture mediaProjectionScreenCapture;
 
 
     private Executer executer;
@@ -53,9 +55,10 @@ public abstract class AbstractBot implements IBot ,ScreenCapture.ScreenCaptureCa
     }
 
 
-    public AbstractBot(BotSettings botSettings){
+    public AbstractBot(BotSettings botSettings, MediaProjectionScreenCapture mediaProjectionScreenCapture){
         this.botSettings = botSettings;
-        screenCapture = new ScreenCapture(this,botSettings);
+        this.mediaProjectionScreenCapture = mediaProjectionScreenCapture;
+        //screenCapture = new ScreenCapture(this,botSettings);
         executer = new Executer();
     }
 
@@ -86,8 +89,8 @@ public abstract class AbstractBot implements IBot ,ScreenCapture.ScreenCaptureCa
     }
 
     @Override
-    public ScreenCapture getScreeCapture() {
-        return screenCapture;
+    public MediaProjectionScreenCapture getScreeCapture() {
+        return mediaProjectionScreenCapture;
     }
 
     @Override
@@ -95,6 +98,7 @@ public abstract class AbstractBot implements IBot ,ScreenCapture.ScreenCaptureCa
         doWork = true;
         tickCounter =0;
         Log.d(TAG, "start");
+        mediaProjectionScreenCapture.start();
         executer.start();
         new Thread(()->{
             threadstarttime = System.currentTimeMillis();
@@ -111,15 +115,27 @@ public abstract class AbstractBot implements IBot ,ScreenCapture.ScreenCaptureCa
             isRunning = false;
         }
         ).start();
-        screenCapture.start();
 
+        new Thread(()->{
+            while (doWork)
+            {
+                onScreenCapture();
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+        //screenCapture.start();
     }
 
     @Override
     public void stop() {
         this.doWork = false;
         executer.stop();
-        screenCapture.stop();
+        //screenCapture.stop();
+        mediaProjectionScreenCapture.stop();
         try {
             Thread.sleep(botSettings.mainLooperSleepTime);
         } catch (InterruptedException e) {
