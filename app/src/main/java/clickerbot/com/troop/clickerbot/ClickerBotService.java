@@ -1,6 +1,5 @@
 package clickerbot.com.troop.clickerbot;
 
-import android.app.Activity;
 import android.app.Notification;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -10,17 +9,12 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
-import android.hardware.display.DisplayManager;
-import android.hardware.display.VirtualDisplay;
-import android.media.projection.MediaProjection;
-import android.media.projection.MediaProjectionManager;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.SurfaceView;
 import android.view.WindowManager;
 
 import clickerbot.com.troop.clickerbot.tt2.AbstractBot;

@@ -3,11 +3,11 @@ package clickerbot.com.troop.clickerbot.tt2;
 import android.graphics.Bitmap;
 import android.util.Log;
 
-import clickerbot.com.troop.clickerbot.executer.Executer;
-import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.IBot;
 import clickerbot.com.troop.clickerbot.MediaProjectionScreenCapture;
 import clickerbot.com.troop.clickerbot.ScreenCaptureCallBack;
+import clickerbot.com.troop.clickerbot.executer.Executer;
+import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 
 public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
 {
@@ -74,6 +74,11 @@ public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
     public void putAtPos(ExecuterTask task, int pos)
     {
         executer.putAt(task,pos);
+    }
+
+    public boolean containsT(ExecuterTask task)
+    {
+        return executer.containsTaks(task);
     }
 
     @Override

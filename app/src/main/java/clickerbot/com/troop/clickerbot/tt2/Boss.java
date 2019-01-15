@@ -7,10 +7,8 @@ import android.util.Log;
 import java.io.IOException;
 
 import clickerbot.com.troop.clickerbot.ColorUtils;
-import clickerbot.com.troop.clickerbot.RootShell;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.ClickOnBossFightTask;
-import clickerbot.com.troop.clickerbot.tt2.tasks.LevelAllHerosTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.LevelSwordMasterTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.LevelTop6HerosTask;
 
@@ -58,7 +56,6 @@ public class Boss extends Menu {
     private int bossFightActiveColor = Color.argb(255,69,85,89);
     private int bossFightFailedColor = Color.argb(255,239,113,16);
 
-    private boolean waitForNextFail = true;
 
     public void checkIfActiveBossFight()
     {
@@ -69,7 +66,6 @@ public class Boss extends Menu {
                 if (bossFailedCounter > 0)
                     bossFailedCounter--;
                 setBossState(BossState.BossFightActive);
-                waitForNextFail = true;
                 Log.i(TAG, "bossFightActiveColor Wait for next fail: true");
             }
         }
@@ -80,9 +76,8 @@ public class Boss extends Menu {
                     bossFailedCounter++;
                 setBossState(BossState.BossFightFailed);
 
-                if (waitForNextFail) {
+                if (!bot.containsTask(ClickOnBossFightTask.class)) {
                     Log.i(TAG, "bossFightFailedColor Wait for next fail: false");
-                    waitForNextFail = false;
                     int pos = 0;
                     if (botSettings.autoLvlSwordMaster) {
                         bot.putTaskAtPos(LevelSwordMasterTask.class, pos++);
@@ -115,10 +110,6 @@ public class Boss extends Menu {
     public void clickOnBossFight() throws IOException, InterruptedException {
         Thread.sleep(100);
         touchInput.tap(Coordinates.fightBossButton);
-        Thread.sleep(100);
-        touchInput.tap(Coordinates.fightBossButton);
-        Thread.sleep(100);
-        touchInput.tap(Coordinates.fightBossButton);
         Thread.sleep(500);
         /*int color = bot.getScreeCapture().getColor(Coordinates.fightBossButton_Color);
         if(color == bossFightFailedColor)
@@ -127,6 +118,5 @@ public class Boss extends Menu {
             Thread.sleep(100);
             Thread.sleep(300);
         }*/
-        waitForNextFail = true;
     }
 }

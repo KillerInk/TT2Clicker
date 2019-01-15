@@ -51,14 +51,40 @@ public class NativeTouchHandler implements TouchInterface {
         touchUp(pos);
     }
 
+    /**
+     * touchDown 0 280 650
+     * 		sleep 200
+     * 		touchMove 0 280 600
+     * 		sleep 50
+     * 		touchMove 0 280 700
+     * 		sleep 50
+     * 		touchMove 0 280 750
+     * 		sleep 50
+     * 		touchMove 0 280 780
+     * 		touchUp 0
+     * @param from
+     * @param to
+     * @throws InterruptedException
+     */
     @Override
     public void swipeVertical(Point from, Point to) throws InterruptedException {
+        int dif = from.y - to.y;
+
+        int sleep = dif / 4;
+        if (sleep < 0 )
+            sleep *= -1;
         touchDown(from);
-        updatePosition(from);
-        Thread.sleep(300);
-        int y = from.y - (from.y - to.y)/2;
-        updatePosition(new Point(from.x,y));
-        Thread.sleep(300);
+        updatePosition(new Point(from.x,from.y));
+        Thread.sleep(sleep);
+
+        for (int i = 1; i< 5; i++)
+        {
+            if (to.y < from.y)
+                updatePosition(new Point(from.x,from.y - (sleep*i)));
+            else
+                updatePosition(new Point(from.x,from.y + (sleep*i)));
+            Thread.sleep(sleep);
+        }
         updatePosition(to);
         touchUp(to);
     }

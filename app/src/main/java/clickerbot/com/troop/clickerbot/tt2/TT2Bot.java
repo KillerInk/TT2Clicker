@@ -12,8 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.MediaProjectionScreenCapture;
+import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.NativeTouchHandler;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.CrazyTapTask;
@@ -122,6 +122,11 @@ public class TT2Bot extends AbstractBot
     public void putTaskAtPos(Class task, int pos)
     {
         putAtPos(executerTaskHashMap.get(task),pos);
+    }
+
+    public boolean containsTask(Class task)
+    {
+        return containsT(executerTaskHashMap.get(task));
     }
 
     public void destroy()
@@ -288,6 +293,8 @@ public class TT2Bot extends AbstractBot
      */
     public void tapOnPoints(List<Point> points, ExecuterTask task)
     {
+        if (points == null )
+            return;
         try {
             for (int i=0; i < points.size(); i++)
             {
@@ -309,8 +316,8 @@ public class TT2Bot extends AbstractBot
     @Override
     public void onScreenCapture() {
         //UpdateImage(getScreeCapture().getBitmap());
-        //boss.checkIfActiveBossFight();
-        //fairy.checkIfFairyWindowOpen();
-        //heros.checkIfMenuOpen();
+        boss.checkIfActiveBossFight();
+        fairy.checkIfFairyWindowOpen();
+        heros.checkIfMenuOpen();
     }
 }

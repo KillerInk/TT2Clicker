@@ -14,16 +14,10 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceView;
-import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
-
-import java.io.IOException;
 
 import clickerbot.com.troop.clickerbot.R;
-import clickerbot.com.troop.clickerbot.RootShell;
 
 public class FrameBufferTestActivity extends AppCompatActivity {
 

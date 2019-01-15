@@ -6,7 +6,6 @@ import android.util.Log;
 
 import java.io.IOException;
 
-import clickerbot.com.troop.clickerbot.RootShell;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.MenuCloseTask;
 

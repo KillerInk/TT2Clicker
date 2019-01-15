@@ -40,7 +40,7 @@ public:
         struct uinput_event event;
         int len;
 
-        LOGD("sendEvent %i %i %i", type, code,value);
+        //LOGD("sendEvent %i %i %i", type, code,value);
 
         memset(&event, 0, sizeof(event));
         event.type = type;

@@ -3,12 +3,8 @@ package clickerbot.com.troop.clickerbot;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.ImageFormat;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
-import android.graphics.SurfaceTexture;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.VirtualDisplay;
 import android.media.Image;
@@ -18,15 +14,8 @@ import android.media.projection.MediaProjectionManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.renderscript.Allocation;
-import android.renderscript.Element;
-import android.renderscript.RenderScript;
 import android.util.Log;
-import android.view.Surface;
 import android.view.TextureView;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.renderscript.Type.Builder;
 
 import java.nio.ByteBuffer;
 
@@ -171,14 +160,14 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
         int color =0;
         captureframe = lastFrame;
         synchronized (bitmapLOCK) {
-            if (captureframe+3 > lastFrame) {
+            /*if (captureframe+3 > lastFrame) {
                 try {
                     bitmapLOCK.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-            Log.v(TAG,"getColor w:" + inputbmp.getWidth() +" h:" + inputbmp.getHeight());
+            Log.v(TAG,"getColor w:" + inputbmp.getWidth() +" h:" + inputbmp.getHeight());*/
             if (inputbmp != null && inputbmp.getWidth() > 0 && inputbmp.getHeight() > 0)
                 color = inputbmp.getPixel(p.x, p.y);
         }
@@ -190,7 +179,7 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
 
         frames++;
         Image img = reader.acquireLatestImage();
-        if (frames == 5) {
+        if (frames == 10) {
             if (reader != null) {
 
                 if (img != null) {

@@ -7,9 +7,8 @@ import android.util.Log;
 import java.io.IOException;
 
 import clickerbot.com.troop.clickerbot.ColorUtils;
-import clickerbot.com.troop.clickerbot.RootShell;
+import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
-import clickerbot.com.troop.clickerbot.tt2.tasks.ClickOnBossFightTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.LevelAllHerosTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.LevelTop6HerosTask;
 
@@ -62,19 +61,16 @@ public class Heros extends Menu {
     public void levelTop6Heros() throws InterruptedException, IOException {
         openHeroMenu();
         //make sure we are on top
-        swipeUp(300);
-        Thread.sleep(200);
-        swipeUp(300);
-        Thread.sleep(200);
-        swipeUp(300);
-        Thread.sleep(200);
+        for (int i=0; i< 25; i++)
+            touchInput.swipeVertical(Coordinates.lvlFIrsHeroButton_click, Coordinates.lvlThirdHeroButton_click);
+        Thread.sleep(1500);
         if (canLevelHero(bot.getScreeCapture().getColor(Coordinates.lvlFIrsHeroButton_color)))
             tapOnHero(1, Coordinates.lvlFIrsHeroButton_click);
         if (canLevelHero(bot.getScreeCapture().getColor(Coordinates.lvlSecondHeroButton_color)))
             tapOnHero(1, Coordinates.lvlSecondHeroButton_click);
         if (canLevelHero(bot.getScreeCapture().getColor(Coordinates.lvlThirdHeroButton_color)))
             tapOnHero(1, Coordinates.lvlThirdHeroButton_click);
-        swipeDown3xHeros();
+        touchInput.swipeVertical(Coordinates.lvlThirdHeroButton_click, Coordinates.lvlFIrsHeroButton_click);
         if (canLevelHero(bot.getScreeCapture().getColor(Coordinates.lvlFIrsHeroButton_color)))
             tapOnHero(1, Coordinates.lvlFIrsHeroButton_click);
         if (canLevelHero(bot.getScreeCapture().getColor(Coordinates.lvlSecondHeroButton_color)))
@@ -95,17 +91,12 @@ public class Heros extends Menu {
 
     final int tapOnHerosXtimes = 5;
 
-    public void lvlAllHeros() throws InterruptedException, IOException {
+    public void lvlAllHeros(ExecuterTask task) throws InterruptedException, IOException {
         openHeroMenu();
-        swipeUp(-400);
-        Thread.sleep(200);
-        swipeUp(-400);
-        Thread.sleep(200);
-        swipeUp(-400);
-        Thread.sleep(200);
-        swipeUp(-400);
-        Thread.sleep(400);
-        while (bot.getScreeCapture().getColor(MenuMaxButtonColorPosition) != MenuMaxButtonBackgroundColor) {
+        for (int i=0; i< 25; i++)
+            touchInput.swipeVertical(Coordinates.lvlThirdHeroButton_click, Coordinates.lvlFIrsHeroButton_click);
+        Thread.sleep(1500);
+        while (bot.getScreeCapture().getColor(MenuMaxButtonColorPosition) != MenuMaxButtonBackgroundColor || task.cancelTask) {
             Thread.sleep(200);
             if (canLevelHero(bot.getScreeCapture().getColor(Coordinates.lvlFIrsHeroButton_color)))
                 tapOnHero(tapOnHerosXtimes, Coordinates.lvlFIrsHeroButton_click);
@@ -113,7 +104,7 @@ public class Heros extends Menu {
                 tapOnHero(tapOnHerosXtimes, Coordinates.lvlSecondHeroButton_click);
             if (canLevelHero(bot.getScreeCapture().getColor(Coordinates.lvlThirdHeroButton_color)))
                 tapOnHero(tapOnHerosXtimes, Coordinates.lvlThirdHeroButton_click);
-            swipeUp3xHeros();
+            touchInput.swipeVertical(Coordinates.lvlFIrsHeroButton_click, Coordinates.lvlThirdHeroButton_click);
         }
         closeHeroMenu();
 

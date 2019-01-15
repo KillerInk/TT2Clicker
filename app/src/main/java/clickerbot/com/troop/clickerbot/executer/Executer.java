@@ -50,6 +50,11 @@ public class Executer {
         Log.d(TAG, "Queue size:" + runnableLinkedList.size());
     }
 
+    public boolean containsTaks(ExecuterTask runnable)
+    {
+        return runnableLinkedList.contains(runnable)  || run == runnable;
+    }
+
     public void putRunnable(ExecuterTask runnable)
     {
         if (!runnableLinkedList.contains(runnable) && run != runnable) {

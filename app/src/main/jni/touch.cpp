@@ -1,6 +1,5 @@
 #include <jni.h>
 #include <stdlib.h>
-#include <android/log.h>
 #include <fcntl.h>
 #include "MyInput.h"
 

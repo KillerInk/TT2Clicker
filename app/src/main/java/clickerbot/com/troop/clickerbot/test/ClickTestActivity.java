@@ -8,25 +8,10 @@ import android.widget.Button;
 
 import java.io.IOException;
 
-import clickerbot.com.troop.clickerbot.CmdBuilder;
-import clickerbot.com.troop.clickerbot.NativeTouch;
 import clickerbot.com.troop.clickerbot.R;
-import clickerbot.com.troop.clickerbot.RootShell;
 import clickerbot.com.troop.clickerbot.touch.NativeTouchHandler;
 import clickerbot.com.troop.clickerbot.touch.ShellInputEventHandler;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
-
-import static clickerbot.com.troop.clickerbot.CmdBuilder.ABS_MT_POSITION_X;
-import static clickerbot.com.troop.clickerbot.CmdBuilder.ABS_MT_POSITION_Y;
-import static clickerbot.com.troop.clickerbot.CmdBuilder.ABS_MT_PRESSURE;
-import static clickerbot.com.troop.clickerbot.CmdBuilder.BTN_TOUCH;
-import static clickerbot.com.troop.clickerbot.CmdBuilder.DOWN;
-import static clickerbot.com.troop.clickerbot.CmdBuilder.EV_ABS;
-import static clickerbot.com.troop.clickerbot.CmdBuilder.EV_KEY;
-import static clickerbot.com.troop.clickerbot.CmdBuilder.EV_SYN;
-import static clickerbot.com.troop.clickerbot.CmdBuilder.SYN_MT_REPORT;
-import static clickerbot.com.troop.clickerbot.CmdBuilder.SYN_REPORT;
-import static clickerbot.com.troop.clickerbot.CmdBuilder.UP;
 
 public class ClickTestActivity extends AppCompatActivity {
 
@@ -43,9 +28,9 @@ public class ClickTestActivity extends AppCompatActivity {
                     Thread.sleep(500);
                     TouchInterface nativeTouchHandler = new NativeTouchHandler();
                     runTouchTest(nativeTouchHandler);
-                    Thread.sleep(2000);
+                    /*Thread.sleep(2000);
                     nativeTouchHandler = new ShellInputEventHandler(1);
-                    runTouchTest(nativeTouchHandler);
+                    runTouchTest(nativeTouchHandler);*/
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
