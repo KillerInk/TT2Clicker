@@ -2,7 +2,7 @@ package clickerbot.com.troop.clickerbot.tt2.tasks;
 
 import java.io.IOException;
 
-import clickerbot.com.troop.clickerbot.ExecuterTask;
+import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.tt2.Prestige;
 
 public class PrestigeTask extends ExecuterTask {

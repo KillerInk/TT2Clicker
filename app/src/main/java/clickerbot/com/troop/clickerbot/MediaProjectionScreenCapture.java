@@ -40,7 +40,7 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
     private static int mResultCode;
     private int mScreenDensity;
     private Bitmap inputbmp;
-    private ScreenCapture.ScreenCaptureCallBack screenCaptureCallBack;
+    private ScreenCaptureCallBack screenCaptureCallBack;
     private long frames;
     private ImageReader imageReader;
     private HandlerThread mBackgroundThread;
@@ -86,7 +86,7 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
     }
 
 
-    public void setScreenCaptureCallBack(ScreenCapture.ScreenCaptureCallBack captureCallBack)
+    public void setScreenCaptureCallBack(ScreenCaptureCallBack captureCallBack)
     {
         this.screenCaptureCallBack = captureCallBack;
     }
@@ -164,10 +164,20 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
         return inputbmp;
     }
 
+    long lastFrame;
+    long captureframe;
     public int getColor(Point p)
     {
         int color =0;
+        captureframe = lastFrame;
         synchronized (bitmapLOCK) {
+            if (captureframe+3 > lastFrame) {
+                try {
+                    bitmapLOCK.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
             Log.v(TAG,"getColor w:" + inputbmp.getWidth() +" h:" + inputbmp.getHeight());
             if (inputbmp != null && inputbmp.getWidth() > 0 && inputbmp.getHeight() > 0)
                 color = inputbmp.getPixel(p.x, p.y);
@@ -180,13 +190,16 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
 
         frames++;
         Image img = reader.acquireLatestImage();
-        if (frames == 60) {
+        if (frames == 5) {
             if (reader != null) {
 
                 if (img != null) {
                     ByteBuffer byteBuffer = img.getPlanes()[0].getBuffer();
                     synchronized (bitmapLOCK) {
                         inputbmp.copyPixelsFromBuffer(byteBuffer);
+                        lastFrame++;
+                        bitmapLOCK.notify();
+
                     }
 
                     if (screenCaptureCallBack != null)

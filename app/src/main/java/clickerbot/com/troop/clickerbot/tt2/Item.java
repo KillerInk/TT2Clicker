@@ -2,22 +2,20 @@ package clickerbot.com.troop.clickerbot.tt2;
 
 import android.graphics.Point;
 
-import java.io.IOException;
-
-import clickerbot.com.troop.clickerbot.RootShell;
+import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 
 public abstract class Item {
 
     protected final TT2Bot bot;
     protected final BotSettings botSettings;
-    protected RootShell rootShells[];
+    protected TouchInterface touchInput;
 
 
 
-    public Item(TT2Bot ibot, BotSettings botSettings, RootShell[] rootShell){
+    public Item(TT2Bot ibot, BotSettings botSettings, TouchInterface touchInput){
         this.bot = ibot;
         this.botSettings = botSettings;
-        this.rootShells = rootShell;
+        this.touchInput = touchInput;
     }
 
     abstract void init();
@@ -26,10 +24,8 @@ public abstract class Item {
     public void doSingelTap(Point point)
     {
         try {
-            rootShells[0].doTap(point);
+            touchInput.tap(point);
             Thread.sleep(50);
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

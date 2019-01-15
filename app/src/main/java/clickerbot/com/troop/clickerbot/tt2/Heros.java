@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import clickerbot.com.troop.clickerbot.ColorUtils;
 import clickerbot.com.troop.clickerbot.RootShell;
+import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.ClickOnBossFightTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.LevelAllHerosTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.LevelTop6HerosTask;
@@ -21,7 +22,7 @@ public class Heros extends Menu {
 
     private final int hero_button_red_min = 160;
 
-    public Heros(TT2Bot ibot, BotSettings botSettings, RootShell[] rootShell,Boss boss) {
+    public Heros(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell, Boss boss) {
         super(ibot, botSettings, rootShell);
         this.boss = boss;
     }
@@ -105,6 +106,7 @@ public class Heros extends Menu {
         swipeUp(-400);
         Thread.sleep(400);
         while (bot.getScreeCapture().getColor(MenuMaxButtonColorPosition) != MenuMaxButtonBackgroundColor) {
+            Thread.sleep(200);
             if (canLevelHero(bot.getScreeCapture().getColor(Coordinates.lvlFIrsHeroButton_color)))
                 tapOnHero(tapOnHerosXtimes, Coordinates.lvlFIrsHeroButton_click);
             if (canLevelHero(bot.getScreeCapture().getColor(Coordinates.lvlSecondHeroButton_color)))
@@ -124,7 +126,7 @@ public class Heros extends Menu {
 
     private void tapOnHero(int times,Point point) throws IOException, InterruptedException {
         for (int i = 0; i< times;i++) {
-            rootShells[0].doTap(point);
+            doSingelTap(point);
             Thread.sleep(200);
         }
     }

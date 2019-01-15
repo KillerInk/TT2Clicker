@@ -3,13 +3,13 @@ package clickerbot.com.troop.clickerbot.tt2;
 import android.graphics.Bitmap;
 import android.util.Log;
 
-import clickerbot.com.troop.clickerbot.Executer;
-import clickerbot.com.troop.clickerbot.ExecuterTask;
+import clickerbot.com.troop.clickerbot.executer.Executer;
+import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.IBot;
 import clickerbot.com.troop.clickerbot.MediaProjectionScreenCapture;
-import clickerbot.com.troop.clickerbot.ScreenCapture;
+import clickerbot.com.troop.clickerbot.ScreenCaptureCallBack;
 
-public abstract class AbstractBot implements IBot ,ScreenCapture.ScreenCaptureCallBack
+public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
 {
     private final static String TAG = AbstractBot.class.getSimpleName();
     private volatile boolean doWork = false;
@@ -58,7 +58,6 @@ public abstract class AbstractBot implements IBot ,ScreenCapture.ScreenCaptureCa
     public AbstractBot(BotSettings botSettings, MediaProjectionScreenCapture mediaProjectionScreenCapture){
         this.botSettings = botSettings;
         this.mediaProjectionScreenCapture = mediaProjectionScreenCapture;
-        //screenCapture = new ScreenCapture(this,botSettings);
         executer = new Executer();
     }
 
@@ -116,7 +115,7 @@ public abstract class AbstractBot implements IBot ,ScreenCapture.ScreenCaptureCa
         }
         ).start();
 
-        new Thread(()->{
+        /*new Thread(()->{
             while (doWork)
             {
                 onScreenCapture();
@@ -126,7 +125,7 @@ public abstract class AbstractBot implements IBot ,ScreenCapture.ScreenCaptureCa
                     e.printStackTrace();
                 }
             }
-        }).start();
+        }).start();*/
         //screenCapture.start();
     }
 

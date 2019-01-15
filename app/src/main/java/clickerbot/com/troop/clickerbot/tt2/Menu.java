@@ -7,6 +7,7 @@ import android.util.Log;
 import java.io.IOException;
 
 import clickerbot.com.troop.clickerbot.RootShell;
+import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.MenuCloseTask;
 
 public abstract class Menu extends Item
@@ -19,7 +20,7 @@ public abstract class Menu extends Item
     public final int MenuMaxButtonBackgroundColor = Color.argb(255,65,82,82);
     public final Point MenuMaxButtonColorPosition = new Point(465,500);
 
-    public Menu(TT2Bot ibot, BotSettings botSettings, RootShell[] rootShell) {
+    public Menu(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
         super(ibot, botSettings, rootShell);
     }
 
@@ -42,12 +43,10 @@ public abstract class Menu extends Item
     {
         Log.d(TAG, "closeMenu");
         try {
-            rootShells[0].doTap(Coordinates.Menu_Close);
+            touchInput.tap(Coordinates.Menu_Close);
             Thread.sleep(100);
-            rootShells[0].doTap(Coordinates.Menu_Close);
+            touchInput.tap(Coordinates.Menu_Close);
             Thread.sleep(menuOpenCloseDelay);
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -66,10 +65,8 @@ public abstract class Menu extends Item
         Log.d(TAG, "openSwordMasterMenu");
         MenuOpen = true;
         try {
-            rootShells[0].doTap(Coordinates.Menu_SwordMaster);
+            touchInput.tap(Coordinates.Menu_SwordMaster);
             Thread.sleep(menuOpenCloseDelay);
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -85,10 +82,8 @@ public abstract class Menu extends Item
         Log.d(TAG, "openSwordMasterMenu");
         MenuOpen = false;
         try {
-            rootShells[0].doTap(Coordinates.Menu_SwordMaster);
+            touchInput.tap(Coordinates.Menu_SwordMaster);
             Thread.sleep(menuOpenCloseDelay);
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -104,10 +99,8 @@ public abstract class Menu extends Item
         Log.d(TAG, "openHeroMenu");
         MenuOpen =true;
         try {
-            rootShells[0].doTap(Coordinates.Menu_Heros);
+            touchInput.tap(Coordinates.Menu_Heros);
             Thread.sleep(menuOpenCloseDelay);
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -119,10 +112,8 @@ public abstract class Menu extends Item
         Log.d(TAG, "openHeroMenu");
         MenuOpen =false;
         try {
-            rootShells[0].doTap(Coordinates.Menu_Heros);
+            touchInput.tap(Coordinates.Menu_Heros);
             Thread.sleep(menuOpenCloseDelay);
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -133,10 +124,8 @@ public abstract class Menu extends Item
     {
         Log.d(TAG, "maximiseMenu");
         try {
-            rootShells[0].doTap(Coordinates.Menu_Maximise);
+            touchInput.tap(Coordinates.Menu_Maximise);
             Thread.sleep(menuOpenCloseDelay);
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -146,10 +135,8 @@ public abstract class Menu extends Item
     {
         Log.d(TAG, "minimiseMenu");
         try {
-            rootShells[0].doTap(Coordinates.Menu_Minimise);
+            touchInput.tap(Coordinates.Menu_Minimise);
             Thread.sleep(menuOpenCloseDelay);
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -157,27 +144,30 @@ public abstract class Menu extends Item
 
     public void swipeUp()
     {
-        swipeUp(100);
+        try {
+            swipeUp(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void swipeUp(int pixel)
-    {
+    public void swipeUp(int pixel) throws InterruptedException {
         try {
-            rootShells[0].doSwipe(new Point(280 ,600),new Point(280,600+pixel));
+            touchInput.swipeVertical(new Point(280 ,600),new Point(280,600+pixel));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void swipe(int pixel,int duration)
+   /* public void swipe(int pixel,int duration)
     {
         try {
             rootShells[0].doSwipe(new Point(280 ,600),new Point(280,600+pixel),duration);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
+    }*/
+/*
     public void swipe(Point from,Point to,int duration)
     {
         try {
@@ -185,31 +175,34 @@ public abstract class Menu extends Item
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 
-    public void menuTest() throws InterruptedException {
+    public void menuTest() throws InterruptedException, IOException {
        /* openHeroMenu();
         closeMenu();
         openSwordMasterMenu();
         closeMenu();*/
 
         openHeroMenu();
-        swipeDown3xHeros();
-        Thread.sleep(1000);
-        swipeDown3xHeros();
-        Thread.sleep(1000);
+
+            swipeDown3xHeros();
+            Thread.sleep(1000);
+            swipeDown3xHeros();
+            Thread.sleep(1000);
+
+
 
     }
 
-    public void swipeUp3xHeros() throws InterruptedException {
-        swipe(new Point(261,590),new Point(261,766),1000);
-        Thread.sleep(1000);
+    private final int swipeTopPos = 585;
+    private final int swipeBottomPos = 734;
+
+    public void swipeUp3xHeros() throws InterruptedException, IOException {
+        touchInput.swipeVertical(new Point(200,swipeTopPos),new Point(200,swipeBottomPos));
     }
 
-    public void swipeDown3xHeros() throws InterruptedException {
-        //swipe(new Point(261,766),new Point(261,590),1000);
-        swipe(new Point(261,766),new Point(261,590),1000);
-        Thread.sleep(1000);
+    public void swipeDown3xHeros() throws InterruptedException, IOException {
+        touchInput.swipeVertical(new Point(200,swipeBottomPos),new Point(200,swipeTopPos));
     }
 }

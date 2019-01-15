@@ -1,11 +1,11 @@
 package clickerbot.com.troop.clickerbot;
 
+import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
+
 public interface IBot {
     boolean getIsRunning();
     void start();
     void stop();
-
-    OCR getOcr();
 
     MediaProjectionScreenCapture getScreeCapture();
     public void resetTickCounter();

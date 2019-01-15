@@ -1,6 +1,8 @@
 package clickerbot.com.troop.clickerbot.tt2.tasks.test;
 
-import clickerbot.com.troop.clickerbot.ExecuterTask;
+import java.io.IOException;
+
+import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.tt2.Menu;
 
 public class MenuTest extends ExecuterTask {
@@ -18,6 +20,8 @@ public class MenuTest extends ExecuterTask {
         try {
             menu.menuTest();
         } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

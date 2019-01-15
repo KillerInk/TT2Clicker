@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Random;
 
 import clickerbot.com.troop.clickerbot.ColorUtils;
-import clickerbot.com.troop.clickerbot.ExecuterTask;
-import clickerbot.com.troop.clickerbot.RootShell;
+import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
+import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.TapOnFairyVipWindowTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.TapOnFairysTask;
 
@@ -28,7 +28,7 @@ public class Fairy extends Menu {
     private Point fairyColorAccept = new Point(420,589);
 
 
-    public Fairy(TT2Bot ibot, BotSettings botSettings, RootShell[] rootShell) {
+    public Fairy(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
         super(ibot, botSettings, rootShell);
         rand = new Random();
         fairyTaps = new ArrayList<>();

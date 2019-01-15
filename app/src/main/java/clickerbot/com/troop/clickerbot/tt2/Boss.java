@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import clickerbot.com.troop.clickerbot.ColorUtils;
 import clickerbot.com.troop.clickerbot.RootShell;
+import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.ClickOnBossFightTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.LevelAllHerosTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.LevelSwordMasterTask;
@@ -23,7 +24,7 @@ public class Boss extends Menu {
     private BossState bossState = BossState.NoneFight;
 
 
-    public Boss(TT2Bot ibot, BotSettings botSettings, RootShell[] rootShell) {
+    public Boss(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
         super(ibot, botSettings, rootShell);
     }
 
@@ -113,11 +114,11 @@ public class Boss extends Menu {
 
     public void clickOnBossFight() throws IOException, InterruptedException {
         Thread.sleep(100);
-        rootShells[0].doTap(Coordinates.fightBossButton);
+        touchInput.tap(Coordinates.fightBossButton);
         Thread.sleep(100);
-        rootShells[0].doTap(Coordinates.fightBossButton);
+        touchInput.tap(Coordinates.fightBossButton);
         Thread.sleep(100);
-        rootShells[0].doTap(Coordinates.fightBossButton);
+        touchInput.tap(Coordinates.fightBossButton);
         Thread.sleep(500);
         /*int color = bot.getScreeCapture().getColor(Coordinates.fightBossButton_Color);
         if(color == bossFightFailedColor)

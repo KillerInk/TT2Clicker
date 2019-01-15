@@ -5,6 +5,7 @@ import android.util.Log;
 import java.io.IOException;
 
 import clickerbot.com.troop.clickerbot.RootShell;
+import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.InitTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.PrestigeTask;
 
@@ -20,7 +21,7 @@ public class Prestige extends Menu {
     private long timeSinceLastPrestige = 0;
     private Boss boss;
 
-    public Prestige(TT2Bot ibot, BotSettings botSettings, RootShell[] rootShell, Boss boss) {
+    public Prestige(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell, Boss boss) {
         super(ibot, botSettings, rootShell);
         this.boss = boss;
     }
@@ -66,13 +67,13 @@ public class Prestige extends Menu {
             Thread.sleep(200);
             swipeUp(-200);
             Thread.sleep(1000);
-            rootShells[0].doTap(Coordinates.prestigeMenuButton);
+            doSingelTap(Coordinates.prestigeMenuButton);
             Thread.sleep(1000);
-            rootShells[0].doTap(Coordinates.prestigeButton);
+            doSingelTap(Coordinates.prestigeButton);
             Thread.sleep(3000);
-            rootShells[0].doTap(Coordinates.prestigeAcceptButton);
+            doSingelTap(Coordinates.prestigeAcceptButton);
             Thread.sleep(300);
-            rootShells[0].doTap(Coordinates.prestigeAcceptButton);
+            doSingelTap(Coordinates.prestigeAcceptButton);
             Thread.sleep(5000);
             bot.resetTickCounter();
             bot.executeTask(InitTask.class);

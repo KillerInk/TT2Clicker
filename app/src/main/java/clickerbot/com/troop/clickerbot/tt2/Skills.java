@@ -7,6 +7,7 @@ import android.util.Log;
 import java.io.IOException;
 
 import clickerbot.com.troop.clickerbot.RootShell;
+import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 
 public class Skills extends Menu {
     private final String TAG = Skills.class.getSimpleName();
@@ -21,34 +22,34 @@ public class Skills extends Menu {
     private boolean wcUnlocked = false;
     private boolean scUnlocked = false;
 
-    public Skills(TT2Bot ibot, BotSettings botSettings, RootShell[] rootShell) {
+    public Skills(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
         super(ibot, botSettings, rootShell);
     }
 
 
     public void activateAllSkills() throws IOException, InterruptedException {
         if (scUnlocked && !Menu.MenuOpen) {
-            rootShells[0].doTap(Coordinates.SC_Pos);
+            doSingelTap(Coordinates.SC_Pos);
             Thread.sleep(100);
         }
         if (wcUnlocked && !Menu.MenuOpen) {
-            rootShells[0].doTap(Coordinates.WC_Pos);
+            doSingelTap(Coordinates.WC_Pos);
             Thread.sleep(100);
         }
         if (fsUnlocked && !Menu.MenuOpen) {
-            rootShells[0].doTap(Coordinates.FS_Pos);
+            doSingelTap(Coordinates.FS_Pos);
             Thread.sleep(100);
         }
         if (homUnlocked && !Menu.MenuOpen) {
-            rootShells[0].doTap(Coordinates.HOM_Pos);
+            doSingelTap(Coordinates.HOM_Pos);
             Thread.sleep(100);
         }
         if (dsUnlocked && !Menu.MenuOpen) {
-            rootShells[0].doTap(Coordinates.DS_Pos);
+            doSingelTap(Coordinates.DS_Pos);
             Thread.sleep(100);
         }
         if (hsUnlocked && !Menu.MenuOpen) {
-            rootShells[0].doTap(Coordinates.Hs_Pos);
+            doSingelTap(Coordinates.Hs_Pos);
             Thread.sleep(100);
         }
 
@@ -131,12 +132,10 @@ public class Skills extends Menu {
             Thread.sleep(200);
             swipeUp(200);
             Thread.sleep(200);
-            rootShells[0].doTap(Coordinates.Menu_Minimized_SwordMaster);
+            doSingelTap(Coordinates.Menu_Minimized_SwordMaster);
             Thread.sleep(1);
-            rootShells[0].doTap(Coordinates.Menu_Minimized_SwordMaster);
+            doSingelTap(Coordinates.Menu_Minimized_SwordMaster);
             Thread.sleep(50);
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -146,10 +145,8 @@ public class Skills extends Menu {
     private void levelUpSkills()
     {
         try {
-            rootShells[0].doTap(Coordinates.Menu_SwordMasterPos);
+            doSingelTap(Coordinates.Menu_SwordMasterPos);
             Thread.sleep(20);
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -173,10 +170,8 @@ public class Skills extends Menu {
         for (int i = 0; i< lvl; i++)
         {
             try {
-                rootShells[0].doTap(pos);
+                doSingelTap(pos);
                 Thread.sleep(40);
-            } catch (IOException e) {
-                e.printStackTrace();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

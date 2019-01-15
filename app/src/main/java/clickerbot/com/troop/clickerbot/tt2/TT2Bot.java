@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Point;
 import android.util.Log;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,10 +12,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import clickerbot.com.troop.clickerbot.ExecuterTask;
+import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.MediaProjectionScreenCapture;
-import clickerbot.com.troop.clickerbot.OCR;
-import clickerbot.com.troop.clickerbot.RootShell;
+import clickerbot.com.troop.clickerbot.touch.NativeTouchHandler;
+import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.CrazyTapTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.InitTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.LevelAllHerosTask;
@@ -28,14 +27,13 @@ public class TT2Bot extends AbstractBot
 {
     private static final String TAG = TT2Bot.class.getSimpleName();
 
+    private TouchInterface touchInput;
+
     /**
      * Holds the tasks to execute
      */
     private HashMap<Class, ExecuterTask> executerTaskHashMap;
-    /**
-     * Hold the root shells that get used to send commands
-     */
-    private RootShell rootShells[];
+
 
     /**
      * handels everything releated about skills
@@ -57,11 +55,6 @@ public class TT2Bot extends AbstractBot
      * handels everything releated about fairys
      */
     private Fairy fairy;
-    /**
-     * can get used to extract text from images.
-     * but its not trained yet, so its non functional
-     */
-    private OCR ocr;
 
     /**
      * time after a randomtap gets executed
@@ -102,18 +95,15 @@ public class TT2Bot extends AbstractBot
     public TT2Bot(Context context, BotSettings botSettings, MediaProjectionScreenCapture mediaProjectionScreenCapture)
     {
         super(botSettings,mediaProjectionScreenCapture);
-        rootShells = new RootShell[(int)botSettings.shellcount];
-        for (int i = 0; i < rootShells.length; i++)
-        {
-            rootShells[i] = new RootShell(i);
-        }
-        boss = new Boss(this,botSettings, rootShells);
-        skills = new Skills(this,botSettings, rootShells);
-        heros = new Heros(this,botSettings, rootShells,boss);
 
-        prestige = new Prestige(this,botSettings, rootShells,boss);
-        ocr = new OCR(context,"eng");
-        fairy = new Fairy(this,botSettings, rootShells);
+        touchInput = new NativeTouchHandler();
+
+        boss = new Boss(this,botSettings, touchInput);
+        skills = new Skills(this,botSettings, touchInput);
+        heros = new Heros(this,botSettings, touchInput,boss);
+
+        prestige = new Prestige(this,botSettings, touchInput,boss);
+        fairy = new Fairy(this,botSettings, touchInput);
 
         executerTaskHashMap = new TaskFactory().getTasksmap(this,heros,skills,prestige,fairy,boss);
         mediaProjectionScreenCapture.setScreenCaptureCallBack(this::onScreenCapture);
@@ -137,18 +127,8 @@ public class TT2Bot extends AbstractBot
     public void destroy()
     {
         Log.d(TAG,"destroy");
-        ocr.destroy();
         //getScreeCapture().destroy();
-        for (int i = 0; i < rootShells.length; i++)
-        {
-            rootShells[i].Close();
-        }
-    }
-
-
-    @Override
-    public OCR getOcr() {
-        return ocr;
+        touchInput.close();
     }
 
     /**
@@ -159,8 +139,7 @@ public class TT2Bot extends AbstractBot
         Log.d(TAG,"start");
         createRandomTaps();
         lastTestExecuted = 0;
-        for (int i = 0; i < rootShells.length; i++)
-            rootShells[i].startProcess();
+        touchInput.start();
         super.start();
     }
 
@@ -171,8 +150,7 @@ public class TT2Bot extends AbstractBot
     {
         Log.d(TAG,"stop");
         super.stop();
-        for (int i = 0; i < rootShells.length; i++)
-            rootShells[i].stopProcess();
+        touchInput.stop();
     }
 
     /**
@@ -310,32 +288,14 @@ public class TT2Bot extends AbstractBot
      */
     public void tapOnPoints(List<Point> points, ExecuterTask task)
     {
-        for (int i=0; i < points.size(); i+= rootShells.length-1)
-        {
-            for(int s = 1; s< rootShells.length; s++)
+        try {
+            for (int i=0; i < points.size(); i++)
             {
                 if (task.cancelTask)
                     return;
-                int pos = i+s-1;
-                if (pos < points.size()) {
-                    try {
-                        rootShells[s].doTap(points.get(pos));
-                        try {
-                            Thread.sleep(botSettings.clickSleepTime);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }catch (ArrayIndexOutOfBoundsException e) {
-                        //e.printStackTrace();
-                    }
-                }
-                else
-                    break;
+                touchInput.tap(points.get(i));
+                Thread.sleep(botSettings.clickSleepTime);
             }
-        }
-        try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -349,8 +309,8 @@ public class TT2Bot extends AbstractBot
     @Override
     public void onScreenCapture() {
         //UpdateImage(getScreeCapture().getBitmap());
-        boss.checkIfActiveBossFight();
-        fairy.checkIfFairyWindowOpen();
+        //boss.checkIfActiveBossFight();
+        //fairy.checkIfFairyWindowOpen();
         //heros.checkIfMenuOpen();
     }
 }

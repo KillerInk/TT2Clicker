@@ -2,7 +2,7 @@ package clickerbot.com.troop.clickerbot.tt2.tasks;
 
 import java.util.HashMap;
 
-import clickerbot.com.troop.clickerbot.ExecuterTask;
+import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.tt2.Boss;
 import clickerbot.com.troop.clickerbot.tt2.Fairy;
 import clickerbot.com.troop.clickerbot.tt2.Heros;
