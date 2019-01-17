@@ -94,7 +94,9 @@ public class Heros extends Menu {
             touchInput.swipeVertical(new Point(240, 707), new Point(240, 556));
         }
         Thread.sleep(500);
-        while (!isMenuTopReached() || task.cancelTask) {
+        int loopbreaker = 0;
+        while (!isMenuTopReached() && !task.cancelTask && loopbreaker < 25) {
+            loopbreaker++;
             Thread.sleep(200);
             level3heros();
             touchInput.swipeVertical(new Point(240,556),new Point(240,707));
@@ -112,14 +114,17 @@ public class Heros extends Menu {
 
 
     private void level3heros() throws IOException, InterruptedException {
-        while (canLevelHero(bot.getScreeCapture().getColor(Coordinates.lvlFIrsHeroButton_color),1)) {
-            tapOnHero(1, Coordinates.lvlFIrsHeroButton_click);
-        }
-        while (canLevelHero(bot.getScreeCapture().getColor(Coordinates.lvlSecondHeroButton_color),2)) {
-            tapOnHero(1, Coordinates.lvlSecondHeroButton_click);
-        }
-        while (canLevelHero(bot.getScreeCapture().getColor(Coordinates.lvlThirdHeroButton_color),3)) {
-            tapOnHero(1, Coordinates.lvlThirdHeroButton_click);
+        levelhero(Coordinates.lvlFIrsHeroButton_color,Coordinates.lvlFIrsHeroButton_click);
+        levelhero(Coordinates.lvlSecondHeroButton_color,Coordinates.lvlSecondHeroButton_click);
+        levelhero(Coordinates.lvlThirdHeroButton_color,Coordinates.lvlThirdHeroButton_click);
+    }
+
+    private void levelhero(Point color, Point click) throws IOException, InterruptedException {
+        int loopbreaker = 0;
+        while (canLevelHero(bot.getScreeCapture().getColor(color),1) && loopbreaker < 7) {
+            loopbreaker++;
+            tapOnHero(1, click);
+            Thread.sleep(400); //TODO this time may can get lowered, or removed with a wait for a new frame.
         }
     }
 

@@ -22,6 +22,7 @@ import clickerbot.com.troop.clickerbot.tt2.tasks.LevelAllHerosTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.LevelSwordMasterTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.RandomTapTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.TaskFactory;
+import clickerbot.com.troop.clickerbot.tt2.tasks.test.SwipeTest;
 
 public class TT2Bot extends AbstractBot
 {
@@ -136,6 +137,7 @@ public class TT2Bot extends AbstractBot
         touchInput.close();
     }
 
+    private boolean dochecks = false;
     /**
      * start the bot
      */
@@ -146,6 +148,22 @@ public class TT2Bot extends AbstractBot
         lastTestExecuted = 0;
         touchInput.start();
         super.start();
+        dochecks = true;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (dochecks) {
+                    boss.checkIfActiveBossFight();
+                    fairy.checkIfFairyWindowOpen();
+                    heros.checkIfMenuOpen();
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
     }
 
     /**
@@ -153,6 +171,7 @@ public class TT2Bot extends AbstractBot
      */
     public void stop()
     {
+        dochecks = false;
         Log.d(TAG,"stop");
         super.stop();
         touchInput.stop();
@@ -316,8 +335,6 @@ public class TT2Bot extends AbstractBot
     @Override
     public void onScreenCapture() {
         //UpdateImage(getScreeCapture().getBitmap());
-        boss.checkIfActiveBossFight();
-        fairy.checkIfFairyWindowOpen();
-        heros.checkIfMenuOpen();
+
     }
 }

@@ -127,7 +127,9 @@ public class Skills extends Menu {
         Log.d(TAG,"lvlSwordMaster");
         openSwordMasterMenu();
         try {
-            while (!isMenuTopReached()) {
+            int loopbreaker = 0;
+            while (!isMenuTopReached() && loopbreaker < 25) {
+                loopbreaker++;
                 touchInput.swipeVertical(Coordinates.lvlFIrsHeroButton_click, Coordinates.lvlThirdHeroButton_click);
                 Thread.sleep(300);
             }
