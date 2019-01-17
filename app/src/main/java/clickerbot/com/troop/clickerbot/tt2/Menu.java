@@ -5,7 +5,9 @@ import android.graphics.Point;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import clickerbot.com.troop.clickerbot.ColorUtils;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.MenuCloseTask;
 
@@ -15,17 +17,41 @@ public abstract class Menu extends Item
     public static volatile boolean MenuOpen = false;
 
     private final int menuOpenCloseDelay = 1000;
+    ArrayList<Integer> maxButtonColors;
 
-    public final int MenuMaxButtonBackgroundColor = Color.argb(255,65,82,82);
-    public final Point MenuMaxButtonColorPosition = new Point(465,500);
+    public final Point MenuMaxButtonColorPosition = new Point(335,518);
 
     public Menu(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
         super(ibot, botSettings, rootShell);
+        maxButtonColors = getMaxButtonColors();
     }
 
     private int colorMenuOpen = Color.argb(255,84,76,76);
     private Point menuOpenCheckPoint = new Point(471,449);
     private boolean menuTaskRunning = false;
+
+    public boolean isMenuTopReached()
+    {
+        int color = bot.getScreeCapture().getColor(MenuMaxButtonColorPosition);
+        boolean yep = false;
+
+        if (maxButtonColors.contains(color))
+            yep = true;
+        Log.d(TAG, "isMenuTopReached: "+ yep + " " + ColorUtils.getColorString(color));
+        return yep;
+    }
+
+    private ArrayList<Integer> getMaxButtonColors()
+    {
+        ArrayList<Integer> arr = new ArrayList();
+        arr.add(-11178377);
+        arr.add(-10914692);
+        arr.add(-10914948);
+        arr.add(-10849155);
+        arr.add(-10914691);
+        arr.add(-11112327);
+        return arr;
+    }
 
     public void checkIfMenuOpen()
     {

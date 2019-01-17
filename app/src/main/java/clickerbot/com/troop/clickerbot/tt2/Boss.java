@@ -62,31 +62,28 @@ public class Boss extends Menu {
         int color = bot.getScreeCapture().getColor(Coordinates.fightBossButton_Color);
         if (color ==  bossFightActiveColor)
         {
-            if (bossState == BossState.NoneFight) {
-                if (bossFailedCounter > 0)
+            if (bossState == BossState.NoneFight && bossFailedCounter > 0)
                     bossFailedCounter--;
-                setBossState(BossState.BossFightActive);
-                Log.i(TAG, "bossFightActiveColor Wait for next fail: true");
-            }
+            setBossState(BossState.BossFightActive);
+            Log.i(TAG, "bossFightActiveColor Wait for next fail: true");
+
         }
         else if(color == bossFightFailedColor)
         {
-            if (bossState == BossState.BossFightActive) {
-                if (bossFailedCounter < botSettings.bossFailedCount)
+            if (bossState == BossState.BossFightActive && bossFailedCounter < botSettings.bossFailedCount)
                     bossFailedCounter++;
-                setBossState(BossState.BossFightFailed);
+            setBossState(BossState.BossFightFailed);
 
-                if (!bot.containsTask(ClickOnBossFightTask.class)) {
-                    Log.i(TAG, "bossFightFailedColor Wait for next fail: false");
-                    int pos = 0;
-                    if (botSettings.autoLvlSwordMaster) {
-                        bot.putTaskAtPos(LevelSwordMasterTask.class, pos++);
-                    }
-                    if (botSettings.autoLvlHeros) {
-                        bot.putTaskAtPos(LevelTop6HerosTask.class, pos++);
-                    }
-                    bot.putTaskAtPos(ClickOnBossFightTask.class, pos++);
+            if (!bot.containsTask(ClickOnBossFightTask.class)) {
+                Log.i(TAG, "bossFightFailedColor Wait for next fail: false");
+                int pos = 0;
+                if (botSettings.autoLvlSwordMaster) {
+                    bot.putTaskAtPos(LevelSwordMasterTask.class, pos++);
                 }
+                if (botSettings.autoLvlHeros) {
+                    bot.putTaskAtPos(LevelTop6HerosTask.class, pos++);
+                }
+                bot.putTaskAtPos(ClickOnBossFightTask.class, pos++);
             }
 
         }
@@ -108,7 +105,8 @@ public class Boss extends Menu {
     }
 
     public void clickOnBossFight() throws IOException, InterruptedException {
-        Thread.sleep(100);
+        if (bossState == BossState.BossFightActive)
+            return;
         touchInput.tap(Coordinates.fightBossButton);
         Thread.sleep(500);
         /*int color = bot.getScreeCapture().getColor(Coordinates.fightBossButton_Color);

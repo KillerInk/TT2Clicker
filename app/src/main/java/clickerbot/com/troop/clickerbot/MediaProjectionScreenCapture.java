@@ -43,7 +43,7 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
         this.mResultCode = mResultCode;
         this.surfaceView = surfaceView;
         inputbmp = Bitmap.createBitmap(480,800,Bitmap.Config.ARGB_8888);
-        imageReader = ImageReader.newInstance(480,800,PixelFormat.RGBA_8888,2);
+        imageReader = ImageReader.newInstance(480,800,PixelFormat.RGBA_8888,5);
         imageReader.setOnImageAvailableListener(this,mBackgroundHandler);
 
         this.mScreenDensity =mScreenDensity;
@@ -160,14 +160,14 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
         int color =0;
         captureframe = lastFrame;
         synchronized (bitmapLOCK) {
-            /*if (captureframe+3 > lastFrame) {
+           /* if (captureframe+1 > lastFrame) {
                 try {
                     bitmapLOCK.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            }
-            Log.v(TAG,"getColor w:" + inputbmp.getWidth() +" h:" + inputbmp.getHeight());*/
+            }*/
+            /*Log.v(TAG,"getColor w:" + inputbmp.getWidth() +" h:" + inputbmp.getHeight());*/
             if (inputbmp != null && inputbmp.getWidth() > 0 && inputbmp.getHeight() > 0)
                 color = inputbmp.getPixel(p.x, p.y);
         }
@@ -179,7 +179,7 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
 
         frames++;
         Image img = reader.acquireLatestImage();
-        if (frames == 10) {
+        if (frames == 2) {
             if (reader != null) {
 
                 if (img != null) {
@@ -188,11 +188,10 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
                         inputbmp.copyPixelsFromBuffer(byteBuffer);
                         lastFrame++;
                         bitmapLOCK.notify();
-
                     }
 
-                    if (screenCaptureCallBack != null)
-                        screenCaptureCallBack.onScreenCapture();
+                    /*if (screenCaptureCallBack != null)
+                        screenCaptureCallBack.onScreenCapture();*/
                 }
             }
             frames = 0;

@@ -45,7 +45,8 @@ public class Executer {
     {
         Log.d(TAG, "stop");
         doWork =false;
-
+        if (run != null)
+            run.cancelTask = true;
         runnableLinkedList.clear();
         Log.d(TAG, "Queue size:" + runnableLinkedList.size());
     }

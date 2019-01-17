@@ -127,15 +127,17 @@ public class Skills extends Menu {
         Log.d(TAG,"lvlSwordMaster");
         openSwordMasterMenu();
         try {
-            swipeUp(200);
-            Thread.sleep(200);
-            swipeUp(200);
-            Thread.sleep(200);
+            while (!isMenuTopReached()) {
+                touchInput.swipeVertical(Coordinates.lvlFIrsHeroButton_click, Coordinates.lvlThirdHeroButton_click);
+                Thread.sleep(300);
+            }
             doSingelTap(Coordinates.Menu_Minimized_SwordMaster);
             Thread.sleep(1);
             doSingelTap(Coordinates.Menu_Minimized_SwordMaster);
             Thread.sleep(50);
         } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         closeSwordMasterMenu();

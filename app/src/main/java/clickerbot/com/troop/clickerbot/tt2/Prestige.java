@@ -1,5 +1,6 @@
 package clickerbot.com.troop.clickerbot.tt2;
 
+import android.graphics.Point;
 import android.util.Log;
 
 import java.io.IOException;
@@ -56,15 +57,8 @@ public class Prestige extends Menu {
         if (botSettings.autoPrestige) {
             bot.clearExecuterQueue();
             openSwordMasterMenu();
-            swipeUp(-200);
-            Thread.sleep(200);
-            swipeUp(-200);
-            Thread.sleep(200);
-            swipeUp(-200);
-            Thread.sleep(200);
-            swipeUp(-200);
-            Thread.sleep(200);
-            swipeUp(-200);
+            for (int i =0; i < 20; i++)
+                touchInput.swipeVertical(new Point(240, 707), new Point(240, 556));
             Thread.sleep(1000);
             doSingelTap(Coordinates.prestigeMenuButton);
             Thread.sleep(1000);
