@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import clickerbot.com.troop.clickerbot.ColorUtils;
+import clickerbot.com.troop.clickerbot.executer.Executer;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.LevelAllHerosTask;
@@ -64,18 +65,18 @@ public class Heros extends Menu {
         return System.currentTimeMillis() - lastTop6HerosLeveld > botSettings.levelTop6HeroTime;
     }
 
-    public void levelTop6Heros() throws InterruptedException, IOException {
+    public void levelTop6Heros(ExecuterTask task) throws InterruptedException, IOException {
         openHeroMenu();
         //make sure we are on top
-        while (!isMenuTopReached()) {
+        while (!isMenuTopReached() && !task.cancelTask && Menu.MenuOpen) {
             touchInput.swipeVertical(Coordinates.lvlFIrsHeroButton_click, Coordinates.lvlThirdHeroButton_click);
             Thread.sleep(300);
         }
         Thread.sleep(500);
-        level3heros();
+        level3heros(task);
         touchInput.swipeVertical(new Point(240, 707), new Point(240, 556));
         touchInput.swipeVertical(new Point(240, 707), new Point(240, 556));
-        level3heros();
+        level3heros(task);
 
         Thread.sleep(200);
         closeHeroMenu();
@@ -93,12 +94,12 @@ public class Heros extends Menu {
                 break;
             touchInput.swipeVertical(new Point(240, 707), new Point(240, 556));
         }
-        Thread.sleep(500);
+        Thread.sleep(1000);
         int loopbreaker = 0;
-        while (!isMenuTopReached() && !task.cancelTask && loopbreaker < 25) {
+        while (!isMenuTopReached() && !task.cancelTask && loopbreaker < 25 && Menu.MenuOpen) {
             loopbreaker++;
             Thread.sleep(200);
-            level3heros();
+            level3heros(task);
             touchInput.swipeVertical(new Point(240,556),new Point(240,707));
             //touchInput.swipeVertical(new Point(240,556),new Point(240,707));
             Thread.sleep(400);
@@ -113,18 +114,20 @@ public class Heros extends Menu {
     }
 
 
-    private void level3heros() throws IOException, InterruptedException {
-        levelhero(Coordinates.lvlFIrsHeroButton_color,Coordinates.lvlFIrsHeroButton_click);
-        levelhero(Coordinates.lvlSecondHeroButton_color,Coordinates.lvlSecondHeroButton_click);
-        levelhero(Coordinates.lvlThirdHeroButton_color,Coordinates.lvlThirdHeroButton_click);
+    private void level3heros(ExecuterTask task) throws IOException, InterruptedException {
+        levelhero(Coordinates.lvlFIrsHeroButton_color,Coordinates.lvlFIrsHeroButton_click,task);
+        levelhero(Coordinates.lvlSecondHeroButton_color,Coordinates.lvlSecondHeroButton_click,task);
+        levelhero(Coordinates.lvlThirdHeroButton_color,Coordinates.lvlThirdHeroButton_click,task);
     }
 
-    private void levelhero(Point color, Point click) throws IOException, InterruptedException {
+    private void levelhero(Point color, Point click, ExecuterTask task) throws IOException, InterruptedException {
         int loopbreaker = 0;
-        while (canLevelHero(bot.getScreeCapture().getColor(color),1) && loopbreaker < 7) {
+        while (canLevelHero(bot.getScreeCapture().getColor(color),1) && loopbreaker < 12 && !task.cancelTask && Menu.MenuOpen) {
             loopbreaker++;
             tapOnHero(1, click);
-            Thread.sleep(400); //TODO this time may can get lowered, or removed with a wait for a new frame.
+            //bot.getScreeCapture().waitForNextFrame();
+            if (!task.cancelTask)
+                Thread.sleep(500); //TODO this time may can get lowered, or removed with a wait for a new frame.
         }
     }
 
