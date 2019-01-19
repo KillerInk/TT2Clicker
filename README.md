@@ -4,7 +4,7 @@
 
 Tested on:
 
-    Memu 5.6.2 Android 5.1 ROOT requiered 2xCores 2048MB Ram ScreenSize 480x800
+    Memu 5.6.2 Android 5.1 ROOT requiered 2xCores 2048MB Ram ScreenSize 480x800 OpenGL
 
 Features:
 
