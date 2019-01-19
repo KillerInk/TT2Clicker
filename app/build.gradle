@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'clickerbot'
+            keyPassword 'clickerbot'
+            storeFile file('C:/Users/troop/workspace2/Clickerbot/key/tt2clickerbot.jks')
+            storePassword 'clickerbot'
+        }
+    }
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
     defaultConfig {
