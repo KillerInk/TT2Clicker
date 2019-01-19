@@ -20,9 +20,7 @@ public class Heros extends Menu {
     private Boss boss;
     private long lastTop6HerosLeveld = 0;
     private long lastAllHerosLeveld = 0;
-
-    private final int hero_button_red_min = 160;
-    ArrayList<Integer> goodHeroLevelUpColors;
+    private ArrayList<Integer> goodHeroLevelUpColors;
 
 
 
@@ -85,32 +83,29 @@ public class Heros extends Menu {
         lastTop6HerosLeveld = System.currentTimeMillis();
     }
 
-    final int tapOnHerosXtimes = 5;
-
     public void lvlAllHeros(ExecuterTask task) throws InterruptedException, IOException {
         openHeroMenu();
         for (int i=0; i< 25; i++) {
             if (task.cancelTask)
-                break;
+                return;
             touchInput.swipeVertical(new Point(240, 707), new Point(240, 556));
         }
-        Thread.sleep(1000);
+        if (!task.cancelTask)
+            Thread.sleep(1500);
+        if (!task.cancelTask)
+            Thread.sleep(100);
         int loopbreaker = 0;
-        while (!isMenuTopReached() && !task.cancelTask && loopbreaker < 25 && Menu.MenuOpen) {
+        while (!isMenuTopReached() && breakCondition(loopbreaker,25,task)) {
             loopbreaker++;
             Thread.sleep(200);
             level3heros(task);
             touchInput.swipeVertical(new Point(240,556),new Point(240,707));
-            //touchInput.swipeVertical(new Point(240,556),new Point(240,707));
             Thread.sleep(400);
         }
         closeHeroMenu();
 
         lastAllHerosLeveld = System.currentTimeMillis();
         lastTop6HerosLeveld = System.currentTimeMillis();
-
-        /*if (boss.getBossState() == Boss.BossState.BossFightFailed)
-            bot.executeTask(ClickOnBossFightTask.class);*/
     }
 
 
@@ -122,13 +117,41 @@ public class Heros extends Menu {
 
     private void levelhero(Point color, Point click, ExecuterTask task) throws IOException, InterruptedException {
         int loopbreaker = 0;
-        while (canLevelHero(bot.getScreeCapture().getColor(color),1) && loopbreaker < 12 && !task.cancelTask && Menu.MenuOpen) {
+        while (level3HeroBreakConditions(color,loopbreaker,12,task)) {
             loopbreaker++;
             tapOnHero(1, click);
-            //bot.getScreeCapture().waitForNextFrame();
+
             if (!task.cancelTask)
                 Thread.sleep(500); //TODO this time may can get lowered, or removed with a wait for a new frame.
         }
+    }
+
+    private boolean level3HeroBreakConditions(Point color, int loopbreaker, int loopbreakerMax, ExecuterTask task)
+    {
+        boolean canlevel = breakCondition(loopbreaker,loopbreakerMax,task);
+        if(canlevel) {
+            canlevel = canLevelHero(bot.getScreeCapture().getColor(color), 1);
+            Log.d(TAG, "canLevelHero:" + canlevel);
+        }
+        return canlevel;
+    }
+
+    private boolean breakCondition(int loopbreaker, int loopbreakerMax, ExecuterTask task)
+    {
+        boolean canlevel = true;
+        if (canlevel) {
+            canlevel = loopbreaker < loopbreakerMax;
+            Log.d(TAG, "loopbreak not triggered:" + canlevel);
+        }
+        if (canlevel) {
+            canlevel = task.cancelTask != true;
+            Log.d(TAG, "task canceld:" + task.cancelTask);
+        }
+        if (canlevel) {
+            canlevel = Menu.MenuOpen == true;
+            Log.d(TAG, "MenuOPen:" + Menu.MenuOpen);
+        }
+        return canlevel;
     }
 
     private void tapOnHero(int times,Point point) throws IOException, InterruptedException {
