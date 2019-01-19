@@ -76,14 +76,13 @@ public class Boss extends Menu {
 
             if (!bot.containsTask(ClickOnBossFightTask.class)) {
                 Log.i(TAG, "bossFightFailedColor Wait for next fail: false");
-                int pos = 0;
                 if (botSettings.autoLvlSwordMaster) {
-                    bot.putTaskAtPos(LevelSwordMasterTask.class, pos++);
+                    bot.executeTask(LevelSwordMasterTask.class);
                 }
                 if (botSettings.autoLvlHeros) {
-                    bot.putTaskAtPos(LevelTop6HerosTask.class, pos++);
+                    bot.executeTask(LevelTop6HerosTask.class);
                 }
-                bot.putTaskAtPos(ClickOnBossFightTask.class, pos++);
+                bot.executeTask(ClickOnBossFightTask.class);
             }
 
         }
