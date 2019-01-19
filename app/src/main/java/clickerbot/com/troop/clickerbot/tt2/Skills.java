@@ -6,6 +6,7 @@ import android.util.Log;
 
 import java.io.IOException;
 
+import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 
 public class Skills extends Menu {
@@ -122,13 +123,13 @@ public class Skills extends Menu {
             return false;
     }
 
-    public void lvlSwordMaster()
+    public void lvlSwordMaster(ExecuterTask task)
     {
         Log.d(TAG,"lvlSwordMaster");
         openSwordMasterMenu();
         try {
             int loopbreaker = 0;
-            while (!isMenuTopReached() && loopbreaker < 25) {
+            while (!isMenuTopReached() && loopbreaker < 25 && !task.cancelTask && Menu.MenuOpen) {
                 loopbreaker++;
                 touchInput.swipeVertical(Coordinates.lvlFIrsHeroButton_click, Coordinates.lvlThirdHeroButton_click);
                 Thread.sleep(300);

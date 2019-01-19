@@ -17,7 +17,7 @@ public class LevelTop6HerosTask extends ExecuterTask {
     @Override
     public void doTask() {
         try {
-            heros.levelTop6Heros();
+            heros.levelTop6Heros(this);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (IOException e) {

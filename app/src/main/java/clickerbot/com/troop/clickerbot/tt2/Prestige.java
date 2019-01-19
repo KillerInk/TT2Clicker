@@ -54,6 +54,7 @@ public class Prestige extends Menu {
     }
 
     public void doPrestige() throws InterruptedException, IOException {
+        Log.d(TAG, "doPrestige:" + botSettings.autoPrestige);
         if (botSettings.autoPrestige) {
             bot.clearExecuterQueue();
             openSwordMasterMenu();

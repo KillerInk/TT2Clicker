@@ -14,6 +14,6 @@ public class LevelSwordMasterTask extends ExecuterTask {
 
     @Override
     public void doTask() {
-        skills.lvlSwordMaster();
+        skills.lvlSwordMaster(this);
     }
 }
