@@ -1,62 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/overall_margin"
+    android:orientation="vertical">
 
 
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/autotap"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
         android:text="Auto Tap"
-        custom:settingkey_ids="@string/autoTap"
-        custom:setting_defaults="false"/>
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/autoTap" />
 
 
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/clickOnFairys"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
         android:text="Click On Fairys"
-        custom:settingkey_ids="@string/clickonfairyadds"
-        custom:setting_defaults="false"/>
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/clickonfairyadds" />
+
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/clickOnAcceptFairyAdds"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
         android:text="Accecpt Fairy Adds"
-        custom:settingkey_ids="@string/acceptfairyadds"
-        custom:setting_defaults="false"/>
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/acceptfairyadds" />
+
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/autoLvlSwordMaster"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
         android:text="Auto level Swormaster"
-        custom:settingkey_ids="@string/autolvlswordmaster"
-        custom:setting_defaults="false"/>
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/autolvlswordmaster" />
+
     <clickerbot.com.troop.clickerbot.views.LongEditText
         android:id="@+id/levelswordmastertime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
         custom:header_txt="Level SworMaster every XX min"
-        custom:settingkey_id="@string/levelswordmastertime"
-        custom:setting_default="3"/>
+        custom:setting_default="3"
+        custom:settingkey_id="@string/levelswordmastertime" />
+
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/autoCollectEgg"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
         android:text="Auto collect Eggs"
-        custom:settingkey_ids="@string/autocollectegg"
-        custom:setting_defaults="false"/>
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/autocollectegg" />
 
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/runTests"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
         android:text="Run Tests instead of botting,ONLY FOR DEVELOPING!"
-        custom:settingkey_ids="@string/runtests"
-        custom:setting_defaults="false"/>
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/runtests" />
 
 
 </LinearLayout>

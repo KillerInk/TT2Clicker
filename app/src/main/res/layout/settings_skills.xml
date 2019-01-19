@@ -1,88 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/overall_margin"
+    android:orientation="vertical">
+
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/autolevelskills"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
         android:text="Auto lvl Skills"
-        custom:settingkey_ids="@string/autolvlskills"
-        custom:setting_defaults="false"/>
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/autolvlskills" />
+
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/usehs"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
         android:text="UseHS"
-        custom:settingkey_ids="@string/useHs"
-        custom:setting_defaults="false"/>
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/useHs" />
+
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/useds"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
         android:text="UseDS"
-        custom:settingkey_ids="@string/useDS"
-        custom:setting_defaults="false"/>
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/useDS" />
 
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/usehom"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
         android:text="UseHom"
-        custom:settingkey_ids="@string/useHom"
-        custom:setting_defaults="false"/>
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/useHom" />
+
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/usefs"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
         android:text="UseFS"
-        custom:settingkey_ids="@string/useFS"
-        custom:setting_defaults="false"/>
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/useFS" />
+
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/usewc"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
         android:text="UseWC"
-        custom:settingkey_ids="@string/useWC"
-        custom:setting_defaults="false"/>
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/useWC" />
+
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/usesc"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
         android:text="UseSC"
-        custom:settingkey_ids="@string/useSC"
-        custom:setting_defaults="false"/>
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/useSC" />
 
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/useAAW"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
         android:text="use AstralAwakening"
-        custom:settingkey_ids="@string/useaaw"
-        custom:setting_defaults="false"/>
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/useaaw" />
 
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/useCO"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
         android:text="use Coordinated Offensive"
-        custom:settingkey_ids="@string/useco"
-        custom:setting_defaults="false"/>
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/useco" />
 
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/usephom"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
         android:text="use Heart of Midas (PHOM)"
-        custom:settingkey_ids="@string/usephom"
-        custom:setting_defaults="false"/>
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/usephom" />
 
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/useFLashZip"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
         android:text="use FLash Zip"
-        custom:settingkey_ids="@string/useflashzip"
-        custom:setting_defaults="false"/>
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/useflashzip" />
 </LinearLayout>

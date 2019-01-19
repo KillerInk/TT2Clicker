@@ -1,32 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/overall_margin"
+    android:orientation="vertical">
 
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/autoprestige"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
         android:text="Auto Prestige"
-        custom:settingkey_ids="@string/auto_prestige"
-        custom:setting_defaults="false"/>
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/auto_prestige" />
 
 
     <clickerbot.com.troop.clickerbot.views.LongEditText
         android:id="@+id/prestigetime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
         custom:header_txt="Prestige after xx min"
-        custom:settingkey_id="@string/prestigetime"
-        custom:setting_default="60"/>
+        custom:setting_default="60"
+        custom:settingkey_id="@string/prestigetime" />
 
     <clickerbot.com.troop.clickerbot.views.LongEditText
         android:id="@+id/prestigeafterbossfailed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
         custom:header_txt="Prestige after xx bossFails"
-        custom:settingkey_id="@string/prestigeafterbossfail"
-        custom:setting_default="3"/>
+        custom:setting_default="3"
+        custom:settingkey_id="@string/prestigeafterbossfail" />
 
 </LinearLayout>

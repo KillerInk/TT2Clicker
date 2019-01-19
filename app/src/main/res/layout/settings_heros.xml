@@ -1,30 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/overall_margin"
+    android:orientation="vertical">
 
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/autolevelheros"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
         android:text="Auto lvl Heros"
-        custom:settingkey_ids="@string/autolvlheros"
-        custom:setting_defaults="false"/>
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/autolvlheros" />
 
     <clickerbot.com.troop.clickerbot.views.LongEditText
         android:id="@+id/levelherotime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
         custom:header_txt="Level Top6 Heros every XX min"
-        custom:settingkey_id="@string/levelherostime"
-        custom:setting_default="3"/>
+        custom:setting_default="3"
+        custom:settingkey_id="@string/levelherostime" />
 
     <clickerbot.com.troop.clickerbot.views.LongEditText
         android:id="@+id/levelALLherotime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
         custom:header_txt="Level ALL Heros every XX min"
-        custom:settingkey_id="@string/levelallherostime"
-        custom:setting_default="10"/>
+        custom:setting_default="10"
+        custom:settingkey_id="@string/levelallherostime" />
 </LinearLayout>
