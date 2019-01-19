@@ -153,12 +153,20 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
         return inputbmp;
     }
 
+    public void waitForNextFrame() throws InterruptedException {
+        captureframe = lastFrame;
+        synchronized (bitmapLOCK) {
+            if (captureframe+3 > lastFrame)
+                bitmapLOCK.wait();
+        }
+    }
+
     long lastFrame;
     long captureframe;
     public int getColor(Point p)
     {
         int color =0;
-        captureframe = lastFrame;
+        //captureframe = lastFrame;
         synchronized (bitmapLOCK) {
            /* if (captureframe+1 > lastFrame) {
                 try {
