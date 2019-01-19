@@ -261,6 +261,7 @@ public class TT2Bot extends AbstractBot
         prestige.init();
         heros.init();
         boss.resetBossFailedCounter();
+        lastSwordMasterLeveled =0;
         int startTapPoints = 40;
         if (botSettings.useFlashZip || botSettings.useAAW)
             startTapPoints -=30;
