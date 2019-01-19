@@ -23,13 +23,13 @@ public class Coordinates
 
     public static final Point lvlHeroButton = new Point(340,520);
     public static final Point lvlNextHeroButton = new Point(340,597);
-    public static final Point lvlFIrsHeroButton_color = new Point(333,579);
+    public static final Point lvlFIrsHeroButton_color = new Point(470,579);
     public static final Point lvlFIrsHeroButton_click = new Point(424,579);
 
-    public static final Point lvlSecondHeroButton_color = new Point(333,652);
+    public static final Point lvlSecondHeroButton_color = new Point(470,652);
     public static final Point lvlSecondHeroButton_click = new Point(424,652);
 
-    public static final Point lvlThirdHeroButton_color = new Point(333,726);
+    public static final Point lvlThirdHeroButton_color = new Point(470,726);
     public static final Point lvlThirdHeroButton_click = new Point(424,726);
 
     public static final Point fightBossButton = new Point(430,46);
