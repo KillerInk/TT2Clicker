@@ -22,3 +22,5 @@ Not working:
     Level skills
 
 This works good aslong you play a beginner cs or pet build and no skills have to get unlocked
+
+To start the bot press Vol-, and again Vol- to stop it.
