@@ -57,6 +57,8 @@ public class TT2Bot extends AbstractBot
      */
     private Fairy fairy;
 
+    private FlashZip flashZip;
+
     /**
      * time after a randomtap gets executed
      */
@@ -105,6 +107,7 @@ public class TT2Bot extends AbstractBot
 
         prestige = new Prestige(this,botSettings, touchInput,boss);
         fairy = new Fairy(this,botSettings, touchInput);
+        flashZip = new FlashZip(this,botSettings,touchInput);
 
         executerTaskHashMap = new TaskFactory().getTasksmap(this,heros,skills,prestige,fairy,boss);
         mediaProjectionScreenCapture.setScreenCaptureCallBack(this::onScreenCapture);
@@ -156,6 +159,8 @@ public class TT2Bot extends AbstractBot
                     boss.checkIfActiveBossFight();
                     fairy.checkIfFairyWindowOpen();
                     heros.checkIfMenuOpen();
+                    if (botSettings.useFlashZip)
+                        flashZip.checkFlashZipAreasAndTap();
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
@@ -248,8 +253,8 @@ public class TT2Bot extends AbstractBot
             randomTaps.add(Coordinates.CO_Pos);
         if (botSettings.collectEggs)
             randomTaps.add(Coordinates.egg_to_collect_pos);
-        if (botSettings.useFlashZip)
-            randomTaps.addAll(Arrays.asList(Coordinates.FLASH_ZIP_Areas));
+        /*if (botSettings.useFlashZip)
+            randomTaps.addAll(Arrays.asList(Coordinates.FLASH_ZIP_Areas));*/
 
     }
 
