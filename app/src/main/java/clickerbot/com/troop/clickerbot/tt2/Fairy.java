@@ -81,11 +81,11 @@ public class Fairy extends Menu {
             else
                 doSingelTap(Coordinates.decline_Pos);
         }
-        try {
+       /* try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
         if (Menu.MenuOpen)
             closeMenu();
     }
@@ -100,7 +100,8 @@ public class Fairy extends Menu {
         if (ColorUtils.redEquals(color,251) && ColorUtils.blueIsInRange(color2,194,262))
         {
             Log.d(TAG,"Tap on Fairy Ads Window");
-            bot.putFirstAndExecuteTask(TapOnFairyVipWindowTask.class);
+            tapOnFairyVipWindow();
+            //bot.putFirstAndExecuteTask(TapOnFairyVipWindowTask.class);
         }
     }
 
