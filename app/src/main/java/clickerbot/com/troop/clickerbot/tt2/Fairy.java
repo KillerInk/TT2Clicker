@@ -86,17 +86,17 @@ public class Fairy extends Menu {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }*/
-        if (Menu.MenuOpen)
-            closeMenu();
+       /* if (Menu.MenuOpen)
+            closeMenu();*/
     }
 
     public void checkIfFairyWindowOpen()
     {
         int color = bot.getScreeCapture().getColor(fairyColorDecline);//-294644
-        Log.v(TAG,"checkIfFairyWindowOpen color decline " + ColorUtils.getColorString(color));
+       // Log.v(TAG,"checkIfFairyWindowOpen color decline " + ColorUtils.getColorString(color));
         int color2 = bot.getScreeCapture().getColor(fairyColorAccept); // -13981229
-        Log.v(TAG,"checkIfFairyWindowOpen color accept " + ColorUtils.getColorString(color2));
-        Log.d(TAG, "fairy window open: "  + (ColorUtils.redEquals(color,251) && ColorUtils.blueIsInRange(color2,194,262)));
+       // Log.v(TAG,"checkIfFairyWindowOpen color accept " + ColorUtils.getColorString(color2));
+       // Log.d(TAG, "fairy window open: "  + (ColorUtils.redEquals(color,251) && ColorUtils.blueIsInRange(color2,194,262)));
         if (ColorUtils.redEquals(color,251) && ColorUtils.blueIsInRange(color2,194,262))
         {
             Log.d(TAG,"Tap on Fairy Ads Window");

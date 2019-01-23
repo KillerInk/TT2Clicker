@@ -70,6 +70,7 @@ public class Prestige extends Menu {
             doSingelTap(Coordinates.prestigeAcceptButton);
             Thread.sleep(5000);
             bot.resetTickCounter();
+            setMenuState(MenuState.closed);
             bot.executeTask(InitTask.class);
             lastPrestigeCheck = System.currentTimeMillis();
         }

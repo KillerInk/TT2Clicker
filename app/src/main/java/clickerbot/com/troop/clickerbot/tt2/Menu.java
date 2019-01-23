@@ -16,8 +16,29 @@ public abstract class Menu extends Item
     private final String TAG = Menu.class.getSimpleName();
     public static volatile boolean MenuOpen = false;
 
-    private final int menuOpenCloseDelay = 1000;
+    private final int menuOpenCloseDelay = 1500;
     ArrayList<Integer> maxButtonColors;
+
+    private static MenuState menuState;
+
+    public static synchronized  void setMenuState(MenuState state)
+    {
+        menuState = state;
+    }
+
+    public static synchronized MenuState getMenuState()
+    {
+        return menuState;
+    }
+
+    public enum MenuState
+    {
+        opening,
+        open,
+        closing,
+        closed
+    }
+
 
     public final Point MenuMaxButtonColorPosition = new Point(335,518);
 
@@ -55,94 +76,114 @@ public abstract class Menu extends Item
 
     public void checkIfMenuOpen()
     {
-        if (!MenuOpen && !menuTaskRunning) {
-            int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
-            if (color == colorMenuOpen) {
-                menuTaskRunning = true;
-                bot.putFirstAndExecuteTask(MenuCloseTask.class);
-            }
+        int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
+        MenuOpen = color == colorMenuOpen;
+        if (MenuOpen && !menuTaskRunning && menuState == MenuState.closed) {
+            menuTaskRunning = true;
+            bot.putFirstAndExecuteTask(MenuCloseTask.class);
         }
     }
 
     public void closeMenu()
     {
         Log.d(TAG, "closeMenu");
+        menuState = MenuState.closing;
         try {
-            touchInput.tap(Coordinates.Menu_Close);
-            Thread.sleep(100);
             touchInput.tap(Coordinates.Menu_Close);
             Thread.sleep(menuOpenCloseDelay);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        MenuOpen = false;
+        int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
+        if (color != colorMenuOpen)
+            MenuOpen = false;
+        menuState = MenuState.closed;
         menuTaskRunning = false;
         Log.d(TAG, "closedMenu");
     }
 
     public void openSwordMasterMenu()
     {
+        setMenuState(MenuState.opening);
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         Log.d(TAG, "openSwordMasterMenu");
-        MenuOpen = true;
+
         try {
             touchInput.tap(Coordinates.Menu_SwordMaster);
             Thread.sleep(menuOpenCloseDelay);
+            int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
+            if (color == colorMenuOpen)
+                MenuOpen = true;
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        setMenuState(MenuState.open);
     }
 
     public void closeSwordMasterMenu()
     {
+        setMenuState(MenuState.closing);
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         Log.d(TAG, "openSwordMasterMenu");
-        MenuOpen = false;
         try {
             touchInput.tap(Coordinates.Menu_SwordMaster);
             Thread.sleep(menuOpenCloseDelay);
+            int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
+            if (color != colorMenuOpen)
+                MenuOpen = false;
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        setMenuState(MenuState.closed);
     }
 
     public void openHeroMenu()
     {
+        setMenuState(MenuState.opening);
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         Log.d(TAG, "openHeroMenu");
-        MenuOpen =true;
         try {
             touchInput.tap(Coordinates.Menu_Heros);
             Thread.sleep(menuOpenCloseDelay);
+            int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
+            if (color == colorMenuOpen)
+                MenuOpen = true;
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+        setMenuState(MenuState.open);
     }
 
     public void closeHeroMenu()
     {
         Log.d(TAG, "openHeroMenu");
-        MenuOpen =false;
+        setMenuState(MenuState.closing);
         try {
             touchInput.tap(Coordinates.Menu_Heros);
             Thread.sleep(menuOpenCloseDelay);
+            int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
+            if (color != colorMenuOpen)
+                MenuOpen = false;
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+        setMenuState(MenuState.closed);
     }
 
     public void maximiseMenu()
