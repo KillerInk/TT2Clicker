@@ -161,6 +161,7 @@ public class TT2Bot extends AbstractBot
                     heros.checkIfMenuOpen();
                     if (botSettings.useFlashZip)
                         flashZip.checkFlashZipAreasAndTap();
+                    skills.checkIfRdyToExecute();
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
@@ -208,7 +209,7 @@ public class TT2Bot extends AbstractBot
                     lastUiUpdate = System.currentTimeMillis();
                 }
                 swordMasterRdyToExecute();
-                skills.checkIfRdyToExecute();
+                //skills.checkIfRdyToExecute();
                 heros.checkIfRdyToExecute();
                 if (System.currentTimeMillis() - lastRandomTapActivated > runRandomTapActivator){
                     executeTask(RandomTapTask.class);

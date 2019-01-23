@@ -17,6 +17,16 @@
         custom:settingkey_ids="@string/autolvlskills" />
 
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/unlockhs"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="unlock HS"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/unlockHs" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/usehs"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
@@ -25,6 +35,16 @@
         android:text="UseHS"
         custom:setting_defaults="false"
         custom:settingkey_ids="@string/useHs" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/unlockds"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="unlock DS"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/unlockDS" />
 
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/useds"
@@ -37,6 +57,16 @@
         custom:settingkey_ids="@string/useDS" />
 
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/unlockhom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="unlock Hom"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/unlockHom" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/usehom"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
@@ -45,6 +75,16 @@
         android:text="UseHom"
         custom:setting_defaults="false"
         custom:settingkey_ids="@string/useHom" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/unlockfs"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="unlock FS"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/unlockFS" />
 
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/usefs"
@@ -57,6 +97,16 @@
         custom:settingkey_ids="@string/useFS" />
 
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/unlockwc"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="unlock WC"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/unlockWC" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/usewc"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
@@ -65,6 +115,16 @@
         android:text="UseWC"
         custom:setting_defaults="false"
         custom:settingkey_ids="@string/useWC" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/unlocksc"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="unlock SC"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/unlockSC" />
 
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/usesc"

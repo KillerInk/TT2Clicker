@@ -14,26 +14,32 @@ public class BotSettings {
      * activate heavenly strike
      */
     public final boolean useHS;
+    public final boolean unlockHS;
     /**
      * activate deadly strike
      */
     public final boolean useDS;
+    public final boolean unlockDS;
     /**
      * activate hand of midas
      */
     public final boolean useHOM;
+    public final boolean unlockHOM;
     /**
      * activate fire sword
      */
     public final boolean useFS;
+    public final boolean unlockFS;
     /**
      * activate war cry
      */
     public final boolean useWC;
+    public final boolean unlockWC;
     /**
      * activate shadowclone
      */
     public final boolean useSC;
+    public final boolean unlockSC;
     /**
      * time till prestige in ms
      */
@@ -146,6 +152,12 @@ public class BotSettings {
         useFS = sharedPreferences.getBoolean(context.getString(R.string.useFS),false);
         useWC = sharedPreferences.getBoolean(context.getString(R.string.useWC),false);
         useSC = sharedPreferences.getBoolean(context.getString(R.string.useSC),false);
+        unlockHS = sharedPreferences.getBoolean(context.getString(R.string.unlockHs),false);
+        unlockDS = sharedPreferences.getBoolean(context.getString(R.string.unlockDS),false);
+        unlockHOM = sharedPreferences.getBoolean(context.getString(R.string.unlockHom),false);
+        unlockFS = sharedPreferences.getBoolean(context.getString(R.string.unlockFS),false);
+        unlockWC = sharedPreferences.getBoolean(context.getString(R.string.unlockWC),false);
+        unlockSC = sharedPreferences.getBoolean(context.getString(R.string.unlockSC),false);
         doAutoTap = sharedPreferences.getBoolean(context.getString(R.string.autoTap),false);
         autoLvlHeros = sharedPreferences.getBoolean(context.getString(R.string.autolvlheros),false);
         autoLvlSkills = sharedPreferences.getBoolean(context.getString(R.string.autolvlskills),false);

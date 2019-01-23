@@ -5,10 +5,16 @@
     <string name="useHom">useHom</string>
     <string name="useFS">useFS</string>
     <string name="useWC">useWC</string>
+    <string name="useSC">useSC</string>
+    <string name="unlockHs">unlockHs</string>
+    <string name="unlockDS">unlockDS</string>
+    <string name="unlockHom">unlockHom</string>
+    <string name="unlockFS">unlockFS</string>
+    <string name="unlockWC">unlockWC</string>
+    <string name="unlockSC">unlockSC</string>
     <string name="auto_prestige">auto_prestige</string>
     <string name="prestige_after_time">prestige_after_time</string>
     <string name="after_boss_failed">after_boss_failed</string>
-    <string name="useSC">useSC</string>
     <string name="autoTap">autoTap</string>
     <string name="autolvlheros">autolvlheros</string>
     <string name="autolvlskills">autolvlskills</string>
