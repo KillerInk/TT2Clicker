@@ -191,6 +191,9 @@ public class Heros extends Menu {
         arr.add(-877805);
         arr.add(-943340);
         arr.add(-1665772);
+        arr.add(-272567);
+        arr.add(-9399);
+        arr.add(-272311);
         return arr;
     }
 
