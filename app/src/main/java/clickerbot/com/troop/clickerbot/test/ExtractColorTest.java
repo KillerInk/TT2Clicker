@@ -18,9 +18,9 @@ public class ExtractColorTest extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ArrayList<Integer> arr = new ArrayList();
-        //readHeroLvlButtonColors(arr);
-        Bitmap map = BitmapFactory.decodeResource(getResources(),R.drawable.hero_max_button);
-        dumpColors(map,arr);
+        readHeroLvlButtonColors(arr);
+        /*Bitmap map = BitmapFactory.decodeResource(getResources(),R.drawable.hero_max_button);
+        dumpColors(map,arr);*/
         printList(arr);
     }
 
@@ -32,6 +32,9 @@ public class ExtractColorTest extends AppCompatActivity {
         dumpColors(map,arr);
 
         map = BitmapFactory.decodeResource(getResources(),R.drawable.hero_button_level_hero);
+        dumpColors(map,arr);
+
+        map = BitmapFactory.decodeResource(getResources(),R.drawable.hero_button_skill_unlock1_flash);
         dumpColors(map,arr);
     }
 
