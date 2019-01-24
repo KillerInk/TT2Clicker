@@ -15,31 +15,37 @@ public class BotSettings {
      */
     public final boolean useHS;
     public final boolean unlockHS;
+    public long hsMaxLvl;
     /**
      * activate deadly strike
      */
     public final boolean useDS;
     public final boolean unlockDS;
+    public long dsMaxLvl;
     /**
      * activate hand of midas
      */
     public final boolean useHOM;
     public final boolean unlockHOM;
+    public long homMaxLvl;
     /**
      * activate fire sword
      */
     public final boolean useFS;
     public final boolean unlockFS;
+    public long fsMaxLVL;
     /**
      * activate war cry
      */
     public final boolean useWC;
     public final boolean unlockWC;
+    public long wcMaxLvl;
     /**
      * activate shadowclone
      */
     public final boolean useSC;
     public final boolean unlockSC;
+    public long scMaxLvl;
     /**
      * time till prestige in ms
      */
@@ -181,6 +187,12 @@ public class BotSettings {
         levelTop6HeroTime = sharedPreferences.getLong(context.getString(R.string.levelherostime),3)*60*1000;
         levelAllHeroTime = sharedPreferences.getLong(context.getString(R.string.levelallherostime),9)*60*1000;
         levelSwordMasterTime = sharedPreferences.getLong(context.getString(R.string.levelswordmastertime),3)*60*1000;
+        hsMaxLvl = sharedPreferences.getLong(context.getString(R.string.hsmaxlvl),0);
+        dsMaxLvl = sharedPreferences.getLong(context.getString(R.string.dsmaxlvl),0);
+        homMaxLvl = sharedPreferences.getLong(context.getString(R.string.hommaxlvl),0);
+        fsMaxLVL = sharedPreferences.getLong(context.getString(R.string.fsmaxlvl),0);
+        wcMaxLvl = sharedPreferences.getLong(context.getString(R.string.wcmaxlvl),0);
+        scMaxLvl = sharedPreferences.getLong(context.getString(R.string.scmaxlvl),0);
         Log.i(TAG, "Skills used HS:" + useHS + " DS:" + useDS+" Hom:"+useHOM+" FS:" + useFS + " WC:"+useWC +" SC: "+useSC);
         Log.i(TAG,"auto lvl heros:" + autoLvlHeros + " auto Tap:" + doAutoTap + " auto lvl skills"+ autoLvlSkills);
         Log.i(TAG, "time to prestige ms:" + timeToPrestige + " bossfailed:" + bossFailedCount);

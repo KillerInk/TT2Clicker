@@ -26,12 +26,12 @@ public class Skills extends Menu {
 
     public Skills(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
         super(ibot, botSettings, rootShell);
-        hs =new Skill(bot,rootShell,Skill.SkillType.HS,botSettings.unlockHS, botSettings.useHS);
-        ds =new Skill(bot,rootShell,Skill.SkillType.DS,botSettings.unlockDS, botSettings.useDS);
-        hom =new Skill(bot,rootShell,Skill.SkillType.HOM,botSettings.unlockHOM, botSettings.useHOM);
-        fs =new Skill(bot,rootShell,Skill.SkillType.FS,botSettings.unlockFS, botSettings.useFS);
-        wc =new Skill(bot,rootShell,Skill.SkillType.WC,botSettings.unlockWC, botSettings.useWC);
-        sc =new Skill(bot,rootShell,Skill.SkillType.SC,botSettings.unlockSC, botSettings.useSC);
+        hs =new Skill(bot,rootShell,Skill.SkillType.HS,botSettings.unlockHS, botSettings.useHS,(int)botSettings.hsMaxLvl);
+        ds =new Skill(bot,rootShell,Skill.SkillType.DS,botSettings.unlockDS, botSettings.useDS,(int)botSettings.dsMaxLvl);
+        hom =new Skill(bot,rootShell,Skill.SkillType.HOM,botSettings.unlockHOM, botSettings.useHOM,(int)botSettings.homMaxLvl);
+        fs =new Skill(bot,rootShell,Skill.SkillType.FS,botSettings.unlockFS, botSettings.useFS,(int)botSettings.fsMaxLVL);
+        wc =new Skill(bot,rootShell,Skill.SkillType.WC,botSettings.unlockWC, botSettings.useWC,(int)botSettings.wcMaxLvl);
+        sc =new Skill(bot,rootShell,Skill.SkillType.SC,botSettings.unlockSC, botSettings.useSC,(int)botSettings.scMaxLvl);
         skillLevelParser = new SkillLevelParser(ibot);
     }
 
@@ -57,13 +57,20 @@ public class Skills extends Menu {
 
                 maximiseMenu();
 
-                swipeUp();
                 try {
-                    Thread.sleep(500);
+                    touchInput.swipeVertical(Heros.lvlFIrsHeroButton_click, Heros.lvlThirdHeroButton_click);
+                    touchInput.swipeVertical(Heros.lvlFIrsHeroButton_click, Heros.lvlThirdHeroButton_click);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
+                skillLevelParser.parseAllSkillLevels(hs, ds, hom,fs, wc,sc);
                 levelUpSkills();
                 try {
                     Thread.sleep(50);
@@ -100,7 +107,7 @@ public class Skills extends Menu {
             e.printStackTrace();
         }
 
-        skillLevelParser.parseAllSkillLevels();
+        skillLevelParser.parseAllSkillLevels(hs, ds, hom,fs, wc,sc);
         try {
             Thread.sleep(50);
         } catch (InterruptedException e) {

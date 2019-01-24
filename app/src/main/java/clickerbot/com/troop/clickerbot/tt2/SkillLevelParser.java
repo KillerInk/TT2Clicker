@@ -27,17 +27,17 @@ public class SkillLevelParser {
                     0,0,1,1,1,1,1,0,
                     0,0,0,0,1,0,0,0,
                     0,0,0,0,0,0,0,0,*/
-                          0,0,0,0,0,0,0,0,
-                          0,0,0,0,0,0,0,0,
-                          0,0,1,1,1,1,0,0,
-                          0,1,1,0,0,1,1,0,
-                          0,1,1,0,0,1,1,0,
-                          0,1,1,0,0,1,1,0,
-                          0,1,1,0,0,1,1,0,
-                          0,1,1,0,0,1,1,0,
-                          0,1,1,0,1,1,0,0,
-                          0,0,1,1,1,1,0,0,
-                          0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,
+                    0,0,0,1,1,1,1,0,
+                    0,0,1,1,0,1,1,0,
+                    0,0,1,1,0,0,1,0,
+                    0,0,1,1,0,0,1,1,
+                    0,0,1,1,0,0,1,1,
+                    0,0,1,1,0,0,1,0,
+                    0,0,1,1,0,1,1,0,
+                    0,0,1,1,1,1,1,0,
+                    0,0,0,0,0,0,0,0,
             };
     
     private final int[] array1 = new int[]
@@ -269,15 +269,21 @@ public class SkillLevelParser {
         patches[9] = new Patch(array9,"9");
     }
 
-    public void parseAllSkillLevels()
+    public void parseAllSkillLevels(Skill hs, Skill ds, Skill hom,Skill fs, Skill wc,Skill sc)
     {
         Bitmap map = bot.getScreeCapture().getBitmap().copy(bot.getScreeCapture().getBitmap().getConfig(),false);
         int hslvl = getLevel(228,map);
+        hs.setSkillLvl(hslvl);
         int dslvl = getLevel(303,map);
+        ds.setSkillLvl(dslvl);
         int homlvl = getLevel(379,map);
+        hom.setSkillLvl(homlvl);
         int fslvl = getLevel(454,map);
+        fs.setSkillLvl(fslvl);
         int wclvl = getLevel(530,map);
+        wc.setSkillLvl(wclvl);
         int sclvl = getLevel(605,map);
+        sc.setSkillLvl(sclvl);
         map.recycle();
         Log.d(TAG,"hs:" + hslvl +" ds:"+dslvl+" hom:"+ homlvl +" fs:" +fslvl +" wc:"+wclvl + " sc:"+sclvl);
     }
@@ -317,6 +323,7 @@ public class SkillLevelParser {
                     pixels[i++] = 1;
             }
         }
+        printarrs(pixels);
         //check the patches if one match
         for (int p = 0; p < pixels.length; p++) {
             for (int t = 0; t < patches.length; t++) {
@@ -334,7 +341,7 @@ public class SkillLevelParser {
 
     private boolean doPatchMatch(int[] bitmap, int[] patch)
     {
-        printarrs(bitmap,patch);
+        printarrs(bitmap);
         int fails = 0;
         for (int i = 0; i < patch.length; i++)
         {
@@ -346,20 +353,68 @@ public class SkillLevelParser {
         return false;
     }
 
-    private void printarrs(int[] bitmap , int[] patch)
+    private void printarrs(int[] bitmap)
     {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("\npatch                 bitmap\n");
+        stringBuilder.append(" \nbitmap                patch0                patch1                patch2                patch3                patch4                "+
+                "patch5                patch6                patch7                patch8                patch9\n");
         for (int y = 0; y < 11; y++)
         {
-            for (int x = 0; x < width/2; x++)
-            {
-                stringBuilder.append(patch[(width/2)*y + x] + ",");
-            }
-            stringBuilder.append("      ");
+
+
             for (int x = 0; x < 8; x++)
             {
                 stringBuilder.append(bitmap[(width/2)*y+x] + ",");
+            }
+            stringBuilder.append("      ");
+            for (int x = 0; x < width/2; x++)
+            {
+                stringBuilder.append(array0[(width/2)*y + x] + ",");
+            }
+            stringBuilder.append("      ");
+            for (int x = 0; x < width/2; x++)
+            {
+                stringBuilder.append(array1[(width/2)*y + x] + ",");
+            }
+            stringBuilder.append("      ");
+            for (int x = 0; x < width/2; x++)
+            {
+                stringBuilder.append(array2[(width/2)*y + x] + ",");
+            }
+            stringBuilder.append("      ");
+            for (int x = 0; x < width/2; x++)
+            {
+                stringBuilder.append(array3[(width/2)*y + x] + ",");
+            }
+            stringBuilder.append("      ");
+            for (int x = 0; x < width/2; x++)
+            {
+                stringBuilder.append(array4[(width/2)*y + x] + ",");
+            }
+            stringBuilder.append("      ");
+            for (int x = 0; x < width/2; x++)
+            {
+                stringBuilder.append(array5[(width/2)*y + x] + ",");
+            }
+            stringBuilder.append("      ");
+            for (int x = 0; x < width/2; x++)
+            {
+                stringBuilder.append(array6[(width/2)*y + x] + ",");
+            }
+            stringBuilder.append("      ");
+            for (int x = 0; x < width/2; x++)
+            {
+                stringBuilder.append(array7[(width/2)*y + x] + ",");
+            }
+            stringBuilder.append("      ");
+            for (int x = 0; x < width/2; x++)
+            {
+                stringBuilder.append(array8[(width/2)*y + x] + ",");
+            }
+            stringBuilder.append("      ");
+            for (int x = 0; x < width/2; x++)
+            {
+                stringBuilder.append(array9[(width/2)*y + x] + ",");
             }
             stringBuilder.append("\n");
         }

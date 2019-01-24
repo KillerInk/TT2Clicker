@@ -24,6 +24,12 @@
     <string name="prestigetime">prestigetime</string>
     <string name="prestigeafterbossfail">prestigeafterbossfail</string>
     <string name="mainLooperSleep">mainloopersleep</string>
+    <string name="hsmaxlvl">hsmaxlvl</string>
+    <string name="dsmaxlvl">dsmaxlvl</string>
+    <string name="hommaxlvl">hommaxlvl</string>
+    <string name="fsmaxlvl">fsmaxlvl</string>
+    <string name="wcmaxlvl">wcmaxlvl</string>
+    <string name="scmaxlvl">scmaxlvl</string>
     <string name="captureFrameSleep">captureFrameSleep</string>
     <string name="clicksleeptime">clicksleeptime</string>
     <string name="useco">useco</string>

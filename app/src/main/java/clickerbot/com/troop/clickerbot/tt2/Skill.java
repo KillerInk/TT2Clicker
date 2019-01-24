@@ -47,8 +47,9 @@ public class Skill {
     private boolean unlockSkilll = false;
     private boolean activateSkill = false;
     private int skillLvl;
+    private int maxLVL;
 
-    public Skill(TT2Bot bot,TouchInterface touchInput,SkillType type, boolean unlockSkill, boolean activateSkill)
+    public Skill(TT2Bot bot,TouchInterface touchInput,SkillType type, boolean unlockSkill, boolean activateSkill, int maxLVL)
     {
         this.bot = bot;
         this.touchInput =touchInput;
@@ -56,6 +57,7 @@ public class Skill {
         this.activateSkill = activateSkill;
         this.unlockSkilll = unlockSkill;
         this.skillState = SkillState.locked;
+        this.maxLVL = maxLVL;
     }
 
     public void setSkillLvl(int skillLvl)
@@ -180,24 +182,27 @@ public class Skill {
 
     public void levelSkill()
     {
+        int dif = maxLVL - skillLvl;
+        if (dif < 0)
+            dif = 0;
         switch (skillType) {
             case HS:
-                levelSkill(25,Coordinates.Menu_HSPos);
+                levelSkill(dif,Coordinates.Menu_HSPos);
                 break;
             case DS:
-                levelSkill(25,Coordinates.Menu_DSPos);
+                levelSkill(dif,Coordinates.Menu_DSPos);
                 break;
             case HOM:
-                levelSkill(25,Coordinates.Menu_HOMPos);
+                levelSkill(dif,Coordinates.Menu_HOMPos);
                 break;
             case FS:
-                levelSkill(25,Coordinates.Menu_FSMPos);
+                levelSkill(dif,Coordinates.Menu_FSMPos);
                 break;
             case WC:
-                levelSkill(25,Coordinates.Menu_WCMPos);
+                levelSkill(dif,Coordinates.Menu_WCMPos);
                 break;
             case SC:
-                levelSkill(25,Coordinates.Menu_SCMPos);
+                levelSkill(dif,Coordinates.Menu_SCMPos);
                 break;
         }
     }

@@ -6,173 +6,243 @@
     android:layout_margin="@dimen/overall_margin"
     android:orientation="vertical">
 
-    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/autolevelskills"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/settingitem_height"
-        android:layout_margin="@dimen/overall_margin"
-        android:background="@drawable/border"
-        android:text="Auto lvl Skills"
-        custom:setting_defaults="false"
-        custom:settingkey_ids="@string/autolvlskills" />
+        android:layout_height="match_parent">
 
-    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/unlockhs"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/settingitem_height"
-        android:layout_margin="@dimen/overall_margin"
-        android:background="@drawable/border"
-        android:text="unlock HS"
-        custom:setting_defaults="false"
-        custom:settingkey_ids="@string/unlockHs" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+            <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+                android:id="@+id/autolevelskills"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settingitem_height"
+                android:layout_margin="@dimen/overall_margin"
+                android:background="@drawable/border"
+                android:text="Auto lvl Skills"
+                custom:setting_defaults="false"
+                custom:settingkey_ids="@string/autolvlskills" />
 
-    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/usehs"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/settingitem_height"
-        android:layout_margin="@dimen/overall_margin"
-        android:background="@drawable/border"
-        android:text="UseHS"
-        custom:setting_defaults="false"
-        custom:settingkey_ids="@string/useHs" />
+            <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+                android:id="@+id/unlockhs"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settingitem_height"
+                android:layout_margin="@dimen/overall_margin"
+                android:background="@drawable/border"
+                android:text="unlock HS"
+                custom:setting_defaults="false"
+                custom:settingkey_ids="@string/unlockHs" />
 
-    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/unlockds"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/settingitem_height"
-        android:layout_margin="@dimen/overall_margin"
-        android:background="@drawable/border"
-        android:text="unlock DS"
-        custom:setting_defaults="false"
-        custom:settingkey_ids="@string/unlockDS" />
+            <clickerbot.com.troop.clickerbot.views.LongEditText
+                android:id="@+id/hsmaxlvl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/overall_margin"
+                android:background="@drawable/border"
+                custom:header_txt="HS Max lvl"
+                custom:setting_default="0"
+                custom:settingkey_id="@string/hsmaxlvl" />
 
-    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/useds"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/settingitem_height"
-        android:layout_margin="@dimen/overall_margin"
-        android:background="@drawable/border"
-        android:text="UseDS"
-        custom:setting_defaults="false"
-        custom:settingkey_ids="@string/useDS" />
+            <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+                android:id="@+id/usehs"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settingitem_height"
+                android:layout_margin="@dimen/overall_margin"
+                android:background="@drawable/border"
+                android:text="UseHS"
+                custom:setting_defaults="false"
+                custom:settingkey_ids="@string/useHs" />
 
-    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/unlockhom"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/settingitem_height"
-        android:layout_margin="@dimen/overall_margin"
-        android:background="@drawable/border"
-        android:text="unlock Hom"
-        custom:setting_defaults="false"
-        custom:settingkey_ids="@string/unlockHom" />
+            <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+                android:id="@+id/unlockds"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settingitem_height"
+                android:layout_margin="@dimen/overall_margin"
+                android:background="@drawable/border"
+                android:text="unlock DS"
+                custom:setting_defaults="false"
+                custom:settingkey_ids="@string/unlockDS" />
 
-    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/usehom"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/settingitem_height"
-        android:layout_margin="@dimen/overall_margin"
-        android:background="@drawable/border"
-        android:text="UseHom"
-        custom:setting_defaults="false"
-        custom:settingkey_ids="@string/useHom" />
+            <clickerbot.com.troop.clickerbot.views.LongEditText
+                android:id="@+id/dsmaxlvl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/overall_margin"
+                android:background="@drawable/border"
+                custom:header_txt="DS Max lvl"
+                custom:setting_default="0"
+                custom:settingkey_id="@string/dsmaxlvl" />
 
-    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/unlockfs"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/settingitem_height"
-        android:layout_margin="@dimen/overall_margin"
-        android:background="@drawable/border"
-        android:text="unlock FS"
-        custom:setting_defaults="false"
-        custom:settingkey_ids="@string/unlockFS" />
+            <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+                android:id="@+id/useds"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settingitem_height"
+                android:layout_margin="@dimen/overall_margin"
+                android:background="@drawable/border"
+                android:text="UseDS"
+                custom:setting_defaults="false"
+                custom:settingkey_ids="@string/useDS" />
 
-    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/usefs"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/settingitem_height"
-        android:layout_margin="@dimen/overall_margin"
-        android:background="@drawable/border"
-        android:text="UseFS"
-        custom:setting_defaults="false"
-        custom:settingkey_ids="@string/useFS" />
+            <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+                android:id="@+id/unlockhom"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settingitem_height"
+                android:layout_margin="@dimen/overall_margin"
+                android:background="@drawable/border"
+                android:text="unlock Hom"
+                custom:setting_defaults="false"
+                custom:settingkey_ids="@string/unlockHom" />
 
-    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/unlockwc"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/settingitem_height"
-        android:layout_margin="@dimen/overall_margin"
-        android:background="@drawable/border"
-        android:text="unlock WC"
-        custom:setting_defaults="false"
-        custom:settingkey_ids="@string/unlockWC" />
+            <clickerbot.com.troop.clickerbot.views.LongEditText
+                android:id="@+id/hommaxlvl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/overall_margin"
+                android:background="@drawable/border"
+                custom:header_txt="HOM Max lvl"
+                custom:setting_default="0"
+                custom:settingkey_id="@string/hommaxlvl" />
 
-    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/usewc"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/settingitem_height"
-        android:layout_margin="@dimen/overall_margin"
-        android:background="@drawable/border"
-        android:text="UseWC"
-        custom:setting_defaults="false"
-        custom:settingkey_ids="@string/useWC" />
+            <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+                android:id="@+id/usehom"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settingitem_height"
+                android:layout_margin="@dimen/overall_margin"
+                android:background="@drawable/border"
+                android:text="UseHom"
+                custom:setting_defaults="false"
+                custom:settingkey_ids="@string/useHom" />
 
-    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/unlocksc"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/settingitem_height"
-        android:layout_margin="@dimen/overall_margin"
-        android:background="@drawable/border"
-        android:text="unlock SC"
-        custom:setting_defaults="false"
-        custom:settingkey_ids="@string/unlockSC" />
+            <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+                android:id="@+id/unlockfs"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settingitem_height"
+                android:layout_margin="@dimen/overall_margin"
+                android:background="@drawable/border"
+                android:text="unlock FS"
+                custom:setting_defaults="false"
+                custom:settingkey_ids="@string/unlockFS" />
+            <clickerbot.com.troop.clickerbot.views.LongEditText
+                android:id="@+id/fsmaxlvl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/overall_margin"
+                android:background="@drawable/border"
+                custom:header_txt="FS Max lvl"
+                custom:setting_default="0"
+                custom:settingkey_id="@string/fsmaxlvl" />
 
-    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/usesc"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/settingitem_height"
-        android:layout_margin="@dimen/overall_margin"
-        android:background="@drawable/border"
-        android:text="UseSC"
-        custom:setting_defaults="false"
-        custom:settingkey_ids="@string/useSC" />
+            <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+                android:id="@+id/usefs"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settingitem_height"
+                android:layout_margin="@dimen/overall_margin"
+                android:background="@drawable/border"
+                android:text="UseFS"
+                custom:setting_defaults="false"
+                custom:settingkey_ids="@string/useFS" />
 
-    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/useAAW"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/settingitem_height"
-        android:layout_margin="@dimen/overall_margin"
-        android:background="@drawable/border"
-        android:text="use AstralAwakening"
-        custom:setting_defaults="false"
-        custom:settingkey_ids="@string/useaaw" />
+            <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+                android:id="@+id/unlockwc"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settingitem_height"
+                android:layout_margin="@dimen/overall_margin"
+                android:background="@drawable/border"
+                android:text="unlock WC"
+                custom:setting_defaults="false"
+                custom:settingkey_ids="@string/unlockWC" />
 
-    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/useCO"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/settingitem_height"
-        android:layout_margin="@dimen/overall_margin"
-        android:background="@drawable/border"
-        android:text="use Coordinated Offensive"
-        custom:setting_defaults="false"
-        custom:settingkey_ids="@string/useco" />
+            <clickerbot.com.troop.clickerbot.views.LongEditText
+                android:id="@+id/wcmaxlvl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/overall_margin"
+                android:background="@drawable/border"
+                custom:header_txt="WC Max lvl"
+                custom:setting_default="0"
+                custom:settingkey_id="@string/wcmaxlvl" />
 
-    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/usephom"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/settingitem_height"
-        android:layout_margin="@dimen/overall_margin"
-        android:background="@drawable/border"
-        android:text="use Heart of Midas (PHOM)"
-        custom:setting_defaults="false"
-        custom:settingkey_ids="@string/usephom" />
+            <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+                android:id="@+id/usewc"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settingitem_height"
+                android:layout_margin="@dimen/overall_margin"
+                android:background="@drawable/border"
+                android:text="UseWC"
+                custom:setting_defaults="false"
+                custom:settingkey_ids="@string/useWC" />
 
-    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/useFLashZip"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/settingitem_height"
-        android:layout_margin="@dimen/overall_margin"
-        android:background="@drawable/border"
-        android:text="use FLash Zip"
-        custom:setting_defaults="false"
-        custom:settingkey_ids="@string/useflashzip" />
+            <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+                android:id="@+id/unlocksc"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settingitem_height"
+                android:layout_margin="@dimen/overall_margin"
+                android:background="@drawable/border"
+                android:text="unlock SC"
+                custom:setting_defaults="false"
+                custom:settingkey_ids="@string/unlockSC" />
+            <clickerbot.com.troop.clickerbot.views.LongEditText
+                android:id="@+id/scmaxlvl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/overall_margin"
+                android:background="@drawable/border"
+                custom:header_txt="SC Max lvl"
+                custom:setting_default="0"
+                custom:settingkey_id="@string/scmaxlvl" />
+
+            <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+                android:id="@+id/usesc"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settingitem_height"
+                android:layout_margin="@dimen/overall_margin"
+                android:background="@drawable/border"
+                android:text="UseSC"
+                custom:setting_defaults="false"
+                custom:settingkey_ids="@string/useSC" />
+
+            <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+                android:id="@+id/useAAW"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settingitem_height"
+                android:layout_margin="@dimen/overall_margin"
+                android:background="@drawable/border"
+                android:text="use AstralAwakening"
+                custom:setting_defaults="false"
+                custom:settingkey_ids="@string/useaaw" />
+
+            <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+                android:id="@+id/useCO"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settingitem_height"
+                android:layout_margin="@dimen/overall_margin"
+                android:background="@drawable/border"
+                android:text="use Coordinated Offensive"
+                custom:setting_defaults="false"
+                custom:settingkey_ids="@string/useco" />
+
+            <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+                android:id="@+id/usephom"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settingitem_height"
+                android:layout_margin="@dimen/overall_margin"
+                android:background="@drawable/border"
+                android:text="use Heart of Midas (PHOM)"
+                custom:setting_defaults="false"
+                custom:settingkey_ids="@string/usephom" />
+
+            <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+                android:id="@+id/useFLashZip"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settingitem_height"
+                android:layout_margin="@dimen/overall_margin"
+                android:background="@drawable/border"
+                android:text="use FLash Zip"
+                custom:setting_defaults="false"
+                custom:settingkey_ids="@string/useflashzip" />
+        </LinearLayout>
+    </ScrollView>
+
+
 </LinearLayout>
