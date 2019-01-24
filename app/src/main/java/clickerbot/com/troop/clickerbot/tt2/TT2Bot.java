@@ -59,6 +59,8 @@ public class TT2Bot extends AbstractBot
 
     private FlashZip flashZip;
 
+    private SubMenuOpenChecker subMenuOpenChecker;
+
     /**
      * time after a randomtap gets executed
      */
@@ -108,6 +110,7 @@ public class TT2Bot extends AbstractBot
         prestige = new Prestige(this,botSettings, touchInput,boss);
         fairy = new Fairy(this,botSettings, touchInput);
         flashZip = new FlashZip(this,botSettings,touchInput);
+        subMenuOpenChecker = new SubMenuOpenChecker(this,botSettings,touchInput);
 
         executerTaskHashMap = new TaskFactory().getTasksmap(this,heros,skills,prestige,fairy,boss);
         mediaProjectionScreenCapture.setScreenCaptureCallBack(this::onScreenCapture);
@@ -152,16 +155,21 @@ public class TT2Bot extends AbstractBot
         touchInput.start();
         super.start();
         dochecks = true;
+        long startTime = System.currentTimeMillis();
         new Thread(new Runnable() {
             @Override
             public void run() {
                 while (dochecks) {
-                    boss.checkIfActiveBossFight();
+                    subMenuOpenChecker.checkIfRdyToExecute();
+
                     fairy.checkIfFairyWindowOpen();
                     heros.checkIfMenuOpen();
                     if (botSettings.useFlashZip)
                         flashZip.checkFlashZipAreasAndTap();
-                    skills.checkIfRdyToExecute();
+                    if (System.currentTimeMillis() - startTime > 30000) {
+                        skills.checkIfRdyToExecute();
+                        boss.checkIfActiveBossFight();
+                    }
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
