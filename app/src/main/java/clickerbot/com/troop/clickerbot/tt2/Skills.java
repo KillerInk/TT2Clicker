@@ -21,6 +21,7 @@ public class Skills extends Menu {
     private final Skill fs;
     private final Skill wc;
     private final Skill sc;
+    private final SkillLevelParser skillLevelParser;
 
 
     public Skills(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
@@ -31,6 +32,7 @@ public class Skills extends Menu {
         fs =new Skill(bot,rootShell,Skill.SkillType.FS,botSettings.unlockFS, botSettings.useFS);
         wc =new Skill(bot,rootShell,Skill.SkillType.WC,botSettings.unlockWC, botSettings.useWC);
         sc =new Skill(bot,rootShell,Skill.SkillType.SC,botSettings.unlockSC, botSettings.useSC);
+        skillLevelParser = new SkillLevelParser(ibot);
     }
 
 
@@ -62,10 +64,6 @@ public class Skills extends Menu {
                     e.printStackTrace();
                 }
 
-        /*bot.dumpScreen();
-        Log.d(TAG, (Coordinates.dsLvlArea.right - Coordinates.dsLvlArea.left) + (Coordinates.dsLvlArea.bottom -Coordinates.dsLvlArea.top) +"" );
-        String dsLvl = bot.getOcr().getOCRResult(bot.getAreaFromScreen(Coordinates.dsLvlArea));*/
-
                 levelUpSkills();
                 try {
                     Thread.sleep(50);
@@ -87,6 +85,30 @@ public class Skills extends Menu {
         wc.detectSkillState();
         sc.detectSkillState();
         return false;
+    }
+
+    public void testSkillLvlDetection()
+    {
+        openSwordMasterMenu();
+
+        maximiseMenu();
+
+        //swipeUp();
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        skillLevelParser.parseAllSkillLevels();
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        minimiseMenu();
+        closeSwordMasterMenu();
+
     }
 
     private boolean skipLevelUpSkills()
@@ -112,7 +134,7 @@ public class Skills extends Menu {
             int loopbreaker = 0;
             while (!isMenuTopReached() && loopbreaker < 25 && !task.cancelTask && Menu.MenuOpen) {
                 loopbreaker++;
-                touchInput.swipeVertical(Coordinates.lvlFIrsHeroButton_click, Coordinates.lvlThirdHeroButton_click);
+                touchInput.swipeVertical(Heros.lvlFIrsHeroButton_click, Heros.lvlThirdHeroButton_click);
                 Thread.sleep(300);
             }
             doSingelTap(Coordinates.Menu_Minimized_SwordMaster);

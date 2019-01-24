@@ -38,6 +38,7 @@ public class Skill {
 
     private final  int COLOR_ACTIVE_SKILL = Color.argb(255,188,134,18);
     private final  int COLOR_RDY_SKILL = Color.argb(255,255,255,255);
+    private final  int COLOR_OUT_OF_MANA = Color.argb(255,127,127,127);
 
     private TT2Bot bot;
     private SkillType skillType;
@@ -45,6 +46,7 @@ public class Skill {
     private TouchInterface touchInput;
     private boolean unlockSkilll = false;
     private boolean activateSkill = false;
+    private int skillLvl;
 
     public Skill(TT2Bot bot,TouchInterface touchInput,SkillType type, boolean unlockSkill, boolean activateSkill)
     {
@@ -54,6 +56,11 @@ public class Skill {
         this.activateSkill = activateSkill;
         this.unlockSkilll = unlockSkill;
         this.skillState = SkillState.locked;
+    }
+
+    public void setSkillLvl(int skillLvl)
+    {
+        this.skillLvl = skillLvl;
     }
 
     public void checkIfSkillUnlocked()
@@ -96,6 +103,8 @@ public class Skill {
                 state = SkillState.deactive;
             else if (color == COLOR_ACTIVE_SKILL)
                 state = SkillState.active;
+            else if(color == COLOR_OUT_OF_MANA)
+                state = SkillState.outOfMana;
             else
                 state = SkillState.locked;
             if (true/*skillState != state*/)
@@ -128,7 +137,7 @@ public class Skill {
 
     private boolean isSkillUnlocked(int color)
     {
-        return color == COLOR_ACTIVE_SKILL || color == COLOR_RDY_SKILL;
+        return color == COLOR_ACTIVE_SKILL || color == COLOR_RDY_SKILL || color == COLOR_OUT_OF_MANA;
     }
 
     public void activateSkill()

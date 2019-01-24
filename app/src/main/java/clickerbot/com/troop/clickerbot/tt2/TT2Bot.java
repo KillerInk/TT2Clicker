@@ -22,7 +22,7 @@ import clickerbot.com.troop.clickerbot.tt2.tasks.LevelAllHerosTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.LevelSwordMasterTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.RandomTapTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.TaskFactory;
-import clickerbot.com.troop.clickerbot.tt2.tasks.test.SwipeTest;
+import clickerbot.com.troop.clickerbot.tt2.tasks.test.ParseSkilllvlTest;
 
 public class TT2Bot extends AbstractBot
 {
@@ -227,7 +227,7 @@ public class TT2Bot extends AbstractBot
     private long lastTestExecuted;
     private void executeTests() {
         if (System.currentTimeMillis() - lastTestExecuted > 20000) {
-            execute(new LevelAllHerosTask(heros));
+            execute(new ParseSkilllvlTest(skills));
             lastTestExecuted = System.currentTimeMillis();
         }
     }
