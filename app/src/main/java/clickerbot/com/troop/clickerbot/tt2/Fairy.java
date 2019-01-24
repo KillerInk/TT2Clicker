@@ -27,6 +27,9 @@ public class Fairy extends Menu {
     private Point fairyColorDecline = new Point(57,593);
     private Point fairyColorAccept = new Point(420,589);
 
+    private final Point accept_Pos = new Point(300 ,630);
+    private final Point decline_Pos = new Point(200 ,630);
+
 
     public Fairy(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
         super(ibot, botSettings, rootShell);
@@ -50,9 +53,9 @@ public class Fairy extends Menu {
                 fairyTaps.add(new Point(400, getRandomFairyY()));
             }
             if (botSettings.acceptFairyAdds)
-                fairyTaps.add(Coordinates.accept_Pos);
+                fairyTaps.add(accept_Pos);
             else
-                fairyTaps.add(Coordinates.decline_Pos);
+                fairyTaps.add(decline_Pos);
         }
     }
 
@@ -77,9 +80,9 @@ public class Fairy extends Menu {
     {
         if (!Menu.MenuOpen) {
             if (botSettings.acceptFairyAdds)
-                doSingelTap(Coordinates.accept_Pos);
+                doSingelTap(accept_Pos);
             else
-                doSingelTap(Coordinates.decline_Pos);
+                doSingelTap(decline_Pos);
         }
        /* try {
             Thread.sleep(500);

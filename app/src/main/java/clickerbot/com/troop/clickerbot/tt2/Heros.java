@@ -22,7 +22,14 @@ public class Heros extends Menu {
     private long lastAllHerosLeveld = 0;
     private ArrayList<Integer> goodHeroLevelUpColors;
 
+    private final Point lvlFIrsHeroButton_color = new Point(470,579);
+    public static final Point lvlFIrsHeroButton_click = new Point(424,579);
 
+    private final Point lvlSecondHeroButton_color = new Point(470,652);
+    private final Point lvlSecondHeroButton_click = new Point(424,652);
+
+    private final Point lvlThirdHeroButton_color = new Point(470,726);
+    public static final Point lvlThirdHeroButton_click = new Point(424,726);
 
     public Heros(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell, Boss boss) {
         super(ibot, botSettings, rootShell);
@@ -67,7 +74,7 @@ public class Heros extends Menu {
         openHeroMenu();
         //make sure we are on top
         while (!isMenuTopReached() && !task.cancelTask && Menu.MenuOpen) {
-            touchInput.swipeVertical(Coordinates.lvlFIrsHeroButton_click, Coordinates.lvlThirdHeroButton_click);
+            touchInput.swipeVertical(lvlFIrsHeroButton_click, lvlThirdHeroButton_click);
             Thread.sleep(300);
         }
         Thread.sleep(500);
@@ -110,9 +117,9 @@ public class Heros extends Menu {
 
 
     private void level3heros(ExecuterTask task) throws IOException, InterruptedException {
-        levelhero(Coordinates.lvlFIrsHeroButton_color,Coordinates.lvlFIrsHeroButton_click,task);
-        levelhero(Coordinates.lvlSecondHeroButton_color,Coordinates.lvlSecondHeroButton_click,task);
-        levelhero(Coordinates.lvlThirdHeroButton_color,Coordinates.lvlThirdHeroButton_click,task);
+        levelhero(lvlFIrsHeroButton_color,lvlFIrsHeroButton_click,task);
+        levelhero(lvlSecondHeroButton_color,lvlSecondHeroButton_click,task);
+        levelhero(lvlThirdHeroButton_color,lvlThirdHeroButton_click,task);
     }
 
     private void levelhero(Point color, Point click, ExecuterTask task) throws IOException, InterruptedException {

@@ -17,9 +17,12 @@ public class Prestige extends Menu {
 
     private final long runPrestigeCheckActivator = convertMinToMs(1);
     private long lastPrestigeCheck = 0;
-    //private int prestigeTime = 60;
     private long timeSinceLastPrestige = 0;
     private Boss boss;
+
+    private final Point prestigeMenuButton = new Point(401,734);
+    private final Point prestigeButton = new Point(239,630);
+    private final Point prestigeAcceptButton = new Point(326,539);
 
     public Prestige(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell, Boss boss) {
         super(ibot, botSettings, rootShell);
@@ -61,13 +64,13 @@ public class Prestige extends Menu {
             for (int i =0; i < 20; i++)
                 touchInput.swipeVertical(new Point(240, 707), new Point(240, 556));
             Thread.sleep(1000);
-            doSingelTap(Coordinates.prestigeMenuButton);
+            doSingelTap(prestigeMenuButton);
             Thread.sleep(1000);
-            doSingelTap(Coordinates.prestigeButton);
+            doSingelTap(prestigeButton);
             Thread.sleep(3000);
-            doSingelTap(Coordinates.prestigeAcceptButton);
+            doSingelTap(prestigeAcceptButton);
             Thread.sleep(300);
-            doSingelTap(Coordinates.prestigeAcceptButton);
+            doSingelTap(prestigeAcceptButton);
             Thread.sleep(5000);
             bot.resetTickCounter();
             setMenuState(MenuState.closed);

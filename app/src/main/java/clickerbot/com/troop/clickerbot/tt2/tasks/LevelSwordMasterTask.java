@@ -5,7 +5,7 @@ import clickerbot.com.troop.clickerbot.tt2.Skills;
 
 public class LevelSwordMasterTask extends ExecuterTask {
 
-    private final Skills skills;
+    protected final Skills skills;
 
     public LevelSwordMasterTask(Skills skils)
     {

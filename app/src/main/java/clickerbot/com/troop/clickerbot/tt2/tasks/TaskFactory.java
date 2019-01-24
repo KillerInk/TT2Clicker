@@ -23,7 +23,6 @@ public class TaskFactory<T> {
         tasksmap.put(PrestigeTask.class,new PrestigeTask(prestige));
         tasksmap.put(RandomTapTask.class,new RandomTapTask(bot));
         tasksmap.put(TapOnFairysTask.class,new TapOnFairysTask(fairy));
-        tasksmap.put(TapOnFairyVipWindowTask.class,new TapOnFairyVipWindowTask(fairy));
         tasksmap.put(MenuCloseTask.class,new MenuCloseTask(heros));
         tasksmap.put(ClickOnBossFightTask.class,new ClickOnBossFightTask(boss));
         return tasksmap;
