@@ -47,6 +47,12 @@ public class Skills extends Menu {
 
     @Override
     public void init() {
+        hs.setSkillLvl(0);
+        ds.setSkillLvl(0);
+        hom.setSkillLvl(0);
+        fs.setSkillLvl(0);
+        wc.setSkillLvl(0);
+        sc.setSkillLvl(0);
         closeMenu();
         checkSkillsUnlocked();
         Log.d(TAG,"init autolvl skills:" + botSettings.autoLvlSkills);
@@ -58,8 +64,9 @@ public class Skills extends Menu {
                 maximiseMenu();
 
                 try {
-                    touchInput.swipeVertical(Heros.lvlFIrsHeroButton_click, Heros.lvlThirdHeroButton_click);
-                    touchInput.swipeVertical(Heros.lvlFIrsHeroButton_click, Heros.lvlThirdHeroButton_click);
+                    for (int i = 0; i < 10;i++)
+                        touchInput.swipeVertical(Heros.lvlFIrsHeroButton_click, Heros.lvlThirdHeroButton_click);
+                    //touchInput.swipeVertical(Heros.lvlFIrsHeroButton_click, Heros.lvlThirdHeroButton_click);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (IOException e) {

@@ -1,5 +1,7 @@
 package clickerbot.com.troop.clickerbot;
 
+import android.content.Context;
+
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 
 public interface IBot {
@@ -13,4 +15,5 @@ public interface IBot {
     void execute(ExecuterTask runnable);
     void putFirstAndExecute(ExecuterTask runnable);
     void clearExecuterQueue();
+    Context getContext();
 }

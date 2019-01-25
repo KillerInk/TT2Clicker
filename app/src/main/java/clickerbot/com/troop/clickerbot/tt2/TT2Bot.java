@@ -99,7 +99,7 @@ public class TT2Bot extends AbstractBot
 
     public TT2Bot(Context context, BotSettings botSettings, MediaProjectionScreenCapture mediaProjectionScreenCapture)
     {
-        super(botSettings,mediaProjectionScreenCapture);
+        super(context,botSettings,mediaProjectionScreenCapture);
 
         touchInput = new NativeTouchHandler();
 

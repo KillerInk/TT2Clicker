@@ -1,5 +1,6 @@
 package clickerbot.com.troop.clickerbot.tt2;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 
@@ -21,6 +22,7 @@ public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
     /*private ScreenCapture screenCapture;*/
     protected final BotSettings botSettings;
     protected MediaProjectionScreenCapture mediaProjectionScreenCapture;
+    private Context context;
 
 
     private Executer executer;
@@ -55,10 +57,16 @@ public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
     }
 
 
-    public AbstractBot(BotSettings botSettings, MediaProjectionScreenCapture mediaProjectionScreenCapture){
+    public AbstractBot(Context context,BotSettings botSettings, MediaProjectionScreenCapture mediaProjectionScreenCapture){
         this.botSettings = botSettings;
         this.mediaProjectionScreenCapture = mediaProjectionScreenCapture;
         executer = new Executer();
+        this.context = context;
+    }
+
+    @Override
+    public Context getContext() {
+        return context;
     }
 
     @Override

@@ -36,7 +36,8 @@ public abstract class Menu extends Item
         opening,
         open,
         closing,
-        closed
+        closed,
+        maximise
     }
 
 
@@ -188,6 +189,7 @@ public abstract class Menu extends Item
 
     public void maximiseMenu()
     {
+        menuState = MenuState.maximise;
         Log.d(TAG, "maximiseMenu");
         try {
             touchInput.tap(Coordinates.Menu_Maximise);
@@ -199,6 +201,7 @@ public abstract class Menu extends Item
 
     public void minimiseMenu()
     {
+
         Log.d(TAG, "minimiseMenu");
         try {
             touchInput.tap(Coordinates.Menu_Minimise);
@@ -206,6 +209,7 @@ public abstract class Menu extends Item
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        menuState = MenuState.open;
     }
 
     public void swipeUp()
