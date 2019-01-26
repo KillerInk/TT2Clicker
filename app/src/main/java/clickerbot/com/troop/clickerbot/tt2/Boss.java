@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import clickerbot.com.troop.clickerbot.ColorUtils;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
@@ -17,7 +18,7 @@ import clickerbot.com.troop.clickerbot.tt2.tasks.LevelTop6HerosTask;
 
 public class Boss extends Menu {
     private final String TAG = Boss.class.getSimpleName();
-    private int bossFailedCounter = 0;
+    private AtomicInteger bossFailedCounter = new AtomicInteger();
 
     private BossState bossState = BossState.NoneFight;
 
@@ -62,16 +63,16 @@ public class Boss extends Menu {
         int color = bot.getScreeCapture().getColor(Coordinates.fightBossButton_Color);
         if (color ==  bossFightActiveColor)
         {
-            if (bossState == BossState.NoneFight && bossFailedCounter > 0)
-                    bossFailedCounter--;
+            if (bossState == BossState.NoneFight && bossFailedCounter.get() > 0)
+                    bossFailedCounter.getAndDecrement();
             setBossState(BossState.BossFightActive);
             Log.i(TAG, "bossFightActiveColor Wait for next fail: true");
 
         }
         else if(color == bossFightFailedColor)
         {
-            if (bossState == BossState.BossFightActive && bossFailedCounter < botSettings.bossFailedCount)
-                    bossFailedCounter++;
+            if (bossState == BossState.BossFightActive && bossFailedCounter.get() < botSettings.bossFailedCount)
+                    bossFailedCounter.getAndIncrement();
             setBossState(BossState.BossFightFailed);
 
             if (!bot.containsTask(ClickOnBossFightTask.class)) {
@@ -95,12 +96,12 @@ public class Boss extends Menu {
 
     public int getBossFailedCounter()
     {
-        return bossFailedCounter;
+        return bossFailedCounter.get();
     }
 
     public void resetBossFailedCounter()
     {
-        bossFailedCounter = 0;
+        bossFailedCounter.set(0);
     }
 
     public void clickOnBossFight() throws IOException, InterruptedException {
