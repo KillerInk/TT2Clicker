@@ -74,6 +74,7 @@ public class Prestige extends Menu {
             Thread.sleep(5000);
             bot.resetTickCounter();
             setMenuState(MenuState.closed);
+            bot.clearExecuterQueue();
             bot.executeTask(InitTask.class);
             lastPrestigeCheck = System.currentTimeMillis();
         }
