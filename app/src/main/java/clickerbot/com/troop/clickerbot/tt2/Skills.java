@@ -12,9 +12,6 @@ import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 public class Skills extends Menu {
     private final String TAG = Skills.class.getSimpleName();
 
-    private final int runSkillsActivator = 30000;//ms
-    private long lastSkillsActivated = 0;
-
     private final Skill hs;
     private final Skill ds;
     private final Skill hom;
@@ -64,16 +61,18 @@ public class Skills extends Menu {
                 maximiseMenu();
 
                 try {
-                    for (int i = 0; i < 10;i++)
+                    for (int i = 0; i < 10;i++) {
                         touchInput.swipeVertical(Heros.lvlFIrsHeroButton_click, Heros.lvlThirdHeroButton_click);
-                    //touchInput.swipeVertical(Heros.lvlFIrsHeroButton_click, Heros.lvlThirdHeroButton_click);
+                        Thread.sleep(400);
+                    }
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(5000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -146,10 +145,10 @@ public class Skills extends Menu {
         openSwordMasterMenu();
         try {
             int loopbreaker = 0;
-            while (!isMenuTopReached() && loopbreaker < 25 && !task.cancelTask && Menu.MenuOpen) {
+            while (!isMenuTopReached() && loopbreaker < 25 && !task.cancelTask && Menu.MenuOpen.get()) {
                 loopbreaker++;
                 touchInput.swipeVertical(Heros.lvlFIrsHeroButton_click, Heros.lvlThirdHeroButton_click);
-                Thread.sleep(300);
+                Thread.sleep(200);
             }
             doSingelTap(Coordinates.Menu_Minimized_SwordMaster);
             Thread.sleep(1);
