@@ -144,6 +144,7 @@ public class TT2Bot extends AbstractBot
     }
 
     private boolean dochecks = false;
+    private long startTime;
     /**
      * start the bot
      */
@@ -155,7 +156,7 @@ public class TT2Bot extends AbstractBot
         touchInput.start();
         super.start();
         dochecks = true;
-        long startTime = System.currentTimeMillis();
+        startTime = System.currentTimeMillis();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -272,6 +273,7 @@ public class TT2Bot extends AbstractBot
      */
     public void init()
     {
+        startTime = System.currentTimeMillis();
         prestige.init();
         heros.init();
         boss.resetBossFailedCounter();
