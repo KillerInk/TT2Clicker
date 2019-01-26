@@ -24,6 +24,12 @@
                 custom:setting_defaults="false"
                 custom:settingkey_ids="@string/autolvlskills" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/border"
+                android:layout_margin="@dimen/overall_margin">
             <clickerbot.com.troop.clickerbot.views.SettingsSwitch
                 android:id="@+id/unlockhs"
                 android:layout_width="match_parent"
@@ -43,6 +49,7 @@
                 custom:header_txt="HS Max lvl"
                 custom:setting_default="0"
                 custom:settingkey_id="@string/hsmaxlvl" />
+            </LinearLayout>
 
             <clickerbot.com.troop.clickerbot.views.SettingsSwitch
                 android:id="@+id/usehs"
@@ -54,6 +61,12 @@
                 custom:setting_defaults="false"
                 custom:settingkey_ids="@string/useHs" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/border"
+            android:layout_margin="@dimen/overall_margin">
             <clickerbot.com.troop.clickerbot.views.SettingsSwitch
                 android:id="@+id/unlockds"
                 android:layout_width="match_parent"
@@ -73,6 +86,7 @@
                 custom:header_txt="DS Max lvl"
                 custom:setting_default="0"
                 custom:settingkey_id="@string/dsmaxlvl" />
+        </LinearLayout>
 
             <clickerbot.com.troop.clickerbot.views.SettingsSwitch
                 android:id="@+id/useds"
@@ -84,6 +98,12 @@
                 custom:setting_defaults="false"
                 custom:settingkey_ids="@string/useDS" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/border"
+            android:layout_margin="@dimen/overall_margin">
             <clickerbot.com.troop.clickerbot.views.SettingsSwitch
                 android:id="@+id/unlockhom"
                 android:layout_width="match_parent"
@@ -103,7 +123,7 @@
                 custom:header_txt="HOM Max lvl"
                 custom:setting_default="0"
                 custom:settingkey_id="@string/hommaxlvl" />
-
+        </LinearLayout>
             <clickerbot.com.troop.clickerbot.views.SettingsSwitch
                 android:id="@+id/usehom"
                 android:layout_width="match_parent"
@@ -114,6 +134,12 @@
                 custom:setting_defaults="false"
                 custom:settingkey_ids="@string/useHom" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/border"
+            android:layout_margin="@dimen/overall_margin">
             <clickerbot.com.troop.clickerbot.views.SettingsSwitch
                 android:id="@+id/unlockfs"
                 android:layout_width="match_parent"
@@ -132,7 +158,7 @@
                 custom:header_txt="FS Max lvl"
                 custom:setting_default="0"
                 custom:settingkey_id="@string/fsmaxlvl" />
-
+        </LinearLayout>
             <clickerbot.com.troop.clickerbot.views.SettingsSwitch
                 android:id="@+id/usefs"
                 android:layout_width="match_parent"
@@ -142,7 +168,12 @@
                 android:text="UseFS"
                 custom:setting_defaults="false"
                 custom:settingkey_ids="@string/useFS" />
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/border"
+            android:layout_margin="@dimen/overall_margin">
             <clickerbot.com.troop.clickerbot.views.SettingsSwitch
                 android:id="@+id/unlockwc"
                 android:layout_width="match_parent"
@@ -162,7 +193,7 @@
                 custom:header_txt="WC Max lvl"
                 custom:setting_default="0"
                 custom:settingkey_id="@string/wcmaxlvl" />
-
+        </LinearLayout>
             <clickerbot.com.troop.clickerbot.views.SettingsSwitch
                 android:id="@+id/usewc"
                 android:layout_width="match_parent"
@@ -172,7 +203,12 @@
                 android:text="UseWC"
                 custom:setting_defaults="false"
                 custom:settingkey_ids="@string/useWC" />
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/border"
+            android:layout_margin="@dimen/overall_margin">
             <clickerbot.com.troop.clickerbot.views.SettingsSwitch
                 android:id="@+id/unlocksc"
                 android:layout_width="match_parent"
@@ -191,7 +227,7 @@
                 custom:header_txt="SC Max lvl"
                 custom:setting_default="0"
                 custom:settingkey_id="@string/scmaxlvl" />
-
+        </LinearLayout>
             <clickerbot.com.troop.clickerbot.views.SettingsSwitch
                 android:id="@+id/usesc"
                 android:layout_width="match_parent"
