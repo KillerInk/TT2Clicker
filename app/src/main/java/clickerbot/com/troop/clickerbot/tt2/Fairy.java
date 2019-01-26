@@ -61,7 +61,7 @@ public class Fairy extends Menu {
 
     @Override
     boolean checkIfRdyToExecute() {
-        return !Menu.MenuOpen;
+        return !Menu.MenuOpen.get();
     }
 
     public void executeTapFairys()
@@ -78,7 +78,7 @@ public class Fairy extends Menu {
 
     public void tapOnFairyVipWindow()
     {
-        if (!Menu.MenuOpen) {
+        if (!Menu.MenuOpen.get()) {
             if (botSettings.acceptFairyAdds)
                 doSingelTap(accept_Pos);
             else

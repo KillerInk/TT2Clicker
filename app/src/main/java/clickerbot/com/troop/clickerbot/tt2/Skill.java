@@ -98,7 +98,7 @@ public class Skill {
 
     public void detectSkillState()
     {
-        if (!Menu.MenuOpen) {
+        if (!Menu.MenuOpen.get()) {
             int color = bot.getScreeCapture().getColor(getSkillColorPoint());
             SkillState state;
             if (color == COLOR_RDY_SKILL)
@@ -144,7 +144,7 @@ public class Skill {
 
     public void activateSkill()
     {
-        if (skillState != SkillState.locked && skillState != SkillState.active && skillState != SkillState.outOfMana && !Menu.MenuOpen)
+        if (skillState != SkillState.locked && skillState != SkillState.active && skillState != SkillState.outOfMana && !Menu.MenuOpen.get())
         {
             try {
                 switch (skillType) {

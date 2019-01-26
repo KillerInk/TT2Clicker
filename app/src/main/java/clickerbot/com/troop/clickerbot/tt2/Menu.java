@@ -6,6 +6,7 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import clickerbot.com.troop.clickerbot.ColorUtils;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
@@ -14,7 +15,7 @@ import clickerbot.com.troop.clickerbot.tt2.tasks.MenuCloseTask;
 public abstract class Menu extends Item
 {
     private final String TAG = Menu.class.getSimpleName();
-    public static volatile boolean MenuOpen = false;
+    public static AtomicBoolean MenuOpen = new AtomicBoolean(false);
 
     private final int menuOpenCloseDelay = 1500;
     ArrayList<Integer> maxButtonColors;
@@ -78,8 +79,8 @@ public abstract class Menu extends Item
     public void checkIfMenuOpen()
     {
         int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
-        MenuOpen = color == colorMenuOpen;
-        if (MenuOpen && !menuTaskRunning && menuState == MenuState.closed) {
+        MenuOpen.set(color == colorMenuOpen);
+        if (MenuOpen.get() && !menuTaskRunning && menuState == MenuState.closed) {
             menuTaskRunning = true;
             bot.putFirstAndExecuteTask(MenuCloseTask.class);
         }
@@ -97,7 +98,7 @@ public abstract class Menu extends Item
         }
         int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
         if (color != colorMenuOpen)
-            MenuOpen = false;
+            MenuOpen.set(false);
         menuState = MenuState.closed;
         menuTaskRunning = false;
         Log.d(TAG, "closedMenu");
@@ -118,7 +119,7 @@ public abstract class Menu extends Item
             Thread.sleep(menuOpenCloseDelay);
             int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
             if (color == colorMenuOpen)
-                MenuOpen = true;
+                MenuOpen.set(true);
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -140,7 +141,7 @@ public abstract class Menu extends Item
             Thread.sleep(menuOpenCloseDelay);
             int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
             if (color != colorMenuOpen)
-                MenuOpen = false;
+                MenuOpen.set(false);
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -162,7 +163,7 @@ public abstract class Menu extends Item
             Thread.sleep(menuOpenCloseDelay);
             int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
             if (color == colorMenuOpen)
-                MenuOpen = true;
+                MenuOpen.set(true);
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -179,7 +180,7 @@ public abstract class Menu extends Item
             Thread.sleep(menuOpenCloseDelay);
             int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
             if (color != colorMenuOpen)
-                MenuOpen = false;
+                MenuOpen.set(false);
 
         } catch (InterruptedException e) {
             e.printStackTrace();

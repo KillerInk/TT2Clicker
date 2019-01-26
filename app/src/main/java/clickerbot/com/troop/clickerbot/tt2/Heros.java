@@ -73,7 +73,7 @@ public class Heros extends Menu {
     public void levelTop6Heros(ExecuterTask task) throws InterruptedException, IOException {
         openHeroMenu();
         //make sure we are on top
-        while (!isMenuTopReached() && !task.cancelTask && Menu.MenuOpen) {
+        while (!isMenuTopReached() && !task.cancelTask && Menu.MenuOpen.get()) {
             touchInput.swipeVertical(lvlFIrsHeroButton_click, lvlThirdHeroButton_click);
             Thread.sleep(300);
         }
@@ -155,7 +155,7 @@ public class Heros extends Menu {
             Log.d(TAG, "task canceld:" + task.cancelTask);
         }
         if (canlevel) {
-            canlevel = Menu.MenuOpen == true;
+            canlevel = Menu.MenuOpen.get() == true;
             Log.d(TAG, "MenuOPen:" + Menu.MenuOpen);
         }
         return canlevel;
