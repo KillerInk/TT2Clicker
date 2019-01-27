@@ -22,8 +22,14 @@ public class SubMenuOpenChecker extends Menu {
     @Override
     boolean checkIfRdyToExecute() {
         int color = bot.getScreeCapture().getColor(hero_sub_menu_point);
-        if (color == hero_sub_menu_color)
+        if (color == hero_sub_menu_color) {
+            WaitLock.lockError(true);
             doSingelTap(hero_sub_menu_point);
+        }
+        else
+        {
+            WaitLock.lockError(false);
+        }
         return false;
     }
 }

@@ -2,7 +2,6 @@ package clickerbot.com.troop.clickerbot.tt2;
 
 import android.graphics.Color;
 import android.graphics.Point;
-import android.util.Log;
 
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 
@@ -146,6 +145,7 @@ public class Skill {
     {
         if (skillState != SkillState.locked && skillState != SkillState.active && skillState != SkillState.outOfMana && !Menu.MenuOpen.get())
         {
+            WaitLock.checkForErrorAndWait();
             try {
                 switch (skillType) {
                     case HS:
@@ -177,6 +177,7 @@ public class Skill {
             catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            WaitLock.checkForErrorAndWait();
         }
     }
 
@@ -213,7 +214,9 @@ public class Skill {
         {
             try {
                 touchInput.tap(pos);
+                WaitLock.checkForErrorAndWait();
                 Thread.sleep(40);
+                WaitLock.checkForErrorAndWait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -102,9 +102,13 @@ public class Fairy extends Menu {
        // Log.d(TAG, "fairy window open: "  + (ColorUtils.redEquals(color,251) && ColorUtils.blueIsInRange(color2,194,262)));
         if (ColorUtils.redEquals(color,251) && ColorUtils.blueIsInRange(color2,194,262))
         {
+            WaitLock.lockFairyWindow(true);
             Log.d(TAG,"Tap on Fairy Ads Window");
             tapOnFairyVipWindow();
             //bot.putFirstAndExecuteTask(TapOnFairyVipWindowTask.class);
+        }
+        else {
+            WaitLock.lockFairyWindow(false);
         }
     }
 

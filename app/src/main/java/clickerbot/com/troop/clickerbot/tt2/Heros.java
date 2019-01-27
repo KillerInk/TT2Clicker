@@ -1,6 +1,5 @@
 package clickerbot.com.troop.clickerbot.tt2;
 
-import android.graphics.Color;
 import android.graphics.Point;
 import android.util.Log;
 
@@ -8,7 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import clickerbot.com.troop.clickerbot.ColorUtils;
-import clickerbot.com.troop.clickerbot.executer.Executer;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.LevelAllHerosTask;
@@ -72,42 +70,63 @@ public class Heros extends Menu {
 
     public void levelTop6Heros(ExecuterTask task) throws InterruptedException, IOException {
         openHeroMenu();
+        WaitLock.checkForErrorAndWait();
         //make sure we are on top
         while (!isMenuTopReached() && !task.cancelTask && Menu.MenuOpen.get()) {
+            WaitLock.checkForErrorAndWait();
             touchInput.swipeVertical(lvlFIrsHeroButton_click, lvlThirdHeroButton_click);
+            WaitLock.checkForErrorAndWait();
             Thread.sleep(300);
+            WaitLock.checkForErrorAndWait();
         }
         Thread.sleep(500);
+        WaitLock.checkForErrorAndWait();
         level3heros(task);
+        WaitLock.checkForErrorAndWait();
         touchInput.swipeVertical(new Point(240, 707), new Point(240, 556));
+        WaitLock.checkForErrorAndWait();
         touchInput.swipeVertical(new Point(240, 707), new Point(240, 556));
+        WaitLock.checkForErrorAndWait();
         level3heros(task);
-
+        WaitLock.checkForErrorAndWait();
         Thread.sleep(200);
+        WaitLock.checkForErrorAndWait();
         closeHeroMenu();
+        WaitLock.checkForErrorAndWait();
         Thread.sleep(200);
+        WaitLock.checkForErrorAndWait();
 
         lastTop6HerosLeveld = System.currentTimeMillis();
     }
 
     public void lvlAllHeros(ExecuterTask task) throws InterruptedException, IOException {
         openHeroMenu();
+        WaitLock.checkForErrorAndWait();
         for (int i=0; i< 25; i++) {
             if (task.cancelTask)
                 return;
+            WaitLock.checkForErrorAndWait();
             touchInput.swipeVertical(new Point(240, 707), new Point(240, 556));
+            WaitLock.checkForErrorAndWait();
         }
         if (!task.cancelTask)
             Thread.sleep(1500);
+        WaitLock.checkForErrorAndWait();
         if (!task.cancelTask)
             Thread.sleep(100);
+        WaitLock.checkForErrorAndWait();
         int loopbreaker = 0;
         while (!isMenuTopReached() && breakCondition(loopbreaker,25,task)) {
             loopbreaker++;
+            WaitLock.checkForErrorAndWait();
             Thread.sleep(200);
+            WaitLock.checkForErrorAndWait();
             level3heros(task);
+            WaitLock.checkForErrorAndWait();
             touchInput.swipeVertical(new Point(240,556),new Point(240,707));
+            WaitLock.checkForErrorAndWait();
             Thread.sleep(400);
+            WaitLock.checkForErrorAndWait();
         }
         closeHeroMenu();
 
@@ -127,9 +146,10 @@ public class Heros extends Menu {
         while (level3HeroBreakConditions(color,loopbreaker,12,task)) {
             loopbreaker++;
             tapOnHero(1, click);
-
+            WaitLock.checkForErrorAndWait();
             if (!task.cancelTask)
                 Thread.sleep(500); //TODO this time may can get lowered, or removed with a wait for a new frame.
+            WaitLock.checkForErrorAndWait();
         }
     }
 
@@ -163,8 +183,10 @@ public class Heros extends Menu {
 
     private void tapOnHero(int times,Point point) throws IOException, InterruptedException {
         for (int i = 0; i< times;i++) {
+            WaitLock.checkForErrorAndWait();
             doSingelTap(point);
             Thread.sleep(200);
+            WaitLock.checkForErrorAndWait();
         }
     }
 

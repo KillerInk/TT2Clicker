@@ -19,6 +19,7 @@ public abstract class Menu extends Item
 
     private final int menuOpenCloseDelay = 1500;
     ArrayList<Integer> maxButtonColors;
+    private final int screenTransitionColor = Color.argb(255,25,25,25);
 
     private static MenuState menuState;
 
@@ -79,23 +80,29 @@ public abstract class Menu extends Item
     public void checkIfMenuOpen()
     {
         int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
-        MenuOpen.set(color == colorMenuOpen);
-        if (MenuOpen.get() && !menuTaskRunning && menuState == MenuState.closed) {
-            menuTaskRunning = true;
-            bot.putFirstAndExecuteTask(MenuCloseTask.class);
+        if (color != screenTransitionColor) {
+            MenuOpen.set(color == colorMenuOpen);
+            if (MenuOpen.get() && !menuTaskRunning && menuState == MenuState.closed) {
+                menuTaskRunning = true;
+                bot.putFirstAndExecuteTask(MenuCloseTask.class);
+            }
         }
     }
 
     public void closeMenu()
     {
+        WaitLock.checkForErrorAndWait();
         Log.d(TAG, "closeMenu");
         menuState = MenuState.closing;
         try {
+            WaitLock.checkForErrorAndWait();
             touchInput.tap(Coordinates.Menu_Close);
+            WaitLock.checkForErrorAndWait();
             Thread.sleep(menuOpenCloseDelay);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        WaitLock.checkForErrorAndWait();
         int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
         if (color != colorMenuOpen)
             MenuOpen.set(false);
@@ -106,17 +113,20 @@ public abstract class Menu extends Item
 
     public void openSwordMasterMenu()
     {
+        WaitLock.checkForErrorAndWait();
         setMenuState(MenuState.opening);
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        WaitLock.checkForErrorAndWait();
         Log.d(TAG, "openSwordMasterMenu");
 
         try {
             touchInput.tap(Coordinates.Menu_SwordMaster);
             Thread.sleep(menuOpenCloseDelay);
+            WaitLock.checkForErrorAndWait();
             int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
             if (color == colorMenuOpen)
                 MenuOpen.set(true);
@@ -129,7 +139,9 @@ public abstract class Menu extends Item
 
     public void closeSwordMasterMenu()
     {
+        WaitLock.checkForErrorAndWait();
         setMenuState(MenuState.closing);
+
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
@@ -137,8 +149,10 @@ public abstract class Menu extends Item
         }
         Log.d(TAG, "openSwordMasterMenu");
         try {
+            WaitLock.checkForErrorAndWait();
             touchInput.tap(Coordinates.Menu_SwordMaster);
             Thread.sleep(menuOpenCloseDelay);
+            WaitLock.checkForErrorAndWait();
             int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
             if (color != colorMenuOpen)
                 MenuOpen.set(false);
@@ -151,16 +165,19 @@ public abstract class Menu extends Item
 
     public void openHeroMenu()
     {
+        WaitLock.checkForErrorAndWait();
         setMenuState(MenuState.opening);
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        WaitLock.checkForErrorAndWait();
         Log.d(TAG, "openHeroMenu");
         try {
             touchInput.tap(Coordinates.Menu_Heros);
             Thread.sleep(menuOpenCloseDelay);
+            WaitLock.checkForErrorAndWait();
             int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
             if (color == colorMenuOpen)
                 MenuOpen.set(true);
@@ -173,14 +190,17 @@ public abstract class Menu extends Item
 
     public void closeHeroMenu()
     {
+        WaitLock.checkForErrorAndWait();
         Log.d(TAG, "openHeroMenu");
         setMenuState(MenuState.closing);
         try {
             touchInput.tap(Coordinates.Menu_Heros);
             Thread.sleep(menuOpenCloseDelay);
+            WaitLock.checkForErrorAndWait();
             int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
             if (color != colorMenuOpen)
                 MenuOpen.set(false);
+            WaitLock.checkForErrorAndWait();
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -190,11 +210,14 @@ public abstract class Menu extends Item
 
     public void maximiseMenu()
     {
+        WaitLock.checkForErrorAndWait();
         menuState = MenuState.maximise;
         Log.d(TAG, "maximiseMenu");
         try {
             touchInput.tap(Coordinates.Menu_Maximise);
+            WaitLock.checkForErrorAndWait();
             Thread.sleep(menuOpenCloseDelay);
+            WaitLock.checkForErrorAndWait();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -202,11 +225,12 @@ public abstract class Menu extends Item
 
     public void minimiseMenu()
     {
-
+        WaitLock.checkForErrorAndWait();
         Log.d(TAG, "minimiseMenu");
         try {
             touchInput.tap(Coordinates.Menu_Minimise);
             Thread.sleep(menuOpenCloseDelay);
+            WaitLock.checkForErrorAndWait();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -274,6 +298,9 @@ public abstract class Menu extends Item
     }
 
     public void swipeDown3xHeros() throws InterruptedException, IOException {
+        WaitLock.checkForErrorAndWait();
         touchInput.swipeVertical(new Point(200,swipeBottomPos),new Point(200,swipeTopPos));
+        WaitLock.checkForErrorAndWait();
     }
+
 }

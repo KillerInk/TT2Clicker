@@ -71,7 +71,7 @@ public class Prestige extends Menu {
             doSingelTap(prestigeAcceptButton);
             Thread.sleep(300);
             doSingelTap(prestigeAcceptButton);
-            Thread.sleep(5000);
+            Thread.sleep(8000);
             bot.resetTickCounter();
             setMenuState(MenuState.closed);
             bot.clearExecuterQueue();

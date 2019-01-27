@@ -18,7 +18,6 @@ import clickerbot.com.troop.clickerbot.touch.NativeTouchHandler;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.CrazyTapTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.InitTask;
-import clickerbot.com.troop.clickerbot.tt2.tasks.LevelAllHerosTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.LevelSwordMasterTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.RandomTapTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.TaskFactory;
@@ -336,8 +335,11 @@ public class TT2Bot extends AbstractBot
             {
                 if (task.cancelTask)
                     return;
+                WaitLock.checkForErrorAndWait();
                 touchInput.tap(points.get(i));
+                WaitLock.checkForErrorAndWait();
                 Thread.sleep(botSettings.clickSleepTime);
+                WaitLock.checkForErrorAndWait();
             }
             Thread.sleep(100);
         } catch (InterruptedException e) {

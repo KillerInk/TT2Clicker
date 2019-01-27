@@ -1,7 +1,5 @@
 package clickerbot.com.troop.clickerbot.tt2;
 
-import android.graphics.Color;
-import android.graphics.Point;
 import android.util.Log;
 
 import java.io.IOException;
@@ -62,8 +60,10 @@ public class Skills extends Menu {
 
                 try {
                     for (int i = 0; i < 10;i++) {
+                        WaitLock.checkForErrorAndWait();
                         touchInput.swipeVertical(Heros.lvlFIrsHeroButton_click, Heros.lvlThirdHeroButton_click);
                         Thread.sleep(400);
+                        WaitLock.checkForErrorAndWait();
                     }
 
                 } catch (InterruptedException e) {
@@ -72,14 +72,18 @@ public class Skills extends Menu {
                     e.printStackTrace();
                 }
                 try {
+                    WaitLock.checkForErrorAndWait();
                     Thread.sleep(5000);
+                    WaitLock.checkForErrorAndWait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 skillLevelParser.parseAllSkillLevels(hs, ds, hom,fs, wc,sc);
+                WaitLock.checkForErrorAndWait();
                 levelUpSkills();
                 try {
                     Thread.sleep(50);
+                    WaitLock.checkForErrorAndWait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -167,19 +171,25 @@ public class Skills extends Menu {
         try {
             doSingelTap(Coordinates.Menu_SwordMasterPos);
             Thread.sleep(20);
+            WaitLock.checkForErrorAndWait();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         if (botSettings.unlockHS)
             hs.levelSkill();
+        WaitLock.checkForErrorAndWait();
         if (botSettings.unlockDS)
             ds.levelSkill();
+        WaitLock.checkForErrorAndWait();
         if (botSettings.unlockHOM)
             hom.levelSkill();
+        WaitLock.checkForErrorAndWait();
         if (botSettings.unlockFS)
             fs.levelSkill();
+        WaitLock.checkForErrorAndWait();
         if (botSettings.unlockWC)
             wc.levelSkill();
+        WaitLock.checkForErrorAndWait();
         if (botSettings.unlockSC)
             sc.levelSkill();
     }
