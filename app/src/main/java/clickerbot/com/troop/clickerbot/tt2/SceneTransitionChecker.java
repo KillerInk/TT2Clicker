@@ -6,13 +6,13 @@ import android.util.Log;
 
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 
-public class SceneTranstitionChecker extends Menu {
+public class SceneTransitionChecker extends Menu {
 
-    private final String TAG  = SceneTranstitionChecker.class.getSimpleName();
+    private final String TAG  = SceneTransitionChecker.class.getSimpleName();
     private final Point shopbuttonColorPos = new Point(479,799);
     private final int shopButtonColor = Color.argb(255,60,131,134);
     private long lastTap =0;
-    public SceneTranstitionChecker(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
+    public SceneTransitionChecker(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
         super(ibot, botSettings, rootShell);
     }
 
@@ -24,8 +24,8 @@ public class SceneTranstitionChecker extends Menu {
     @Override
     boolean checkIfRdyToExecute() {
         int color =bot.getScreeCapture().getColor(shopbuttonColorPos);
-        if (color != shopButtonColor) {
-            Log.d(TAG, "scene Transition color:" + color + " expectedcolor:" + shopButtonColor);
+        if (color != shopButtonColor && color != 0) {
+            //Log.d(TAG, "scene Transition color:" + color + " expectedcolor:" + shopButtonColor);
             WaitLock.lockSceneTransition(true);
             if (System.currentTimeMillis() - lastTap > 200)
             {
