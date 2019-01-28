@@ -178,16 +178,28 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
             /*Log.v(TAG,"getColor w:" + inputbmp.getWidth() +" h:" + inputbmp.getHeight());*/
             if (inputbmp != null && inputbmp.getWidth() > 0 && inputbmp.getHeight() > 0)
                 color = inputbmp.getPixel(p.x, p.y);
+            //if this case happen something went wrong while copy the buffer to the bitmap
+            //or it got never filled
+            if (color == 0)
+            {
+                Log.d(TAG ,"Requested COLOR = 0 wait()");
+                try {
+                    bitmapLOCK.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                color = inputbmp.getPixel(p.x, p.y);
+            }
+
         }
         return color;
     }
 
     @Override
     public void onImageAvailable(ImageReader reader) {
-
         frames++;
         Image img = reader.acquireLatestImage();
-        if (frames == 2) {
+        if (true/*frames == 2*/) {
             if (reader != null) {
 
                 if (img != null) {
