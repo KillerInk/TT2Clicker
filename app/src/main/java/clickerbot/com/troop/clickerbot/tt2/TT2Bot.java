@@ -59,7 +59,7 @@ public class TT2Bot extends AbstractBot
     private FlashZip flashZip;
 
     private SubMenuOpenChecker subMenuOpenChecker;
-    private SceneTranstitionChecker sceneTranstitionChecker;
+    private SceneTransitionChecker sceneTransitionChecker;
 
     /**
      * time after a randomtap gets executed
@@ -111,7 +111,7 @@ public class TT2Bot extends AbstractBot
         fairy = new Fairy(this,botSettings, touchInput);
         flashZip = new FlashZip(this,botSettings,touchInput);
         subMenuOpenChecker = new SubMenuOpenChecker(this,botSettings,touchInput);
-        sceneTranstitionChecker = new SceneTranstitionChecker(this,botSettings,touchInput);
+        sceneTransitionChecker = new SceneTransitionChecker(this,botSettings,touchInput);
 
         executerTaskHashMap = new TaskFactory().getTasksmap(this,heros,skills,prestige,fairy,boss);
         mediaProjectionScreenCapture.setScreenCaptureCallBack(this::onScreenCapture);
@@ -162,7 +162,7 @@ public class TT2Bot extends AbstractBot
             @Override
             public void run() {
                 while (dochecks) {
-                    sceneTranstitionChecker.checkIfRdyToExecute();
+                    sceneTransitionChecker.checkIfRdyToExecute();
                     subMenuOpenChecker.checkIfRdyToExecute();
 
                     fairy.checkIfFairyWindowOpen();
@@ -295,12 +295,12 @@ public class TT2Bot extends AbstractBot
         skills.init();
     }
 
-    private int getRandomX()
+    public int getRandomX()
     {
         return rand.nextInt(20) + 20 +Coordinates.crazy_touch_pos.x;
     }
 
-    private int getRandomY() {
+    public int getRandomY() {
         return rand.nextInt(20) + 20 + Coordinates.crazy_touch_pos.y;
     }
 
@@ -339,6 +339,7 @@ public class TT2Bot extends AbstractBot
                 if (task.cancelTask)
                     return;
                 WaitLock.checkForErrorAndWait();
+                WaitLock.waitForFlashZip();
                 touchInput.tap(points.get(i));
                 WaitLock.checkForErrorAndWait();
                 Thread.sleep(botSettings.clickSleepTime);

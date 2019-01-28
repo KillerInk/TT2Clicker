@@ -7,9 +7,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class WaitLock
 {
     private static String TAG = WaitLock.class.getSimpleName();
-    private static AtomicBoolean errorDetected = new AtomicBoolean();
-    private static AtomicBoolean fairyWindowDetected = new AtomicBoolean();
-    private static AtomicBoolean sceneTransition = new AtomicBoolean();
+    public static AtomicBoolean errorDetected = new AtomicBoolean();
+    public static AtomicBoolean fairyWindowDetected = new AtomicBoolean();
+    public static AtomicBoolean sceneTransition = new AtomicBoolean();
+    private static AtomicBoolean flashzip = new AtomicBoolean();
 
     public static void lockError(boolean lock)
     {
@@ -71,6 +72,31 @@ public class WaitLock
         }
     }
 
+
+    public static void lockFlashZip(boolean lock)
+    {
+        synchronized (flashzip)
+        {
+            Log.d(TAG, "sceneTransition detected");
+            flashzip.set(lock);
+            if (!lock)
+                flashzip.notifyAll();
+        }
+    }
+
+    public static void waitForFlashZip()
+    {
+        synchronized (flashzip) {
+            if (flashzip.get()) {
+                try {
+                    flashzip.wait(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     public static void checkForErrorAndWait()
     {
         synchronized (WaitLock.sceneTransition)
@@ -78,7 +104,7 @@ public class WaitLock
             if (WaitLock.sceneTransition.get()) {
                 Log.d(TAG, "wait for sceneTransition");
                 try {
-                    WaitLock.sceneTransition.wait();
+                    WaitLock.sceneTransition.wait(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -90,7 +116,7 @@ public class WaitLock
             if (WaitLock.errorDetected.get()) {
                 Log.d(TAG, "wait for error");
                 try {
-                    WaitLock.errorDetected.wait();
+                    WaitLock.errorDetected.wait(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -102,7 +128,7 @@ public class WaitLock
             if (WaitLock.fairyWindowDetected.get()) {
                 Log.d(TAG, "wait for fairywindow");
                 try {
-                    WaitLock.fairyWindowDetected.wait();
+                    WaitLock.fairyWindowDetected.wait(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
