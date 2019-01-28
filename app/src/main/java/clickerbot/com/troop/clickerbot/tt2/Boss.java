@@ -60,6 +60,8 @@ public class Boss extends Menu {
 
     public void checkIfActiveBossFight()
     {
+        if (WaitLock.fairyWindowDetected.get() || WaitLock.sceneTransition.get() || WaitLock.errorDetected.get())
+            return;
         int color = bot.getScreeCapture().getColor(Coordinates.fightBossButton_Color);
         if (color ==  bossFightActiveColor)
         {
@@ -87,7 +89,14 @@ public class Boss extends Menu {
             }
 
         }
-        else if (color != bossFightActiveColor && color != bossFightFailedColor && color != 0 && bossState != BossState.NoneFight){
+        else if (color != bossFightActiveColor
+                && color != bossFightFailedColor
+                && color != 0
+                && bossState != BossState.NoneFight
+                && !WaitLock.fairyWindowDetected.get()
+                && !WaitLock.sceneTransition.get()
+                && !WaitLock.errorDetected.get())
+        {
             setBossState(BossState.NoneFight);
         }
         Log.v(TAG,"isActiveBossFight: "+ bossState.toString() + " " + ColorUtils.getColorString(color));
