@@ -15,12 +15,12 @@ Features:
     auto tap
     collect eggs
     activate CO, AAW, FlashZip, PHOM
-    activate skills all 3 min
+    auto lvl skills
+    activate skills when they runned out
 
 Not working:
 
-    Level skills
+    
 
-This works good aslong you play a beginner cs or pet build and no skills have to get unlocked
 
 To start the bot press Vol-, and again Vol- to stop it.
