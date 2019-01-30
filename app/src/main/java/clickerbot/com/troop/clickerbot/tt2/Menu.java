@@ -80,7 +80,7 @@ public abstract class Menu extends Item
     public void checkIfMenuOpen()
     {
         int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
-        if (color != screenTransitionColor) {
+        if (!WaitLock.sceneTransition.get()) {
             MenuOpen.set(color == colorMenuOpen);
             if (MenuOpen.get() && !menuTaskRunning && menuState == MenuState.closed) {
                 menuTaskRunning = true;
