@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/overall_margin"
         android:background="@drawable/border"
-        custom:header_txt="Prestige after xx min"
+        custom:header_txt="Prestige after xx min, to disable set it to 0, if bossFails 0 too, you can disable auto prestige"
         custom:setting_default="60"
         custom:settingkey_id="@string/prestigetime" />
 
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/overall_margin"
         android:background="@drawable/border"
-        custom:header_txt="Prestige after xx bossFails"
+        custom:header_txt="Prestige after xx bossFails, to disable set it to 0, if prestige after time 0 too, you can disble auto prestige"
         custom:setting_default="3"
         custom:settingkey_id="@string/prestigeafterbossfail" />
 

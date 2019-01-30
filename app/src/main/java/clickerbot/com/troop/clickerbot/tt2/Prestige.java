@@ -24,6 +24,8 @@ public class Prestige extends Menu {
     private final Point prestigeButton = new Point(239,630);
     private final Point prestigeAcceptButton = new Point(326,539);
 
+    private long randomTimeToPrestige;
+
     public Prestige(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell, Boss boss) {
         super(ibot, botSettings, rootShell);
         this.boss = boss;
@@ -31,21 +33,22 @@ public class Prestige extends Menu {
 
     @Override
     void init() {
+        randomTimeToPrestige = botSettings.timeToPrestige + (bot.rand.nextInt(10)*60*1000);
         timeSinceLastPrestige = System.currentTimeMillis();
     }
 
     public long getTimeSinceLastPrestige(){
-        return timeSinceLastPrestige + botSettings.timeToPrestige;
+        return timeSinceLastPrestige;
     }
 
     @Override
     boolean checkIfRdyToExecute() {
-        if(System.currentTimeMillis() - lastPrestigeCheck > runPrestigeCheckActivator) {
+        if(botSettings.autoPrestige && System.currentTimeMillis() - lastPrestigeCheck > runPrestigeCheckActivator) {
             Log.d(TAG, "check if boss failed or time to prestige");
 
-            if (System.currentTimeMillis() - timeSinceLastPrestige > botSettings.timeToPrestige + timeSinceLastPrestige
-                    || boss.getBossFailedCounter() >= botSettings.bossFailedCount) {
-                Log.d(TAG, "reason to prestige: bossfailed:" + boss.getBossFailedCounter() + " time toprestige:" + (System.currentTimeMillis() - timeSinceLastPrestige > botSettings.timeToPrestige));
+            if ((System.currentTimeMillis() - timeSinceLastPrestige > botSettings.timeToPrestige && randomTimeToPrestige > 0)
+                    || (boss.getBossFailedCounter() >= botSettings.bossFailedCount && botSettings.bossFailedCount > 0)) {
+                Log.d(TAG, "reason to prestige: bossfailed:" + boss.getBossFailedCounter() + " time toprestige:" + (System.currentTimeMillis() - timeSinceLastPrestige > randomTimeToPrestige));
                 bot.clearExecuterQueue();
                 bot.executeTask(PrestigeTask.class);
 
