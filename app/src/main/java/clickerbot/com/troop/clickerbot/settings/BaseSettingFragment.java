@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class BaseSettingFragment extends Fragment {
-    private int layoutID;
+    protected int layoutID;
 
     public static BaseSettingFragment getFragment(int layoutID)
     {

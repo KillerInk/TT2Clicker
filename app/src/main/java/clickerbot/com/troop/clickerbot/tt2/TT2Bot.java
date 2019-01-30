@@ -101,7 +101,7 @@ public class TT2Bot extends AbstractBot
     {
         super(context,botSettings,mediaProjectionScreenCapture);
 
-        touchInput = new NativeTouchHandler();
+        touchInput = new NativeTouchHandler(botSettings.inputPath);
 
         boss = new Boss(this,botSettings, touchInput);
         skills = new Skills(this,botSettings, touchInput);

@@ -22,10 +22,11 @@ import static clickerbot.com.troop.clickerbot.CmdBuilder.UP;
 public class NativeTouchHandler implements TouchInterface {
 
     private NativeTouch nativeTouch;
-    private String inputDevice = "/dev/input/event6";
+    private final String inputDevice;
 
-    public NativeTouchHandler()
+    public NativeTouchHandler(String inputPath)
     {
+        inputDevice = inputPath;
         try {
             RootShell rootShell = new RootShell(0);
             rootShell.startProcess();

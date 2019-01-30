@@ -55,6 +55,16 @@ public class RootShell
     public void chmodFile(String file) throws IOException {
         sendCommand("chmod 666 "+file+"\n");
     }
+
+    public void dumpInput()
+    {
+        try {
+            sendCommand("getevent -p\n");
+            sendCommand("exit\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 /*
     public void chmodFB0() throws IOException {
         sendCommand("chmod 666 /dev/fb0\n");
