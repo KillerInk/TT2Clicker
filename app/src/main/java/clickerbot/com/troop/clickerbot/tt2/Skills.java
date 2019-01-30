@@ -55,22 +55,23 @@ public class Skills extends Menu {
             if (!skipLevelUpSkills()) {
 
                 openSwordMasterMenu();
+                while (!isMenuTopReached() && Menu.MenuOpen.get()) {
+                    WaitLock.checkForErrorAndWait();
+                    try {
+                        touchInput.swipeVertical(Heros.lvlFIrsHeroButton_click, Heros.lvlThirdHeroButton_click);
+                        WaitLock.checkForErrorAndWait();
+
+                        Thread.sleep(300);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    WaitLock.checkForErrorAndWait();
+                }
 
                 maximiseMenu();
 
-                try {
-                    for (int i = 0; i < 10;i++) {
-                        WaitLock.checkForErrorAndWait();
-                        touchInput.swipeVertical(Heros.lvlFIrsHeroButton_click, Heros.lvlThirdHeroButton_click);
-                        Thread.sleep(400);
-                        WaitLock.checkForErrorAndWait();
-                    }
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
                 try {
                     WaitLock.checkForErrorAndWait();
                     Thread.sleep(5000);
