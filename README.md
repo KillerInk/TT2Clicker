@@ -24,3 +24,9 @@ Not working:
 
 
 To start the bot press Vol-, and again Vol- to stop it.
+
+How to root Memu:
+ - turn off root in memu.
+ - install and start kingroot (will fail to root)
+ - turn on root in memu and restart
+ - start again kingroot. (should now successfull root).
