@@ -3,6 +3,9 @@ package clickerbot.com.troop.clickerbot.tt2;
 import android.graphics.Color;
 import android.graphics.Point;
 
+import java.util.ArrayList;
+
+import clickerbot.com.troop.clickerbot.ColorUtils;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 
 public class Skill {
@@ -47,6 +50,20 @@ public class Skill {
     private boolean activateSkill = false;
     private int skillLvl;
     private int maxLVL;
+
+    private final Point Menu_HSPos = new Point(408,232);
+    private final Point Menu_HSPos_color = new Point(470,232);
+    private final Point Menu_DSPos = new Point(408,310);
+    private final Point Menu_DSPos_color = new Point(470,310);
+    private final Point Menu_HOMPos = new Point(408,385);
+    private final Point Menu_HOMPos_color = new Point(470,385);
+    private final Point Menu_FSMPos = new Point(408,459);
+    private final Point Menu_FSMPos_color = new Point(470,459);
+    private final Point Menu_WCMPos = new Point(408,537);
+    private final Point Menu_WCMPos_color = new Point(470,537);
+    private final Point Menu_SCMPos = new Point(408,614);
+    private final Point Menu_SCMPos_color = new Point(470,614);
+
 
     public Skill(TT2Bot bot,TouchInterface touchInput,SkillType type, boolean unlockSkill, boolean activateSkill, int maxLVL)
     {
@@ -188,34 +205,42 @@ public class Skill {
             dif = 0;
         switch (skillType) {
             case HS:
-                levelSkill(dif,Coordinates.Menu_HSPos);
+                levelSkill(dif,Menu_HSPos, Menu_HSPos_color);
                 break;
             case DS:
-                levelSkill(dif,Coordinates.Menu_DSPos);
+                levelSkill(dif,Menu_DSPos,Menu_DSPos_color);
                 break;
             case HOM:
-                levelSkill(dif,Coordinates.Menu_HOMPos);
+                levelSkill(dif,Menu_HOMPos,Menu_HOMPos_color);
                 break;
             case FS:
-                levelSkill(dif,Coordinates.Menu_FSMPos);
+                levelSkill(dif,Menu_FSMPos,Menu_FSMPos_color);
                 break;
             case WC:
-                levelSkill(dif,Coordinates.Menu_WCMPos);
+                levelSkill(dif,Menu_WCMPos,Menu_WCMPos_color);
                 break;
             case SC:
-                levelSkill(dif,Coordinates.Menu_SCMPos);
+                levelSkill(dif,Menu_SCMPos,Menu_SCMPos_color);
                 break;
         }
     }
 
-    private void levelSkill(int lvl, Point pos)
+    private void levelSkill(int lvl, Point pos, Point color_pos)
     {
         for (int i = 0; i< lvl; i++)
         {
             try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            int color = bot.getScreeCapture().getColor(color_pos);
+            if (ColorUtils.isGray(color))
+                return;
+            try {
                 touchInput.tap(pos);
                 WaitLock.checkForErrorAndWait();
-                Thread.sleep(40);
+                Thread.sleep(100);
                 WaitLock.checkForErrorAndWait();
             } catch (InterruptedException e) {
                 e.printStackTrace();

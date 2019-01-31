@@ -40,6 +40,9 @@ public class Prestige extends Menu {
     public long getTimeSinceLastPrestige(){
         return timeSinceLastPrestige;
     }
+    public long getRandomTimeToPrestige(){
+        return randomTimeToPrestige;
+    }
 
     @Override
     boolean checkIfRdyToExecute() {

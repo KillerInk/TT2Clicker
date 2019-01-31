@@ -82,6 +82,7 @@ public class Skills extends Menu {
                 skillLevelParser.parseAllSkillLevels(hs, ds, hom,fs, wc,sc);
                 WaitLock.checkForErrorAndWait();
                 levelUpSkills();
+                WaitLock.checkForErrorAndWait();
                 try {
                     Thread.sleep(50);
                     WaitLock.checkForErrorAndWait();

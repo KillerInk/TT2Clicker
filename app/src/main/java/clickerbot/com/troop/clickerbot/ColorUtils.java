@@ -53,4 +53,16 @@ public class ColorUtils {
     {
         return "color " + color + " r:" +Color.red(color) + " g:"+Color.green(color) + " b:" +Color.blue(color);
     }
+
+    public static boolean isGray(int color)
+    {
+        int r = Color.red(color);
+        int g = Color.green(color);
+        int b = Color.blue(color);
+        if (r == g && r == b)
+            return true;
+        if (r +10 > g && r -10 < g && r+10 > b && r-10 < b)
+            return true;
+        return  false;
+    }
 }

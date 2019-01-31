@@ -14,27 +14,12 @@ public class Coordinates
     public static final Point Menu_Close = new Point(466,455);
 
     public static final Point Menu_SwordMasterPos = new Point(408,137);
-    public static final Point Menu_HSPos = new Point(408,232);
-    public static final Point Menu_DSPos = new Point(408,310);
-    public static final Point Menu_HOMPos = new Point(408,385);
-    public static final Point Menu_FSMPos = new Point(408,459);
-    public static final Point Menu_WCMPos = new Point(408,537);
-    public static final Point Menu_SCMPos = new Point(408,614);
-
-
-
 
     public static final Point fightBossButton = new Point(430,46);
     public static final Point fightBossButton_Color = new Point(375,21);
 
-    public static final Point activeBossFightColor = new Point(435,45);
-
-
-
     public static final Point CO_Pos = new Point(175,410);
     public static final Point Phom_Pos = new Point(270 ,370); //phom
-
-
 
     public static final Point Hs_Pos = new Point(40 ,710);
     public static final Point DS_Pos = new Point(120 ,710);
@@ -43,14 +28,8 @@ public class Coordinates
     public static final Point WC_Pos = new Point(360 ,710);
     public static final Point SC_Pos = new Point(430, 710);
 
-
-
     public static final Point crazy_touch_pos = new Point(73, 360);
     public static final Point egg_to_collect_pos = new Point(31, 285);
-
-
-
-
 
     public static final Point AAW_Areas[] = new Point[]{
             new Point(350, 400), //Maya

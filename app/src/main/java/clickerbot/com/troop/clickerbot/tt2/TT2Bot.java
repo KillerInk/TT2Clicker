@@ -214,7 +214,7 @@ public class TT2Bot extends AbstractBot
                     long now = System.currentTimeMillis();
                     long dif =  prestige.getTimeSinceLastPrestige() - now -(7*60*60*1000);
                     String out;
-                    if (prestige.getTimeSinceLastPrestige() + botSettings.timeToPrestige > now)
+                    if (prestige.getTimeSinceLastPrestige() + prestige.getRandomTimeToPrestige() > now)
                         out = "Prestige:" + dateFormat.format(new Date(dif))+"\n";
                     else
                         out = "Prestige: It's time\n";

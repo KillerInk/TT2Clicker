@@ -18,7 +18,6 @@ public class Heros extends Menu {
     private Boss boss;
     private long lastTop6HerosLeveld = 0;
     private long lastAllHerosLeveld = 0;
-    private ArrayList<Integer> goodHeroLevelUpColors;
 
     private final Point lvlFIrsHeroButton_color = new Point(470,579);
     public static final Point lvlFIrsHeroButton_click = new Point(424,579);
@@ -32,7 +31,6 @@ public class Heros extends Menu {
     public Heros(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell, Boss boss) {
         super(ibot, botSettings, rootShell);
         this.boss = boss;
-        goodHeroLevelUpColors = getColorsToLvlHero();
 
     }
 
@@ -136,28 +134,28 @@ public class Heros extends Menu {
 
 
     private void level3heros(ExecuterTask task) throws IOException, InterruptedException {
-        levelhero(lvlFIrsHeroButton_color,lvlFIrsHeroButton_click,task);
-        levelhero(lvlSecondHeroButton_color,lvlSecondHeroButton_click,task);
-        levelhero(lvlThirdHeroButton_color,lvlThirdHeroButton_click,task);
+        levelhero(lvlFIrsHeroButton_color,lvlFIrsHeroButton_click,task,1);
+        levelhero(lvlSecondHeroButton_color,lvlSecondHeroButton_click,task,2);
+        levelhero(lvlThirdHeroButton_color,lvlThirdHeroButton_click,task,3);
     }
 
-    private void levelhero(Point color, Point click, ExecuterTask task) throws IOException, InterruptedException {
+    private void levelhero(Point color, Point click, ExecuterTask task, int id) throws IOException, InterruptedException {
         int loopbreaker = 0;
-        while (level3HeroBreakConditions(color,loopbreaker,12,task)) {
+        while (level3HeroBreakConditions(color,loopbreaker,12,task,id)) {
             loopbreaker++;
             tapOnHero(1, click);
             WaitLock.checkForErrorAndWait();
             if (!task.cancelTask)
-                Thread.sleep(500); //TODO this time may can get lowered, or removed with a wait for a new frame.
+                Thread.sleep(100); //TODO this time may can get lowered, or removed with a wait for a new frame.
             WaitLock.checkForErrorAndWait();
         }
     }
 
-    private boolean level3HeroBreakConditions(Point color, int loopbreaker, int loopbreakerMax, ExecuterTask task)
+    private boolean level3HeroBreakConditions(Point color, int loopbreaker, int loopbreakerMax, ExecuterTask task, int id)
     {
         boolean canlevel = breakCondition(loopbreaker,loopbreakerMax,task);
         if(canlevel) {
-            canlevel = canLevelHero(bot.getScreeCapture().getColor(color), 1);
+            canlevel = canLevelHero(bot.getScreeCapture().getColor(color), id);
             Log.d(TAG, "canLevelHero:" + canlevel);
         }
         return canlevel;
@@ -185,7 +183,7 @@ public class Heros extends Menu {
         for (int i = 0; i< times;i++) {
             WaitLock.checkForErrorAndWait();
             doSingelTap(point);
-            Thread.sleep(200);
+            Thread.sleep(100);
             WaitLock.checkForErrorAndWait();
         }
     }
@@ -193,39 +191,9 @@ public class Heros extends Menu {
     private boolean canLevelHero(int color, int heroid)
     {
         boolean canlvl = false;
-        if (goodHeroLevelUpColors.contains(color))
+        if (!ColorUtils.isGray(color))
             canlvl = true;
         Log.v(TAG,"canLevelHero "+heroid+": " + canlvl + " " +ColorUtils.getColorString(color));
         return canlvl;
     }
-
-    /**
-     * colors from the Hero Button to lvl and unlock hero skills
-     * colors got dumpend from R.drawable.hero_button_skill_unlock and R.drawable.hero_button_level_hero at X position 333
-     * @return a list with good colors to lvl up
-     */
-    private ArrayList<Integer> getColorsToLvlHero()
-    {
-        ArrayList<Integer> arr = new ArrayList();
-        arr.add(-867322);
-        arr.add(-13052);
-        arr.add(-933114);
-        arr.add(-932859);
-        arr.add(-78588);
-        arr.add(-998650);
-        arr.add(-1797100);
-        arr.add(-1008877);
-        arr.add(-943084);
-        arr.add(-943341);
-        arr.add(-877805);
-        arr.add(-943340);
-        arr.add(-1665772);
-        arr.add(-272567);
-        arr.add(-9399);
-        arr.add(-272311);
-        return arr;
-    }
-
-
-
 }
