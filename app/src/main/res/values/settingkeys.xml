@@ -42,6 +42,7 @@
     <string name="swipelength">swipelength</string>
     <string name="levelherostime">levelherostime</string>
     <string name="levelallherostime">levelallherostime</string>
+    <string name="levelallheroscount">levelallheroscount</string>
     <string name="levelswordmastertime">levelswordmastertime</string>
     <string name="inputpath">inputpath</string>
 </resources>

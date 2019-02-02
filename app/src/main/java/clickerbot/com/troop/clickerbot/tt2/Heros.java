@@ -27,6 +27,7 @@ public class Heros extends Menu {
 
     private final Point lvlThirdHeroButton_color = new Point(470,726);
     public static final Point lvlThirdHeroButton_click = new Point(424,726);
+    private int lvlAllHerosRunCount = 0;
 
     public Heros(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell, Boss boss) {
         super(ibot, botSettings, rootShell);
@@ -38,23 +39,28 @@ public class Heros extends Menu {
     void init() {
         lastTop6HerosLeveld = 0;
         lastAllHerosLeveld = 0;
+        lvlAllHerosRunCount = 0;
     }
 
     @Override
     boolean checkIfRdyToExecute() {
-        if (botSettings.autoLvlHeros && System.currentTimeMillis() - lastAllHerosLeveld > botSettings.levelAllHeroTime && boss.getBossState() != Boss.BossState.BossFightActive)
-        {
-            Log.v(TAG, "level ALL Heros");
-            bot.executeTask(LevelAllHerosTask.class);
-            lastAllHerosLeveld = System.currentTimeMillis();
-            lastTop6HerosLeveld = System.currentTimeMillis();
-        }
-        if (boss.getBossState() != Boss.BossState.BossFightActive
-                && botSettings.autoLvlHeros && timeOver()) {
+        if (botSettings.autoLvlHeros) {
+            if (botSettings.levelAllHeroTime > 0
+                    && botSettings.autoLvlHeros && System.currentTimeMillis() - lastAllHerosLeveld > botSettings.levelAllHeroTime
+                    && boss.getBossState() != Boss.BossState.BossFightActive
+                    && (lvlAllHerosRunCount < botSettings.levelAllHeroCount || botSettings.levelAllHeroCount == 0)) {
+                lvlAllHerosRunCount++;
+                Log.v(TAG, "level ALL Heros");
+                bot.executeTask(LevelAllHerosTask.class);
+                lastAllHerosLeveld = System.currentTimeMillis();
+                lastTop6HerosLeveld = System.currentTimeMillis();
+            }
+            if (boss.getBossState() != Boss.BossState.BossFightActive && timeOver()) {
                 Log.v(TAG, "level Top6 Heros");
                 bot.executeTask(LevelTop6HerosTask.class);
                 lastTop6HerosLeveld = System.currentTimeMillis();
                 return true;
+            }
         }
        /* else if (debug) {
             Log.d(TAG, "not rdy to execute " + boss.getBossState() + " timeover: "+timeOver());}*/

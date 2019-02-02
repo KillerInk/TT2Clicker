@@ -142,6 +142,7 @@ public class BotSettings {
      * time after that all heros gets leveld
      */
     public final  long levelAllHeroTime;
+    public final  long levelAllHeroCount;
     /**
      * time after that the swordmaster gets leveld
      */
@@ -189,6 +190,7 @@ public class BotSettings {
         levelTop6HeroTime = sharedPreferences.getLong(context.getString(R.string.levelherostime),3)*60*1000;
         levelAllHeroTime = sharedPreferences.getLong(context.getString(R.string.levelallherostime),9)*60*1000;
         levelSwordMasterTime = sharedPreferences.getLong(context.getString(R.string.levelswordmastertime),3)*60*1000;
+        levelAllHeroCount = sharedPreferences.getLong(context.getString(R.string.levelallheroscount),3);
         hsMaxLvl = sharedPreferences.getLong(context.getString(R.string.hsmaxlvl),0);
         dsMaxLvl = sharedPreferences.getLong(context.getString(R.string.dsmaxlvl),0);
         homMaxLvl = sharedPreferences.getLong(context.getString(R.string.hommaxlvl),0);
