@@ -70,6 +70,20 @@ public class Skills extends Menu {
                     WaitLock.checkForErrorAndWait();
                 }
 
+                //make sure we are truly on top
+                WaitLock.checkForErrorAndWait();
+                try {
+                    touchInput.swipeVertical(Heros.lvlFIrsHeroButton_click, Heros.lvlThirdHeroButton_click);
+                    WaitLock.checkForErrorAndWait();
+
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                WaitLock.checkForErrorAndWait();
+
                 maximiseMenu();
 
                 try {
