@@ -15,7 +15,7 @@ public class Prestige extends Menu {
 
     private final String TAG = Prestige.class.getSimpleName();
 
-    private final long runPrestigeCheckActivator = convertMinToMs(1);
+    private final long runPrestigeCheckActivator = 5000;
     private long lastPrestigeCheck = 0;
     private long timeSinceLastPrestige = 0;
     private Boss boss;
