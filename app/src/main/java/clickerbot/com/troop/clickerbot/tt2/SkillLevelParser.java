@@ -44,7 +44,7 @@ public class SkillLevelParser {
             boolean found = false;
             for (int i = 0; i< failslist.length;i++)
             {
-                if (failslist[i] < 4)
+                if (failslist[i] < 3)
                     found = true;
             }
             return found;
