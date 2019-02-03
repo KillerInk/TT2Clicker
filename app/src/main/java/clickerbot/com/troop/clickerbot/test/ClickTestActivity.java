@@ -42,7 +42,7 @@ public class ClickTestActivity extends AppCompatActivity {
 
     private void runTouchTest(TouchInterface nativeTouchHandler) throws InterruptedException, IOException {
         nativeTouchHandler.start();
-        nativeTouchHandler.tap(new Point(240,71));
+        nativeTouchHandler.tap(new Point(240,71),30);
         Thread.sleep(1000);
         nativeTouchHandler.swipeVertical(new Point(200,782), new Point(200,546));
         Thread.sleep(1000);

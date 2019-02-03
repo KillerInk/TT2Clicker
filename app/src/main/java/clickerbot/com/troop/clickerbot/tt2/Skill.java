@@ -166,27 +166,27 @@ public class Skill {
             try {
                 switch (skillType) {
                     case HS:
-                        touchInput.tap(Coordinates.Hs_Pos);
+                        touchInput.tap(Coordinates.Hs_Pos,30);
                         Thread.sleep(100);
                         break;
                     case DS:
-                        touchInput.tap(Coordinates.DS_Pos);
+                        touchInput.tap(Coordinates.DS_Pos,30);
                         Thread.sleep(100);
                         break;
                     case HOM:
-                        touchInput.tap(Coordinates.HOM_Pos);
+                        touchInput.tap(Coordinates.HOM_Pos,30);
                         Thread.sleep(100);
                         break;
                     case FS:
-                        touchInput.tap(Coordinates.FS_Pos);
+                        touchInput.tap(Coordinates.FS_Pos,30);
                         Thread.sleep(100);
                         break;
                     case WC:
-                        touchInput.tap(Coordinates.WC_Pos);
+                        touchInput.tap(Coordinates.WC_Pos,30);
                         Thread.sleep(100);
                         break;
                     case SC:
-                        touchInput.tap(Coordinates.SC_Pos);
+                        touchInput.tap(Coordinates.SC_Pos,30);
                         Thread.sleep(100);
                         break;
                 }
@@ -238,7 +238,7 @@ public class Skill {
             if (ColorUtils.isGray(color))
                 return;
             try {
-                touchInput.tap(pos);
+                touchInput.tap(pos,30);
                 WaitLock.checkForErrorAndWait();
                 Thread.sleep(100);
                 WaitLock.checkForErrorAndWait();

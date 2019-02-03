@@ -24,8 +24,20 @@ public abstract class Item {
     public void doSingelTap(Point point)
     {
         try {
-            touchInput.tap(point);
-            Thread.sleep(50);
+            touchInput.tap(point,30);
+            Thread.sleep(20);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    public void doLongerSingelTap(Point point)
+    {
+        try {
+            touchInput.tap(point,70);
+            Thread.sleep(20);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

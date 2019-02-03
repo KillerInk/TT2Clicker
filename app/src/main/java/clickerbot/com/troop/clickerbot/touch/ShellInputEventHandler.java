@@ -24,7 +24,7 @@ public class ShellInputEventHandler implements TouchInterface {
     }
 
     @Override
-    public void tap(Point pos) throws InterruptedException {
+    public void tap(Point pos, int duration) throws InterruptedException {
         RootShell shell = getShell();
         shell.touchdownUp(pos);
     }

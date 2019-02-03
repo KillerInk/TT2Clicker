@@ -41,11 +41,11 @@ public class NativeTouchHandler implements TouchInterface {
     }
 
     @Override
-    public void tap(Point pos) throws InterruptedException {
+    public void tap(Point pos,int duration) throws InterruptedException {
 
         touchDown(pos);
         try {
-            Thread.sleep(30);
+            Thread.sleep(duration);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

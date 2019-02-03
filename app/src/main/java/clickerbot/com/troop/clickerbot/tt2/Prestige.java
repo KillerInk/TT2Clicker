@@ -70,13 +70,13 @@ public class Prestige extends Menu {
             for (int i =0; i < 20; i++)
                 touchInput.swipeVertical(new Point(240, 707), new Point(240, 556));
             Thread.sleep(1000);
-            doSingelTap(prestigeMenuButton);
+            doLongerSingelTap(prestigeMenuButton);
             Thread.sleep(1000);
-            doSingelTap(prestigeButton);
+            doLongerSingelTap(prestigeButton);
             Thread.sleep(3000);
-            doSingelTap(prestigeAcceptButton);
+            doLongerSingelTap(prestigeAcceptButton);
             Thread.sleep(300);
-            doSingelTap(prestigeAcceptButton);
+            doLongerSingelTap(prestigeAcceptButton);
             Thread.sleep(8000);
             bot.resetTickCounter();
             setMenuState(MenuState.closed);

@@ -21,7 +21,7 @@ public class SwipeTest extends ExecuterTask {
     @Override
     public void doTask() {
         try {
-            touchInterface.tap(Coordinates.Menu_Heros);
+            touchInterface.tap(Coordinates.Menu_Heros,30);
             Thread.sleep(1000);
             touchInterface.swipeVertical(new Point(240,707),new Point(240,556));
             Thread.sleep(100);

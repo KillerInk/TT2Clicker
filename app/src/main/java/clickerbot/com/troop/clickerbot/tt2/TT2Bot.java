@@ -344,7 +344,7 @@ public class TT2Bot extends AbstractBot
                     return;
                 WaitLock.checkForErrorAndWait();
                 WaitLock.waitForFlashZip();
-                touchInput.tap(points.get(i));
+                touchInput.tap(points.get(i),30);
                 WaitLock.checkForErrorAndWait();
                 Thread.sleep(botSettings.clickSleepTime);
                 WaitLock.checkForErrorAndWait();
