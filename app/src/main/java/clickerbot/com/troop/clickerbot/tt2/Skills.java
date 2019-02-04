@@ -48,7 +48,9 @@ public class Skills extends Menu {
         fs.setSkillLvl(0);
         wc.setSkillLvl(0);
         sc.setSkillLvl(0);
+        WaitLock.checkForErrorAndWait();
         closeMenu();
+        WaitLock.checkForErrorAndWait();
         checkSkillsUnlocked();
         Log.d(TAG,"init autolvl skills:" + botSettings.autoLvlSkills);
         if (botSettings.autoLvlSkills) {
@@ -139,6 +141,7 @@ public class Skills extends Menu {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        WaitLock.checkForErrorAndWait();
         minimiseMenu();
         closeSwordMasterMenu();
 
@@ -185,6 +188,7 @@ public class Skills extends Menu {
     private void levelUpSkills()
     {
         try {
+            WaitLock.checkForErrorAndWait();
             doSingelTap(Coordinates.Menu_SwordMasterPos);
             Thread.sleep(20);
             WaitLock.checkForErrorAndWait();
