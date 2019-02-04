@@ -1,5 +1,6 @@
 package clickerbot.com.troop.clickerbot.tt2;
 
+import android.graphics.Color;
 import android.graphics.Point;
 import android.util.Log;
 
@@ -23,6 +24,10 @@ public class Prestige extends Menu {
     private final Point prestigeMenuButton = new Point(401,734);
     private final Point prestigeButton = new Point(239,630);
     private final Point prestigeAcceptButton = new Point(326,539);
+    private final Point prestigeAcceptButton_color = new Point(326,525);
+
+
+    private final Point loginInfoButton = new Point(241,596);
 
     private long randomTimeToPrestige;
 
@@ -74,15 +79,34 @@ public class Prestige extends Menu {
             Thread.sleep(1000);
             doLongerSingelTap(prestigeButton);
             Thread.sleep(3000);
-            doLongerSingelTap(prestigeAcceptButton);
-            Thread.sleep(300);
-            doLongerSingelTap(prestigeAcceptButton);
-            Thread.sleep(8000);
+            while (checkPrestigAcceptColor()) {
+                doLongerSingelTap(prestigeAcceptButton);
+                Thread.sleep(500);
+            }
+            Thread.sleep(10000);
+
+            while (checkLoginInfoColor()) {
+                doLongerSingelTap(loginInfoButton);
+                Thread.sleep(200);
+            }
+
             bot.resetTickCounter();
             setMenuState(MenuState.closed);
             bot.clearExecuterQueue();
             bot.executeTask(InitTask.class);
             lastPrestigeCheck = System.currentTimeMillis();
         }
+    }
+
+    private boolean checkPrestigAcceptColor()
+    {
+        int color = bot.getScreeCapture().getColor(prestigeAcceptButton_color);
+        return Color.blue(color)> 200;
+    }
+
+    private boolean checkLoginInfoColor()
+    {
+        int color = bot.getScreeCapture().getColor(loginInfoButton);
+        return Color.blue(color)> 200;
     }
 }
