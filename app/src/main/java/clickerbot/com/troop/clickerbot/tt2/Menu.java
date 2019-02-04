@@ -43,15 +43,17 @@ public abstract class Menu extends Item
 
 
     public final Point MenuMaxButtonColorPosition = new Point(335,518);
+    private int colorMenuOpen = Color.argb(255,84,76,76);
+    private Point menuOpenCheckPoint = new Point(471,449);
+    private Point menuMaximizedCheckPoint = new Point(471,12);
+    private boolean menuTaskRunning = false;
 
     public Menu(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
         super(ibot, botSettings, rootShell);
         maxButtonColors = getMaxButtonColors();
     }
 
-    private int colorMenuOpen = Color.argb(255,84,76,76);
-    private Point menuOpenCheckPoint = new Point(471,449);
-    private boolean menuTaskRunning = false;
+
 
     public boolean isMenuTopReached()
     {
@@ -118,6 +120,12 @@ public abstract class Menu extends Item
         return color == colorMenuOpen;
     }
 
+    private boolean isMenuMaximized()
+    {
+        int color = bot.getScreeCapture().getColor(menuMaximizedCheckPoint);
+        return color == colorMenuOpen;
+    }
+
     private void openMenu(Point point)
     {
         WaitLock.checkForErrorAndWait();
@@ -179,30 +187,35 @@ public abstract class Menu extends Item
 
     public void maximiseMenu()
     {
-        WaitLock.checkForErrorAndWait();
-        menuState = MenuState.maximise;
-        Log.d(TAG, "maximiseMenu");
-        try {
-            doSingelTap(Coordinates.Menu_Maximise);
+        while (!isMenuMaximized()) {
             WaitLock.checkForErrorAndWait();
-            Thread.sleep(menuOpenCloseDelay);
-            WaitLock.checkForErrorAndWait();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            menuState = MenuState.maximise;
+            Log.d(TAG, "maximiseMenu");
+            try {
+                doSingelTap(Coordinates.Menu_Maximise);
+                WaitLock.checkForErrorAndWait();
+                Thread.sleep(menuOpenCloseDelay);
+                WaitLock.checkForErrorAndWait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public void minimiseMenu()
     {
-        WaitLock.checkForErrorAndWait();
-        Log.d(TAG, "minimiseMenu");
-        try {
-
-            doSingelTap(Coordinates.Menu_Minimise);
-            Thread.sleep(menuOpenCloseDelay);
+        while (isMenuMaximized()) {
             WaitLock.checkForErrorAndWait();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            Log.d(TAG, "minimiseMenu");
+            try {
+
+                doSingelTap(Coordinates.Menu_Minimise);
+                Thread.sleep(menuOpenCloseDelay);
+                WaitLock.checkForErrorAndWait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
         }
         menuState = MenuState.open;
     }
