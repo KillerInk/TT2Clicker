@@ -212,10 +212,13 @@ public class TT2Bot extends AbstractBot
             {
                 if (System.currentTimeMillis() - lastUiUpdate > 1000) {
                     long now = System.currentTimeMillis();
-                    long dif =  prestige.getTimeSinceLastPrestige()+ prestige.getRandomTimeToPrestige() - now -(8*60*60*1000);
+                    long dif =  (prestige.getTimeSinceLastPrestige()+ prestige.getRandomTimeToPrestige() - now)/1000;
+                    int hour = ((int)dif / 60) / 60;
+                    int min = (int)(dif - (hour*60*60)) / 60;
+                    int sec = (int)(dif - (hour*60*60)) - (min *60);
                     String out;
                     if (prestige.getTimeSinceLastPrestige() + prestige.getRandomTimeToPrestige() > now)
-                        out = "Prestige:" + dateFormat.format(new Date(dif))+"\n";
+                        out = "Prestige:" + hour +":"+min+":" + sec+"\n";
                     else
                         out = "Prestige: It's time\n";
                     //Log.d(TAG, out);
