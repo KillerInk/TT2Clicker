@@ -54,7 +54,7 @@ public class Prestige extends Menu {
         if(botSettings.autoPrestige && System.currentTimeMillis() - lastPrestigeCheck > runPrestigeCheckActivator) {
             Log.d(TAG, "check if boss failed or time to prestige");
 
-            if ((System.currentTimeMillis() - timeSinceLastPrestige > botSettings.timeToPrestige && randomTimeToPrestige > 0)
+            if ((System.currentTimeMillis() - timeSinceLastPrestige > randomTimeToPrestige && randomTimeToPrestige > 0)
                     || (boss.getBossFailedCounter() >= botSettings.bossFailedCount && botSettings.bossFailedCount > 0)) {
                 Log.d(TAG, "reason to prestige: bossfailed:" + boss.getBossFailedCounter() + " time toprestige:" + (System.currentTimeMillis() - timeSinceLastPrestige > randomTimeToPrestige));
                 bot.clearExecuterQueue();
