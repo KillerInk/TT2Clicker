@@ -17,13 +17,14 @@ Features:
     activate CO, AAW, FlashZip, PHOM
     auto lvl skills
     activate skills when they runned out
+    auto prestige after time, after xx boss fails
 
 Not working:
 
-    
+    What you tell me
 
 
-To start the bot press Vol-, and again Vol- to stop it.
+To start the bot in game press Vol-, and again Vol- to stop it.
 
 How to root Memu:
  - turn off root in memu.

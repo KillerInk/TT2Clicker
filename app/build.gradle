@@ -15,7 +15,7 @@ android {
         applicationId "clickerbot.com.troop.clickerbot"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 3
+        versionCode 7
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
@@ -24,7 +24,7 @@ android {
                 abiFilters 'armeabi-v7a', 'arm64-v8a'
             }
         }
-        versionNameSuffix 'preview3'
+        versionNameSuffix 'preview7'
     }
     externalNativeBuild {
         ndkBuild {
