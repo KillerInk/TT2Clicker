@@ -4,7 +4,6 @@ import android.graphics.Point;
 import android.util.Log;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import clickerbot.com.troop.clickerbot.ColorUtils;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
@@ -69,10 +68,10 @@ public class Heros extends Menu {
 
     private boolean timeOver()
     {
-        return System.currentTimeMillis() - lastTop6HerosLeveld > botSettings.levelTop6HeroTime;
+        return System.currentTimeMillis() - lastTop6HerosLeveld > botSettings.levelTop9HeroTime;
     }
 
-    public void levelTop6Heros(ExecuterTask task) throws InterruptedException, IOException {
+    public void levelTop9Heros(ExecuterTask task) throws InterruptedException, IOException {
         openHeroMenu();
         WaitLock.checkForErrorAndWait();
         //make sure we are on top
@@ -84,6 +83,12 @@ public class Heros extends Menu {
             WaitLock.checkForErrorAndWait();
         }
         Thread.sleep(500);
+        WaitLock.checkForErrorAndWait();
+        level3heros(task);
+        WaitLock.checkForErrorAndWait();
+        touchInput.swipeVertical(new Point(240, 707), new Point(240, 556));
+        WaitLock.checkForErrorAndWait();
+        touchInput.swipeVertical(new Point(240, 707), new Point(240, 556));
         WaitLock.checkForErrorAndWait();
         level3heros(task);
         WaitLock.checkForErrorAndWait();
