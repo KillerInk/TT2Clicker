@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/mouseinput"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="MouseInput. Disable on Memu > 6.0.X"
+        custom:setting_defaults="true"
+        custom:settingkey_ids="@string/mouseinput" />
 
     <EditText
         android:id="@+id/editText_inputpath"

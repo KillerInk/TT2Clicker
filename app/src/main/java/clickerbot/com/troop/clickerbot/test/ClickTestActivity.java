@@ -26,7 +26,7 @@ public class ClickTestActivity extends AppCompatActivity {
             new Thread(() -> {
                 try {
                     Thread.sleep(500);
-                    TouchInterface nativeTouchHandler = new NativeTouchHandler("/dev/input/event6");
+                    TouchInterface nativeTouchHandler = new NativeTouchHandler("/dev/input/event6", false);
                     runTouchTest(nativeTouchHandler);
                     /*Thread.sleep(2000);
                     nativeTouchHandler = new ShellInputEventHandler(1);

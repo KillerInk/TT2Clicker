@@ -153,6 +153,7 @@ public class BotSettings {
 
     public final String inputPath;
 
+    public final boolean mouseInput;
     public BotSettings(SharedPreferences sharedPreferences,Context context)
     {
         useHS = sharedPreferences.getBoolean(context.getString(R.string.useHs),false);
@@ -168,6 +169,7 @@ public class BotSettings {
         unlockWC = sharedPreferences.getBoolean(context.getString(R.string.unlockWC),false);
         unlockSC = sharedPreferences.getBoolean(context.getString(R.string.unlockSC),false);
         doAutoTap = sharedPreferences.getBoolean(context.getString(R.string.autoTap),false);
+        mouseInput = sharedPreferences.getBoolean(context.getString(R.string.mouseinput),true);
         autoLvlHeros = sharedPreferences.getBoolean(context.getString(R.string.autolvlheros),false);
         autoLvlSkills = sharedPreferences.getBoolean(context.getString(R.string.autolvlskills),false);
         clickOnFairys = sharedPreferences.getBoolean(context.getString(R.string.clickonfairyadds),false);

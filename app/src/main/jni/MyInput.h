@@ -19,9 +19,9 @@ public:
     MyInput(){}
     struct uinput_event {
         struct timeval time;
-        uint16_t type;
-        uint16_t code;
-        int32_t value;
+        unsigned short type;
+        unsigned short code;
+        unsigned int value;
     };
     int file;
     void openFile(char * file)
@@ -43,6 +43,7 @@ public:
         //LOGD("sendEvent %i %i %i", type, code,value);
 
         memset(&event, 0, sizeof(event));
+        gettimeofday (&event.time, NULL);
         event.type = type;
         event.code = code;
         event.value = value;
