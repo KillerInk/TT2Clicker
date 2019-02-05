@@ -26,6 +26,7 @@ import clickerbot.com.troop.clickerbot.tt2.tasks.test.ParseSkilllvlTest;
 public class TT2Bot extends AbstractBot
 {
     private static final String TAG = TT2Bot.class.getSimpleName();
+    private final ClanQuest clanQuest;
 
     private TouchInterface touchInput;
 
@@ -112,8 +113,9 @@ public class TT2Bot extends AbstractBot
         flashZip = new FlashZip(this,botSettings,touchInput);
         subMenuOpenChecker = new SubMenuOpenChecker(this,botSettings,touchInput);
         sceneTransitionChecker = new SceneTransitionChecker(this,botSettings,touchInput);
+        clanQuest = new ClanQuest(this,botSettings,touchInput);
 
-        executerTaskHashMap = new TaskFactory().getTasksmap(this,heros,skills,prestige,fairy,boss);
+        executerTaskHashMap = new TaskFactory().getTasksmap(this,heros,skills,prestige,fairy,boss,clanQuest);
         mediaProjectionScreenCapture.setScreenCaptureCallBack(this::onScreenCapture);
 
         Log.d(TAG,"TT2Bot()");
@@ -226,6 +228,7 @@ public class TT2Bot extends AbstractBot
                     UpdatePrestigeTime(out);
                     lastUiUpdate = System.currentTimeMillis();
                 }
+                clanQuest.checkIfRdyToExecute();
                 swordMasterRdyToExecute();
                 //skills.checkIfRdyToExecute();
                 heros.checkIfRdyToExecute();
@@ -286,6 +289,7 @@ public class TT2Bot extends AbstractBot
         prestige.init();
         heros.init();
         boss.resetBossFailedCounter();
+        clanQuest.init();
         lastSwordMasterLeveled =0;
         int startTapPoints = 40;
         if (botSettings.useFlashZip || botSettings.useAAW)

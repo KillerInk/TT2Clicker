@@ -38,6 +38,7 @@
     <string name="usephom">usephom</string>
     <string name="shellcount">shellcount</string>
     <string name="autocollectegg">autocollectegg</string>
+    <string name="autoqc">autoqc</string>
     <string name="useflashzip">useflashzip</string>
     <string name="runtests">runtests</string>
     <string name="swipelength">swipelength</string>

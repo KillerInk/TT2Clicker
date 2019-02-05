@@ -69,6 +69,16 @@
         custom:settingkey_ids="@string/autocollectegg" />
 
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/autoQc"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Auto Clan Quest"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/autoqc" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/runTests"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
