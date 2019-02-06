@@ -98,6 +98,8 @@ public class TT2Bot extends AbstractBot
         return min*60*1000;
     }
 
+    private Thread screenParserThread;
+
     public TT2Bot(Context context, BotSettings botSettings, MediaProjectionScreenCapture mediaProjectionScreenCapture)
     {
         super(context,botSettings,mediaProjectionScreenCapture);
@@ -160,21 +162,22 @@ public class TT2Bot extends AbstractBot
         super.start();
         dochecks = true;
         startTime = System.currentTimeMillis();
-        new Thread(new Runnable() {
+        screenParserThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (dochecks) {
                     if (!WaitLock.clanquest.get()) {
                         sceneTransitionChecker.checkIfRdyToExecute();
                         subMenuOpenChecker.checkIfRdyToExecute();
-                        fairy.checkIfFairyWindowOpen();
-                        heros.checkIfMenuOpen();
-                        if (botSettings.useFlashZip)
-                            flashZip.checkFlashZipAreasAndTap();
-                        if (System.currentTimeMillis() - startTime > 30000) {
-                            skills.checkIfRdyToExecute();
-                            boss.checkIfActiveBossFight();
-                        }
+                    }
+
+                    fairy.checkIfFairyWindowOpen();
+                    heros.checkIfMenuOpen();
+                    if (botSettings.useFlashZip)
+                        flashZip.checkFlashZipAreasAndTap();
+                    if (System.currentTimeMillis() - startTime > 30000) {
+                        skills.checkIfRdyToExecute();
+                        boss.checkIfActiveBossFight();
                     }
                     try {
                         Thread.sleep(100);
@@ -183,7 +186,8 @@ public class TT2Bot extends AbstractBot
                     }
                 }
             }
-        }).start();
+        });
+        screenParserThread.start();
     }
 
     /**
@@ -192,6 +196,7 @@ public class TT2Bot extends AbstractBot
     public void stop()
     {
         dochecks = false;
+        screenParserThread.interrupt();
         Log.d(TAG,"stop");
         super.stop();
         touchInput.stop();

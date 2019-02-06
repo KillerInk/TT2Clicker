@@ -26,6 +26,7 @@ public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
 
 
     private Executer executer;
+    private Thread baseThread;
 
     public interface UpdateUi
     {
@@ -112,7 +113,7 @@ public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
         Log.d(TAG, "start");
         mediaProjectionScreenCapture.start();
         executer.start();
-        new Thread(()->{
+        baseThread = new Thread(()->{
             threadstarttime = System.currentTimeMillis();
             isRunning = true;
             while (doWork)
@@ -126,26 +127,15 @@ public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
             }
             isRunning = false;
         }
-        ).start();
-
-        /*new Thread(()->{
-            while (doWork)
-            {
-                onScreenCapture();
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();*/
-        //screenCapture.start();
+        );
+        baseThread.start();
     }
 
     @Override
     public void stop() {
         this.doWork = false;
         executer.stop();
+        baseThread.interrupt();
         //screenCapture.stop();
         mediaProjectionScreenCapture.stop();
         try {
