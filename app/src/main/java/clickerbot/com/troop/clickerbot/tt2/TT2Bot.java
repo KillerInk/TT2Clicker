@@ -164,16 +164,17 @@ public class TT2Bot extends AbstractBot
             @Override
             public void run() {
                 while (dochecks) {
-                    sceneTransitionChecker.checkIfRdyToExecute();
-                    subMenuOpenChecker.checkIfRdyToExecute();
-
-                    fairy.checkIfFairyWindowOpen();
-                    heros.checkIfMenuOpen();
-                    if (botSettings.useFlashZip)
-                        flashZip.checkFlashZipAreasAndTap();
-                    if (System.currentTimeMillis() - startTime > 30000) {
-                        skills.checkIfRdyToExecute();
-                        boss.checkIfActiveBossFight();
+                    if (!WaitLock.clanquest.get()) {
+                        sceneTransitionChecker.checkIfRdyToExecute();
+                        subMenuOpenChecker.checkIfRdyToExecute();
+                        fairy.checkIfFairyWindowOpen();
+                        heros.checkIfMenuOpen();
+                        if (botSettings.useFlashZip)
+                            flashZip.checkFlashZipAreasAndTap();
+                        if (System.currentTimeMillis() - startTime > 30000) {
+                            skills.checkIfRdyToExecute();
+                            boss.checkIfActiveBossFight();
+                        }
                     }
                     try {
                         Thread.sleep(100);

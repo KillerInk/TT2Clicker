@@ -29,6 +29,7 @@ public class ClanQuest extends Menu {
     private final Point cq_close_button_click_pos = new Point(415,47);
     private final int cq_close_button_click_color = Color.argb(255,69,56,48);
     private long lastPrestigeCheck;
+    private TapThread tap;
 
     public ClanQuest(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
         super(ibot, botSettings, rootShell);
@@ -55,66 +56,82 @@ public class ClanQuest extends Menu {
     public void doCQ(ExecuterTask executerTask) throws InterruptedException {
         //tap on cq and open clanchat
         Log.d(TAG,"Open ClanChat");
-        while (!isClanChatOpen()) {
+        WaitLock.clanquest.set(true);
+        while (!isClanChatOpen() && !executerTask.cancelTask) {
             WaitLock.checkForErrorAndWait();
             doLongerSingelTap(cq_button_click_pos);
             Thread.sleep(2000);
+            Log.d(TAG,"Open ClanChat");
             WaitLock.checkForErrorAndWait();
         }
-        if (isClanChatOpen())
-        {
+        Log.d(TAG,"ClanChat Open, open ClanQuest");
+        //open cq window
+        while (!isFightButton()&& !executerTask.cancelTask) {
             Log.d(TAG,"ClanChat Open, open ClanQuest");
-            //open cq window
-            while (!isFightButton()) {
-                WaitLock.checkForErrorAndWait();
-                doLongerSingelTap(cq_clanchat_button_click_pos);
-                Thread.sleep(2000);
-                WaitLock.checkForErrorAndWait();
-            }
-            Log.d(TAG,"ClanQuest Open, click on Fight");
-            //start finaly clanquest
-            while (isFightButton())
-            {
-                WaitLock.checkForErrorAndWait();
-                doLongerSingelTap(cq_fight_button_click_pos);
-                Thread.sleep(1000);
-                WaitLock.checkForErrorAndWait();
-            }
-
-            //wait for battle to start
-            while (!isClanFightTimer() && !isClanFightTimerStart())
-            {
-                Thread.sleep(100);
-            }
-            Log.d(TAG,"Fight is starting");
-            //fight boss
-            int sleep = 1000/ (600 / 30);// = 20 = 50
-
-            TapThread tap  =new TapThread();
-            tap.start();
-            while (isClanFightTimer() && !executerTask.cancelTask)
-            {
-                Thread.sleep(100);
-            }
-            tap.abort();
-            Log.d(TAG,"Fight is over, wait for ClanQuest Close");
-            //wait till we are back to cq window
-            while (!isCloseWindow())
-            {
-                doLongerSingelTap(new Point(bot.getRandomX(),bot.getRandomY()));
-                Thread.sleep(200);
-            }
-            //close cq and chat
-            Log.d(TAG,"Close Both Windows");
-            while (isCloseWindow())
-            {
-                Log.d(TAG,"Close Windows");
-                WaitLock.checkForErrorAndWait();
-                doLongerSingelTap(cq_close_button_click_pos);
-                Thread.sleep(2000);
-            }
-            Log.d(TAG,"Back to normal state");
+            WaitLock.checkForErrorAndWait();
+            doLongerSingelTap(cq_clanchat_button_click_pos);
+            Thread.sleep(2000);
+            WaitLock.checkForErrorAndWait();
         }
+        Log.d(TAG,"ClanQuest Open, click on Fight");
+        //start finaly clanquest
+        while (isFightButton()&& !executerTask.cancelTask)
+        {
+            Log.d(TAG,"ClanQuest Open, click on Fight");
+            WaitLock.checkForErrorAndWait();
+            doLongerSingelTap(cq_fight_button_click_pos);
+            Thread.sleep(1000);
+            WaitLock.checkForErrorAndWait();
+        }
+
+        //wait for battle to start
+        while (isTimerRunning() && !isTimerStarted()&& !executerTask.cancelTask)
+        {
+            Log.d(TAG,"Wait for battel to start");
+            Thread.sleep(200);
+        }
+        Log.d(TAG,"Fight is starting");
+        //fight boss
+
+        Log.d(TAG,"CreateRandomTaps prepare for FIght");
+        List<Point> randomTaps = new ArrayList();
+        for (int i = 0; i< 40; i++)
+        {
+            randomTaps.add(new Point(bot.getRandomX(),bot.getRandomY()));
+        }
+
+        long start = System.currentTimeMillis();
+        while (System.currentTimeMillis() -start < 31000)
+        {
+            try {
+                for (int i = 0; i < randomTaps.size(); i++) {
+                    touchInput.tap(randomTaps.get(i), 30);
+                    Thread.sleep(30);
+                }
+                Thread.sleep(30);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        Log.d(TAG,"Fight is over, wait for ClanQuest Close");
+        //wait till we are back to cq window
+        while (!isCloseWindow()&& !executerTask.cancelTask)
+        {
+            Log.d(TAG,"Fight is over, wait for ClanQuest Close");
+            doLongerSingelTap(new Point(bot.getRandomX(),bot.getRandomY()));
+            Thread.sleep(200);
+        }
+        //close cq and chat
+        Log.d(TAG,"Close Both Windows");
+        while (isCloseWindow()&& !executerTask.cancelTask)
+        {
+            Log.d(TAG,"Close Windows");
+            WaitLock.checkForErrorAndWait();
+            doLongerSingelTap(cq_close_button_click_pos);
+            Thread.sleep(2000);
+        }
+        Log.d(TAG,"Back to normal state");
+        WaitLock.clanquest.set(false);
     }
 
     private class TapThread extends Thread
@@ -136,18 +153,18 @@ public class ClanQuest extends Menu {
             {
                 randomTaps.add(new Point(bot.getRandomX(),bot.getRandomY()));
             }
-            while (work.get())
+            while (work.get() && !Thread.currentThread().isInterrupted())
             {
                 synchronized (TapThread.class) {
                     try {
                         for (int i = 0; i < randomTaps.size(); i++) {
-                            if (!TapThread.this.work.get())
+                            if (!TapThread.this.work.get()&& !Thread.currentThread().isInterrupted())
                                 return;
                             touchInput.tap(randomTaps.get(i), 30);
-                            if (TapThread.this.work.get())
+                            if (TapThread.this.work.get()&& !Thread.currentThread().isInterrupted())
                                 Thread.sleep(30);
                         }
-                        if (TapThread.this.work.get())
+                        if (TapThread.this.work.get()&& !Thread.currentThread().isInterrupted())
                             Thread.sleep(30);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -163,16 +180,16 @@ public class ClanQuest extends Menu {
         return Color.red(color)> 230;
     }
 
-    private boolean isClanFightTimer()
+    private boolean isTimerRunning()
     {
         int color = bot.getScreeCapture().getColor(cq_fight_timer_color_pos);
-        return color == cq_fight_timer_color;
+        return Color.red(color) > 90 && Color.blue(color) > 90 && Color.green(color)>90;
     }
 
-    private boolean isClanFightTimerStart()
+    private boolean isTimerStarted()
     {
         int color = bot.getScreeCapture().getColor(cq_fight_timer_color_pos2);
-        return color != cq_fight_timer_color;
+        return  Color.red(color) < 90 && Color.blue(color) < 90 && Color.green(color)< 90;
     }
 
     private boolean isFightButton()
