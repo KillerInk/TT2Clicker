@@ -28,6 +28,7 @@ public class ClanQuest extends Menu {
     private final Point cq_fight_timer_color_pos = new Point(83,50);
     private final Point cq_fight_timer_color_pos2 = new Point(84,50);
     private final int cq_fight_timer_color = Color.argb(255,164,164,164);
+    private final int cq_clanchat_bossfight_rdy = Color.argb(255,127,148,154);
 
     private final Point cq_close_button_click_pos = new Point(415,47);
     private final int cq_close_button_click_color = Color.argb(255,69,56,48);
@@ -69,6 +70,7 @@ public class ClanQuest extends Menu {
 
         if (!isClanQuestRdy()) {
             doLongerSingelTap(cq_close_button_click_pos);
+            WaitLock.clanquest.set(false);
             return;
         }
         Log.d(TAG,"ClanChat Open, open ClanQuest");
@@ -151,7 +153,7 @@ public class ClanQuest extends Menu {
     private boolean isClanQuestRdy()
     {
         int color = bot.getScreeCapture().getColor(cq_clanchat_button_color_pos);
-        return Color.red(color)> 230;
+        return Color.red(color)> 230 || color == cq_clanchat_bossfight_rdy;
     }
 
     private boolean isTimerRunning()
