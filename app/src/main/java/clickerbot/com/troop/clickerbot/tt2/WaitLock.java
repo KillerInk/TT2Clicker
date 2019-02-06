@@ -25,7 +25,7 @@ public class WaitLock
     {
         synchronized (errorDetected)
         {
-            Log.v(TAG, "errorDetected");
+            //Log.v(TAG, "errorDetected");
             errorDetected.set(lock);
             if (!lock)
                 errorDetected.notifyAll();
@@ -41,7 +41,7 @@ public class WaitLock
     {
         synchronized (fairyWindowDetected)
         {
-            Log.v(TAG, "fairywindow detected");
+            //Log.v(TAG, "fairywindow detected");
             fairyWindowDetected.set(lock);
             if (!lock)
                 fairyWindowDetected.notifyAll();
@@ -56,7 +56,7 @@ public class WaitLock
     {
         synchronized (sceneTransition)
         {
-            Log.v(TAG, "sceneTransition detected");
+            //Log.v(TAG, "sceneTransition detected");
             sceneTransition.set(lock);
             if (!lock)
                 sceneTransition.notifyAll();
@@ -72,7 +72,7 @@ public class WaitLock
     {
         synchronized (flashzip)
         {
-            Log.v(TAG, "sceneTransition detected");
+            //Log.v(TAG, "sceneTransition detected");
             flashzip.set(lock);
             if (!lock)
                 flashzip.notifyAll();

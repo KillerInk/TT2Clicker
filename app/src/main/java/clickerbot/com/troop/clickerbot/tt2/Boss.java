@@ -68,7 +68,7 @@ public class Boss extends Menu {
             if (bossState == BossState.NoneFight && bossFailedCounter.get() > 0)
                     bossFailedCounter.getAndDecrement();
             setBossState(BossState.BossFightActive);
-            Log.i(TAG, "bossFightActiveColor Wait for next fail: true");
+            //Log.i(TAG, "bossFightActiveColor Wait for next fail: true");
 
         }
         else if(color == bossFightFailedColor)
@@ -78,7 +78,7 @@ public class Boss extends Menu {
             setBossState(BossState.BossFightFailed);
 
             if (!bot.containsTask(ClickOnBossFightTask.class)) {
-                Log.i(TAG, "bossFightFailedColor Wait for next fail: false");
+                //Log.i(TAG, "bossFightFailedColor Wait for next fail: false");
                 if (botSettings.autoLvlSwordMaster) {
                     bot.executeTask(LevelSwordMasterTask.class);
                 }
@@ -99,7 +99,7 @@ public class Boss extends Menu {
         {
             setBossState(BossState.NoneFight);
         }
-        Log.v(TAG,"isActiveBossFight: "+ bossState.toString() + " " + ColorUtils.getColorString(color));
+        //Log.v(TAG,"isActiveBossFight: "+ bossState.toString() + " " + ColorUtils.getColorString(color));
 
     }
 

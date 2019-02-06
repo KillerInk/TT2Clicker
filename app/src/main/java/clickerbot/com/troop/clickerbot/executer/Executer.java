@@ -45,6 +45,7 @@ public class Executer {
     {
         Log.d(TAG, "stop");
         doWork =false;
+        exeThread.interrupt();
         if (run != null)
             run.cancelTask = true;
         runnableLinkedList.clear();
@@ -62,7 +63,7 @@ public class Executer {
             runnableLinkedList.add(runnable);
             Log.i(TAG,"putRunnable "+runnable.getClass().getSimpleName());
         }
-        else Log.v(TAG, "Runnable already added " +runnable.getClass().getSimpleName());
+        //else Log.v(TAG, "Runnable already added " +runnable.getClass().getSimpleName());
     }
 
     public void putFirstAndExecute(ExecuterTask executerTask)
