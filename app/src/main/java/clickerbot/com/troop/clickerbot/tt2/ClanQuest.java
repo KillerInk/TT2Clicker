@@ -45,7 +45,7 @@ public class ClanQuest extends Menu {
 
     @Override
     boolean checkIfRdyToExecute() {
-        if(botSettings.autoClanQuest && System.currentTimeMillis() - lastPrestigeCheck > 1000 && !Menu.MenuOpen.get()) {
+        if(botSettings.autoClanQuest && System.currentTimeMillis() - lastPrestigeCheck > 1000 && !Menu.MenuOpen.get() && !WaitLock.sceneTransition.get()) {
             lastPrestigeCheck = System.currentTimeMillis();
             WaitLock.checkForErrorAndWait();
             int color = bot.getScreeCapture().getColor(cq_button_color_pos);
@@ -115,7 +115,7 @@ public class ClanQuest extends Menu {
             try {
                 for (int i = 0; i < randomTaps.size(); i++) {
                     touchInput.tap(randomTaps.get(i), 30);
-                    Thread.sleep(30);
+                    Thread.sleep(25);
                 }
                 Thread.sleep(30);
             } catch (InterruptedException e) {
