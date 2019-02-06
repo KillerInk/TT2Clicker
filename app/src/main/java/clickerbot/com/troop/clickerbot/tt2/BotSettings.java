@@ -194,7 +194,7 @@ public class BotSettings {
         clickSleepTime = sharedPreferences.getLong(context.getString(R.string.clicksleeptime),80);
         shellcount = sharedPreferences.getLong(context.getString(R.string.shellcount),10) +1;
         swipeLength = sharedPreferences.getLong(context.getString(R.string.swipelength),100);
-        levelTop9HeroTime = sharedPreferences.getLong(context.getString(R.string.levelherostime),3)*60*1000;
+        levelTop9HeroTime = sharedPreferences.getLong(context.getString(R.string.levelherostime),120)*1000;
         levelAllHeroTime = sharedPreferences.getLong(context.getString(R.string.levelallherostime),9)*60*1000;
         levelSwordMasterTime = sharedPreferences.getLong(context.getString(R.string.levelswordmastertime),3)*60*1000;
         levelAllHeroCount = sharedPreferences.getLong(context.getString(R.string.levelallheroscount),3);

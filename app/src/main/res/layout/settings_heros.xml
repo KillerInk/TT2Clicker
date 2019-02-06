@@ -22,8 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/overall_margin"
         android:background="@drawable/border"
-        custom:header_txt="Level Top9 Heros every XX min"
-        custom:setting_default="3"
+        custom:header_txt="Level Top9 Heros every XX sec"
+        custom:setting_default="120"
         custom:settingkey_id="@string/levelherostime" />
 
     <LinearLayout
