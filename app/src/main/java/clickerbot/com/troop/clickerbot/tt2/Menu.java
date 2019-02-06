@@ -133,7 +133,7 @@ public abstract class Menu extends Item
         WaitLock.checkForErrorAndWait();
         Log.d(TAG, "openSwordMasterMenu");
 
-        while (!isMenuOpen()) {
+        while (!isMenuOpen() && !Thread.currentThread().isInterrupted()) {
             try {
                 doSingelTap(point);
                 Thread.sleep(menuOpenCloseDelay);
@@ -151,7 +151,7 @@ public abstract class Menu extends Item
         setMenuState(MenuState.closing);
         Log.d(TAG, "closeMenu");
         try {
-            while (isMenuOpen()) {
+            while (isMenuOpen()&& !Thread.currentThread().isInterrupted()) {
                 WaitLock.checkForErrorAndWait();
                 doSingelTap(point);
                 Thread.sleep(menuOpenCloseDelay);
@@ -187,7 +187,7 @@ public abstract class Menu extends Item
 
     public void maximiseMenu()
     {
-        while (!isMenuMaximized()) {
+        while (!isMenuMaximized()&& !Thread.currentThread().isInterrupted()) {
             WaitLock.checkForErrorAndWait();
             menuState = MenuState.maximise;
             Log.d(TAG, "maximiseMenu");
@@ -204,7 +204,7 @@ public abstract class Menu extends Item
 
     public void minimiseMenu()
     {
-        while (isMenuMaximized()) {
+        while (isMenuMaximized()&& !Thread.currentThread().isInterrupted()) {
             WaitLock.checkForErrorAndWait();
             Log.d(TAG, "minimiseMenu");
             try {

@@ -76,15 +76,18 @@ public class Prestige extends Menu {
             Thread.sleep(1000);
             doLongerSingelTap(prestigeMenuButton);
             Thread.sleep(1000);
-            doLongerSingelTap(prestigeButton);
-            Thread.sleep(3000);
-            while (checkPrestigAcceptColor()) {
+            while (!checkPrestigAcceptColor() && !Thread.currentThread().isInterrupted()) {
+                doLongerSingelTap(prestigeButton);
+                Thread.sleep(1000);
+            }
+
+            while (checkPrestigAcceptColor()&& !Thread.currentThread().isInterrupted()) {
                 doLongerSingelTap(prestigeAcceptButton);
                 Thread.sleep(500);
             }
             Thread.sleep(10000);
 
-            while (checkLoginInfoColor()) {
+            while (checkLoginInfoColor()&& !Thread.currentThread().isInterrupted()) {
                 doLongerSingelTap(loginInfoButton);
                 Thread.sleep(200);
             }
