@@ -20,6 +20,9 @@ public class ClanQuest extends Menu {
 
     private final Point cq_clanchat_button_color_pos = new Point(80,736);
     private final Point cq_clanchat_button_click_pos = new Point(103,725);
+    private final Point cq_clanchat_is_button__color_pos = new Point(102,713);
+    private final int cq_clanchat_is_button__color = Color.argb(255,55,55,72);
+
 
     private final Point cq_fight_button_click_pos = new Point(319,735);
     private final Point cq_fight_timer_color_pos = new Point(83,50);
@@ -29,7 +32,6 @@ public class ClanQuest extends Menu {
     private final Point cq_close_button_click_pos = new Point(415,47);
     private final int cq_close_button_click_color = Color.argb(255,69,56,48);
     private long lastPrestigeCheck;
-    private TapThread tap;
 
     public ClanQuest(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
         super(ibot, botSettings, rootShell);
@@ -63,6 +65,11 @@ public class ClanQuest extends Menu {
             Thread.sleep(2000);
             Log.d(TAG,"Open ClanChat");
             WaitLock.checkForErrorAndWait();
+        }
+
+        if (!isClanQuestRdy()) {
+            doLongerSingelTap(cq_close_button_click_pos);
+            return;
         }
         Log.d(TAG,"ClanChat Open, open ClanQuest");
         //open cq window
@@ -134,47 +141,14 @@ public class ClanQuest extends Menu {
         WaitLock.clanquest.set(false);
     }
 
-    private class TapThread extends Thread
-    {
-        private AtomicBoolean work = new AtomicBoolean();
-
-        public void abort()
-        {
-            synchronized (TapThread.class) {
-                work.set(false);
-            }
-        }
-        @Override
-        public void run() {
-            work.set(true);
-            Log.d(TAG,"CreateRandomTaps prepare for FIght");
-            List<Point> randomTaps = new ArrayList();
-            for (int i = 0; i< 40; i++)
-            {
-                randomTaps.add(new Point(bot.getRandomX(),bot.getRandomY()));
-            }
-            while (work.get() && !Thread.currentThread().isInterrupted())
-            {
-                synchronized (TapThread.class) {
-                    try {
-                        for (int i = 0; i < randomTaps.size(); i++) {
-                            if (!TapThread.this.work.get()&& !Thread.currentThread().isInterrupted())
-                                return;
-                            touchInput.tap(randomTaps.get(i), 30);
-                            if (TapThread.this.work.get()&& !Thread.currentThread().isInterrupted())
-                                Thread.sleep(30);
-                        }
-                        if (TapThread.this.work.get()&& !Thread.currentThread().isInterrupted())
-                            Thread.sleep(30);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-    }
 
     private boolean isClanChatOpen()
+    {
+        int color = bot.getScreeCapture().getColor(cq_clanchat_is_button__color_pos);
+        return color == cq_clanchat_is_button__color;
+    }
+
+    private boolean isClanQuestRdy()
     {
         int color = bot.getScreeCapture().getColor(cq_clanchat_button_color_pos);
         return Color.red(color)> 230;
