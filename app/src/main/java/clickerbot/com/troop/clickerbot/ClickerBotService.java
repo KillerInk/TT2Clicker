@@ -101,8 +101,9 @@ public class ClickerBotService extends Service
                 PixelFormat.TRANSLUCENT);
 
         paramsPrestigeView.gravity = Gravity.TOP|Gravity.LEFT;
-        paramsPrestigeView.x = (metrics.widthPixels/2) - (convertDpiToPixel(140) + 5);
+        paramsPrestigeView.x = (metrics.widthPixels/2) - (convertDpiToPixel(150) + 5);
         paramsPrestigeView.y = 0;
+        //paramsPrestigeView.width = convertDpiToPixel(110);
         windowManager.addView(serviceView, paramsPrestigeView);
         serviceView.bringToFront();
 
