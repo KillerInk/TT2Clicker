@@ -9,8 +9,12 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import clickerbot.com.troop.clickerbot.ColorUtils;
+import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.MenuCloseTask;
+
+import static clickerbot.com.troop.clickerbot.tt2.Heros.lvlFIrsHeroButton_click;
+import static clickerbot.com.troop.clickerbot.tt2.Heros.lvlThirdHeroButton_click;
 
 public abstract class Menu extends Item
 {
@@ -185,6 +189,19 @@ public abstract class Menu extends Item
         closeMenu(Coordinates.Menu_Heros);
     }
 
+    public void openArtifactMenu()
+    {
+        openMenu(Coordinates.Menu_Artifacts);
+    }
+
+    public void closeArtifactMenu()
+    {
+        closeMenu(Coordinates.Menu_Artifacts);
+    }
+
+
+
+
     public void maximiseMenu()
     {
         while (!isMenuMaximized()&& !Thread.currentThread().isInterrupted()) {
@@ -218,6 +235,20 @@ public abstract class Menu extends Item
 
         }
         menuState = MenuState.open;
+    }
+
+    public void gotToTop(ExecuterTask task) throws IOException, InterruptedException {
+        while (!isMenuTopReached() && !task.cancelTask && Menu.MenuOpen.get()) {
+            WaitLock.checkForErrorAndWait();
+            touchInput.swipeVertical(lvlFIrsHeroButton_click, lvlThirdHeroButton_click);
+            WaitLock.checkForErrorAndWait();
+            Thread.sleep(300);
+            WaitLock.checkForErrorAndWait();
+        }
+        WaitLock.checkForErrorAndWait();
+        touchInput.swipeVertical(lvlFIrsHeroButton_click, lvlThirdHeroButton_click);
+        WaitLock.checkForErrorAndWait();
+        Thread.sleep(300);
     }
 
     public void swipeUp()

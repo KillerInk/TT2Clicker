@@ -75,26 +75,16 @@ public class Heros extends Menu {
         openHeroMenu();
         WaitLock.checkForErrorAndWait();
         //make sure we are on top
-        while (!isMenuTopReached() && !task.cancelTask && Menu.MenuOpen.get()) {
-            WaitLock.checkForErrorAndWait();
-            touchInput.swipeVertical(lvlFIrsHeroButton_click, lvlThirdHeroButton_click);
-            WaitLock.checkForErrorAndWait();
-            Thread.sleep(300);
-            WaitLock.checkForErrorAndWait();
-        }
+        gotToTop(task);
         Thread.sleep(500);
         WaitLock.checkForErrorAndWait();
         level3heros(task);
         WaitLock.checkForErrorAndWait();
-        touchInput.swipeVertical(new Point(240, 707), new Point(240, 556));
-        WaitLock.checkForErrorAndWait();
-        touchInput.swipeVertical(new Point(240, 707), new Point(240, 556));
+        swipeDown3Heros();
         WaitLock.checkForErrorAndWait();
         level3heros(task);
         WaitLock.checkForErrorAndWait();
-        touchInput.swipeVertical(new Point(240, 707), new Point(240, 556));
-        WaitLock.checkForErrorAndWait();
-        touchInput.swipeVertical(new Point(240, 707), new Point(240, 556));
+        swipeDown3Heros();
         WaitLock.checkForErrorAndWait();
         level3heros(task);
         WaitLock.checkForErrorAndWait();
@@ -106,6 +96,12 @@ public class Heros extends Menu {
         WaitLock.checkForErrorAndWait();
 
         lastTop6HerosLeveld = System.currentTimeMillis();
+    }
+
+    private void swipeDown3Heros() throws InterruptedException, IOException {
+        touchInput.swipeVertical(new Point(240, 707), new Point(240, 556));
+        WaitLock.checkForErrorAndWait();
+        touchInput.swipeVertical(new Point(240, 707), new Point(240, 556));
     }
 
     public void lvlAllHeros(ExecuterTask task) throws InterruptedException, IOException {
