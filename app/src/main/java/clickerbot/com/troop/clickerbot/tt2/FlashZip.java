@@ -3,6 +3,7 @@ package clickerbot.com.troop.clickerbot.tt2;
 import android.graphics.Color;
 import android.graphics.Point;
 
+import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 
 public class FlashZip extends Menu {
@@ -100,7 +101,7 @@ public class FlashZip extends Menu {
     }
 
     @Override
-    void init() {
+    void init(ExecuterTask task) {
 
     }
 

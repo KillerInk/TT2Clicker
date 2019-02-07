@@ -4,6 +4,8 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.util.Log;
 
+import clickerbot.com.troop.clickerbot.executer.Executer;
+import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 
 public class SceneTransitionChecker extends Menu {
@@ -17,7 +19,7 @@ public class SceneTransitionChecker extends Menu {
     }
 
     @Override
-    void init() {
+    void init(ExecuterTask task) {
 
     }
 

@@ -45,7 +45,7 @@ public class Fairy extends Menu {
     }
 
     @Override
-    void init() {
+    void init(ExecuterTask task) {
         if (botSettings.clickOnFairys)
         {
             for (int i = 0; i < 8; i++)

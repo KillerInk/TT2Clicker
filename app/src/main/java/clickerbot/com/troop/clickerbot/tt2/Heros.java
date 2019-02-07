@@ -35,7 +35,7 @@ public class Heros extends Menu {
     }
 
     @Override
-    void init() {
+    void init(ExecuterTask task) {
         lastTop6HerosLeveld = 0;
         lastAllHerosLeveld = 0;
         lvlAllHerosRunCount = 0;

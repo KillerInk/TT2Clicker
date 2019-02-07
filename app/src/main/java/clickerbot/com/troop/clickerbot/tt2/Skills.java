@@ -41,7 +41,7 @@ public class Skills extends Menu {
     }
 
     @Override
-    public void init() {
+    public void init(ExecuterTask task) {
         hs.setSkillLvl(0);
         ds.setSkillLvl(0);
         hom.setSkillLvl(0);

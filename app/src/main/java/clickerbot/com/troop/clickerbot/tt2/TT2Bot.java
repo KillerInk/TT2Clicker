@@ -289,13 +289,13 @@ public class TT2Bot extends AbstractBot
     /**
      * init the bot
      */
-    public void init()
+    public void init(ExecuterTask task)
     {
         startTime = System.currentTimeMillis();
-        prestige.init();
-        heros.init();
+        prestige.init(task);
+        heros.init(task);
         boss.resetBossFailedCounter();
-        clanQuest.init();
+        clanQuest.init(task);
         lastSwordMasterLeveled =0;
         int startTapPoints = 40;
         if (botSettings.useFlashZip || botSettings.useAAW)
@@ -309,7 +309,7 @@ public class TT2Bot extends AbstractBot
             }
         }
         Log.i(TAG,"init");
-        skills.init();
+        skills.init(task);
     }
 
     public int getRandomX()

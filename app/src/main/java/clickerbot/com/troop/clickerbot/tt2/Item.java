@@ -2,6 +2,7 @@ package clickerbot.com.troop.clickerbot.tt2;
 
 import android.graphics.Point;
 
+import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 
 public abstract class Item {
@@ -18,7 +19,7 @@ public abstract class Item {
         this.touchInput = touchInput;
     }
 
-    abstract void init();
+    abstract void init(ExecuterTask task);
     abstract boolean checkIfRdyToExecute();
 
     public void doSingelTap(Point point)

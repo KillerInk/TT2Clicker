@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import clickerbot.com.troop.clickerbot.ColorUtils;
+import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.ClickOnBossFightTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.LevelSwordMasterTask;
@@ -28,7 +29,7 @@ public class Boss extends Menu {
     }
 
     @Override
-    void init() {
+    void init(ExecuterTask task) {
         bossState = BossState.NoneFight;
     }
 

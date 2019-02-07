@@ -3,6 +3,7 @@ package clickerbot.com.troop.clickerbot.tt2;
 import android.graphics.Color;
 import android.graphics.Point;
 
+import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 
 public class SubMenuOpenChecker extends Menu {
@@ -15,7 +16,7 @@ public class SubMenuOpenChecker extends Menu {
     }
 
     @Override
-    void init() {
+    void init(ExecuterTask task) {
 
     }
 

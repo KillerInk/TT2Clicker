@@ -44,8 +44,7 @@ public class ClanQuest extends Menu {
     }
 
     @Override
-    void init() {
-
+    void init(ExecuterTask task) {
         howOftenDetected = 0;
     }
 

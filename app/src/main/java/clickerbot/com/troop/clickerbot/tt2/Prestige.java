@@ -36,7 +36,7 @@ public class Prestige extends Menu {
     }
 
     @Override
-    void init() {
+    void init(ExecuterTask task) {
         randomTimeToPrestige = botSettings.timeToPrestige + (bot.rand.nextInt(10)*60*1000);
         timeSinceLastPrestige = System.currentTimeMillis();
     }

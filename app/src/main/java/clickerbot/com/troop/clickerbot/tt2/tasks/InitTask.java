@@ -9,6 +9,6 @@ public class InitTask extends RandomTapTask {
 
     @Override
     public void doTask() {
-        bot.init();
+        bot.init(this);
     }
 }
