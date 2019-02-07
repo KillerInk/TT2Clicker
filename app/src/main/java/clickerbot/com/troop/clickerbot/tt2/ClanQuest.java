@@ -34,13 +34,19 @@ public class ClanQuest extends Menu {
     private final int cq_close_button_click_color = Color.argb(255,69,56,48);
     private long lastPrestigeCheck;
 
+    private final Point clanbossHP_color_Pos = new Point(174,330);
+
+    private int howOftenDetected = 0;
+
     public ClanQuest(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
         super(ibot, botSettings, rootShell);
+        howOftenDetected = 0;
     }
 
     @Override
     void init() {
 
+        howOftenDetected = 0;
     }
 
     @Override
@@ -49,9 +55,15 @@ public class ClanQuest extends Menu {
             lastPrestigeCheck = System.currentTimeMillis();
             WaitLock.checkForErrorAndWait();
             int color = bot.getScreeCapture().getColor(cq_button_color_pos);
-            if (Color.red(color) > 120 && Color.red(color) < 140 && !WaitLock.sceneTransition.get()) {
-                bot.executeTask(ClanQuestTask.class);
+            if (Color.red(color) > 120 && Color.red(color) < 140 && !WaitLock.sceneTransition.get() && !WaitLock.fairyWindowDetected.get()) {
+                howOftenDetected++;
+                if(howOftenDetected > 2) {
+                    howOftenDetected = 0;
+                    bot.executeTask(ClanQuestTask.class);
+                }
             }
+            else if (howOftenDetected > 0)
+                howOftenDetected--;
         }
         return false;
     }
@@ -68,8 +80,8 @@ public class ClanQuest extends Menu {
             WaitLock.checkForErrorAndWait();
         }
 
-        if (!isClanQuestRdy()) {
-            doLongerSingelTap(cq_close_button_click_pos);
+        if (!isClanQuestRdy() || executerTask.cancelTask) {
+            closeWindows(executerTask);
             WaitLock.clanquest.set(false);
             return;
         }
@@ -82,7 +94,14 @@ public class ClanQuest extends Menu {
             Thread.sleep(2000);
             WaitLock.checkForErrorAndWait();
         }
-        Log.d(TAG,"ClanQuest Open, click on Fight");
+
+        if (!bossHaveHp() || executerTask.cancelTask)
+        {
+            closeWindows(executerTask);
+            WaitLock.clanquest.set(false);
+            return;
+        }
+        Log.d(TAG,"ClanQuest Open, boss have hp");
         //start finaly clanquest
         while (isFightButton()&& !executerTask.cancelTask)
         {
@@ -132,6 +151,12 @@ public class ClanQuest extends Menu {
         }
         //close cq and chat
         Log.d(TAG,"Close Both Windows");
+        closeWindows(executerTask);
+        Log.d(TAG,"Back to normal state");
+        WaitLock.clanquest.set(false);
+    }
+
+    private void closeWindows(ExecuterTask executerTask) throws InterruptedException {
         while (isCloseWindow()&& !executerTask.cancelTask)
         {
             Log.d(TAG,"Close Windows");
@@ -139,8 +164,6 @@ public class ClanQuest extends Menu {
             doLongerSingelTap(cq_close_button_click_pos);
             Thread.sleep(2000);
         }
-        Log.d(TAG,"Back to normal state");
-        WaitLock.clanquest.set(false);
     }
 
 
@@ -178,5 +201,11 @@ public class ClanQuest extends Menu {
     {
         int color = bot.getScreeCapture().getColor(cq_close_button_click_pos);
         return color == cq_close_button_click_color;
+    }
+
+    private boolean bossHaveHp()
+    {
+        int color = bot.getScreeCapture().getColor(clanbossHP_color_Pos);
+        return Color.red(color) > 90;
     }
 }
