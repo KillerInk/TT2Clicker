@@ -78,6 +78,8 @@
         custom:setting_defaults="false"
         custom:settingkey_ids="@string/autoqc" />
 
+
+
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
         android:id="@+id/runTests"
         android:layout_width="match_parent"

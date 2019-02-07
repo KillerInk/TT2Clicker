@@ -62,6 +62,8 @@ public class TT2Bot extends AbstractBot
     private SubMenuOpenChecker subMenuOpenChecker;
     private SceneTransitionChecker sceneTransitionChecker;
 
+    private BOS autoLevelBos;
+
     /**
      * time after a randomtap gets executed
      */
@@ -116,8 +118,9 @@ public class TT2Bot extends AbstractBot
         subMenuOpenChecker = new SubMenuOpenChecker(this,botSettings,touchInput);
         sceneTransitionChecker = new SceneTransitionChecker(this,botSettings,touchInput);
         clanQuest = new ClanQuest(this,botSettings,touchInput);
+        autoLevelBos = new BOS(this,botSettings,touchInput);
 
-        executerTaskHashMap = new TaskFactory().getTasksmap(this,heros,skills,prestige,fairy,boss,clanQuest);
+        executerTaskHashMap = new TaskFactory().getTasksmap(this,heros,skills,prestige,fairy,boss,clanQuest,autoLevelBos);
         mediaProjectionScreenCapture.setScreenCaptureCallBack(this::onScreenCapture);
 
         Log.d(TAG,"TT2Bot()");

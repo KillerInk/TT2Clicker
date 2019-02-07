@@ -9,6 +9,7 @@ public class Coordinates
     public final static Point Menu_Minimise = new Point(390,13);
     public static final Point Menu_Heros = new Point(120,780);
     public static final Point Menu_SwordMaster = new Point(46,780);
+    public static final Point Menu_Artifacts = new Point(361,780);
     public static final Point Menu_Minimized_SwordMaster = new Point(403,575);
 
     public static final Point Menu_Close = new Point(466,455);

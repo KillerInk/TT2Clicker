@@ -37,4 +37,14 @@
         custom:setting_default="3"
         custom:settingkey_id="@string/prestigeafterbossfail" />
 
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/autoLvlBos"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Auto Lvl BOS after Prestige, make sure its MAX in Game"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/autobos" />
+
 </LinearLayout>

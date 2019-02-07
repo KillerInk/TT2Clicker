@@ -157,6 +157,7 @@ public class BotSettings {
     public final String inputPath;
 
     public final boolean mouseInput;
+    public final boolean autoLvlBos;
 
     public BotSettings(SharedPreferences sharedPreferences,Context context)
     {
@@ -174,6 +175,7 @@ public class BotSettings {
         unlockSC = sharedPreferences.getBoolean(context.getString(R.string.unlockSC),false);
         doAutoTap = sharedPreferences.getBoolean(context.getString(R.string.autoTap),false);
         mouseInput = sharedPreferences.getBoolean(context.getString(R.string.mouseinput),true);
+        autoLvlBos = sharedPreferences.getBoolean(context.getString(R.string.autobos),true);
         autoClanQuest = sharedPreferences.getBoolean(context.getString(R.string.autoqc),false);
         autoLvlHeros = sharedPreferences.getBoolean(context.getString(R.string.autolvlheros),false);
         autoLvlSkills = sharedPreferences.getBoolean(context.getString(R.string.autolvlskills),false);

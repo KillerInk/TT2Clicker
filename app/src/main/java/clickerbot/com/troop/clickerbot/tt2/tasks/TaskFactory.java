@@ -3,6 +3,7 @@ package clickerbot.com.troop.clickerbot.tt2.tasks;
 import java.util.HashMap;
 
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
+import clickerbot.com.troop.clickerbot.tt2.BOS;
 import clickerbot.com.troop.clickerbot.tt2.Boss;
 import clickerbot.com.troop.clickerbot.tt2.ClanQuest;
 import clickerbot.com.troop.clickerbot.tt2.Fairy;
@@ -13,7 +14,7 @@ import clickerbot.com.troop.clickerbot.tt2.TT2Bot;
 
 public class TaskFactory<T> {
 
-    public HashMap<Class, ExecuterTask> getTasksmap(TT2Bot bot, Heros heros, Skills skills, Prestige prestige, Fairy fairy, Boss boss, ClanQuest clanQuest)
+    public HashMap<Class, ExecuterTask> getTasksmap(TT2Bot bot, Heros heros, Skills skills, Prestige prestige, Fairy fairy, Boss boss, ClanQuest clanQuest, BOS bos)
     {
         HashMap<Class, ExecuterTask> tasksmap = new HashMap<>();
         tasksmap.put(InitTask.class,new InitTask(bot));
@@ -27,6 +28,7 @@ public class TaskFactory<T> {
         tasksmap.put(MenuCloseTask.class,new MenuCloseTask(heros));
         tasksmap.put(ClickOnBossFightTask.class,new ClickOnBossFightTask(boss));
         tasksmap.put(ClanQuestTask.class,new ClanQuestTask(clanQuest));
+        tasksmap.put(AutoLevelBOSTask.class,new AutoLevelBOSTask(bos));
         return tasksmap;
     }
 

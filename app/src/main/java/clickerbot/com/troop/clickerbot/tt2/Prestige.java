@@ -6,7 +6,9 @@ import android.util.Log;
 
 import java.io.IOException;
 
+import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
+import clickerbot.com.troop.clickerbot.tt2.tasks.AutoLevelBOSTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.InitTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.PrestigeTask;
 
@@ -85,7 +87,7 @@ public class Prestige extends Menu {
                 doLongerSingelTap(prestigeAcceptButton);
                 Thread.sleep(500);
             }
-            Thread.sleep(10000);
+            Thread.sleep(12000);
 
             while (checkLoginInfoColor()&& !Thread.currentThread().isInterrupted()) {
                 doLongerSingelTap(loginInfoButton);
@@ -95,6 +97,7 @@ public class Prestige extends Menu {
             bot.resetTickCounter();
             setMenuState(MenuState.closed);
             bot.clearExecuterQueue();
+            bot.executeTask(AutoLevelBOSTask.class);
             bot.executeTask(InitTask.class);
             lastPrestigeCheck = System.currentTimeMillis();
         }
