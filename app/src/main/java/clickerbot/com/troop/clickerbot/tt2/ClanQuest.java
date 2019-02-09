@@ -71,7 +71,9 @@ public class ClanQuest extends Menu {
         //tap on cq and open clanchat
         Log.d(TAG,"Open ClanChat");
         WaitLock.clanquest.set(true);
-        while (!isClanChatOpen() && !executerTask.cancelTask) {
+        int loopbreaker = 0;
+        while (!isClanChatOpen() && !executerTask.cancelTask && loopbreaker < 10) {
+            loopbreaker++;
             WaitLock.checkForErrorAndWait();
             doLongerSingelTap(cq_button_click_pos);
             Thread.sleep(2000);
@@ -80,13 +82,14 @@ public class ClanQuest extends Menu {
         }
 
         if (!isClanQuestRdy() || executerTask.cancelTask) {
-            closeWindows(executerTask);
             WaitLock.clanquest.set(false);
             return;
         }
         Log.d(TAG,"ClanChat Open, open ClanQuest");
         //open cq window
-        while (!isFightButton()&& !executerTask.cancelTask) {
+        loopbreaker = 0;
+        while (!isFightButton()&& !executerTask.cancelTask && loopbreaker < 10) {
+            loopbreaker++;
             Log.d(TAG,"ClanChat Open, open ClanQuest");
             WaitLock.checkForErrorAndWait();
             doLongerSingelTap(cq_clanchat_button_click_pos);
@@ -96,14 +99,15 @@ public class ClanQuest extends Menu {
 
         if (!bossHaveHp() || executerTask.cancelTask)
         {
-            closeWindows(executerTask);
             WaitLock.clanquest.set(false);
             return;
         }
         Log.d(TAG,"ClanQuest Open, boss have hp");
         //start finaly clanquest
-        while (isFightButton()&& !executerTask.cancelTask)
+        loopbreaker = 0;
+        while (isFightButton()&& !executerTask.cancelTask && loopbreaker < 10)
         {
+            loopbreaker++;
             Log.d(TAG,"ClanQuest Open, click on Fight");
             WaitLock.checkForErrorAndWait();
             doLongerSingelTap(cq_fight_button_click_pos);
@@ -112,8 +116,10 @@ public class ClanQuest extends Menu {
         }
 
         //wait for battle to start
-        while (isTimerRunning() && !isTimerStarted()&& !executerTask.cancelTask)
+        loopbreaker = 0;
+        while (isTimerRunning() && !isTimerStarted()&& !executerTask.cancelTask && loopbreaker < 15)
         {
+            loopbreaker++;
             Log.d(TAG,"Wait for battel to start");
             Thread.sleep(200);
         }
@@ -142,27 +148,17 @@ public class ClanQuest extends Menu {
         }
         Log.d(TAG,"Fight is over, wait for ClanQuest Close");
         //wait till we are back to cq window
-        while (!isCloseWindow()&& !executerTask.cancelTask)
+        loopbreaker =0;
+        while (!isCloseWindow()&& !executerTask.cancelTask && loopbreaker < 15)
         {
+            loopbreaker++;
             Log.d(TAG,"Fight is over, wait for ClanQuest Close");
             doLongerSingelTap(new Point(bot.getRandomX(),bot.getRandomY()));
             Thread.sleep(200);
         }
         //close cq and chat
-        Log.d(TAG,"Close Both Windows");
-        closeWindows(executerTask);
         Log.d(TAG,"Back to normal state");
         WaitLock.clanquest.set(false);
-    }
-
-    private void closeWindows(ExecuterTask executerTask) throws InterruptedException {
-        while (isCloseWindow()&& !executerTask.cancelTask)
-        {
-            Log.d(TAG,"Close Windows");
-            WaitLock.checkForErrorAndWait();
-            doLongerSingelTap(cq_close_button_click_pos);
-            Thread.sleep(2000);
-        }
     }
 
 
