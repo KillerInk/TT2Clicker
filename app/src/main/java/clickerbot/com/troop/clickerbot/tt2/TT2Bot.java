@@ -224,12 +224,9 @@ public class TT2Bot extends AbstractBot
                 if (System.currentTimeMillis() - lastUiUpdate > 1000) {
                     long now = System.currentTimeMillis();
                     long dif =  (prestige.getTimeSinceLastPrestige()+ prestige.getRandomTimeToPrestige() - now)/1000;
-                    int hour = ((int)dif / 60) / 60;
-                    int min = (int)(dif - (hour*60*60)) / 60;
-                    int sec = (int)(dif - (hour*60*60)) - (min *60);
                     String out;
                     if (prestige.getTimeSinceLastPrestige() + prestige.getRandomTimeToPrestige() > now)
-                        out = "Prestige:" + hour +":"+min+":" + sec+"\n";
+                        out = "Prestige:" +getTimeString((int)dif)+"\n";
                     else
                         out = "Prestige: It's time\n";
                     //Log.d(TAG, out);
@@ -252,6 +249,26 @@ public class TT2Bot extends AbstractBot
                 }
             }
         }
+    }
+
+    private String getTimeString(int dif)
+    {
+        int hour = ((int)dif / 60) / 60;
+        int min = (int)(dif - (hour*60*60)) / 60;
+        int sec = (int)(dif - (hour*60*60)) - (min *60);
+        StringBuilder builder =new StringBuilder();
+        if (hour <= 9)
+            builder.append(0);
+        builder.append(hour);
+        builder.append(":");
+        if (min <= 9)
+            builder.append(0);
+        builder.append(min);
+        builder.append(":");
+        if (sec <= 9)
+            builder.append(0);
+        builder.append(sec);
+        return builder.toString();
     }
 
     private long lastTestExecuted;
