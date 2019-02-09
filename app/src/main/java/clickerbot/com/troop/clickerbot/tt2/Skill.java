@@ -164,6 +164,8 @@ public class Skill {
         if (skillState != SkillState.locked && skillState != SkillState.active && skillState != SkillState.outOfMana && !Menu.MenuOpen.get())
         {
             WaitLock.checkForErrorAndWait();
+            if (WaitLock.clanquest.get())
+                return;
             try {
                 switch (skillType) {
                     case HS:
