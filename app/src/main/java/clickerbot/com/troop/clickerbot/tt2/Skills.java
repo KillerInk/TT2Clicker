@@ -66,7 +66,7 @@ public class Skills extends Menu {
                 }
                 WaitLock.checkForErrorAndWait();
 
-                maximiseMenu();
+                maximiseMenu(task);
 
                 try {
                     WaitLock.checkForErrorAndWait();
@@ -77,7 +77,7 @@ public class Skills extends Menu {
                 }
                 skillLevelParser.parseAllSkillLevels(hs, ds, hom,fs, wc,sc);
                 WaitLock.checkForErrorAndWait();
-                levelUpSkills();
+                levelUpSkills(task);
                 WaitLock.checkForErrorAndWait();
                 try {
                     Thread.sleep(50);
@@ -85,7 +85,7 @@ public class Skills extends Menu {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                minimiseMenu();
+                minimiseMenu(task);
                 closeSwordMasterMenu(task);
             }
         }
@@ -106,7 +106,7 @@ public class Skills extends Menu {
     {
         openSwordMasterMenu(task);
 
-        maximiseMenu();
+        maximiseMenu(task);
 
         //swipeUp();
         try {
@@ -122,7 +122,7 @@ public class Skills extends Menu {
             e.printStackTrace();
         }
         WaitLock.checkForErrorAndWait();
-        minimiseMenu();
+        minimiseMenu(task);
         closeSwordMasterMenu(task);
 
     }
@@ -165,7 +165,7 @@ public class Skills extends Menu {
         closeSwordMasterMenu(task);
     }
 
-    private void levelUpSkills()
+    private void levelUpSkills(ExecuterTask task)
     {
         try {
             WaitLock.checkForErrorAndWait();
@@ -176,22 +176,22 @@ public class Skills extends Menu {
             e.printStackTrace();
         }
         if (botSettings.unlockHS)
-            hs.levelSkill();
+            hs.levelSkill(task);
         WaitLock.checkForErrorAndWait();
         if (botSettings.unlockDS)
-            ds.levelSkill();
+            ds.levelSkill(task);
         WaitLock.checkForErrorAndWait();
         if (botSettings.unlockHOM)
-            hom.levelSkill();
+            hom.levelSkill(task);
         WaitLock.checkForErrorAndWait();
         if (botSettings.unlockFS)
-            fs.levelSkill();
+            fs.levelSkill(task);
         WaitLock.checkForErrorAndWait();
         if (botSettings.unlockWC)
-            wc.levelSkill();
+            wc.levelSkill(task);
         WaitLock.checkForErrorAndWait();
         if (botSettings.unlockSC)
-            sc.levelSkill();
+            sc.levelSkill(task);
     }
 
 

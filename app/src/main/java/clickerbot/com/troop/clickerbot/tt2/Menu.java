@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import clickerbot.com.troop.clickerbot.ColorUtils;
+import clickerbot.com.troop.clickerbot.executer.Executer;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.MenuCloseTask;
@@ -202,9 +203,9 @@ public abstract class Menu extends Item
 
 
 
-    public void maximiseMenu()
+    public void maximiseMenu(ExecuterTask task)
     {
-        while (!isMenuMaximized()&& !Thread.currentThread().isInterrupted()) {
+        while (!isMenuMaximized()&& !Thread.currentThread().isInterrupted() && !task.cancelTask) {
             WaitLock.checkForErrorAndWait();
             menuState = MenuState.maximise;
             Log.d(TAG, "maximiseMenu");
@@ -219,9 +220,9 @@ public abstract class Menu extends Item
         }
     }
 
-    public void minimiseMenu()
+    public void minimiseMenu(ExecuterTask task)
     {
-        while (isMenuMaximized()&& !Thread.currentThread().isInterrupted()) {
+        while (isMenuMaximized()&& !Thread.currentThread().isInterrupted() && !task.cancelTask) {
             WaitLock.checkForErrorAndWait();
             Log.d(TAG, "minimiseMenu");
             try {

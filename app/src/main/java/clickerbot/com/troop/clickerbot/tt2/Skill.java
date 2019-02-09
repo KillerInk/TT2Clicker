@@ -6,6 +6,7 @@ import android.graphics.Point;
 import java.util.ArrayList;
 
 import clickerbot.com.troop.clickerbot.ColorUtils;
+import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 
 public class Skill {
@@ -198,37 +199,39 @@ public class Skill {
         }
     }
 
-    public void levelSkill()
+    public void levelSkill(ExecuterTask task)
     {
         int dif = maxLVL - skillLvl;
         if (dif < 0)
             dif = 0;
         switch (skillType) {
             case HS:
-                levelSkill(dif,Menu_HSPos, Menu_HSPos_color);
+                levelSkill(dif,Menu_HSPos, Menu_HSPos_color,task);
                 break;
             case DS:
-                levelSkill(dif,Menu_DSPos,Menu_DSPos_color);
+                levelSkill(dif,Menu_DSPos,Menu_DSPos_color,task);
                 break;
             case HOM:
-                levelSkill(dif,Menu_HOMPos,Menu_HOMPos_color);
+                levelSkill(dif,Menu_HOMPos,Menu_HOMPos_color,task);
                 break;
             case FS:
-                levelSkill(dif,Menu_FSMPos,Menu_FSMPos_color);
+                levelSkill(dif,Menu_FSMPos,Menu_FSMPos_color,task);
                 break;
             case WC:
-                levelSkill(dif,Menu_WCMPos,Menu_WCMPos_color);
+                levelSkill(dif,Menu_WCMPos,Menu_WCMPos_color,task);
                 break;
             case SC:
-                levelSkill(dif,Menu_SCMPos,Menu_SCMPos_color);
+                levelSkill(dif,Menu_SCMPos,Menu_SCMPos_color,task);
                 break;
         }
     }
 
-    private void levelSkill(int lvl, Point pos, Point color_pos)
+    private void levelSkill(int lvl, Point pos, Point color_pos,ExecuterTask task)
     {
         for (int i = 0; i< lvl; i++)
         {
+            if (task.cancelTask)
+                return;
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
