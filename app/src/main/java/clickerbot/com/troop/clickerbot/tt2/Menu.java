@@ -52,6 +52,8 @@ public abstract class Menu extends Item
     private Point menuOpenCheckPoint = new Point(471,449);
     private Point menuMaximizedCheckPoint = new Point(471,12);
     private boolean menuTaskRunning = false;
+    private final Point swipeTopPoint =  new Point(240, 556);
+    private final Point swipeBottomPoint = new Point(240, 707);
 
     public Menu(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
         super(ibot, botSettings, rootShell);
@@ -241,51 +243,26 @@ public abstract class Menu extends Item
     public void gotToTop(ExecuterTask task) throws IOException, InterruptedException {
         while (!isMenuTopReached() && !task.cancelTask && Menu.MenuOpen.get()) {
             WaitLock.checkForErrorAndWait();
-            touchInput.swipeVertical(lvlFIrsHeroButton_click, lvlThirdHeroButton_click);
+            swipeUp();
             WaitLock.checkForErrorAndWait();
             Thread.sleep(300);
             WaitLock.checkForErrorAndWait();
         }
         WaitLock.checkForErrorAndWait();
-        touchInput.swipeVertical(lvlFIrsHeroButton_click, lvlThirdHeroButton_click);
+        swipeUp();
         WaitLock.checkForErrorAndWait();
         Thread.sleep(300);
     }
 
-    public void swipeUp()
-    {
-        try {
-            swipeUp(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public void swipeDown() throws IOException, InterruptedException {
+        touchInput.swipeVertical(swipeBottomPoint,swipeTopPoint);
     }
 
-    public void swipeUp(int pixel) throws InterruptedException {
-        try {
-            touchInput.swipeVertical(new Point(280 ,600),new Point(280,600+pixel));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void swipeUp() throws InterruptedException, IOException {
+        touchInput.swipeVertical(swipeTopPoint,swipeBottomPoint);
+
     }
 
-   /* public void swipe(int pixel,int duration)
-    {
-        try {
-            rootShells[0].doSwipe(new Point(280 ,600),new Point(280,600+pixel),duration);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-/*
-    public void swipe(Point from,Point to,int duration)
-    {
-        try {
-            rootShells[0].doSwipe(from,to,duration);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
 
 
     public void menuTest(ExecuterTask task) throws InterruptedException, IOException {
@@ -296,26 +273,14 @@ public abstract class Menu extends Item
 
         openHeroMenu(task);
 
-            swipeDown3xHeros();
+            swipeDown();
             Thread.sleep(1000);
-            swipeDown3xHeros();
+            swipeDown();
             Thread.sleep(1000);
 
 
 
     }
 
-    private final int swipeTopPos = 585;
-    private final int swipeBottomPos = 734;
-
-    public void swipeUp3xHeros() throws InterruptedException, IOException {
-        touchInput.swipeVertical(new Point(200,swipeTopPos),new Point(200,swipeBottomPos));
-    }
-
-    public void swipeDown3xHeros() throws InterruptedException, IOException {
-        WaitLock.checkForErrorAndWait();
-        touchInput.swipeVertical(new Point(200,swipeBottomPos),new Point(200,swipeTopPos));
-        WaitLock.checkForErrorAndWait();
-    }
 
 }

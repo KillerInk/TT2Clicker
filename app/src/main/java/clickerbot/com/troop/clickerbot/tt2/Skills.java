@@ -150,7 +150,7 @@ public class Skills extends Menu {
             int loopbreaker = 0;
             while (!isMenuTopReached() && loopbreaker < 25 && !task.cancelTask && Menu.MenuOpen.get()) {
                 loopbreaker++;
-                touchInput.swipeVertical(Heros.lvlFIrsHeroButton_click, Heros.lvlThirdHeroButton_click);
+                swipeUp();
                 Thread.sleep(200);
             }
             doSingelTap(Coordinates.Menu_Minimized_SwordMaster);

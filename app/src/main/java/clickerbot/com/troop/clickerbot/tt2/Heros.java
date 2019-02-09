@@ -28,6 +28,8 @@ public class Heros extends Menu {
     public static final Point lvlThirdHeroButton_click = new Point(424,726);
     private int lvlAllHerosRunCount = 0;
 
+
+
     public Heros(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell, Boss boss) {
         super(ibot, botSettings, rootShell);
         this.boss = boss;
@@ -99,9 +101,9 @@ public class Heros extends Menu {
     }
 
     private void swipeDown3Heros() throws InterruptedException, IOException {
-        touchInput.swipeVertical(new Point(240, 707), new Point(240, 556));
+        swipeDown();
         WaitLock.checkForErrorAndWait();
-        touchInput.swipeVertical(new Point(240, 707), new Point(240, 556));
+        swipeDown();
     }
 
     public void lvlAllHeros(ExecuterTask task) throws InterruptedException, IOException {
@@ -111,7 +113,7 @@ public class Heros extends Menu {
             if (task.cancelTask)
                 return;
             WaitLock.checkForErrorAndWait();
-            touchInput.swipeVertical(new Point(240, 707), new Point(240, 556));
+            swipeDown();
             WaitLock.checkForErrorAndWait();
         }
         if (!task.cancelTask)
@@ -128,7 +130,7 @@ public class Heros extends Menu {
             WaitLock.checkForErrorAndWait();
             level3heros(task);
             WaitLock.checkForErrorAndWait();
-            touchInput.swipeVertical(new Point(240,556),new Point(240,707));
+            swipeUp();
             WaitLock.checkForErrorAndWait();
             Thread.sleep(400);
             WaitLock.checkForErrorAndWait();

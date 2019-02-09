@@ -74,7 +74,7 @@ public class Prestige extends Menu {
             bot.clearExecuterQueue();
             openSwordMasterMenu(task);
             for (int i =0; i < 20; i++)
-                touchInput.swipeVertical(new Point(240, 707), new Point(240, 556));
+                swipeDown();
             Thread.sleep(1000);
             doLongerSingelTap(prestigeMenuButton);
             Thread.sleep(1000);
