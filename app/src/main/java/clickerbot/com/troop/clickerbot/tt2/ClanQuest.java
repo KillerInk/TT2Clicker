@@ -80,6 +80,11 @@ public class ClanQuest extends Menu {
             Log.d(TAG,"Open ClanChat");
             WaitLock.checkForErrorAndWait();
         }
+        if (loopbreaker == 9)
+        {
+            WaitLock.clanquest.set(false);
+            return;
+        }
 
         if (!isClanQuestRdy() || executerTask.cancelTask) {
             WaitLock.clanquest.set(false);
@@ -95,6 +100,11 @@ public class ClanQuest extends Menu {
             doLongerSingelTap(cq_clanchat_button_click_pos);
             Thread.sleep(2000);
             WaitLock.checkForErrorAndWait();
+        }
+        if (loopbreaker == 9)
+        {
+            WaitLock.clanquest.set(false);
+            return;
         }
 
         if (!bossHaveHp() || executerTask.cancelTask)
@@ -115,6 +125,11 @@ public class ClanQuest extends Menu {
             WaitLock.checkForErrorAndWait();
         }
 
+        if (loopbreaker == 9)
+        {
+            WaitLock.clanquest.set(false);
+            return;
+        }
         //wait for battle to start
         loopbreaker = 0;
         while (isTimerRunning() && !isTimerStarted()&& !executerTask.cancelTask && loopbreaker < 15)
