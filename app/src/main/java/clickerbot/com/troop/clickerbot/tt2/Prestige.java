@@ -68,11 +68,11 @@ public class Prestige extends Menu {
         return false;
     }
 
-    public void doPrestige() throws InterruptedException, IOException {
+    public void doPrestige(ExecuterTask task) throws InterruptedException, IOException {
         Log.d(TAG, "doPrestige:" + botSettings.autoPrestige);
         if (botSettings.autoPrestige) {
             bot.clearExecuterQueue();
-            openSwordMasterMenu();
+            openSwordMasterMenu(task);
             for (int i =0; i < 20; i++)
                 touchInput.swipeVertical(new Point(240, 707), new Point(240, 556));
             Thread.sleep(1000);

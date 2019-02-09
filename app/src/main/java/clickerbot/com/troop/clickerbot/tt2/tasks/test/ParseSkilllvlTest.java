@@ -13,6 +13,6 @@ public class ParseSkilllvlTest extends LevelSwordMasterTask {
 
     @Override
     public void doTask() {
-        skills.testSkillLvlDetection();
+        skills.testSkillLvlDetection(this);
     }
 }

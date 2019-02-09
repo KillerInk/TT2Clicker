@@ -56,7 +56,7 @@ public class Skills extends Menu {
         if (botSettings.autoLvlSkills) {
             if (!skipLevelUpSkills()) {
 
-                openSwordMasterMenu();
+                openSwordMasterMenu(task);
                 try {
                     gotToTop(task);
                 } catch (IOException e) {
@@ -86,7 +86,7 @@ public class Skills extends Menu {
                     e.printStackTrace();
                 }
                 minimiseMenu();
-                closeSwordMasterMenu();
+                closeSwordMasterMenu(task);
             }
         }
     }
@@ -102,9 +102,9 @@ public class Skills extends Menu {
         return false;
     }
 
-    public void testSkillLvlDetection()
+    public void testSkillLvlDetection(ExecuterTask task)
     {
-        openSwordMasterMenu();
+        openSwordMasterMenu(task);
 
         maximiseMenu();
 
@@ -123,7 +123,7 @@ public class Skills extends Menu {
         }
         WaitLock.checkForErrorAndWait();
         minimiseMenu();
-        closeSwordMasterMenu();
+        closeSwordMasterMenu(task);
 
     }
 
@@ -145,7 +145,7 @@ public class Skills extends Menu {
     public void lvlSwordMaster(ExecuterTask task)
     {
         Log.d(TAG,"lvlSwordMaster");
-        openSwordMasterMenu();
+        openSwordMasterMenu(task);
         try {
             int loopbreaker = 0;
             while (!isMenuTopReached() && loopbreaker < 25 && !task.cancelTask && Menu.MenuOpen.get()) {
@@ -162,7 +162,7 @@ public class Skills extends Menu {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        closeSwordMasterMenu();
+        closeSwordMasterMenu(task);
     }
 
     private void levelUpSkills()

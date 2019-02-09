@@ -130,14 +130,14 @@ public abstract class Menu extends Item
         return color == colorMenuOpen;
     }
 
-    private void openMenu(Point point)
+    private void openMenu(Point point, ExecuterTask task)
     {
         WaitLock.checkForErrorAndWait();
         setMenuState(MenuState.opening);
         WaitLock.checkForErrorAndWait();
         Log.d(TAG, "openSwordMasterMenu");
 
-        while (!isMenuOpen() && !Thread.currentThread().isInterrupted()) {
+        while (!isMenuOpen() && !Thread.currentThread().isInterrupted() && !task.cancelTask) {
             try {
                 doSingelTap(point);
                 Thread.sleep(menuOpenCloseDelay);
@@ -149,13 +149,13 @@ public abstract class Menu extends Item
         setMenuState(MenuState.open);
     }
 
-    private void closeMenu(Point point)
+    private void closeMenu(Point point,ExecuterTask task)
     {
         WaitLock.checkForErrorAndWait();
         setMenuState(MenuState.closing);
         Log.d(TAG, "closeMenu");
         try {
-            while (isMenuOpen()&& !Thread.currentThread().isInterrupted()) {
+            while (isMenuOpen()&& !Thread.currentThread().isInterrupted() && !task.cancelTask) {
                 WaitLock.checkForErrorAndWait();
                 doSingelTap(point);
                 Thread.sleep(menuOpenCloseDelay);
@@ -169,34 +169,34 @@ public abstract class Menu extends Item
         setMenuState(MenuState.closed);
     }
 
-    public void openSwordMasterMenu()
+    public void openSwordMasterMenu(ExecuterTask task)
     {
-        openMenu(Coordinates.Menu_SwordMaster);
+        openMenu(Coordinates.Menu_SwordMaster,task);
     }
 
-    public void closeSwordMasterMenu()
+    public void closeSwordMasterMenu(ExecuterTask task)
     {
-        closeMenu(Coordinates.Menu_SwordMaster);
+        closeMenu(Coordinates.Menu_SwordMaster,task);
     }
 
-    public void openHeroMenu()
+    public void openHeroMenu(ExecuterTask task)
     {
-        openMenu(Coordinates.Menu_Heros);
+        openMenu(Coordinates.Menu_Heros,task);
     }
 
-    public void closeHeroMenu()
+    public void closeHeroMenu(ExecuterTask task)
     {
-        closeMenu(Coordinates.Menu_Heros);
+        closeMenu(Coordinates.Menu_Heros,task);
     }
 
-    public void openArtifactMenu()
+    public void openArtifactMenu(ExecuterTask task)
     {
-        openMenu(Coordinates.Menu_Artifacts);
+        openMenu(Coordinates.Menu_Artifacts,task);
     }
 
-    public void closeArtifactMenu()
+    public void closeArtifactMenu(ExecuterTask task)
     {
-        closeMenu(Coordinates.Menu_Artifacts);
+        closeMenu(Coordinates.Menu_Artifacts,task);
     }
 
 
@@ -287,13 +287,13 @@ public abstract class Menu extends Item
     }*/
 
 
-    public void menuTest() throws InterruptedException, IOException {
+    public void menuTest(ExecuterTask task) throws InterruptedException, IOException {
        /* openHeroMenu();
         closeMenu();
         openSwordMasterMenu();
         closeMenu();*/
 
-        openHeroMenu();
+        openHeroMenu(task);
 
             swipeDown3xHeros();
             Thread.sleep(1000);

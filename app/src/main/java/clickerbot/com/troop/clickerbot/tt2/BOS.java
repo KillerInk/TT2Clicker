@@ -24,11 +24,11 @@ public class BOS extends Menu {
     }
 
     public void levelBos(ExecuterTask task) throws IOException, InterruptedException {
-        openArtifactMenu();
+        openArtifactMenu(task);
         gotToTop(task);
         Thread.sleep(400);
         doLongerSingelTap(bos_click_pos);
         Thread.sleep(200);
-        closeArtifactMenu();
+        closeArtifactMenu(task);
     }
 }

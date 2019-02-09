@@ -17,7 +17,7 @@ public class PrestigeTask extends ExecuterTask {
     @Override
     public void doTask() {
         try {
-            prestige.doPrestige();
+            prestige.doPrestige(this);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (IOException e) {

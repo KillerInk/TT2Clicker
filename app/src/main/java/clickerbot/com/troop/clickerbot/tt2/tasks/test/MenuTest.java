@@ -18,7 +18,7 @@ public class MenuTest extends ExecuterTask {
     public void doTask() {
 
         try {
-            menu.menuTest();
+            menu.menuTest(this);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (IOException e) {

@@ -72,7 +72,7 @@ public class Heros extends Menu {
     }
 
     public void levelTop9Heros(ExecuterTask task) throws InterruptedException, IOException {
-        openHeroMenu();
+        openHeroMenu(task);
         WaitLock.checkForErrorAndWait();
         //make sure we are on top
         gotToTop(task);
@@ -90,7 +90,7 @@ public class Heros extends Menu {
         WaitLock.checkForErrorAndWait();
         Thread.sleep(200);
         WaitLock.checkForErrorAndWait();
-        closeHeroMenu();
+        closeHeroMenu(task);
         WaitLock.checkForErrorAndWait();
         Thread.sleep(200);
         WaitLock.checkForErrorAndWait();
@@ -105,7 +105,7 @@ public class Heros extends Menu {
     }
 
     public void lvlAllHeros(ExecuterTask task) throws InterruptedException, IOException {
-        openHeroMenu();
+        openHeroMenu(task);
         WaitLock.checkForErrorAndWait();
         for (int i=0; i< 25; i++) {
             if (task.cancelTask)
@@ -133,7 +133,7 @@ public class Heros extends Menu {
             Thread.sleep(400);
             WaitLock.checkForErrorAndWait();
         }
-        closeHeroMenu();
+        closeHeroMenu(task);
 
         lastAllHerosLeveld = System.currentTimeMillis();
         lastTop6HerosLeveld = System.currentTimeMillis();
