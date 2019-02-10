@@ -15,6 +15,7 @@ public class WaitLock
     public static AtomicBoolean sceneTransition = new AtomicBoolean();
     private static AtomicBoolean flashzip = new AtomicBoolean();
     public static AtomicBoolean clanquest = new AtomicBoolean();
+    public static AtomicBoolean prestige = new AtomicBoolean();
 
     /**
      * manly used to detect failed taps that opened a unwanted window.
