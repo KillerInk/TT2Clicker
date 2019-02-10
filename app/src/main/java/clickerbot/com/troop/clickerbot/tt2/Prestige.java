@@ -5,6 +5,7 @@ import android.graphics.Point;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.Random;
 
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
@@ -24,8 +25,10 @@ public class Prestige extends Menu {
 
     private final Point prestigeMenuButton = new Point(401,734);
     private final Point prestigeButton = new Point(239,630);
+    private final Point prestigeButton_color_pos = new Point(292,617);
     private final Point prestigeAcceptButton = new Point(326,539);
     private final Point prestigeAcceptButton_color = new Point(326,525);
+    private Random random;
 
 
     private final Point loginInfoButton = new Point(241,596);
@@ -35,6 +38,7 @@ public class Prestige extends Menu {
     public Prestige(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell, Boss boss) {
         super(ibot, botSettings, rootShell);
         this.boss = boss;
+        random = new Random();
     }
 
     @Override
@@ -75,25 +79,46 @@ public class Prestige extends Menu {
             openSwordMasterMenu(task);
             for (int i =0; i < 20; i++)
                 swipeDown();
-            Thread.sleep(1000);
-            doLongerSingelTap(prestigeMenuButton);
-            Thread.sleep(1000);
-            while (!checkPrestigAcceptColor() && !Thread.currentThread().isInterrupted()) {
+
+            int loopbreaker = 0;
+            WaitLock.prestige.set(true);
+            while(!checkPrestigButton() && !Thread.currentThread().isInterrupted() && !task.cancelTask && loopbreaker  < 20) {
+                loopbreaker++;
+                Log.d(TAG, "Tap on Prestige Menu Button");
+                doLongerSingelTap(new Point(prestigeMenuButton.x -3 +random.nextInt(6),prestigeMenuButton.y -3 +random.nextInt(6)));
+                Thread.sleep(200);
+            }
+            if (loopbreaker == 19)
+            {
+                closeMenu();
+                bot.clearExecuterQueue();
+                bot.executeTask(PrestigeTask.class);
+                WaitLock.prestige.set(false);
+                return;
+            }
+            loopbreaker = 0;
+            while (!checkPrestigAcceptColor() && !Thread.currentThread().isInterrupted()&& !task.cancelTask && loopbreaker  < 5) {
+                loopbreaker++;
+                Log.d(TAG, "Tap on Prestige Button");
                 doLongerSingelTap(prestigeButton);
                 Thread.sleep(1000);
             }
-
-            while (checkPrestigAcceptColor()&& !Thread.currentThread().isInterrupted()) {
+            loopbreaker = 0;
+            while (checkPrestigAcceptColor()&& !Thread.currentThread().isInterrupted()&& !task.cancelTask && loopbreaker  < 5) {
+                loopbreaker++;
+                Log.d(TAG, "Tap on Prestige accept Button");
                 doLongerSingelTap(prestigeAcceptButton);
                 Thread.sleep(500);
             }
             Thread.sleep(12000);
-
-            while (checkLoginInfoColor()&& !Thread.currentThread().isInterrupted()) {
+            loopbreaker = 0;
+            while (checkLoginInfoColor()&& !Thread.currentThread().isInterrupted()&& !task.cancelTask && loopbreaker  < 5) {
+                loopbreaker++;
                 doLongerSingelTap(loginInfoButton);
                 Thread.sleep(200);
             }
 
+            WaitLock.prestige.set(false);
             bot.resetTickCounter();
             setMenuState(MenuState.closed);
             bot.clearExecuterQueue();
@@ -101,12 +126,19 @@ public class Prestige extends Menu {
                 bot.executeTask(AutoLevelBOSTask.class);
             bot.executeTask(InitTask.class);
             lastPrestigeCheck = System.currentTimeMillis();
+
         }
     }
 
     private boolean checkPrestigAcceptColor()
     {
         int color = bot.getScreeCapture().getColor(prestigeAcceptButton_color);
+        return Color.blue(color)> 200;
+    }
+
+    private boolean checkPrestigButton()
+    {
+        int color = bot.getScreeCapture().getColor(prestigeButton_color_pos);
         return Color.blue(color)> 200;
     }
 
