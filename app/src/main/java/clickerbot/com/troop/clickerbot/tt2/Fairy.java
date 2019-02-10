@@ -29,6 +29,7 @@ public class Fairy extends Menu {
 
     private final Point accept_Pos = new Point(300 ,630);
     private final Point decline_Pos = new Point(200 ,630);
+    private int howOftenDetected;
 
 
     public Fairy(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
@@ -61,7 +62,7 @@ public class Fairy extends Menu {
 
     @Override
     boolean checkIfRdyToExecute() {
-        return !Menu.MenuOpen.get();
+        return true;
     }
 
     public void executeTapFairys()
@@ -94,13 +95,19 @@ public class Fairy extends Menu {
        // Log.d(TAG, "fairy window open: "  + (ColorUtils.redEquals(color,251) && ColorUtils.blueIsInRange(color2,194,262)));
         if (ColorUtils.redEquals(color,251) && ColorUtils.blueIsInRange(color2,189,262))
         {
-            WaitLock.lockFairyWindow(true);
-            Log.d(TAG,"Tap on Fairy Ads Window");
-            tapOnFairyVipWindow();
+            howOftenDetected++;
+            if(howOftenDetected > 2) {
+                howOftenDetected = 0;
+                WaitLock.lockFairyWindow(true);
+                Log.d(TAG, "Tap on Fairy Ads Window");
+                tapOnFairyVipWindow();
+            }
             //bot.putFirstAndExecuteTask(TapOnFairyVipWindowTask.class);
         }
         else {
             WaitLock.lockFairyWindow(false);
+            if (howOftenDetected > 0)
+                howOftenDetected--;
         }
     }
 
