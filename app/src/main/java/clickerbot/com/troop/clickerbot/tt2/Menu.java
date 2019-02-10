@@ -142,7 +142,7 @@ public abstract class Menu extends Item
 
         while (!isMenuOpen() && !Thread.currentThread().isInterrupted() && !task.cancelTask) {
             try {
-                doSingelTap(point);
+                doLongerSingelTap(point);
                 Thread.sleep(menuOpenCloseDelay);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -150,6 +150,11 @@ public abstract class Menu extends Item
         }
         MenuOpen.set(true);
         setMenuState(MenuState.open);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void closeMenu(Point point,ExecuterTask task)
@@ -160,7 +165,7 @@ public abstract class Menu extends Item
         try {
             while (isMenuOpen()&& !Thread.currentThread().isInterrupted() && !task.cancelTask) {
                 WaitLock.checkForErrorAndWait();
-                doSingelTap(point);
+                doLongerSingelTap(point);
                 Thread.sleep(menuOpenCloseDelay);
                 WaitLock.checkForErrorAndWait();
             }
@@ -212,7 +217,7 @@ public abstract class Menu extends Item
             menuState = MenuState.maximise;
             Log.d(TAG, "maximiseMenu");
             try {
-                doSingelTap(Coordinates.Menu_Maximise);
+                doLongerSingelTap(Coordinates.Menu_Maximise);
                 WaitLock.checkForErrorAndWait();
                 Thread.sleep(menuOpenCloseDelay);
                 WaitLock.checkForErrorAndWait();
@@ -229,7 +234,7 @@ public abstract class Menu extends Item
             Log.d(TAG, "minimiseMenu");
             try {
 
-                doSingelTap(Coordinates.Menu_Minimise);
+                doLongerSingelTap(Coordinates.Menu_Minimise);
                 Thread.sleep(menuOpenCloseDelay);
                 WaitLock.checkForErrorAndWait();
             } catch (InterruptedException e) {
