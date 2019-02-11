@@ -30,7 +30,7 @@ public class NativeTouchHandler implements TouchInterface {
     private NativeTouch nativeTouch;
     private final String inputDevice;
     private final boolean isMouseInput;
-    private boolean log = true;
+    private boolean log = false;
 
     private Object touchLock = new Object();
 
@@ -90,7 +90,7 @@ public class NativeTouchHandler implements TouchInterface {
     @Override
     public void swipeVertical(Point from, Point to) throws InterruptedException {
         synchronized (touchLock) {
-            Thread.sleep(100);
+            Thread.sleep(200);
             int distance = from.y - to.y - 1;
             boolean negativ = true;
             if (to.y > from.y) {
@@ -99,8 +99,6 @@ public class NativeTouchHandler implements TouchInterface {
             }
             touchDown(from);
             Thread.sleep(200);
-        /*updatePosition(from);
-        Thread.sleep(100);*/
             if (negativ)
                 updatePosition(new Point(from.x, from.y - distance / 4));
             else
@@ -125,14 +123,6 @@ public class NativeTouchHandler implements TouchInterface {
                 updatePosition(new Point(from.x, from.y - distance));
             else
                 updatePosition(new Point(from.x, from.y + distance));
-       /* for (int i =0; i< distance; i++)
-        {
-            if (negativ)
-                updatePosition(new Point(from.x, from.y- i));
-            else
-                updatePosition(new Point(from.x, from.y + i));
-            Thread.sleep(1);
-        }*/
             Thread.sleep(200);
             touchUp(to);
             Thread.sleep(100);
