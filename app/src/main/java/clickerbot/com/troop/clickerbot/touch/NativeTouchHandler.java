@@ -1,6 +1,7 @@
 package clickerbot.com.troop.clickerbot.touch;
 
 import android.graphics.Point;
+import android.util.Log;
 
 import java.io.IOException;
 
@@ -24,10 +25,20 @@ import static clickerbot.com.troop.clickerbot.CmdBuilder.SYN_REPORT;
 import static clickerbot.com.troop.clickerbot.CmdBuilder.UP;
 
 public class NativeTouchHandler implements TouchInterface {
+    private final  String TAG = NativeTouchHandler.class.getSimpleName();
 
     private NativeTouch nativeTouch;
     private final String inputDevice;
     private final boolean isMouseInput;
+    private boolean log = true;
+
+    private Object touchLock = new Object();
+
+    public void doLog(String msg)
+    {
+        if (log)
+            Log.d(TAG,msg);
+    }
 
     public NativeTouchHandler(String inputPath, boolean mouse)
     {
@@ -49,13 +60,15 @@ public class NativeTouchHandler implements TouchInterface {
     @Override
     public void tap(Point pos,int duration) throws InterruptedException {
 
-        touchDown(pos);
-        try {
-            Thread.sleep(duration);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        synchronized (touchLock) {
+            touchDown(pos);
+            try {
+                Thread.sleep(duration);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            touchUp(pos);
         }
-        touchUp(pos);
     }
 
     private final int movesleep = 50;
@@ -76,41 +89,42 @@ public class NativeTouchHandler implements TouchInterface {
      */
     @Override
     public void swipeVertical(Point from, Point to) throws InterruptedException {
-        Thread.sleep(100);
-        int distance = from.y - to.y -1;
-        boolean negativ = true;
-        if (to.y > from.y) {
-            negativ = false;
-            distance = to.y - from.y - 1;
-        }
-        touchDown(from);
-        Thread.sleep(100);
+        synchronized (touchLock) {
+            Thread.sleep(100);
+            int distance = from.y - to.y - 1;
+            boolean negativ = true;
+            if (to.y > from.y) {
+                negativ = false;
+                distance = to.y - from.y - 1;
+            }
+            touchDown(from);
+            Thread.sleep(200);
         /*updatePosition(from);
         Thread.sleep(100);*/
-        if (negativ)
-            updatePosition(new Point(from.x, from.y - distance / 4));
-        else
-            updatePosition(new Point(from.x, from.y + distance / 4));
-        Thread.sleep(movesleep);
-        if (negativ)
-            updatePosition(new Point(from.x, from.y - distance / 4 *2));
-        else
-            updatePosition(new Point(from.x, from.y + distance / 4 *2));
-        Thread.sleep(movesleep);
-        if (negativ)
-            updatePosition(new Point(from.x, from.y - distance/4*3));
-        else
-            updatePosition(new Point(from.x, from.y + distance/4*3));
-        Thread.sleep(movesleep);
-        if (negativ)
-            updatePosition(new Point(from.x, from.y - (distance -1)));
-        else
-            updatePosition(new Point(from.x, from.y + (distance -1)));
-        Thread.sleep(movesleep);
-        if (negativ)
-            updatePosition(new Point(from.x, from.y - distance));
-        else
-            updatePosition(new Point(from.x, from.y + distance));
+            if (negativ)
+                updatePosition(new Point(from.x, from.y - distance / 4));
+            else
+                updatePosition(new Point(from.x, from.y + distance / 4));
+            Thread.sleep(movesleep);
+            if (negativ)
+                updatePosition(new Point(from.x, from.y - distance / 4 * 2));
+            else
+                updatePosition(new Point(from.x, from.y + distance / 4 * 2));
+            Thread.sleep(movesleep);
+            if (negativ)
+                updatePosition(new Point(from.x, from.y - distance / 4 * 3));
+            else
+                updatePosition(new Point(from.x, from.y + distance / 4 * 3));
+            Thread.sleep(movesleep);
+            if (negativ)
+                updatePosition(new Point(from.x, from.y - (distance - 1)));
+            else
+                updatePosition(new Point(from.x, from.y + (distance - 1)));
+            Thread.sleep(movesleep);
+            if (negativ)
+                updatePosition(new Point(from.x, from.y - distance));
+            else
+                updatePosition(new Point(from.x, from.y + distance));
        /* for (int i =0; i< distance; i++)
         {
             if (negativ)
@@ -119,9 +133,10 @@ public class NativeTouchHandler implements TouchInterface {
                 updatePosition(new Point(from.x, from.y + i));
             Thread.sleep(1);
         }*/
-        Thread.sleep(200);
-        touchUp(to);
-        Thread.sleep(100);
+            Thread.sleep(200);
+            touchUp(to);
+            Thread.sleep(100);
+        }
 
     }
 
@@ -142,6 +157,7 @@ public class NativeTouchHandler implements TouchInterface {
 
     private boolean sendMTpressure = false;
     private void touchDown(Point pos) throws InterruptedException {
+        doLog("touchDown");
         if (isMouseInput)
             touchDownMouse(pos, true, DOWN);
         else
@@ -151,6 +167,7 @@ public class NativeTouchHandler implements TouchInterface {
 
     private void touchUp(Point pos)
     {
+        doLog("touchUp");
         if (isMouseInput)
             touchDownMouse(pos, false, UP);
         else
@@ -159,6 +176,7 @@ public class NativeTouchHandler implements TouchInterface {
 
     private void updatePosition(Point pos)
     {
+        doLog("updatePosition");
         if (isMouseInput)
             updatePositionMouse(pos);
         else
