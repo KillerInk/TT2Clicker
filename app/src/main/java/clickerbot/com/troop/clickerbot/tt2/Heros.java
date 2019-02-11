@@ -79,17 +79,24 @@ public class Heros extends Menu {
         //make sure we are on top
         gotToTop(task);
         Thread.sleep(500);
+
+        WaitLock.checkForErrorAndWait();
+        level3heros(task);
+        WaitLock.checkForErrorAndWait();
+        swipeDown3Heros();
+
+        WaitLock.checkForErrorAndWait();
+        level3heros(task);
+        WaitLock.checkForErrorAndWait();
+        swipeDown3Heros();
+
         WaitLock.checkForErrorAndWait();
         level3heros(task);
         WaitLock.checkForErrorAndWait();
         swipeDown3Heros();
         WaitLock.checkForErrorAndWait();
         level3heros(task);
-        WaitLock.checkForErrorAndWait();
-        swipeDown3Heros();
-        WaitLock.checkForErrorAndWait();
-        level3heros(task);
-        WaitLock.checkForErrorAndWait();
+
         Thread.sleep(200);
         WaitLock.checkForErrorAndWait();
         closeHeroMenu(task);
@@ -103,7 +110,10 @@ public class Heros extends Menu {
     private void swipeDown3Heros() throws InterruptedException, IOException {
         swipeDown();
         WaitLock.checkForErrorAndWait();
+        Thread.sleep(100);
+        WaitLock.checkForErrorAndWait();
         swipeDown();
+        WaitLock.checkForErrorAndWait();
         Thread.sleep(100);
     }
 
