@@ -32,7 +32,12 @@ public class NativeTouchHandler implements TouchInterface {
     private final boolean isMouseInput;
     private boolean log = false;
 
+    private final int noInputID=0;
+    private final int clickID = 1;
+    private final int swipeID = 2;
+
     private Object touchLock = new Object();
+    private  Point lastPoint;
 
     public void doLog(String msg)
     {
@@ -44,6 +49,7 @@ public class NativeTouchHandler implements TouchInterface {
     {
         this.isMouseInput = mouse;
         inputDevice = inputPath;
+        lastPoint = new Point(0,0);
         try {
             RootShell rootShell = new RootShell(0);
             rootShell.startProcess();
@@ -61,13 +67,13 @@ public class NativeTouchHandler implements TouchInterface {
     public void tap(Point pos,int duration) throws InterruptedException {
 
         synchronized (touchLock) {
-            touchDown(pos);
+            touchDown(pos, clickID);
             try {
                 Thread.sleep(duration);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            touchUp(pos);
+            touchUp(pos,clickID);
         }
     }
 
@@ -90,6 +96,7 @@ public class NativeTouchHandler implements TouchInterface {
     @Override
     public void swipeVertical(Point from, Point to) throws InterruptedException {
         synchronized (touchLock) {
+            updatePosition(from,swipeID);
             Thread.sleep(200);
             int distance = from.y - to.y - 1;
             boolean negativ = true;
@@ -97,35 +104,36 @@ public class NativeTouchHandler implements TouchInterface {
                 negativ = false;
                 distance = to.y - from.y - 1;
             }
-            touchDown(from);
+            touchDown(from,swipeID);
             Thread.sleep(200);
             if (negativ)
-                updatePosition(new Point(from.x, from.y - distance / 4));
+                updatePosition(new Point(from.x, from.y - distance / 4),swipeID);
             else
-                updatePosition(new Point(from.x, from.y + distance / 4));
+                updatePosition(new Point(from.x, from.y + distance / 4),swipeID);
             Thread.sleep(movesleep);
             if (negativ)
-                updatePosition(new Point(from.x, from.y - distance / 4 * 2));
+                updatePosition(new Point(from.x, from.y - distance / 4 * 2),swipeID);
             else
-                updatePosition(new Point(from.x, from.y + distance / 4 * 2));
+                updatePosition(new Point(from.x, from.y + distance / 4 * 2),swipeID);
             Thread.sleep(movesleep);
             if (negativ)
-                updatePosition(new Point(from.x, from.y - distance / 4 * 3));
+                updatePosition(new Point(from.x, from.y - distance / 4 * 3),swipeID);
             else
-                updatePosition(new Point(from.x, from.y + distance / 4 * 3));
+                updatePosition(new Point(from.x, from.y + distance / 4 * 3),swipeID);
             Thread.sleep(movesleep);
             if (negativ)
-                updatePosition(new Point(from.x, from.y - (distance - 1)));
+                updatePosition(new Point(from.x, from.y - (distance - 1)),swipeID);
             else
-                updatePosition(new Point(from.x, from.y + (distance - 1)));
+                updatePosition(new Point(from.x, from.y + (distance - 1)),swipeID);
             Thread.sleep(movesleep);
             if (negativ)
-                updatePosition(new Point(from.x, from.y - distance));
+                updatePosition(new Point(from.x, from.y - distance),swipeID);
             else
-                updatePosition(new Point(from.x, from.y + distance));
+                updatePosition(new Point(from.x, from.y + distance),swipeID);
             Thread.sleep(200);
-            touchUp(to);
+            touchUp(to,swipeID);
             Thread.sleep(100);
+            lastPoint = to;
         }
 
     }
@@ -146,60 +154,67 @@ public class NativeTouchHandler implements TouchInterface {
     }
 
     private boolean sendMTpressure = false;
-    private void touchDown(Point pos) throws InterruptedException {
+    private void touchDown(Point pos, int id) throws InterruptedException {
         doLog("touchDown");
         if (isMouseInput)
             touchDownMouse(pos, true, DOWN);
         else
-            touchDownTouch(pos);
+            touchDownTouch(pos, id);
 
     }
 
-    private void touchUp(Point pos)
+    private void touchUp(Point pos, int id)
     {
         doLog("touchUp");
         if (isMouseInput)
             touchDownMouse(pos, false, UP);
         else
             touchUpTouch(pos);
+        lastPoint = pos;
     }
 
-    private void updatePosition(Point pos)
+    private void updatePosition(Point pos, int id)
     {
         doLog("updatePosition");
         if (isMouseInput)
             updatePositionMouse(pos);
         else
-            updatePositionTouch(pos);
+            updatePositionTouch(pos,id);
+        lastPoint = pos;
     }
 
     private void touchDownMouse(Point pos, boolean b, int down) {
         sendMTpressure = b;
         nativeTouch.sendEvent(EV_KEY, BTN_TOUCH, down);
-        updatePosition(pos);
+        updatePosition(pos,0);
     }
 
 
+    private void sendXY(Point pos)
+    {
+        if (lastPoint.x != pos.x)
+            nativeTouch.sendEvent(EV_ABS, ABS_MT_POSITION_X,pos.x);
+        if (lastPoint.y != pos.y)
+            nativeTouch.sendEvent(EV_ABS, ABS_MT_POSITION_Y,pos.y);
+    }
 
     private void updatePositionMouse(Point pos) {
         if (sendMTpressure)
             nativeTouch.sendEvent(EV_ABS, ABS_MT_PRESSURE,1);
-        nativeTouch.sendEvent(EV_ABS, ABS_MT_POSITION_X,pos.x);
-        nativeTouch.sendEvent(EV_ABS, ABS_MT_POSITION_Y,pos.y);
+        sendXY(pos);
         nativeTouch.sendEvent(EV_SYN, SYN_MT_REPORT,0);
         nativeTouch.sendEvent(EV_SYN, SYN_REPORT,0);
     }
 
-    private void touchDownTouch(Point pos)
+    private void touchDownTouch(Point pos, int id)
     {
         sendMTpressure = true;
         nativeTouch.sendEvent(EV_ABS, ABS_MT_TRACKING_ID, CmdBuilder.maxint);
         nativeTouch.sendEvent(EV_SYN, SYN_REPORT,0);
-        nativeTouch.sendEvent(EV_ABS, ABS_MT_SLOT,0);
-        nativeTouch.sendEvent(EV_ABS, ABS_MT_POSITION_X,pos.x);
-        nativeTouch.sendEvent(EV_ABS, ABS_MT_POSITION_Y,pos.y);
+        nativeTouch.sendEvent(EV_ABS, ABS_MT_SLOT,id);
+        sendXY(pos);
         nativeTouch.sendEvent(EV_ABS , ABS_MT_TOUCH_MAJOR  , 6);
-        nativeTouch.sendEvent(EV_ABS, ABS_MT_TRACKING_ID, 0);
+        nativeTouch.sendEvent(EV_ABS, ABS_MT_TRACKING_ID, id);
         nativeTouch.sendEvent(EV_SYN, SYN_REPORT,0);
     }
 
@@ -209,17 +224,15 @@ public class NativeTouchHandler implements TouchInterface {
         nativeTouch.sendEvent(EV_ABS , ABS_MT_TOUCH_MAJOR  , 0);
         nativeTouch.sendEvent(EV_ABS, ABS_MT_TRACKING_ID, CmdBuilder.maxint);
         nativeTouch.sendEvent(EV_SYN, SYN_REPORT,0);
-        nativeTouch.sendEvent(EV_ABS, ABS_MT_SLOT,12);
-        nativeTouch.sendEvent(EV_ABS, ABS_MT_POSITION_X,pos.x);
-        nativeTouch.sendEvent(EV_ABS, ABS_MT_POSITION_Y,pos.y);
-        nativeTouch.sendEvent(EV_ABS, ABS_MT_TRACKING_ID, 12);
+        nativeTouch.sendEvent(EV_ABS, ABS_MT_SLOT,noInputID);
+        sendXY(pos);
+        nativeTouch.sendEvent(EV_ABS, ABS_MT_TRACKING_ID, noInputID);
         nativeTouch.sendEvent(EV_SYN, SYN_REPORT,0);
     }
 
-    private void updatePositionTouch(Point pos)
+    private void updatePositionTouch(Point pos, int id)
     {
-        nativeTouch.sendEvent(EV_ABS, ABS_MT_POSITION_X,pos.x);
-        nativeTouch.sendEvent(EV_ABS, ABS_MT_POSITION_Y,pos.y);
+        sendXY(pos);
         if (sendMTpressure)
             nativeTouch.sendEvent(EV_ABS , ABS_MT_TOUCH_MAJOR  , 6);
         nativeTouch.sendEvent(EV_SYN, SYN_REPORT,0);
