@@ -50,6 +50,7 @@ public class BotSettings {
      * time till prestige in ms
      */
     public final long timeToPrestige;
+    public final long randomTimeToPrestige;
 
     /**
      *after how many boss fails it should prestige.
@@ -190,6 +191,7 @@ public class BotSettings {
         useFlashZip = sharedPreferences.getBoolean(context.getString(R.string.useflashzip),false);
         runTests = sharedPreferences.getBoolean(context.getString(R.string.runtests),false);
         timeToPrestige = sharedPreferences.getLong(context.getString(R.string.prestigetime),60)*60*1000;
+        randomTimeToPrestige = sharedPreferences.getLong(context.getString(R.string.prestigerandomtime),10);
         bossFailedCount = sharedPreferences.getLong(context.getString(R.string.prestigeafterbossfail),3);
         mainLooperSleepTime = sharedPreferences.getLong(context.getString(R.string.mainLooperSleep),500);
         captureFrameSleepTime = sharedPreferences.getLong(context.getString(R.string.captureFrameSleep),800);

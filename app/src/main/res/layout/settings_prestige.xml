@@ -28,6 +28,16 @@
         custom:settingkey_id="@string/prestigetime" />
 
     <clickerbot.com.troop.clickerbot.views.LongEditText
+        android:id="@+id/prestigerandomtime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        custom:header_txt="Random time in min that get added to the prestige time, set to 0 to disable."
+        custom:setting_default="10"
+        custom:settingkey_id="@string/prestigerandomtime" />
+
+    <clickerbot.com.troop.clickerbot.views.LongEditText
         android:id="@+id/prestigeafterbossfailed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -23,6 +23,7 @@
     <string name="acceptfairyadds">acceptfairyadds</string>
     <string name="autolvlswordmaster">autolvlswordmaster</string>
     <string name="prestigetime">prestigetime</string>
+    <string name="prestigerandomtime">prestigerandomtime</string>
     <string name="prestigeafterbossfail">prestigeafterbossfail</string>
     <string name="mainLooperSleep">mainloopersleep</string>
     <string name="hsmaxlvl">hsmaxlvl</string>

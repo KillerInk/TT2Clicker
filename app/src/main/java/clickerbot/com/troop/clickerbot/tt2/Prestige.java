@@ -43,7 +43,7 @@ public class Prestige extends Menu {
 
     @Override
     void init(ExecuterTask task) {
-        randomTimeToPrestige = botSettings.timeToPrestige + (bot.rand.nextInt(10)*60*1000);
+        randomTimeToPrestige = botSettings.timeToPrestige + (bot.rand.nextInt((int)botSettings.randomTimeToPrestige)*60*1000);
         timeSinceLastPrestige = System.currentTimeMillis();
     }
 
@@ -90,6 +90,7 @@ public class Prestige extends Menu {
             }
             if (loopbreaker == 19)
             {
+                Log.d(TAG,"Prestige menu button click failed.");
                 closeMenu();
                 bot.clearExecuterQueue();
                 bot.executeTask(PrestigeTask.class);
@@ -108,7 +109,7 @@ public class Prestige extends Menu {
                 loopbreaker++;
                 Log.d(TAG, "Tap on Prestige accept Button");
                 doLongerSingelTap(prestigeAcceptButton);
-                Thread.sleep(500);
+                Thread.sleep(300);
             }
             Thread.sleep(12000);
             loopbreaker = 0;
