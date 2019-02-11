@@ -82,12 +82,12 @@ public class Prestige extends Menu {
 
             int loopbreaker = 0;
             WaitLock.prestige.set(true);
-            while(!checkPrestigButton() && !Thread.currentThread().isInterrupted() && !task.cancelTask && loopbreaker  < 20) {
+            while(!checkPrestigButton() && !Thread.currentThread().isInterrupted() && !task.cancelTask && loopbreaker  < 10) {
                 loopbreaker++;
                 doLongerSingelTap(new Point(prestigeMenuButton.x -3 +random.nextInt(6),prestigeMenuButton.y -3 +random.nextInt(6)),"on Prestige Menu Button");
                 Thread.sleep(200);
             }
-            if (loopbreaker == 19)
+            /*if (loopbreaker == 19)
             {
                 Log.d(TAG,"Prestige menu button click failed.");
                 closeMenu();
@@ -95,7 +95,7 @@ public class Prestige extends Menu {
                 bot.executeTask(PrestigeTask.class);
                 WaitLock.prestige.set(false);
                 return;
-            }
+            }*/
             loopbreaker = 0;
             while (!checkPrestigAcceptColor() && !Thread.currentThread().isInterrupted()&& !task.cancelTask && loopbreaker  < 5) {
                 loopbreaker++;
