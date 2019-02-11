@@ -38,7 +38,7 @@ public abstract class Item {
 
     public void doLongerSingelTap(Point point, String from)
     {
-        Log.d(TAG, "do SingelTap: " + from);
+        Log.d(TAG, "do LongerSingelTap: " + from);
         try {
             touchInput.tap(point,70);
             Thread.sleep(20);

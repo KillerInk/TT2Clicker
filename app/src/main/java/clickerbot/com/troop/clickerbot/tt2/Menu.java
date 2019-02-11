@@ -140,7 +140,7 @@ public abstract class Menu extends Item
 
         while (!isMenuOpen() && !Thread.currentThread().isInterrupted() && !task.cancelTask) {
             try {
-                doLongerSingelTap(point,"openSwordMasterMenu");
+                doSingelTap(point,"openSwordMasterMenu");
                 Thread.sleep(menuOpenCloseDelay);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -162,7 +162,7 @@ public abstract class Menu extends Item
         try {
             while (isMenuOpen()&& !Thread.currentThread().isInterrupted() && !task.cancelTask) {
                 WaitLock.checkForErrorAndWait();
-                doLongerSingelTap(point,"closeMenu");
+                doSingelTap(point,"closeMenu");
                 Thread.sleep(menuOpenCloseDelay);
                 WaitLock.checkForErrorAndWait();
             }
@@ -213,7 +213,7 @@ public abstract class Menu extends Item
             WaitLock.checkForErrorAndWait();
             menuState = MenuState.maximise;
             try {
-                doLongerSingelTap(Coordinates.Menu_Maximise,"maximiseMenu");
+                doSingelTap(Coordinates.Menu_Maximise,"maximiseMenu");
                 WaitLock.checkForErrorAndWait();
                 Thread.sleep(menuOpenCloseDelay);
                 WaitLock.checkForErrorAndWait();
@@ -229,7 +229,7 @@ public abstract class Menu extends Item
             WaitLock.checkForErrorAndWait();
             try {
 
-                doLongerSingelTap(Coordinates.Menu_Minimise,"minimiseMenu");
+                doSingelTap(Coordinates.Menu_Minimise,"minimiseMenu");
                 Thread.sleep(menuOpenCloseDelay);
                 WaitLock.checkForErrorAndWait();
             } catch (InterruptedException e) {
@@ -245,13 +245,13 @@ public abstract class Menu extends Item
             WaitLock.checkForErrorAndWait();
             swipeUp();
             WaitLock.checkForErrorAndWait();
-            Thread.sleep(300);
+            Thread.sleep(100);
             WaitLock.checkForErrorAndWait();
         }
         WaitLock.checkForErrorAndWait();
         swipeUp();
         WaitLock.checkForErrorAndWait();
-        Thread.sleep(300);
+        Thread.sleep(100);
     }
 
     public void swipeDown() throws IOException, InterruptedException {
