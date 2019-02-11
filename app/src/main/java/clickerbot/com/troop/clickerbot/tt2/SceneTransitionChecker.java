@@ -29,10 +29,11 @@ public class SceneTransitionChecker extends Menu {
         int color =bot.getScreeCapture().getColor(shopbuttonColorPos);
         if (color != shopButtonColor && color != 0) {
             howOftenDetected++;
-            if(howOftenDetected > 2) {
+            Log.d(TAG,"Scene Transition detected");
+            WaitLock.lockSceneTransition(true);
+            if(howOftenDetected > 3) {
                 //Log.d(TAG, "scene Transition color:" + color + " expectedcolor:" + shopButtonColor);
                 howOftenDetected++;
-                WaitLock.lockSceneTransition(true);
                 if (System.currentTimeMillis() - lastTap > 200 && !Menu.MenuOpen.get()) {
                     lastTap = System.currentTimeMillis();
                     doSingelTap(new Point(bot.getRandomX(), bot.getRandomY()), "sceneTransition");
