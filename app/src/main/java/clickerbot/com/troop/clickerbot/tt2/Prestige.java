@@ -84,8 +84,7 @@ public class Prestige extends Menu {
             WaitLock.prestige.set(true);
             while(!checkPrestigButton() && !Thread.currentThread().isInterrupted() && !task.cancelTask && loopbreaker  < 20) {
                 loopbreaker++;
-                Log.d(TAG, "Tap on Prestige Menu Button");
-                doLongerSingelTap(new Point(prestigeMenuButton.x -3 +random.nextInt(6),prestigeMenuButton.y -3 +random.nextInt(6)));
+                doLongerSingelTap(new Point(prestigeMenuButton.x -3 +random.nextInt(6),prestigeMenuButton.y -3 +random.nextInt(6)),"on Prestige Menu Button");
                 Thread.sleep(200);
             }
             if (loopbreaker == 19)
@@ -100,22 +99,22 @@ public class Prestige extends Menu {
             loopbreaker = 0;
             while (!checkPrestigAcceptColor() && !Thread.currentThread().isInterrupted()&& !task.cancelTask && loopbreaker  < 5) {
                 loopbreaker++;
-                Log.d(TAG, "Tap on Prestige Button");
-                doLongerSingelTap(prestigeButton);
+                doLongerSingelTap(prestigeButton,"on Prestige Button");
                 Thread.sleep(1000);
             }
             loopbreaker = 0;
             while (checkPrestigAcceptColor()&& !Thread.currentThread().isInterrupted()&& !task.cancelTask && loopbreaker  < 5) {
                 loopbreaker++;
-                Log.d(TAG, "Tap on Prestige accept Button");
-                doLongerSingelTap(prestigeAcceptButton);
-                Thread.sleep(300);
+                doLongerSingelTap(prestigeAcceptButton,  "on Prestige accept Button");
+                Thread.sleep(100);
+                if (!checkPrestigAcceptColor())
+                    loopbreaker = 5;
             }
             Thread.sleep(12000);
             loopbreaker = 0;
             while (checkLoginInfoColor()&& !Thread.currentThread().isInterrupted()&& !task.cancelTask && loopbreaker  < 5) {
                 loopbreaker++;
-                doLongerSingelTap(loginInfoButton);
+                doLongerSingelTap(loginInfoButton,"close loginInfo");
                 Thread.sleep(200);
             }
 

@@ -35,25 +35,21 @@ public class SubMenuOpenChecker extends Menu {
         //window from hero menu and clicked on a hero
         if (color == hero_sub_menu_color) {
             WaitLock.lockError(true);
-            doSingelTap(hero_sub_menu_point);
-            Log.d(TAG,"Random Touch opened Hero Submenu");
+            doSingelTap(hero_sub_menu_point,"Random Touch opened Hero Submenu");
         }
         //window from swordmaster menu and clicked on a skill
         else if (color2 == hero_sub_menu_color) {
             WaitLock.lockError(true);
-            doSingelTap(skill_sub_menu_point);
-            Log.d(TAG,"Random Touch opened Skill Submenu");
+            doSingelTap(skill_sub_menu_point,"Random Touch opened Skill Submenu");
         }
         else if (!WaitLock.clanquest.get() && color3 == hero_sub_menu_color)
         {
-            doSingelTap(cq_close_button_click_pos);
-            Log.d(TAG,"Close cq window");
+            doSingelTap(cq_close_button_click_pos,"Close cq window");
         }
         //window from swordmaster menu and clicked on swordmaster
         else if (color4 == hero_sub_menu_color)
         {
-            doSingelTap(profile_close_button_click_pos);
-            Log.d(TAG,"Random Touch opened profile Submenu");
+            doSingelTap(profile_close_button_click_pos,"Random Touch opened profile Submenu");
         }
         else
         {

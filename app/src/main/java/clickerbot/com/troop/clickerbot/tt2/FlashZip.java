@@ -118,7 +118,7 @@ public class FlashZip extends Menu {
         {
             if (bot.getScreeCapture().getColor(FLASH_ZIP_Areas[i]) == flashZipColor && !Menu.MenuOpen.get()) {
                 WaitLock.lockFlashZip(true);
-                doSingelTap(FLASH_ZIP_Areas[i]);
+                doSingelTap(FLASH_ZIP_Areas[i],"flashzip");
                 WaitLock.lockFlashZip(false);
             }
         }

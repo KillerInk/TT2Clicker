@@ -75,9 +75,8 @@ public class ClanQuest extends Menu {
         while (!isClanChatOpen() && !executerTask.cancelTask && loopbreaker < 10) {
             loopbreaker++;
             WaitLock.checkForErrorAndWait();
-            doLongerSingelTap(cq_button_click_pos);
+            doLongerSingelTap(cq_button_click_pos,"Open ClanChat " + loopbreaker);
             Thread.sleep(2000);
-            Log.d(TAG,"Open ClanChat");
             WaitLock.checkForErrorAndWait();
         }
         if (loopbreaker == 9)
@@ -95,9 +94,8 @@ public class ClanQuest extends Menu {
         loopbreaker = 0;
         while (!isFightButton()&& !executerTask.cancelTask && loopbreaker < 10) {
             loopbreaker++;
-            Log.d(TAG,"ClanChat Open, open ClanQuest");
             WaitLock.checkForErrorAndWait();
-            doLongerSingelTap(cq_clanchat_button_click_pos);
+            doLongerSingelTap(cq_clanchat_button_click_pos,"ClanChat Open, open ClanQuest " + loopbreaker);
             Thread.sleep(2000);
             WaitLock.checkForErrorAndWait();
         }
@@ -118,9 +116,8 @@ public class ClanQuest extends Menu {
         while (isFightButton()&& !executerTask.cancelTask && loopbreaker < 10)
         {
             loopbreaker++;
-            Log.d(TAG,"ClanQuest Open, click on Fight");
             WaitLock.checkForErrorAndWait();
-            doLongerSingelTap(cq_fight_button_click_pos);
+            doLongerSingelTap(cq_fight_button_click_pos,"ClanQuest Open, click on Fight " + loopbreaker);
             Thread.sleep(1000);
             WaitLock.checkForErrorAndWait();
         }
@@ -167,8 +164,7 @@ public class ClanQuest extends Menu {
         while (!isCloseWindow()&& !executerTask.cancelTask && loopbreaker < 15)
         {
             loopbreaker++;
-            Log.d(TAG,"Fight is over, wait for ClanQuest Close");
-            doLongerSingelTap(new Point(bot.getRandomX(),bot.getRandomY()));
+            doLongerSingelTap(new Point(bot.getRandomX(),bot.getRandomY()),"Fight is over, wait for ClanQuest Close " + loopbreaker);
             Thread.sleep(200);
         }
         //close cq and chat

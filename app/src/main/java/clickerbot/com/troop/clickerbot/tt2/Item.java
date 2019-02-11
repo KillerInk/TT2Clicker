@@ -1,6 +1,7 @@
 package clickerbot.com.troop.clickerbot.tt2;
 
 import android.graphics.Point;
+import android.util.Log;
 
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
@@ -11,7 +12,7 @@ public abstract class Item {
     protected final BotSettings botSettings;
     protected TouchInterface touchInput;
 
-
+    private final String TAG = Item.class.getSimpleName();
 
     public Item(TT2Bot ibot, BotSettings botSettings, TouchInterface touchInput){
         this.bot = ibot;
@@ -22,8 +23,9 @@ public abstract class Item {
     abstract void init(ExecuterTask task);
     abstract boolean checkIfRdyToExecute();
 
-    public void doSingelTap(Point point)
+    public void doSingelTap(Point point,String from)
     {
+        Log.d(TAG, "do SingelTap: " + from);
         try {
             touchInput.tap(point,30);
             Thread.sleep(20);
@@ -34,8 +36,9 @@ public abstract class Item {
     }
 
 
-    public void doLongerSingelTap(Point point)
+    public void doLongerSingelTap(Point point, String from)
     {
+        Log.d(TAG, "do SingelTap: " + from);
         try {
             touchInput.tap(point,70);
             Thread.sleep(20);

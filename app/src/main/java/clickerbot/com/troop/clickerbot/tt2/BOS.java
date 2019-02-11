@@ -27,7 +27,7 @@ public class BOS extends Menu {
         openArtifactMenu(task);
         gotToTop(task);
         Thread.sleep(400);
-        doLongerSingelTap(bos_click_pos);
+        doLongerSingelTap(bos_click_pos,"levelBos");
         Thread.sleep(200);
         closeArtifactMenu(task);
     }

@@ -153,9 +153,8 @@ public class Skills extends Menu {
                 swipeUp();
                 Thread.sleep(200);
             }
-            doSingelTap(Coordinates.Menu_Minimized_SwordMaster);
-            Thread.sleep(1);
-            doSingelTap(Coordinates.Menu_Minimized_SwordMaster);
+            doSingelTap(Coordinates.Menu_Minimized_SwordMaster,"on minimize");
+
             Thread.sleep(50);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -169,7 +168,7 @@ public class Skills extends Menu {
     {
         try {
             WaitLock.checkForErrorAndWait();
-            doSingelTap(Coordinates.Menu_SwordMasterPos);
+            doSingelTap(Coordinates.Menu_SwordMasterPos,"level skill");
             Thread.sleep(20);
             WaitLock.checkForErrorAndWait();
         } catch (InterruptedException e) {

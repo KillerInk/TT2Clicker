@@ -14,6 +14,7 @@ public class SceneTransitionChecker extends Menu {
     private final Point shopbuttonColorPos = new Point(479,799);
     private final int shopButtonColor = Color.argb(255,60,131,134);
     private long lastTap =0;
+    private int howOftenDetected;
     public SceneTransitionChecker(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
         super(ibot, botSettings, rootShell);
     }
@@ -27,15 +28,19 @@ public class SceneTransitionChecker extends Menu {
     boolean checkIfRdyToExecute() {
         int color =bot.getScreeCapture().getColor(shopbuttonColorPos);
         if (color != shopButtonColor && color != 0) {
-            //Log.d(TAG, "scene Transition color:" + color + " expectedcolor:" + shopButtonColor);
-            WaitLock.lockSceneTransition(true);
-            if (System.currentTimeMillis() - lastTap > 200)
-            {
-                lastTap = System.currentTimeMillis();
-                doSingelTap(new Point(bot.getRandomX(),bot.getRandomY()));
+            howOftenDetected++;
+            if(howOftenDetected > 2) {
+                //Log.d(TAG, "scene Transition color:" + color + " expectedcolor:" + shopButtonColor);
+                howOftenDetected++;
+                WaitLock.lockSceneTransition(true);
+                if (System.currentTimeMillis() - lastTap > 200 && !Menu.MenuOpen.get()) {
+                    lastTap = System.currentTimeMillis();
+                    doSingelTap(new Point(bot.getRandomX(), bot.getRandomY()), "sceneTransition");
+                }
             }
         }
         else {
+            howOftenDetected--;
             WaitLock.lockSceneTransition(false);
         }
         return false;

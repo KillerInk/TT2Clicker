@@ -79,11 +79,11 @@ public class Fairy extends Menu {
 
     public void tapOnFairyVipWindow()
     {
-
+        Log.d(TAG, "tapOnFairyVipWindow");
         if (botSettings.acceptFairyAdds)
-            doSingelTap(accept_Pos);
+            doSingelTap(accept_Pos,"accept fairy add");
         else
-            doSingelTap(decline_Pos);
+            doSingelTap(decline_Pos,"decline fairy add");
     }
 
     public void checkIfFairyWindowOpen()

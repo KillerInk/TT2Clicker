@@ -191,7 +191,7 @@ public class Heros extends Menu {
     private void tapOnHero(int times,Point point) throws IOException, InterruptedException {
         for (int i = 0; i< times;i++) {
             WaitLock.checkForErrorAndWait();
-            doSingelTap(point);
+            doSingelTap(point,"on Hero " + i);
             Thread.sleep(100);
             WaitLock.checkForErrorAndWait();
         }

@@ -117,7 +117,7 @@ public class Boss extends Menu {
     public void clickOnBossFight() throws IOException, InterruptedException {
         if (bossState == BossState.BossFightActive)
             return;
-        doLongerSingelTap(Coordinates.fightBossButton);
+        doLongerSingelTap(Coordinates.fightBossButton,"on bossfight");
         Thread.sleep(500);
         /*int color = bot.getScreeCapture().getColor(Coordinates.fightBossButton_Color);
         if(color == bossFightFailedColor)
