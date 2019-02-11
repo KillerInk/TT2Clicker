@@ -100,7 +100,7 @@ public class Prestige extends Menu {
             while (!checkPrestigAcceptColor() && !Thread.currentThread().isInterrupted()&& !task.cancelTask && loopbreaker  < 5) {
                 loopbreaker++;
                 doLongerSingelTap(prestigeButton,"on Prestige Button");
-                Thread.sleep(1000);
+                Thread.sleep(200);
             }
             loopbreaker = 0;
             while (checkPrestigAcceptColor()&& !Thread.currentThread().isInterrupted()&& !task.cancelTask && loopbreaker  < 5) {
