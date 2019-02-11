@@ -98,38 +98,20 @@ public class NativeTouchHandler implements TouchInterface {
         synchronized (touchLock) {
             updatePosition(from,swipeID);
             Thread.sleep(200);
-            int distance = from.y - to.y - 1;
-            boolean negativ = true;
-            if (to.y > from.y) {
-                negativ = false;
-                distance = to.y - from.y - 1;
-            }
             touchDown(from,swipeID);
             Thread.sleep(200);
-            if (negativ)
-                updatePosition(new Point(from.x, from.y - distance / 4),swipeID);
-            else
-                updatePosition(new Point(from.x, from.y + distance / 4),swipeID);
+            int distance = from.y - to.y - 1;
+
+            updatePosition(new Point(from.x, from.y - distance / 4),swipeID);
             Thread.sleep(movesleep);
-            if (negativ)
-                updatePosition(new Point(from.x, from.y - distance / 4 * 2),swipeID);
-            else
-                updatePosition(new Point(from.x, from.y + distance / 4 * 2),swipeID);
+            updatePosition(new Point(from.x, from.y - distance / 4 * 2),swipeID);
             Thread.sleep(movesleep);
-            if (negativ)
-                updatePosition(new Point(from.x, from.y - distance / 4 * 3),swipeID);
-            else
-                updatePosition(new Point(from.x, from.y + distance / 4 * 3),swipeID);
+            updatePosition(new Point(from.x, from.y - distance / 4 * 3),swipeID);
             Thread.sleep(movesleep);
-            if (negativ)
-                updatePosition(new Point(from.x, from.y - (distance - 1)),swipeID);
-            else
-                updatePosition(new Point(from.x, from.y + (distance - 1)),swipeID);
+            updatePosition(new Point(from.x, from.y - (distance - 1)),swipeID);
             Thread.sleep(movesleep);
-            if (negativ)
-                updatePosition(new Point(from.x, from.y - distance),swipeID);
-            else
-                updatePosition(new Point(from.x, from.y + distance),swipeID);
+            updatePosition(new Point(from.x, from.y - distance),swipeID);
+
             Thread.sleep(200);
             touchUp(to,swipeID);
             Thread.sleep(100);
