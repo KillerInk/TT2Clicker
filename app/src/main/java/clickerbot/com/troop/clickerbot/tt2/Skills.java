@@ -49,7 +49,10 @@ public class Skills extends Menu {
         wc.setSkillLvl(0);
         sc.setSkillLvl(0);
         WaitLock.checkForErrorAndWait();
-        closeMenu();
+        if (isMenuOpen())
+            closeMenu();
+        if (isMenuMaximized())
+            minimiseMenu(task);
         WaitLock.checkForErrorAndWait();
         checkSkillsUnlocked();
         Log.d(TAG,"init autolvl skills:" + botSettings.autoLvlSkills);

@@ -80,7 +80,7 @@ public class Prestige extends Menu {
         if (botSettings.autoPrestige) {
             bot.clearExecuterQueue();
             openSwordMasterMenu(task);
-            for (int i =0; i < 20; i++)
+            for (int i =0; i < 13; i++)
                 swipeDown();
 
             int loopbreaker = 0;

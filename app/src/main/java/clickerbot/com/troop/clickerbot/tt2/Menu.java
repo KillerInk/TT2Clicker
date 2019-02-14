@@ -52,8 +52,8 @@ public abstract class Menu extends Item
     private Point menuOpenCheckPoint = new Point(471,449);
     private Point menuMaximizedCheckPoint = new Point(471,12);
     private boolean menuTaskRunning = false;
-    private final Point swipeTopPoint =  new Point(240, 556);
-    private final Point swipeBottomPoint = new Point(240, 707);
+    private final Point swipeTopPoint =  new Point(275, 517);
+    private final Point swipeBottomPoint = new Point(275, 744);
 
     public Menu(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
         super(ibot, botSettings, rootShell);
@@ -88,7 +88,7 @@ public abstract class Menu extends Item
     public void checkIfMenuOpen()
     {
         int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
-        if (!WaitLock.sceneTransition.get()) {
+        if (!WaitLock.sceneTransition.get() && !WaitLock.fairyWindowDetected.get() && !WaitLock.clanquest.get()) {
             MenuOpen.set(color == colorMenuOpen);
             if (MenuOpen.get() && !menuTaskRunning && menuState == MenuState.closed) {
                 menuTaskRunning = true;
@@ -120,13 +120,13 @@ public abstract class Menu extends Item
 
 
 
-    private boolean isMenuOpen()
+    public boolean isMenuOpen()
     {
         int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
         return color == colorMenuOpen;
     }
 
-    private boolean isMenuMaximized()
+    public boolean isMenuMaximized()
     {
         int color = bot.getScreeCapture().getColor(menuMaximizedCheckPoint);
         return color == colorMenuOpen;

@@ -23,6 +23,7 @@ import static clickerbot.com.troop.clickerbot.CmdBuilder.EV_SYN;
 import static clickerbot.com.troop.clickerbot.CmdBuilder.SYN_MT_REPORT;
 import static clickerbot.com.troop.clickerbot.CmdBuilder.SYN_REPORT;
 import static clickerbot.com.troop.clickerbot.CmdBuilder.UP;
+import static clickerbot.com.troop.clickerbot.CmdBuilder.fourth;
 
 public class NativeTouchHandler implements TouchInterface {
     private final  String TAG = NativeTouchHandler.class.getSimpleName();
@@ -49,7 +50,7 @@ public class NativeTouchHandler implements TouchInterface {
     {
         this.isMouseInput = mouse;
         inputDevice = inputPath;
-        lastPoint = new Point(0,0);
+        lastPoint = new Point(240,400);
         try {
             RootShell rootShell = new RootShell(0);
             rootShell.startProcess();
@@ -96,21 +97,28 @@ public class NativeTouchHandler implements TouchInterface {
     @Override
     public void swipeVertical(Point from, Point to) throws InterruptedException {
         synchronized (touchLock) {
+            Thread.sleep(2);
             updatePosition(from,swipeID);
-            Thread.sleep(200);
+            Thread.sleep(2);
             touchDown(from,swipeID);
             Thread.sleep(200);
-            int distance = from.y - to.y - 1;
-
-            updatePosition(new Point(from.x, from.y - distance / 4),swipeID);
-            Thread.sleep(movesleep);
-            updatePosition(new Point(from.x, from.y - distance / 4 * 2),swipeID);
-            Thread.sleep(movesleep);
-            updatePosition(new Point(from.x, from.y - distance / 4 * 3),swipeID);
-            Thread.sleep(movesleep);
-            updatePosition(new Point(from.x, from.y - (distance - 1)),swipeID);
-            Thread.sleep(movesleep);
-            updatePosition(new Point(from.x, from.y - distance),swipeID);
+            int distance = from.y - to.y;
+            if (distance >= 0)
+            {
+                for(int i = 1 ; i < distance ; i++)
+                {
+                    updatePosition(new Point(from.x, from.y - i),swipeID);
+                    Thread.sleep(2);
+                }
+            }
+            else
+            {
+                for(int i = distance ; i < 0 ; i++)
+                {
+                    updatePosition(new Point(from.x, from.y + i),swipeID);
+                    Thread.sleep(2);
+                }
+            }
 
             Thread.sleep(200);
             touchUp(to,swipeID);

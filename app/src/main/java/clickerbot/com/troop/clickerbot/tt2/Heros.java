@@ -111,8 +111,8 @@ public class Heros extends Menu {
         swipeDown();
         WaitLock.checkForErrorAndWait();
         Thread.sleep(100);
-        WaitLock.checkForErrorAndWait();
-        swipeDown();
+        /*WaitLock.checkForErrorAndWait();
+        swipeDown();*/
         WaitLock.checkForErrorAndWait();
         Thread.sleep(100);
     }
@@ -120,7 +120,7 @@ public class Heros extends Menu {
     public void lvlAllHeros(ExecuterTask task) throws InterruptedException, IOException {
         openHeroMenu(task);
         WaitLock.checkForErrorAndWait();
-        for (int i=0; i< 25; i++) {
+        for (int i=0; i< 13; i++) {
             if (task.cancelTask)
                 return;
             WaitLock.checkForErrorAndWait();
