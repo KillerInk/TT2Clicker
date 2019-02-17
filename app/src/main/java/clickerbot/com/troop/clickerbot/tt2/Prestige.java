@@ -126,6 +126,7 @@ public class Prestige extends Menu {
             bot.resetTickCounter();
             setMenuState(MenuState.closed);
             bot.clearExecuterQueue();
+            init(task);
             if (botSettings.autoLvlBos)
                 bot.executeTask(AutoLevelBOSTask.class);
             bot.executeTask(InitTask.class);
