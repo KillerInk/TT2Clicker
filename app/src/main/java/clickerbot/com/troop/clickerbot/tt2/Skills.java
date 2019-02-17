@@ -68,6 +68,17 @@ public class Skills extends Menu {
                     e.printStackTrace();
                 }
                 WaitLock.checkForErrorAndWait();
+                try {
+                    Thread.sleep(1000);
+                    WaitLock.checkForErrorAndWait();
+                    doSingelTap(Coordinates.Menu_Minimized_SwordMaster,"on minimize");
+                    Thread.sleep(50);
+                    WaitLock.checkForErrorAndWait();
+                    Thread.sleep(1000);
+                    WaitLock.checkForErrorAndWait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
                 maximiseMenu(task);
 
@@ -169,14 +180,15 @@ public class Skills extends Menu {
 
     private void levelUpSkills(ExecuterTask task)
     {
-        try {
+       /* try {
             WaitLock.checkForErrorAndWait();
             doSingelTap(Coordinates.Menu_SwordMasterPos,"level skill");
             Thread.sleep(20);
             WaitLock.checkForErrorAndWait();
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
+        WaitLock.checkForErrorAndWait();
         if (botSettings.unlockHS)
             hs.levelSkill(task);
         WaitLock.checkForErrorAndWait();
