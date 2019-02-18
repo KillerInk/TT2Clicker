@@ -79,13 +79,16 @@ public class Prestige extends Menu {
     public void doPrestige(ExecuterTask task) throws InterruptedException, IOException {
         Log.d(TAG, "doPrestige:" + botSettings.autoPrestige);
         if (botSettings.autoPrestige) {
+            if (System.currentTimeMillis() - timeSinceLastPrestige > randomTimeToPrestige)
+                return;
+            WaitLock.prestige.set(true);
             bot.clearExecuterQueue();
             openSwordMasterMenu(task);
             for (int i =0; i < 13; i++)
                 swipeDown();
 
             int loopbreaker = 0;
-            WaitLock.prestige.set(true);
+
             while(!checkPrestigButton() && !Thread.currentThread().isInterrupted() && !task.cancelTask && loopbreaker  < 10) {
                 loopbreaker++;
                 doLongerSingelTap(new Point(prestigeMenuButton.x -3 +random.nextInt(6),prestigeMenuButton.y -3 +random.nextInt(6)),"on Prestige Menu Button");
@@ -122,7 +125,7 @@ public class Prestige extends Menu {
                 Thread.sleep(200);
             }
 
-            WaitLock.prestige.set(false);
+
             bot.resetTickCounter();
             setMenuState(MenuState.closed);
             bot.clearExecuterQueue();
@@ -130,8 +133,7 @@ public class Prestige extends Menu {
             if (botSettings.autoLvlBos)
                 bot.executeTask(AutoLevelBOSTask.class);
             bot.executeTask(InitTask.class);
-            lastPrestigeCheck = System.currentTimeMillis();
-
+            WaitLock.prestige.set(false);
         }
     }
 
