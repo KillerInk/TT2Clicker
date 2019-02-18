@@ -5,10 +5,10 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 import clickerbot.com.troop.clickerbot.IBot;
-import clickerbot.com.troop.clickerbot.MediaProjectionScreenCapture;
-import clickerbot.com.troop.clickerbot.ScreenCaptureCallBack;
 import clickerbot.com.troop.clickerbot.executer.Executer;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
+import clickerbot.com.troop.clickerbot.screencapture.MediaProjectionScreenCapture;
+import clickerbot.com.troop.clickerbot.screencapture.ScreenCaptureCallBack;
 
 public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
 {
@@ -18,15 +18,18 @@ public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
     private long threadstarttime;
     private long tickCounter = 0;
     private long lastTick = 0;
-    private volatile boolean isRunning = false;
-    /*private ScreenCapture screenCapture;*/
+    private volatile boolean isBaseThreadRunning = false;
+    private volatile boolean isScreenParserRunning = false;
     protected final BotSettings botSettings;
     protected MediaProjectionScreenCapture mediaProjectionScreenCapture;
     private Context context;
 
 
     private Executer executer;
+    //handels the main logic and add tasks to the executer pool
     private Thread baseThread;
+    //handel screenParsing
+    private Thread screenParserThread;
 
     public interface UpdateUi
     {
@@ -90,6 +93,11 @@ public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
         return executer.containsTaks(task);
     }
 
+    public String getActiveTaskName()
+    {
+        return executer.getActiveTask();
+    }
+
     @Override
     public void clearExecuterQueue() {
         executer.clear();
@@ -98,7 +106,7 @@ public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
     @Override
     public boolean getIsRunning()
     {
-        return isRunning;
+        return isBaseThreadRunning;
     }
 
     @Override
@@ -115,20 +123,38 @@ public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
         executer.start();
         baseThread = new Thread(()->{
             threadstarttime = System.currentTimeMillis();
-            isRunning = true;
-            while (doWork)
+            isBaseThreadRunning = true;
+            while (doWork && !Thread.currentThread().isInterrupted())
             {
-                tick();
+                tickCounter++;
+                onTick(tickCounter);
                 try {
                     Thread.sleep(botSettings.mainLooperSleepTime);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-            isRunning = false;
+            Log.d(TAG,"stopped baseThread");
+            isBaseThreadRunning = false;
         }
         );
         baseThread.start();
+
+        screenParserThread = new Thread(() -> {
+            isScreenParserRunning = true;
+            while (doWork && !Thread.currentThread().isInterrupted())
+            {
+                onScreenParserTick();
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            isScreenParserRunning = false;
+            Log.d(TAG,"stopped screenParserThread");
+        });
+        screenParserThread.start();
     }
 
     @Override
@@ -136,13 +162,27 @@ public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
         this.doWork = false;
         executer.stop();
         baseThread.interrupt();
-        //screenCapture.stop();
+        screenParserThread.interrupt();
+        Log.d(TAG,"Stopping");
+        if (updateUi != null)
+            updateUi.updatePrestigeTime("Stopping");
+        while (isBaseThreadRunning || isScreenParserRunning) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        Log.d(TAG,"Stopped threads, stopping mediaprojection");
         mediaProjectionScreenCapture.stop();
         try {
             Thread.sleep(botSettings.mainLooperSleepTime);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        Log.d(TAG,"Stopped mediaprojection");
+        if (updateUi != null)
+            updateUi.updatePrestigeTime("Stopped");
         executer.clear();
     }
 
@@ -151,49 +191,6 @@ public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
         tickCounter = 0;
     }
 
-    private void tick()
-    {
-        lastTick = System.currentTimeMillis();
-        tickCounter++;
-
-        onTick(tickCounter);
-        long sleep = 100 - (System.currentTimeMillis() - lastTick);
-        if (sleep > 0) {
-            //Log.d(TAG, "do tick sleep " + sleep);
-            try {
-                Thread.sleep(sleep);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     abstract void onTick(long tickCounter);
-
-
-    /*public Bitmap getAreaFromScreen(Rect rect)
-    {
-        int width = rect.right -rect.left;
-        int height = rect.bottom -rect.top;
-        Log.d(TAG,"getAreaFromScreen " + width +" " +height);
-        Bitmap areaCut = Bitmap.createBitmap(width,
-                height, Bitmap.Config.ARGB_8888);
-        for (int x = 0; x < width;x++)
-        {
-            for (int y= 0; y < height;y++)
-            {
-                int color = screenDump.getPixel(rect.left +x, rect.top+y);
-                if (Color.red(color) < 50 && Color.green(color) < 50 && Color.blue(color) < 50)
-                    areaCut.setPixel(x,y,Color.BLACK);
-                else
-                    areaCut.setPixel(x,y,Color.WHITE);
-            }
-        }
-
-        Rect desRect = new Rect(0, 0, rect.width(), rect.height());
-
-        return areaCut;
-    }*/
-
-
+    abstract void onScreenParserTick();
 }

@@ -1,4 +1,4 @@
-package clickerbot.com.troop.clickerbot;
+package clickerbot.com.troop.clickerbot.screencapture;
 
 import android.content.Context;
 import android.content.Intent;

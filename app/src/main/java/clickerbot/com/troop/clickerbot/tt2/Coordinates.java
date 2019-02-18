@@ -1,7 +1,6 @@
 package clickerbot.com.troop.clickerbot.tt2;
 
 import android.graphics.Point;
-import android.graphics.Rect;
 
 public class Coordinates
 {

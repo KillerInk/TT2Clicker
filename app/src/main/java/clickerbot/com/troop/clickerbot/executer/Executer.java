@@ -19,6 +19,13 @@ public class Executer {
 
     private ExecuterTask run;
 
+    public String getActiveTask()
+    {
+        if (run == null)
+            return null;
+        return run.getClass().getSimpleName();
+    }
+
     public void start()
     {
         doWork = true;

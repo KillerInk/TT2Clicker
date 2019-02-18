@@ -17,6 +17,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.WindowManager;
 
+import clickerbot.com.troop.clickerbot.screencapture.MediaProjectionScreenCapture;
 import clickerbot.com.troop.clickerbot.tt2.AbstractBot;
 import clickerbot.com.troop.clickerbot.tt2.BotSettings;
 import clickerbot.com.troop.clickerbot.tt2.TT2Bot;
@@ -127,12 +128,8 @@ public class ClickerBotService extends Service
             }
         });
 
-
-
         if (preferences.getBoolean(botRunningSettingKey,false))
             tt2Bot.start();
-
-
     }
 
     @Override

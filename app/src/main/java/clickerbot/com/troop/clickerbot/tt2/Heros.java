@@ -9,7 +9,7 @@ import clickerbot.com.troop.clickerbot.ColorUtils;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.LevelAllHerosTask;
-import clickerbot.com.troop.clickerbot.tt2.tasks.LevelTop6HerosTask;
+import clickerbot.com.troop.clickerbot.tt2.tasks.LevelTopHerosTask;
 
 public class Heros extends Menu {
 
@@ -58,7 +58,7 @@ public class Heros extends Menu {
             }
             if (boss.getBossState() != Boss.BossState.BossFightActive && timeOver()) {
                 Log.v(TAG, "level Top6 Heros");
-                bot.executeTask(LevelTop6HerosTask.class);
+                bot.executeTask(LevelTopHerosTask.class);
                 lastTop6HerosLeveld = System.currentTimeMillis();
                 return true;
             }

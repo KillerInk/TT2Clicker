@@ -3,6 +3,7 @@ package clickerbot.com.troop.clickerbot;
 import android.content.Context;
 
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
+import clickerbot.com.troop.clickerbot.screencapture.MediaProjectionScreenCapture;
 
 public interface IBot {
     boolean getIsRunning();

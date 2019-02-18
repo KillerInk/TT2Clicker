@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import clickerbot.com.troop.clickerbot.tt2.Heros;
 
-public class LevelAllHerosTask extends LevelTop6HerosTask {
+public class LevelAllHerosTask extends LevelTopHerosTask {
 
     public LevelAllHerosTask(Heros heros) {
         super(heros);

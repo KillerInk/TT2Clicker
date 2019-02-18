@@ -10,7 +10,6 @@ import java.io.IOException;
 
 import clickerbot.com.troop.clickerbot.R;
 import clickerbot.com.troop.clickerbot.touch.NativeTouchHandler;
-import clickerbot.com.troop.clickerbot.touch.ShellInputEventHandler;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 
 public class ClickTestActivity extends AppCompatActivity {

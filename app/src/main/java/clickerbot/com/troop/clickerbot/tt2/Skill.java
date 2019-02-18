@@ -3,8 +3,6 @@ package clickerbot.com.troop.clickerbot.tt2;
 import android.graphics.Color;
 import android.graphics.Point;
 
-import java.util.ArrayList;
-
 import clickerbot.com.troop.clickerbot.ColorUtils;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;

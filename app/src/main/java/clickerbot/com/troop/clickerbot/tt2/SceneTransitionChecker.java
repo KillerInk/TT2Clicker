@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.util.Log;
 
-import clickerbot.com.troop.clickerbot.executer.Executer;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 

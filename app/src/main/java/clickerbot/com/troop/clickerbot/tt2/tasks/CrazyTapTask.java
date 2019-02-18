@@ -1,9 +1,10 @@
 package clickerbot.com.troop.clickerbot.tt2.tasks;
 
-import clickerbot.com.troop.clickerbot.tt2.TT2Bot;
+import clickerbot.com.troop.clickerbot.tt2.RandomTaps;
 
 public class CrazyTapTask extends RandomTapTask {
-    public CrazyTapTask(TT2Bot bot) {
+
+    public CrazyTapTask(RandomTaps bot) {
         super(bot);
     }
 

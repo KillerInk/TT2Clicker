@@ -1,10 +1,14 @@
 package clickerbot.com.troop.clickerbot.tt2.tasks;
 
+import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.tt2.TT2Bot;
 
-public class InitTask extends RandomTapTask {
+public class InitTask extends ExecuterTask {
+
+    private TT2Bot bot;
+
     public InitTask(TT2Bot bot) {
-        super(bot);
+        this.bot = bot;
     }
 
     @Override

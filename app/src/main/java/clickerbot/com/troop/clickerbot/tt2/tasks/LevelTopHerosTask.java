@@ -5,11 +5,11 @@ import java.io.IOException;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.tt2.Heros;
 
-public class LevelTop6HerosTask extends ExecuterTask {
+public class LevelTopHerosTask extends ExecuterTask {
 
     protected final Heros heros;
 
-    public LevelTop6HerosTask(Heros heros)
+    public LevelTopHerosTask(Heros heros)
     {
         this.heros = heros;
     }

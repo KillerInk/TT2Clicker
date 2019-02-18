@@ -23,7 +23,6 @@ import static clickerbot.com.troop.clickerbot.CmdBuilder.EV_SYN;
 import static clickerbot.com.troop.clickerbot.CmdBuilder.SYN_MT_REPORT;
 import static clickerbot.com.troop.clickerbot.CmdBuilder.SYN_REPORT;
 import static clickerbot.com.troop.clickerbot.CmdBuilder.UP;
-import static clickerbot.com.troop.clickerbot.CmdBuilder.fourth;
 
 public class NativeTouchHandler implements TouchInterface {
     private final  String TAG = NativeTouchHandler.class.getSimpleName();

@@ -2,7 +2,6 @@ package clickerbot.com.troop.clickerbot.tt2;
 
 import android.graphics.Color;
 import android.graphics.Point;
-import android.util.Log;
 
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;

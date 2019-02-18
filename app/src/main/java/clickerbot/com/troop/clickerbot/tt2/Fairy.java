@@ -10,7 +10,6 @@ import java.util.Random;
 import clickerbot.com.troop.clickerbot.ColorUtils;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
-import clickerbot.com.troop.clickerbot.tt2.tasks.TapOnFairyVipWindowTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.TapOnFairysTask;
 
 public class Fairy extends Menu {
@@ -30,10 +29,12 @@ public class Fairy extends Menu {
     private final Point accept_Pos = new Point(313 ,591); // <<<<<<<< DIFF
     private final Point decline_Pos = new Point(200 ,630);
     private int howOftenDetected;
+    private RandomTaps randomTaps;
 
 
-    public Fairy(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
+    public Fairy(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell,RandomTaps randomTaps) {
         super(ibot, botSettings, rootShell);
+        this.randomTaps = randomTaps;
         rand = new Random();
         fairyTaps = new ArrayList<>();
         if (botSettings.clickOnFairys)
@@ -74,7 +75,7 @@ public class Fairy extends Menu {
     public void tapFairys(ExecuterTask task)
     {
         if (botSettings.clickOnFairys)
-            bot.tapOnPoints(fairyTaps,task);
+            randomTaps.tapOnPoints(fairyTaps,task);
     }
 
     public void tapOnFairyVipWindow()

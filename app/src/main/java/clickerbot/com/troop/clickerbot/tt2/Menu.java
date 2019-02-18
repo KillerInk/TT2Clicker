@@ -9,13 +9,9 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import clickerbot.com.troop.clickerbot.ColorUtils;
-import clickerbot.com.troop.clickerbot.executer.Executer;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.MenuCloseTask;
-
-import static clickerbot.com.troop.clickerbot.tt2.Heros.lvlFIrsHeroButton_click;
-import static clickerbot.com.troop.clickerbot.tt2.Heros.lvlThirdHeroButton_click;
 
 public abstract class Menu extends Item
 {

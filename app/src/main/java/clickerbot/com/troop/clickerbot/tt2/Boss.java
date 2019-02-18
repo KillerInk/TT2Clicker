@@ -2,17 +2,15 @@ package clickerbot.com.troop.clickerbot.tt2;
 
 
 import android.graphics.Color;
-import android.util.Log;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import clickerbot.com.troop.clickerbot.ColorUtils;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.ClickOnBossFightTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.LevelSwordMasterTask;
-import clickerbot.com.troop.clickerbot.tt2.tasks.LevelTop6HerosTask;
+import clickerbot.com.troop.clickerbot.tt2.tasks.LevelTopHerosTask;
 
 // boss icon boss fight active -12826035 60 74 77
 //boss icons boss fight failed -1085168 239 113 16
@@ -84,7 +82,7 @@ public class Boss extends Menu {
                     bot.executeTask(LevelSwordMasterTask.class);
                 }
                 if (botSettings.autoLvlHeros) {
-                    bot.executeTask(LevelTop6HerosTask.class);
+                    bot.executeTask(LevelTopHerosTask.class);
                 }
                 bot.executeTask(ClickOnBossFightTask.class);
             }
