@@ -43,34 +43,49 @@ public class Prestige extends Menu {
 
     @Override
     void init(ExecuterTask task) {
+
+        randomTimeToPrestige = botSettings.timeToPrestige;
         if (botSettings.randomTimeToPrestige > 0)
-            randomTimeToPrestige = botSettings.timeToPrestige + (bot.rand.nextInt((int)botSettings.randomTimeToPrestige)*60*1000);
-        else
-            randomTimeToPrestige = botSettings.timeToPrestige;
-        timeSinceLastPrestige = System.currentTimeMillis();
+            randomTimeToPrestige += (bot.rand.nextInt((int)botSettings.randomTimeToPrestige)*60*1000);
+        setTimeSinceLastPrestige(System.currentTimeMillis());
+        setLastPrestigeCheck(System.currentTimeMillis());
     }
 
-    public long getTimeSinceLastPrestige(){
+    public synchronized long getTimeSinceLastPrestige(){
         return timeSinceLastPrestige;
+    }
+    private synchronized void setTimeSinceLastPrestige(long time)
+    {
+        this.timeSinceLastPrestige = time;
     }
     public long getRandomTimeToPrestige(){
         return randomTimeToPrestige;
     }
 
+    private synchronized long getLastPrestigeCheck()
+    {
+        return lastPrestigeCheck;
+    }
+
+    private synchronized void setLastPrestigeCheck(long time)
+    {
+        this.lastPrestigeCheck = time;
+    }
+
     @Override
     boolean checkIfRdyToExecute() {
-        if(botSettings.autoPrestige && System.currentTimeMillis() - lastPrestigeCheck > runPrestigeCheckActivator && !WaitLock.prestige.get()) {
+        if(botSettings.autoPrestige && System.currentTimeMillis() - getLastPrestigeCheck() > runPrestigeCheckActivator && !WaitLock.prestige.get()) {
             Log.d(TAG, "check if boss failed or time to prestige");
 
-            if ((System.currentTimeMillis() - timeSinceLastPrestige > randomTimeToPrestige && randomTimeToPrestige > 0)
+            if ((System.currentTimeMillis() - getTimeSinceLastPrestige() > randomTimeToPrestige && randomTimeToPrestige > 0)
                     || (boss.getBossFailedCounter() >= botSettings.bossFailedCount && botSettings.bossFailedCount > 0)) {
-                Log.d(TAG, "reason to prestige: bossfailed:" + boss.getBossFailedCounter() + " time toprestige:" + (System.currentTimeMillis() - timeSinceLastPrestige > randomTimeToPrestige));
+                Log.d(TAG, "reason to prestige: bossfailed:" + boss.getBossFailedCounter() + " time toprestige:" + (System.currentTimeMillis() - getTimeSinceLastPrestige() > randomTimeToPrestige));
                 bot.clearExecuterQueue();
                 if (!WaitLock.prestige.get())
                     bot.executeTask(PrestigeTask.class);
 
             }
-            lastPrestigeCheck = System.currentTimeMillis();
+            setLastPrestigeCheck(System.currentTimeMillis());
             return true;
         }
         return false;
@@ -79,7 +94,7 @@ public class Prestige extends Menu {
     public void doPrestige(ExecuterTask task) throws InterruptedException, IOException {
         Log.d(TAG, "doPrestige:" + botSettings.autoPrestige);
         if (botSettings.autoPrestige) {
-            if (System.currentTimeMillis() - timeSinceLastPrestige > randomTimeToPrestige)
+            if (System.currentTimeMillis() - getTimeSinceLastPrestige() < randomTimeToPrestige)
                 return;
             WaitLock.prestige.set(true);
             bot.clearExecuterQueue();
@@ -129,6 +144,7 @@ public class Prestige extends Menu {
             bot.resetTickCounter();
             setMenuState(MenuState.closed);
             bot.clearExecuterQueue();
+            setLastPrestigeCheck(System.currentTimeMillis());
             init(task);
             if (botSettings.autoLvlBos)
                 bot.executeTask(AutoLevelBOSTask.class);
