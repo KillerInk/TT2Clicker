@@ -165,6 +165,7 @@ public class Skill {
             if (WaitLock.clanquest.get())
                 return;
             try {
+                WaitLock.lockFlashZip(true);
                 switch (skillType) {
                     case HS:
                         touchInput.tap(Coordinates.Hs_Pos,30);
@@ -191,6 +192,7 @@ public class Skill {
                         Thread.sleep(100);
                         break;
                 }
+                WaitLock.lockFlashZip(false);
             }
             catch (InterruptedException e) {
                 e.printStackTrace();
