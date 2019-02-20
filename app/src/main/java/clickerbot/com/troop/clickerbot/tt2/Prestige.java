@@ -94,8 +94,6 @@ public class Prestige extends Menu {
     public void doPrestige(ExecuterTask task) throws InterruptedException, IOException {
         Log.d(TAG, "doPrestige:" + botSettings.autoPrestige);
         if (botSettings.autoPrestige) {
-            if (System.currentTimeMillis() - getTimeSinceLastPrestige() < randomTimeToPrestige)
-                return;
             WaitLock.prestige.set(true);
             bot.clearExecuterQueue();
             openSwordMasterMenu(task);
@@ -146,6 +144,7 @@ public class Prestige extends Menu {
             bot.clearExecuterQueue();
             setLastPrestigeCheck(System.currentTimeMillis());
             init(task);
+            boss.resetBossFailedCounter();
             if (botSettings.autoLvlBos)
                 bot.executeTask(AutoLevelBOSTask.class);
             bot.executeTask(InitTask.class);
