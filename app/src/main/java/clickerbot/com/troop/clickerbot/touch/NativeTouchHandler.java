@@ -96,18 +96,38 @@ public class NativeTouchHandler implements TouchInterface {
     @Override
     public void swipeVertical(Point from, Point to) throws InterruptedException {
         synchronized (touchLock) {
+            Log.d(TAG,"swipeVertical(from:" + from.toString() + " to:" +to.toString() +")");
             Thread.sleep(2);
             updatePosition(from,swipeID);
             Thread.sleep(2);
             touchDown(from,swipeID);
             Thread.sleep(200);
-            int distance = from.y - to.y;
+            boolean negMove = from.y > to.y;
+            int y = from.y;
+            if (negMove){
+                while (y > to.y) {
+                    y--;
+                    updatePosition(new Point(from.x, y),swipeID);
+                    Thread.sleep(1);
+                }
+            }
+            else
+            {
+                while (y < to.y)
+                {
+                    y++;
+                    updatePosition(new Point(from.x, y),swipeID);
+                    Thread.sleep(1);
+                }
+            }
+
+           /* int distance = from.y - to.y;
             if (distance >= 0)
             {
                 for(int i = 1 ; i < distance ; i++)
                 {
                     updatePosition(new Point(from.x, from.y - i),swipeID);
-                    Thread.sleep(2);
+                    Thread.sleep(1);
                 }
             }
             else
@@ -115,9 +135,9 @@ public class NativeTouchHandler implements TouchInterface {
                 for(int i = distance ; i < 0 ; i++)
                 {
                     updatePosition(new Point(from.x, from.y + i),swipeID);
-                    Thread.sleep(2);
+                    Thread.sleep(1);
                 }
-            }
+            }*/
 
             Thread.sleep(200);
             touchUp(to,swipeID);
@@ -181,15 +201,15 @@ public class NativeTouchHandler implements TouchInterface {
 
     private void sendXY(Point pos)
     {
-        if (lastPoint.x != pos.x)
+        //if (lastPoint.x != pos.x)
             nativeTouch.sendEvent(EV_ABS, ABS_MT_POSITION_X,pos.x);
-        if (lastPoint.y != pos.y)
+        //if (lastPoint.y != pos.y)
             nativeTouch.sendEvent(EV_ABS, ABS_MT_POSITION_Y,pos.y);
     }
 
     private void updatePositionMouse(Point pos) {
         if (sendMTpressure)
-            nativeTouch.sendEvent(EV_ABS, ABS_MT_PRESSURE,1);
+            nativeTouch.sendEvent(EV_ABS, ABS_MT_PRESSURE,6);
         sendXY(pos);
         nativeTouch.sendEvent(EV_SYN, SYN_MT_REPORT,0);
         nativeTouch.sendEvent(EV_SYN, SYN_REPORT,0);

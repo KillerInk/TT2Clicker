@@ -48,8 +48,8 @@ public abstract class Menu extends Item
     private Point menuOpenCheckPoint = new Point(471,449);
     private Point menuMaximizedCheckPoint = new Point(471,12);
     private boolean menuTaskRunning = false;
-    private final Point swipeTopPoint =  new Point(275, 517);
-    private final Point swipeBottomPoint = new Point(275, 744);
+    private final Point swipeTopPoint =  new Point(200, 517);
+    private final Point swipeBottomPoint = new Point(200, 744);
 
     public Menu(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
         super(ibot, botSettings, rootShell);
@@ -78,6 +78,7 @@ public abstract class Menu extends Item
         arr.add(-10849155);
         arr.add(-10914691);
         arr.add(-11112327);
+        arr.add(Color.argb(255,89,116,125));
         return arr;
     }
 
@@ -241,12 +242,12 @@ public abstract class Menu extends Item
             WaitLock.checkForErrorAndWait();
             swipeUp();
             WaitLock.checkForErrorAndWait();
-            Thread.sleep(100);
+            Thread.sleep(300);
             WaitLock.checkForErrorAndWait();
         }
-        WaitLock.checkForErrorAndWait();
+       /* WaitLock.checkForErrorAndWait();
         swipeUp();
-        WaitLock.checkForErrorAndWait();
+        WaitLock.checkForErrorAndWait();*/
         Thread.sleep(100);
     }
 
