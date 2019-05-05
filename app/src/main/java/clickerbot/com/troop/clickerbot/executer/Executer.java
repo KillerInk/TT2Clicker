@@ -12,6 +12,7 @@ public class Executer {
     LinkedList<ExecuterTask> runnableLinkedList;
     private Thread exeThread;
 
+    private boolean running;
 
     public Executer() {
         this.runnableLinkedList = new LinkedList<>();
@@ -31,7 +32,8 @@ public class Executer {
         doWork = true;
 
         exeThread = new Thread(()->{
-            while (doWork)
+            running = true;
+            while (doWork && !Thread.currentThread().isInterrupted())
             {
                      run = runnableLinkedList.pollFirst();
                      if (run != null) {
@@ -44,6 +46,7 @@ public class Executer {
                     e.printStackTrace();
                 }
             }
+            running = false;
         });
         exeThread.start();
     }
@@ -55,8 +58,15 @@ public class Executer {
         exeThread.interrupt();
         if (run != null)
             run.cancelTask = true;
+        while (running) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         runnableLinkedList.clear();
-        Log.d(TAG, "Queue size:" + runnableLinkedList.size());
+        Log.d(TAG, "Stopped Queue size:" + runnableLinkedList.size());
     }
 
     public boolean containsTaks(ExecuterTask runnable)

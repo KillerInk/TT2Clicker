@@ -173,6 +173,8 @@ public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
                 e.printStackTrace();
             }
         }
+        baseThread = null;
+        screenParserThread = null;
         Log.d(TAG,"Stopped threads, stopping mediaprojection");
         mediaProjectionScreenCapture.stop();
         try {
@@ -184,6 +186,7 @@ public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
         if (updateUi != null)
             updateUi.updatePrestigeTime("Stopped");
         executer.clear();
+        resetTickCounter();
     }
 
     public void resetTickCounter()
