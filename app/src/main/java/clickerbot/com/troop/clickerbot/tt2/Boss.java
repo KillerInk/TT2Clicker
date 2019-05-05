@@ -54,7 +54,7 @@ public class Boss extends Menu {
 
 
     private int bossFightActiveColor = Color.argb(255,69,85,89);
-    private int bossFightFailedColor = Color.argb(255,239,113,16);
+    private int bossFightFailedColor = Color.argb(255,239,114,16);
 
 
     public void checkIfActiveBossFight()
