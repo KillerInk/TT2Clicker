@@ -3,7 +3,6 @@ package clickerbot.com.troop.clickerbot.tt2;
 import android.content.Context;
 import android.util.Log;
 
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -21,7 +20,7 @@ import clickerbot.com.troop.clickerbot.tt2.tasks.test.ParseSkilllvlTest;
 public class TT2Bot extends AbstractBot
 {
     private static final String TAG = TT2Bot.class.getSimpleName();
-    private final ClanQuest clanQuest;
+    //private final ClanQuest clanQuest;
 
     private TouchInterface touchInput;
 
@@ -70,8 +69,6 @@ public class TT2Bot extends AbstractBot
      */
     private long lastRandomTapActivated = 0;
 
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-
     Random rand = new Random();
 
 
@@ -103,10 +100,10 @@ public class TT2Bot extends AbstractBot
         flashZip = new FlashZip(this,botSettings,touchInput);
         subMenuOpenChecker = new SubMenuOpenChecker(this,botSettings,touchInput);
         sceneTransitionChecker = new SceneTransitionChecker(this,botSettings,touchInput);
-        clanQuest = new ClanQuest(this,botSettings,touchInput);
+        //clanQuest = new ClanQuest(this,botSettings,touchInput);
         autoLevelBos = new BOS(this,botSettings,touchInput);
 
-        executerTaskHashMap = new TaskFactory().getTasksmap(this,heros,skills,prestige,fairy,boss,clanQuest,autoLevelBos,randomTaps);
+        executerTaskHashMap = new TaskFactory().getTasksmap(this,heros,skills,prestige,fairy,boss,autoLevelBos,randomTaps);
         mediaProjectionScreenCapture.setScreenCaptureCallBack(this::onScreenCapture);
 
         Log.d(TAG,"TT2Bot()");
@@ -147,8 +144,9 @@ public class TT2Bot extends AbstractBot
         randomTaps.createRandomTaps();
         lastTestExecuted = 0;
         touchInput.start();
-        super.start();
         startTime = System.currentTimeMillis();
+        super.start();
+
 
     }
 
@@ -160,6 +158,7 @@ public class TT2Bot extends AbstractBot
         Log.d(TAG,"stop");
         super.stop();
         touchInput.stop();
+        Log.d(TAG,"######################################stopped");
 
     }
 
@@ -182,7 +181,7 @@ public class TT2Bot extends AbstractBot
                 if (System.currentTimeMillis() - lastUiUpdate > 300) {
                     sendToUi();
                 }
-                clanQuest.checkIfRdyToExecute();
+                //clanQuest.checkIfRdyToExecute();
                 swordMasterRdyToExecute();
                 heros.checkIfRdyToExecute();
                 if (System.currentTimeMillis() - lastRandomTapActivated > runRandomTapActivator){
@@ -282,7 +281,7 @@ public class TT2Bot extends AbstractBot
         prestige.init(task);
         heros.init(task);
         boss.resetBossFailedCounter();
-        clanQuest.init(task);
+        //clanQuest.init(task);
         lastSwordMasterLeveled =0;
         randomTaps.init(task);
 

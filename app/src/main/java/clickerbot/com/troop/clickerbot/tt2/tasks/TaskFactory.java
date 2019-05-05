@@ -15,7 +15,7 @@ import clickerbot.com.troop.clickerbot.tt2.TT2Bot;
 
 public class TaskFactory {
 
-    public HashMap<Class, ExecuterTask> getTasksmap(TT2Bot bot, Heros heros, Skills skills, Prestige prestige, Fairy fairy, Boss boss, ClanQuest clanQuest, BOS bos, RandomTaps randomTaps)
+    public HashMap<Class, ExecuterTask> getTasksmap(TT2Bot bot, Heros heros, Skills skills, Prestige prestige, Fairy fairy, Boss boss, BOS bos, RandomTaps randomTaps)
     {
         HashMap<Class, ExecuterTask> tasksmap = new HashMap<>();
         tasksmap.put(InitTask.class,new InitTask(bot));
@@ -28,7 +28,7 @@ public class TaskFactory {
         tasksmap.put(TapOnFairysTask.class,new TapOnFairysTask(fairy));
         tasksmap.put(MenuCloseTask.class,new MenuCloseTask(heros));
         tasksmap.put(ClickOnBossFightTask.class,new ClickOnBossFightTask(boss));
-        tasksmap.put(ClanQuestTask.class,new ClanQuestTask(clanQuest));
+        //tasksmap.put(ClanQuestTask.class,new ClanQuestTask(clanQuest));
         tasksmap.put(AutoLevelBOSTask.class,new AutoLevelBOSTask(bos));
         return tasksmap;
     }
