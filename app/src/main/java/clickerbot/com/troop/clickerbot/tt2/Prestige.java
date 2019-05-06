@@ -105,7 +105,7 @@ public class Prestige extends Menu {
             while(!checkPrestigButton() && !Thread.currentThread().isInterrupted() && !task.cancelTask && loopbreaker  < 10) {
                 loopbreaker++;
                 doLongerSingelTap(new Point(prestigeMenuButton.x -3 +random.nextInt(6),prestigeMenuButton.y -3 +random.nextInt(6)),"on Prestige Menu Button");
-                Thread.sleep(200);
+                Thread.sleep(600);
             }
             /*if (loopbreaker == 19)
             {
@@ -120,13 +120,14 @@ public class Prestige extends Menu {
             while (!checkPrestigAcceptColor() && !Thread.currentThread().isInterrupted()&& !task.cancelTask && loopbreaker  < 5) {
                 loopbreaker++;
                 doLongerSingelTap(prestigeButton,"on Prestige Button");
-                Thread.sleep(200);
+                Thread.sleep(600);
             }
             loopbreaker = 0;
             while (checkPrestigAcceptColor()&& !Thread.currentThread().isInterrupted()&& !task.cancelTask && loopbreaker  < 5) {
                 loopbreaker++;
+                Thread.sleep(600);
                 doLongerSingelTap(prestigeAcceptButton,  "on Prestige accept Button");
-                Thread.sleep(100);
+                Thread.sleep(600);
                 if (!checkPrestigAcceptColor())
                     loopbreaker = 5;
             }
@@ -135,7 +136,7 @@ public class Prestige extends Menu {
             while (checkLoginInfoColor()&& !Thread.currentThread().isInterrupted()&& !task.cancelTask && loopbreaker  < 5) {
                 loopbreaker++;
                 doLongerSingelTap(loginInfoButton,"close loginInfo");
-                Thread.sleep(200);
+                Thread.sleep(400);
             }
 
 
