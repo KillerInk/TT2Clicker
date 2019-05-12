@@ -24,11 +24,14 @@ public class BOS extends Menu {
     }
 
     public void levelBos(ExecuterTask task) throws IOException, InterruptedException {
-        openArtifactMenu(task);
-        gotToTop(task);
-        Thread.sleep(400);
-        doLongerSingelTap(bos_click_pos,"levelBos");
-        Thread.sleep(200);
-        closeArtifactMenu(task);
+        if (botSettings.autoLvlBos) {
+            openArtifactMenu(task);
+            swipeUp();
+            gotToTop(task);
+            Thread.sleep(400);
+            doLongerSingelTap(bos_click_pos, "levelBos");
+            Thread.sleep(200);
+            closeArtifactMenu(task);
+        }
     }
 }
