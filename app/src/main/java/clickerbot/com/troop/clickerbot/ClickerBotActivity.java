@@ -97,6 +97,8 @@ public class ClickerBotActivity extends AppCompatActivity {
         if (mResultData == null)
             checkMediaProjectionPermission();
         HIDENAVBAR();
+        Intent intent = new Intent(this, ClickerBotService.class);
+        stopService(intent);
     }
 
     private boolean checkDrawOverlayPermission() {
