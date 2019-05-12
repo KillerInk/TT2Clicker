@@ -71,7 +71,7 @@ public class Skills extends Menu {
                 try {
                     Thread.sleep(1000);
                     WaitLock.checkForErrorAndWait();
-                    doSingelTap(Coordinates.Menu_Minimized_SwordMaster,"on minimize");
+                    doLongerSingelTap(Coordinates.Menu_Minimized_SwordMaster,"on minimize");
                     Thread.sleep(50);
                     WaitLock.checkForErrorAndWait();
                     Thread.sleep(1000);

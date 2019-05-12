@@ -168,27 +168,27 @@ public class Skill {
                 WaitLock.lockFlashZip(true);
                 switch (skillType) {
                     case HS:
-                        touchInput.tap(Coordinates.Hs_Pos,30);
+                        touchInput.tap(Coordinates.Hs_Pos,80);
                         Thread.sleep(100);
                         break;
                     case DS:
-                        touchInput.tap(Coordinates.DS_Pos,30);
+                        touchInput.tap(Coordinates.DS_Pos,80);
                         Thread.sleep(100);
                         break;
                     case HOM:
-                        touchInput.tap(Coordinates.HOM_Pos,30);
+                        touchInput.tap(Coordinates.HOM_Pos,80);
                         Thread.sleep(100);
                         break;
                     case FS:
-                        touchInput.tap(Coordinates.FS_Pos,30);
+                        touchInput.tap(Coordinates.FS_Pos,80);
                         Thread.sleep(100);
                         break;
                     case WC:
-                        touchInput.tap(Coordinates.WC_Pos,30);
+                        touchInput.tap(Coordinates.WC_Pos,80);
                         Thread.sleep(100);
                         break;
                     case SC:
-                        touchInput.tap(Coordinates.SC_Pos,30);
+                        touchInput.tap(Coordinates.SC_Pos,80);
                         Thread.sleep(100);
                         break;
                 }
