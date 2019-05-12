@@ -199,7 +199,7 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
     public void onImageAvailable(ImageReader reader) {
         frames++;
         Image img = reader.acquireLatestImage();
-        if (true/*frames == 2*/) {
+        if (frames == 2) {
             if (reader != null) {
 
                 if (img != null) {
