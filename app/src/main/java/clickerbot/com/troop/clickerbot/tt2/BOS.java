@@ -8,7 +8,7 @@ import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 
 public class BOS extends Menu {
-    private final Point bos_click_pos = new Point(400,652);
+    private final Point bos_click_pos = new Point(400,214);
     public BOS(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
         super(ibot, botSettings, rootShell);
     }
@@ -26,8 +26,9 @@ public class BOS extends Menu {
     public void levelBos(ExecuterTask task) throws IOException, InterruptedException {
         if (botSettings.autoLvlBos) {
             openArtifactMenu(task);
-            swipeUp();
-            gotToTop(task);
+            if (!isMenuMaximized())
+                maximiseMenu(task);
+            gotToTopMaximised(task);
             Thread.sleep(400);
             doLongerSingelTap(bos_click_pos, "levelBos");
             Thread.sleep(200);

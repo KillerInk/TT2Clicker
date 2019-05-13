@@ -44,12 +44,16 @@ public abstract class Menu extends Item
 
 
     public final Point MenuMaxButtonColorPosition = new Point(335,518);
+    public final Point MenuMaximisedMaxButtonColorPosition = new Point(335,60);
     private int colorMenuOpen = Color.argb(255,84,76,76);
     private Point menuOpenCheckPoint = new Point(471,449);
     private Point menuMaximizedCheckPoint = new Point(471,12);
     private boolean menuTaskRunning = false;
     private final Point swipeTopPoint =  new Point(200, 517);
     private final Point swipeBottomPoint = new Point(200, 744);
+
+    private final Point swipeTopPointMaximised =  new Point(200, 129);
+    private final Point swipeBottomPointMaximised = new Point(200, 729);
 
     public Menu(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
         super(ibot, botSettings, rootShell);
@@ -61,6 +65,17 @@ public abstract class Menu extends Item
     public boolean isMenuTopReached()
     {
         int color = bot.getScreeCapture().getColor(MenuMaxButtonColorPosition);
+        boolean yep = false;
+
+        if (maxButtonColors.contains(color))
+            yep = true;
+        Log.d(TAG, "isMenuTopReached: "+ yep + " " + ColorUtils.getColorString(color));
+        return yep;
+    }
+
+    public boolean isMenuTopMaximisedReached()
+    {
+        int color = bot.getScreeCapture().getColor(MenuMaximisedMaxButtonColorPosition);
         boolean yep = false;
 
         if (maxButtonColors.contains(color))
@@ -135,7 +150,7 @@ public abstract class Menu extends Item
         setMenuState(MenuState.opening);
         WaitLock.checkForErrorAndWait();
 
-        while (!isMenuOpen() && !Thread.currentThread().isInterrupted() && !task.cancelTask) {
+        while ((!isMenuOpen() && !isMenuMaximized()) && !Thread.currentThread().isInterrupted() && !task.cancelTask) {
             try {
                 doSingelTap(point,"openSwordMasterMenu");
                 Thread.sleep(menuOpenCloseDelay);
@@ -145,6 +160,8 @@ public abstract class Menu extends Item
         }
         MenuOpen.set(true);
         setMenuState(MenuState.open);
+        if (isMenuMaximized())
+            setMenuState(MenuState.maximise);
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
@@ -157,7 +174,7 @@ public abstract class Menu extends Item
         WaitLock.checkForErrorAndWait();
         setMenuState(MenuState.closing);
         try {
-            while (isMenuOpen()&& !Thread.currentThread().isInterrupted() && !task.cancelTask) {
+            while ((isMenuOpen() || isMenuMaximized())&& !Thread.currentThread().isInterrupted() && !task.cancelTask) {
                 WaitLock.checkForErrorAndWait();
                 doSingelTap(point,"closeMenu");
                 Thread.sleep(menuOpenCloseDelay);
@@ -251,12 +268,35 @@ public abstract class Menu extends Item
         Thread.sleep(100);
     }
 
+    public void gotToTopMaximised(ExecuterTask task) throws IOException, InterruptedException {
+        while (!isMenuTopMaximisedReached() && !task.cancelTask && Menu.getMenuState() == MenuState.maximise) {
+            WaitLock.checkForErrorAndWait();
+            swipeUpMaximised();
+            WaitLock.checkForErrorAndWait();
+            Thread.sleep(300);
+            WaitLock.checkForErrorAndWait();
+        }
+       /* WaitLock.checkForErrorAndWait();
+        swipeUp();
+        WaitLock.checkForErrorAndWait();*/
+        Thread.sleep(100);
+    }
+
     public void swipeDown() throws IOException, InterruptedException {
         touchInput.swipeVertical(swipeBottomPoint,swipeTopPoint);
     }
 
     public void swipeUp() throws InterruptedException, IOException {
         touchInput.swipeVertical(swipeTopPoint,swipeBottomPoint);
+
+    }
+
+    public void swipeDownMaximised() throws IOException, InterruptedException {
+        touchInput.swipeVertical(swipeBottomPointMaximised,swipeTopPointMaximised);
+    }
+
+    public void swipeUpMaximised() throws InterruptedException, IOException {
+        touchInput.swipeVertical(swipeTopPointMaximised,swipeBottomPointMaximised);
 
     }
 

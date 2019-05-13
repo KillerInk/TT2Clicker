@@ -105,7 +105,7 @@ public class NativeTouchHandler implements TouchInterface {
             int y = from.y;
             if (negMove){
                 while (y > to.y) {
-                    y--;
+                    y-=2;
                     updatePosition(new Point(from.x, y),swipeID);
                     Thread.sleep(0,20);
                 }
@@ -114,17 +114,18 @@ public class NativeTouchHandler implements TouchInterface {
             {
                 while (y < to.y)
                 {
-                    y++;
+                    y+=2;
                     updatePosition(new Point(from.x, y),swipeID);
                     Thread.sleep(0,20);
                 }
             }
 
-            Thread.sleep(300);
+            Thread.sleep(600);
             touchUp(to,swipeID);
-            updatePosition(to, swipeID);
-            Thread.sleep(500);
+            //updatePosition(to, swipeID);
             lastPoint = to;
+            Thread.sleep(500);
+
         }
 
     }
@@ -181,16 +182,22 @@ public class NativeTouchHandler implements TouchInterface {
 
 
     private void sendXY(Point pos) throws InterruptedException {
-        nativeTouch.sendEvent(EV_ABS, ABS_MT_POSITION_X,pos.x);
-        Thread.sleep(0,3);
         nativeTouch.sendEvent(EV_ABS, ABS_MT_POSITION_Y,pos.y);
         Thread.sleep(0,3);
+        nativeTouch.sendEvent(EV_ABS, ABS_MT_POSITION_X,pos.x);
+        Thread.sleep(0,3);
+
     }
 
     private void updatePositionMouse(Point pos) throws InterruptedException {
         if (sendMTpressure) {
             nativeTouch.sendEvent(EV_ABS, ABS_MT_PRESSURE, 1);
             Thread.sleep(0,3);
+        }
+        else
+        {
+                nativeTouch.sendEvent(EV_ABS, ABS_MT_PRESSURE, 1);
+                Thread.sleep(0,3);
         }
 
         sendXY(pos);

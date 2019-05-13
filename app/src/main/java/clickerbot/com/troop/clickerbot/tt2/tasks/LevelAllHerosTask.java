@@ -13,7 +13,7 @@ public class LevelAllHerosTask extends LevelTopHerosTask {
     @Override
     public void doTask() {
         try {
-            heros.lvlAllHeros(this);
+            heros.levelAllHerosMaximised(this);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (IOException e) {

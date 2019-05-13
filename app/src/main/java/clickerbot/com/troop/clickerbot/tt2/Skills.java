@@ -49,10 +49,8 @@ public class Skills extends Menu {
         wc.setSkillLvl(0);
         sc.setSkillLvl(0);
         WaitLock.checkForErrorAndWait();
-        if (isMenuOpen())
+        if (isMenuOpen() || isMenuMaximized())
             closeMenu();
-        if (isMenuMaximized())
-            minimiseMenu(task);
         WaitLock.checkForErrorAndWait();
         checkSkillsUnlocked();
         Log.d(TAG,"init autolvl skills:" + botSettings.autoLvlSkills);
@@ -60,8 +58,10 @@ public class Skills extends Menu {
             if (!skipLevelUpSkills()) {
 
                 openSwordMasterMenu(task);
+                if (!isMenuMaximized())
+                    maximiseMenu(task);
                 try {
-                    gotToTop(task);
+                    gotToTopMaximised(task);
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -71,7 +71,7 @@ public class Skills extends Menu {
                 try {
                     Thread.sleep(1000);
                     WaitLock.checkForErrorAndWait();
-                    doLongerSingelTap(Coordinates.Menu_Minimized_SwordMaster,"on minimize");
+                    doLongerSingelTap(Coordinates.Menu_SwordMasterPos,"on minimize");
                     Thread.sleep(50);
                     WaitLock.checkForErrorAndWait();
                     Thread.sleep(1000);
@@ -80,11 +80,9 @@ public class Skills extends Menu {
                     e.printStackTrace();
                 }
 
-                maximiseMenu(task);
-
                 try {
                     WaitLock.checkForErrorAndWait();
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
                     WaitLock.checkForErrorAndWait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -99,7 +97,7 @@ public class Skills extends Menu {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                minimiseMenu(task);
+                //minimiseMenu(task);
                 closeSwordMasterMenu(task);
             }
         }

@@ -97,8 +97,10 @@ public class Prestige extends Menu {
             WaitLock.prestige.set(true);
             bot.clearExecuterQueue();
             openSwordMasterMenu(task);
-            for (int i =0; i < 13; i++)
-                swipeDown();
+            if (!isMenuMaximized())
+                maximiseMenu(task);
+            for (int i =0; i < 5; i++)
+                swipeDownMaximised();
 
             int loopbreaker = 0;
 
@@ -131,7 +133,7 @@ public class Prestige extends Menu {
                 if (!checkPrestigAcceptColor())
                     loopbreaker = 5;
             }
-            Thread.sleep(12000);
+            Thread.sleep(15000);
             loopbreaker = 0;
             while (checkLoginInfoColor()&& !Thread.currentThread().isInterrupted()&& !task.cancelTask && loopbreaker  < 5) {
                 loopbreaker++;

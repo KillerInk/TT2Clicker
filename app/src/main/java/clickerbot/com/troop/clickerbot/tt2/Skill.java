@@ -159,7 +159,7 @@ public class Skill {
 
     public void activateSkill()
     {
-        if (skillState != SkillState.locked && skillState != SkillState.active && skillState != SkillState.outOfMana && !Menu.MenuOpen.get())
+        if (skillState != SkillState.locked && skillState != SkillState.active && skillState != SkillState.outOfMana && !Menu.MenuOpen.get() && Menu.getMenuState() != Menu.MenuState.maximise)
         {
             WaitLock.checkForErrorAndWait();
             if (WaitLock.clanquest.get())

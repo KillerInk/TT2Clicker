@@ -13,6 +13,7 @@ import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.CrazyTapTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.InitTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.LevelSwordMasterTask;
+import clickerbot.com.troop.clickerbot.tt2.tasks.PrestigeTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.RandomTapTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.TaskFactory;
 import clickerbot.com.troop.clickerbot.tt2.tasks.test.ParseSkilllvlTest;
@@ -254,7 +255,7 @@ public class TT2Bot extends AbstractBot
     private long lastTestExecuted;
     private void executeTests() {
         if (System.currentTimeMillis() - lastTestExecuted > 20000) {
-            execute(new ParseSkilllvlTest(skills));
+            executeTask(PrestigeTask.class);
             lastTestExecuted = System.currentTimeMillis();
         }
     }
