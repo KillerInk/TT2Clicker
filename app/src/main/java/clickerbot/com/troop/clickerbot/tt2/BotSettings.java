@@ -160,6 +160,8 @@ public class BotSettings {
     public final boolean mouseInput;
     public final boolean autoLvlBos;
 
+    public final int skillManaLimit;
+
     public BotSettings(SharedPreferences sharedPreferences,Context context)
     {
         useHS = sharedPreferences.getBoolean(context.getString(R.string.useHs),false);
@@ -208,6 +210,7 @@ public class BotSettings {
         fsMaxLVL = sharedPreferences.getLong(context.getString(R.string.fsmaxlvl),0);
         wcMaxLvl = sharedPreferences.getLong(context.getString(R.string.wcmaxlvl),0);
         scMaxLvl = sharedPreferences.getLong(context.getString(R.string.scmaxlvl),0);
+        skillManaLimit = (int)sharedPreferences.getLong(context.getString(R.string.maxskillpercentage),0);
         inputPath = sharedPreferences.getString(context.getString(R.string.inputpath),"/dev/input/event6");
         Log.i(TAG, "Skills used HS:" + useHS + " DS:" + useDS+" Hom:"+useHOM+" FS:" + useFS + " WC:"+useWC +" SC: "+useSC);
         Log.i(TAG,"auto lvl heros:" + autoLvlHeros + " auto Tap:" + doAutoTap + " auto lvl skills"+ autoLvlSkills);

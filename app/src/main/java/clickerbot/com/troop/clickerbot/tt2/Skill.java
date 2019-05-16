@@ -63,6 +63,10 @@ public class Skill {
     private final Point Menu_SCMPos = new Point(408,614);
     private final Point Menu_SCMPos_color = new Point(470,614);
 
+    public SkillState getSkillState()
+    {
+        return skillState;
+    }
 
     public Skill(TT2Bot bot,TouchInterface touchInput,SkillType type, boolean unlockSkill, boolean activateSkill, int maxLVL)
     {
@@ -113,7 +117,7 @@ public class Skill {
 
     public void detectSkillState()
     {
-        if (!Menu.MenuOpen.get()) {
+        if (!Menu.MenuOpen.get() && Menu.getMenuState() != Menu.MenuState.maximise) {
             int color = bot.getScreeCapture().getColor(getSkillColorPoint());
             SkillState state;
             if (color == COLOR_RDY_SKILL)
@@ -127,8 +131,8 @@ public class Skill {
             if (true/*skillState != state*/)
             {
                 skillState = state;
-                if (skillState == SkillState.deactive && activateSkill)
-                    activateSkill();
+                //if (skillState == SkillState.deactive && activateSkill)
+                //    activateSkill();
             }
         }
     }

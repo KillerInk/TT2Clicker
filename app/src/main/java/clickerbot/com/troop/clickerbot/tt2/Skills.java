@@ -17,9 +17,10 @@ public class Skills extends Menu {
     private final Skill wc;
     private final Skill sc;
     private final SkillLevelParser skillLevelParser;
+    private final ManaDetector manaDetector;
 
 
-    public Skills(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
+    public Skills(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell, ManaDetector manaDetector) {
         super(ibot, botSettings, rootShell);
         hs =new Skill(bot,rootShell,Skill.SkillType.HS,botSettings.unlockHS, botSettings.useHS,(int)botSettings.hsMaxLvl);
         ds =new Skill(bot,rootShell,Skill.SkillType.DS,botSettings.unlockDS, botSettings.useDS,(int)botSettings.dsMaxLvl);
@@ -28,6 +29,7 @@ public class Skills extends Menu {
         wc =new Skill(bot,rootShell,Skill.SkillType.WC,botSettings.unlockWC, botSettings.useWC,(int)botSettings.wcMaxLvl);
         sc =new Skill(bot,rootShell,Skill.SkillType.SC,botSettings.unlockSC, botSettings.useSC,(int)botSettings.scMaxLvl);
         skillLevelParser = new SkillLevelParser(ibot);
+        this.manaDetector = manaDetector;
     }
 
 
@@ -111,6 +113,26 @@ public class Skills extends Menu {
         fs.detectSkillState();
         wc.detectSkillState();
         sc.detectSkillState();
+        if (manaDetector.getManaPercentage() >= botSettings.skillManaLimit) {
+            if (botSettings.useDS)
+                ds.activateSkill();
+            if (botSettings.useHOM)
+                hom.activateSkill();
+            if (botSettings.useFS)
+                fs.activateSkill();
+            if (botSettings.useWC)
+                wc.activateSkill();
+            if (botSettings.useSC)
+                sc.activateSkill();
+            if ((ds.getSkillState() == Skill.SkillState.active && botSettings.useDS)
+                    && (hom.getSkillState() == Skill.SkillState.active && botSettings.useHOM)
+                    && (fs.getSkillState() == Skill.SkillState.active && botSettings.useFS)
+                    && (wc.getSkillState() == Skill.SkillState.active && botSettings.useWC)
+                    && (sc.getSkillState() == Skill.SkillState.active && botSettings.useSC)
+                    && botSettings.useHS
+            )
+                hs.activateSkill();
+        }
         return false;
     }
 

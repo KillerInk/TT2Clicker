@@ -58,6 +58,7 @@ public class TT2Bot extends AbstractBot
 
     private SubMenuOpenChecker subMenuOpenChecker;
     private SceneTransitionChecker sceneTransitionChecker;
+    private ManaDetector manaDetector;
 
     private BOS autoLevelBos;
 
@@ -94,7 +95,7 @@ public class TT2Bot extends AbstractBot
 
         randomTaps = new RandomTaps(this,botSettings,touchInput);
         boss = new Boss(this,botSettings, touchInput);
-        skills = new Skills(this,botSettings, touchInput);
+
         heros = new Heros(this,botSettings, touchInput,boss);
         prestige = new Prestige(this,botSettings, touchInput,boss);
         fairy = new Fairy(this,botSettings, touchInput,randomTaps);
@@ -103,6 +104,8 @@ public class TT2Bot extends AbstractBot
         sceneTransitionChecker = new SceneTransitionChecker(this,botSettings,touchInput);
         //clanQuest = new ClanQuest(this,botSettings,touchInput);
         autoLevelBos = new BOS(this,botSettings,touchInput);
+        manaDetector = new ManaDetector(this,botSettings,touchInput);
+        skills = new Skills(this,botSettings, touchInput, manaDetector);
 
         executerTaskHashMap = new TaskFactory().getTasksmap(this,heros,skills,prestige,fairy,boss,autoLevelBos,randomTaps);
         mediaProjectionScreenCapture.setScreenCaptureCallBack(this::onScreenCapture);
@@ -230,6 +233,7 @@ public class TT2Bot extends AbstractBot
             skills.checkIfRdyToExecute();
             boss.checkIfActiveBossFight();
         }
+        manaDetector.checkIfRdyToExecute();
     }
 
     private String getTimeString(int dif)
