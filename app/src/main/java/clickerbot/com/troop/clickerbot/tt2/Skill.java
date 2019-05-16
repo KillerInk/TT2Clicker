@@ -30,14 +30,14 @@ public class Skill {
     }
 
     private final int Y_Pos_Skills = 683;
-    private final Point HS_COLOR_POS = new Point(119,Y_Pos_Skills);
+    private final Point HS_COLOR_POS = new Point(39,Y_Pos_Skills);
     private final Point DS_COLOR_POS = new Point(119,Y_Pos_Skills);
     private final Point HOM_COLOR_POS = new Point(199,Y_Pos_Skills);
     private final Point FS_COLOR_POS = new Point(279,Y_Pos_Skills);
     private final Point WC_COLOR_POS = new Point(359,Y_Pos_Skills);
     private final Point SC_COLOR_POS = new Point(439,Y_Pos_Skills);
 
-    private final  int COLOR_ACTIVE_SKILL = Color.argb(255,188,134,18);
+    private final  int COLOR_ACTIVE_SKILL = Color.argb(255,255,174,0);
     private final  int COLOR_RDY_SKILL = Color.argb(255,255,255,255);
     private final  int COLOR_OUT_OF_MANA = Color.argb(255,127,127,127);
 
