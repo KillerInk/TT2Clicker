@@ -18,15 +18,20 @@ import clickerbot.com.troop.clickerbot.tt2.tasks.RandomTapTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.TaskFactory;
 import clickerbot.com.troop.clickerbot.tt2.tasks.test.ParseSkilllvlTest;
 
+/**
+ * Main class that handels all Stuff
+ */
 public class TT2Bot extends AbstractBot
 {
     private static final String TAG = TT2Bot.class.getSimpleName();
     //private final ClanQuest clanQuest;
 
+    //Interface to the FakeTouchInput
     private TouchInterface touchInput;
 
     /**
      * Holds the tasks to execute
+     * Taks gets execute one by one.
      */
     private HashMap<Class, ExecuterTask> executerTaskHashMap;
 
@@ -52,14 +57,32 @@ public class TT2Bot extends AbstractBot
      */
     private Fairy fairy;
 
+    /**
+     * handels flashzip detection and click
+     */
     private FlashZip flashZip;
 
+    /**
+     * handels fairy collect clicks, fast on screen clicks and aaw clicks
+     */
     private RandomTaps randomTaps;
 
+    /**
+     * checks if a fail click happen and opened a submenu and close it in that case and let all tasks wait.
+     */
     private SubMenuOpenChecker subMenuOpenChecker;
+    /**
+     * checks if a screen transiotion happen and let all tasks wait till its over
+     */
     private SceneTransitionChecker sceneTransitionChecker;
+    /**
+     * Detects the amount of avail mana in %
+     */
     private ManaDetector manaDetector;
 
+    /**
+     * handels autolevel bos after a prestige
+     */
     private BOS autoLevelBos;
 
     /**
@@ -73,8 +96,6 @@ public class TT2Bot extends AbstractBot
 
     Random rand = new Random();
 
-
-
     /**
      * holds the time last swordmaster lvl got executed
      */
@@ -85,8 +106,12 @@ public class TT2Bot extends AbstractBot
     private long lastUiUpdate = 0;
 
 
-
-
+    /**
+     *
+     * @param context from the Application
+     * @param botSettings to apply
+     * @param mediaProjectionScreenCapture to capture screenframes and get colors from it
+     */
     public TT2Bot(Context context, BotSettings botSettings, MediaProjectionScreenCapture mediaProjectionScreenCapture)
     {
         super(context,botSettings,mediaProjectionScreenCapture);
@@ -107,30 +132,53 @@ public class TT2Bot extends AbstractBot
         manaDetector = new ManaDetector(this,botSettings,touchInput);
         skills = new Skills(this,botSettings, touchInput, manaDetector);
 
+        //create the different tasks
         executerTaskHashMap = new TaskFactory().getTasksmap(this,heros,skills,prestige,fairy,boss,autoLevelBos,randomTaps);
         mediaProjectionScreenCapture.setScreenCaptureCallBack(this::onScreenCapture);
 
         Log.d(TAG,"TT2Bot()");
     }
 
+    /**
+     * add a new task to the executer queue
+     * @param task
+     */
     public void executeTask(Class task)
     {
         execute(executerTaskHashMap.get(task));
     }
 
+    /**
+     * Add a new Task to the first position in the queue
+     * @param task
+     */
     public void putFirstAndExecuteTask(Class task) {
         putFirstAndExecute(executerTaskHashMap.get(task));
     }
+
+    /**
+     * Add a new Task to the specific position in the queue
+     * @param task
+     * @param pos
+     */
     public void putTaskAtPos(Class task, int pos)
     {
         putAtPos(executerTaskHashMap.get(task),pos);
     }
 
+    /**
+     * checks if the task is already added to the queue
+     * @param task
+     * @return
+     */
     public boolean containsTask(Class task)
     {
         return containsT(executerTaskHashMap.get(task));
     }
 
+    /**
+     * destroy the bot
+     */
     public void destroy()
     {
         Log.d(TAG,"destroy");
@@ -150,8 +198,6 @@ public class TT2Bot extends AbstractBot
         touchInput.start();
         startTime = System.currentTimeMillis();
         super.start();
-
-
     }
 
     /**
@@ -168,14 +214,16 @@ public class TT2Bot extends AbstractBot
 
     /**
      * runs every xxx ms to fill the executer queue with tasks
+     *
      * @param tickCounter how often it has triggered
      */
     @Override
     void onTick(long tickCounter) {
+        //as first action on start run the InitTask
         if (tickCounter == 1) {
            executeTask(InitTask.class);
         }
-        else if (botSettings.runTests)
+        else if (botSettings.runTests) // runs only if test are activated in devsettings. can get used to test a new feature
         {
             executeTests();
         }
@@ -183,6 +231,7 @@ public class TT2Bot extends AbstractBot
             if(!prestige.checkIfRdyToExecute())
             {
                 if (System.currentTimeMillis() - lastUiUpdate > 300) {
+                    //update the timer, bossfail counter and the currently executed task
                     sendToUi();
                 }
                 //clanQuest.checkIfRdyToExecute();

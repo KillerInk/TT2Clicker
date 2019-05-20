@@ -45,8 +45,6 @@ public class Skill {
     private SkillType skillType;
     private SkillState skillState;
     private TouchInterface touchInput;
-    private boolean unlockSkilll = false;
-    private boolean activateSkill = false;
     private int skillLvl;
     private int maxLVL;
 
@@ -68,13 +66,11 @@ public class Skill {
         return skillState;
     }
 
-    public Skill(TT2Bot bot,TouchInterface touchInput,SkillType type, boolean unlockSkill, boolean activateSkill, int maxLVL)
+    public Skill(TT2Bot bot,TouchInterface touchInput,SkillType type, int maxLVL)
     {
         this.bot = bot;
         this.touchInput =touchInput;
         this.skillType = type;
-        this.activateSkill = activateSkill;
-        this.unlockSkilll = unlockSkill;
         this.skillState = SkillState.locked;
         this.maxLVL = maxLVL;
     }
@@ -128,12 +124,8 @@ public class Skill {
                 state = SkillState.outOfMana;
             else
                 state = SkillState.locked;
-            if (true/*skillState != state*/)
-            {
-                skillState = state;
-                //if (skillState == SkillState.deactive && activateSkill)
-                //    activateSkill();
-            }
+
+            skillState = state;
         }
     }
 

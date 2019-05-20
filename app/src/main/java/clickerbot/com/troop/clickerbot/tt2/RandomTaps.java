@@ -66,8 +66,6 @@ public class RandomTaps extends Item {
             randomTaps.add(Coordinates.CO_Pos);
         if (botSettings.collectEggs)
             randomTaps.add(Coordinates.egg_to_collect_pos);
-        /*if (botSettings.useFlashZip)
-            randomTaps.addAll(Arrays.asList(Coordinates.FLASH_ZIP_Areas));*/
 
     }
 

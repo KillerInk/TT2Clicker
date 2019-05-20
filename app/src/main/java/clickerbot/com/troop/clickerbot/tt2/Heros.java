@@ -17,15 +17,6 @@ public class Heros extends Menu {
     private Boss boss;
     private long lastTop6HerosLeveld = 0;
     private long lastAllHerosLeveld = 0;
-
-    private final Point lvlFIrsHeroButton_color = new Point(470,579);
-    public static final Point lvlFIrsHeroButton_click = new Point(424,579);
-
-    private final Point lvlSecondHeroButton_color = new Point(470,652);
-    private final Point lvlSecondHeroButton_click = new Point(424,652);
-
-    private final Point lvlThirdHeroButton_color = new Point(470,726);
-    public static final Point lvlThirdHeroButton_click = new Point(424,726);
     private int lvlAllHerosRunCount = 0;
 
     private final int hero_click_X = 424;
@@ -41,8 +32,6 @@ public class Heros extends Menu {
             675,
             749,
     };
-    private final int hero_X_2 = 214;
-    private final int hero_X_3 = 214;
 
 
     public Heros(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell, Boss boss) {
@@ -89,6 +78,7 @@ public class Heros extends Menu {
     }
 
     public void levelTopHerosMaximised(ExecuterTask task) throws InterruptedException, IOException {
+        Thread.sleep(500);
         openHeroMenu(task);
         WaitLock.checkForErrorAndWait();
         if (!isMenuMaximized())
@@ -104,8 +94,6 @@ public class Heros extends Menu {
             WaitLock.checkForErrorAndWait();
         }
         Thread.sleep(300);
-        //minimiseMenu(task);
-        //Thread.sleep(200);
         WaitLock.checkForErrorAndWait();
         closeHeroMenu(task);
         WaitLock.checkForErrorAndWait();
@@ -117,6 +105,7 @@ public class Heros extends Menu {
     }
 
     public void levelAllHerosMaximised(ExecuterTask task) throws InterruptedException, IOException {
+        Thread.sleep(500);
         openHeroMenu(task);
         WaitLock.checkForErrorAndWait();
         if(!isMenuMaximized())
@@ -144,8 +133,6 @@ public class Heros extends Menu {
             swipeUpMaximised();
         }
         Thread.sleep(300);
-        //minimiseMenu(task);
-        //Thread.sleep(200);
         WaitLock.checkForErrorAndWait();
         closeHeroMenu(task);
         WaitLock.checkForErrorAndWait();
@@ -155,93 +142,6 @@ public class Heros extends Menu {
         lastAllHerosLeveld = System.currentTimeMillis();
         lastTop6HerosLeveld = System.currentTimeMillis();
 
-    }
-
-
-    public void levelTop9Heros(ExecuterTask task) throws InterruptedException, IOException {
-        openHeroMenu(task);
-        WaitLock.checkForErrorAndWait();
-        //make sure we are on top
-        gotToTop(task);
-        Thread.sleep(500);
-
-        WaitLock.checkForErrorAndWait();
-        level3heros(task);
-        WaitLock.checkForErrorAndWait();
-        swipeDown3Heros();
-
-        WaitLock.checkForErrorAndWait();
-        level3heros(task);
-        WaitLock.checkForErrorAndWait();
-        swipeDown3Heros();
-
-        WaitLock.checkForErrorAndWait();
-        level3heros(task);
-        WaitLock.checkForErrorAndWait();
-        swipeDown3Heros();
-        WaitLock.checkForErrorAndWait();
-        level3heros(task);
-
-        Thread.sleep(200);
-        WaitLock.checkForErrorAndWait();
-        closeHeroMenu(task);
-        WaitLock.checkForErrorAndWait();
-        Thread.sleep(200);
-        WaitLock.checkForErrorAndWait();
-
-        lastTop6HerosLeveld = System.currentTimeMillis();
-    }
-
-    private void swipeDown3Heros() throws InterruptedException, IOException {
-        swipeDown();
-        WaitLock.checkForErrorAndWait();
-        Thread.sleep(100);
-        /*WaitLock.checkForErrorAndWait();
-        swipeDown();*/
-        WaitLock.checkForErrorAndWait();
-        Thread.sleep(100);
-    }
-
-    public void lvlAllHeros(ExecuterTask task) throws InterruptedException, IOException {
-        openHeroMenu(task);
-        WaitLock.checkForErrorAndWait();
-        for (int i=0; i< 13; i++) {
-            if (task.cancelTask)
-                return;
-            WaitLock.checkForErrorAndWait();
-            swipeDown();
-            WaitLock.checkForErrorAndWait();
-        }
-        if (!task.cancelTask)
-            Thread.sleep(1500);
-        WaitLock.checkForErrorAndWait();
-        if (!task.cancelTask)
-            Thread.sleep(100);
-        WaitLock.checkForErrorAndWait();
-        int loopbreaker = 0;
-        while (!isMenuTopReached() && breakCondition(loopbreaker,25,task)) {
-            loopbreaker++;
-            WaitLock.checkForErrorAndWait();
-            Thread.sleep(200);
-            WaitLock.checkForErrorAndWait();
-            level3heros(task);
-            WaitLock.checkForErrorAndWait();
-            swipeUp();
-            WaitLock.checkForErrorAndWait();
-            Thread.sleep(400);
-            WaitLock.checkForErrorAndWait();
-        }
-        closeHeroMenu(task);
-
-        lastAllHerosLeveld = System.currentTimeMillis();
-        lastTop6HerosLeveld = System.currentTimeMillis();
-    }
-
-
-    private void level3heros(ExecuterTask task) throws IOException, InterruptedException {
-        levelhero(lvlFIrsHeroButton_color,lvlFIrsHeroButton_click,task,1);
-        levelhero(lvlSecondHeroButton_color,lvlSecondHeroButton_click,task,2);
-        levelhero(lvlThirdHeroButton_color,lvlThirdHeroButton_click,task,3);
     }
 
     private void levelhero(Point color, Point click, ExecuterTask task, int id) throws IOException, InterruptedException {

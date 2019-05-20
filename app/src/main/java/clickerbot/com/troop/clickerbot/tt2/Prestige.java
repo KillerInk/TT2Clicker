@@ -109,15 +109,6 @@ public class Prestige extends Menu {
                 doLongerSingelTap(new Point(prestigeMenuButton.x -3 +random.nextInt(6),prestigeMenuButton.y -3 +random.nextInt(6)),"on Prestige Menu Button");
                 Thread.sleep(600);
             }
-            /*if (loopbreaker == 19)
-            {
-                Log.d(TAG,"Prestige menu button click failed.");
-                closeMenu();
-                bot.clearExecuterQueue();
-                bot.executeTask(PrestigeTask.class);
-                WaitLock.prestige.set(false);
-                return;
-            }*/
             loopbreaker = 0;
             while (!checkPrestigAcceptColor() && !Thread.currentThread().isInterrupted()&& !task.cancelTask && loopbreaker  < 5) {
                 loopbreaker++;

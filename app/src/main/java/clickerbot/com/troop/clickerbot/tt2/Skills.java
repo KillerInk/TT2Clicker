@@ -22,24 +22,14 @@ public class Skills extends Menu {
 
     public Skills(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell, ManaDetector manaDetector) {
         super(ibot, botSettings, rootShell);
-        hs =new Skill(bot,rootShell,Skill.SkillType.HS,botSettings.unlockHS, botSettings.useHS,(int)botSettings.hsMaxLvl);
-        ds =new Skill(bot,rootShell,Skill.SkillType.DS,botSettings.unlockDS, botSettings.useDS,(int)botSettings.dsMaxLvl);
-        hom =new Skill(bot,rootShell,Skill.SkillType.HOM,botSettings.unlockHOM, botSettings.useHOM,(int)botSettings.homMaxLvl);
-        fs =new Skill(bot,rootShell,Skill.SkillType.FS,botSettings.unlockFS, botSettings.useFS,(int)botSettings.fsMaxLVL);
-        wc =new Skill(bot,rootShell,Skill.SkillType.WC,botSettings.unlockWC, botSettings.useWC,(int)botSettings.wcMaxLvl);
-        sc =new Skill(bot,rootShell,Skill.SkillType.SC,botSettings.unlockSC, botSettings.useSC,(int)botSettings.scMaxLvl);
+        hs =new Skill(bot,rootShell,Skill.SkillType.HS,(int)botSettings.hsMaxLvl);
+        ds =new Skill(bot,rootShell,Skill.SkillType.DS,(int)botSettings.dsMaxLvl);
+        hom =new Skill(bot,rootShell,Skill.SkillType.HOM,(int)botSettings.homMaxLvl);
+        fs =new Skill(bot,rootShell,Skill.SkillType.FS,(int)botSettings.fsMaxLVL);
+        wc =new Skill(bot,rootShell,Skill.SkillType.WC,(int)botSettings.wcMaxLvl);
+        sc =new Skill(bot,rootShell,Skill.SkillType.SC,(int)botSettings.scMaxLvl);
         skillLevelParser = new SkillLevelParser(ibot);
         this.manaDetector = manaDetector;
-    }
-
-
-    public void activateAllSkills() throws IOException, InterruptedException {
-        hs.activateSkill();
-        ds.activateSkill();
-        hom.activateSkill();
-        fs.activateSkill();
-        wc.activateSkill();
-        sc.activateSkill();
     }
 
     @Override
@@ -99,7 +89,6 @@ public class Skills extends Menu {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                //minimiseMenu(task);
                 closeSwordMasterMenu(task);
             }
         }
@@ -142,7 +131,6 @@ public class Skills extends Menu {
 
         maximiseMenu(task);
 
-        //swipeUp();
         try {
             Thread.sleep(4000);
         } catch (InterruptedException e) {
@@ -163,16 +151,6 @@ public class Skills extends Menu {
 
     private boolean skipLevelUpSkills()
     {
-        /*if (!hsUnlocked && !botSettings.useHS
-                && dsUnlocked
-                && homUnlocked
-                && fsUnlocked
-                && wcUnlocked
-                && scUnlocked)
-            return true;
-        else if (hsUnlocked && botSettings.useHS && dsUnlocked && homUnlocked && fsUnlocked && wcUnlocked && scUnlocked)
-            return true;
-        else*/
             return false;
     }
 
@@ -200,14 +178,6 @@ public class Skills extends Menu {
 
     private void levelUpSkills(ExecuterTask task)
     {
-       /* try {
-            WaitLock.checkForErrorAndWait();
-            doSingelTap(Coordinates.Menu_SwordMasterPos,"level skill");
-            Thread.sleep(20);
-            WaitLock.checkForErrorAndWait();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
         WaitLock.checkForErrorAndWait();
         if (botSettings.unlockHS)
             hs.levelSkill(task);

@@ -42,7 +42,6 @@ public abstract class Menu extends Item
         maximise
     }
 
-
     public final Point MenuMaxButtonColorPosition = new Point(335,518);
     public final Point MenuMaximisedMaxButtonColorPosition = new Point(335,60);
     private int colorMenuOpen = Color.argb(255,84,76,76);
@@ -59,8 +58,6 @@ public abstract class Menu extends Item
         super(ibot, botSettings, rootShell);
         maxButtonColors = getMaxButtonColors();
     }
-
-
 
     public boolean isMenuTopReached()
     {
@@ -218,9 +215,6 @@ public abstract class Menu extends Item
         closeMenu(Coordinates.Menu_Artifacts,task);
     }
 
-
-
-
     public void maximiseMenu(ExecuterTask task)
     {
         while (!isMenuMaximized()&& !Thread.currentThread().isInterrupted() && !task.cancelTask) {
@@ -254,20 +248,6 @@ public abstract class Menu extends Item
         menuState = MenuState.open;
     }
 
-    public void gotToTop(ExecuterTask task) throws IOException, InterruptedException {
-        while (!isMenuTopReached() && !task.cancelTask && Menu.MenuOpen.get()) {
-            WaitLock.checkForErrorAndWait();
-            swipeUp();
-            WaitLock.checkForErrorAndWait();
-            Thread.sleep(300);
-            WaitLock.checkForErrorAndWait();
-        }
-       /* WaitLock.checkForErrorAndWait();
-        swipeUp();
-        WaitLock.checkForErrorAndWait();*/
-        Thread.sleep(100);
-    }
-
     public void gotToTopMaximised(ExecuterTask task) throws IOException, InterruptedException {
         while (!isMenuTopMaximisedReached() && !task.cancelTask && Menu.getMenuState() == MenuState.maximise) {
             WaitLock.checkForErrorAndWait();
@@ -276,9 +256,6 @@ public abstract class Menu extends Item
             Thread.sleep(300);
             WaitLock.checkForErrorAndWait();
         }
-       /* WaitLock.checkForErrorAndWait();
-        swipeUp();
-        WaitLock.checkForErrorAndWait();*/
         Thread.sleep(100);
     }
 
@@ -309,15 +286,10 @@ public abstract class Menu extends Item
         closeMenu();*/
 
         openHeroMenu(task);
-
-            swipeDown();
-            Thread.sleep(1000);
-            swipeDown();
-            Thread.sleep(1000);
-
-
-
+        swipeDown();
+        Thread.sleep(1000);
+        swipeDown();
+        Thread.sleep(1000);
     }
-
 
 }

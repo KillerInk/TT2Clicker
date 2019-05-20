@@ -117,12 +117,5 @@ public class Boss extends Menu {
             return;
         doLongerSingelTap(Coordinates.fightBossButton,"on bossfight");
         Thread.sleep(500);
-        /*int color = bot.getScreeCapture().getColor(Coordinates.fightBossButton_Color);
-        if(color == bossFightFailedColor)
-        {
-            rootShells[0].doTap(Coordinates.fightBossButton);
-            Thread.sleep(100);
-            Thread.sleep(300);
-        }*/
     }
 }

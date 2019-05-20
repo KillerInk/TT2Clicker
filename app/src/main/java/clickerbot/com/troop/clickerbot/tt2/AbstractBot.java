@@ -25,6 +25,7 @@ public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
     private Context context;
 
 
+    //Execute the tasks one by one
     private Executer executer;
     //handels the main logic and add tasks to the executer pool
     private Thread baseThread;
