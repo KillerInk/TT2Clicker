@@ -158,22 +158,29 @@ public class Skills extends Menu {
     {
         Log.d(TAG,"lvlSwordMaster");
         openSwordMasterMenu(task);
+        if (!isMenuMaximized())
+            maximiseMenu(task);
         try {
-            int loopbreaker = 0;
-            while (!isMenuTopReached() && loopbreaker < 25 && !task.cancelTask && Menu.MenuOpen.get()) {
-                loopbreaker++;
-                swipeUp();
-                Thread.sleep(200);
-            }
-            doSingelTap(Coordinates.Menu_Minimized_SwordMaster,"on minimize");
+            gotToTopMaximised(task);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        WaitLock.checkForErrorAndWait();
+        try {
 
+            doLongerSingelTap(Coordinates.Menu_SwordMasterPos,"on minimize");
             Thread.sleep(50);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         closeSwordMasterMenu(task);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void levelUpSkills(ExecuterTask task)
