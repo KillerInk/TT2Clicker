@@ -105,6 +105,10 @@ public class TT2Bot extends AbstractBot
      */
     private long lastUiUpdate = 0;
 
+    /**
+     * checks if the daily reward is avail and collect it
+     */
+    private CollectDailyReward collectDailyReward;
 
     /**
      *
@@ -131,9 +135,10 @@ public class TT2Bot extends AbstractBot
         autoLevelBos = new BOS(this,botSettings,touchInput);
         manaDetector = new ManaDetector(this,botSettings,touchInput);
         skills = new Skills(this,botSettings, touchInput, manaDetector);
+        collectDailyReward = new CollectDailyReward(this,botSettings,touchInput);
 
         //create the different tasks
-        executerTaskHashMap = new TaskFactory().getTasksmap(this,heros,skills,prestige,fairy,boss,autoLevelBos,randomTaps);
+        executerTaskHashMap = new TaskFactory().getTasksmap(this,heros,skills,prestige,fairy,boss,autoLevelBos,randomTaps,collectDailyReward);
         mediaProjectionScreenCapture.setScreenCaptureCallBack(this::onScreenCapture);
 
         Log.d(TAG,"TT2Bot()");
@@ -283,6 +288,7 @@ public class TT2Bot extends AbstractBot
             boss.checkIfActiveBossFight();
         }
         manaDetector.checkIfRdyToExecute();
+        collectDailyReward.checkIfRdyToExecute();
     }
 
     private String getTimeString(int dif)
