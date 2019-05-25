@@ -112,17 +112,20 @@ public abstract class Menu extends Item
         menuState = MenuState.closing;
         try {
             WaitLock.checkForErrorAndWait();
-            doSingelTap(Coordinates.Menu_Close,"closeMenu");
+            if (isMenuOpen())
+                doSingelTap(Coordinates.Menu_Close,"closeMenu");
+            if (isMenuMaximized())
+                doSingelTap(Coordinates.Menu_Close_Maximised,"closeMenu");
             WaitLock.checkForErrorAndWait();
             Thread.sleep(menuOpenCloseDelay);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         WaitLock.checkForErrorAndWait();
-        int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
-        if (color != colorMenuOpen)
+        if (!isMenuOpen() && !isMenuMaximized()) {
             MenuOpen.set(false);
-        menuState = MenuState.closed;
+            menuState = MenuState.closed;
+        }
         menuTaskRunning = false;
         Log.d(TAG, "closedMenu");
     }
@@ -155,10 +158,14 @@ public abstract class Menu extends Item
                 e.printStackTrace();
             }
         }
-        MenuOpen.set(true);
-        setMenuState(MenuState.open);
-        if (isMenuMaximized())
+        if (isMenuOpen()) {
+            MenuOpen.set(true);
+            setMenuState(MenuState.open);
+        }
+        if (isMenuMaximized()) {
+            MenuOpen.set(true);
             setMenuState(MenuState.maximise);
+        }
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
@@ -181,8 +188,10 @@ public abstract class Menu extends Item
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        MenuOpen.set(false);
-        setMenuState(MenuState.closed);
+        if (!isMenuOpen() && !isMenuMaximized()) {
+            MenuOpen.set(false);
+            setMenuState(MenuState.closed);
+        }
     }
 
     public void openSwordMasterMenu(ExecuterTask task)
@@ -219,7 +228,6 @@ public abstract class Menu extends Item
     {
         while (!isMenuMaximized()&& !Thread.currentThread().isInterrupted() && !task.cancelTask) {
             WaitLock.checkForErrorAndWait();
-            menuState = MenuState.maximise;
             try {
                 doSingelTap(Coordinates.Menu_Maximise,"maximiseMenu");
                 WaitLock.checkForErrorAndWait();
@@ -228,6 +236,8 @@ public abstract class Menu extends Item
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            if (isMenuMaximized())
+                menuState = MenuState.maximise;
         }
     }
 
@@ -245,7 +255,8 @@ public abstract class Menu extends Item
             }
 
         }
-        menuState = MenuState.open;
+        if (!isMenuMaximized() && isMenuOpen())
+            menuState = MenuState.open;
     }
 
     public void gotToTopMaximised(ExecuterTask task) throws IOException, InterruptedException {
