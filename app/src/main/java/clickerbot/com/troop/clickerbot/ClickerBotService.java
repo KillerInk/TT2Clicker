@@ -18,7 +18,6 @@ import android.view.Gravity;
 import android.view.WindowManager;
 
 import clickerbot.com.troop.clickerbot.screencapture.MediaProjectionScreenCapture;
-import clickerbot.com.troop.clickerbot.tt2.AbstractBot;
 import clickerbot.com.troop.clickerbot.tt2.BotSettings;
 import clickerbot.com.troop.clickerbot.tt2.TT2Bot;
 
@@ -116,7 +115,7 @@ public class ClickerBotService extends Service
 
         BotSettings botSettings = new BotSettings(preferences, getApplicationContext());
         tt2Bot = new TT2Bot(getApplicationContext(),botSettings,mediaProjectionScreenCapture);
-        tt2Bot.setUpdateUiCallBack(new AbstractBot.UpdateUi() {
+        tt2Bot.setUpdateUiCallBack(new TT2Bot.UpdateUi() {
             @Override
             public void updatePrestigeTime(String time) {
                 serviceView.post(() -> serviceView.setTextViewText(time));

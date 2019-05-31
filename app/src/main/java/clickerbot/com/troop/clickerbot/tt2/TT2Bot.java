@@ -1,11 +1,13 @@
 package clickerbot.com.troop.clickerbot.tt2;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import java.util.HashMap;
 import java.util.Random;
 
+import clickerbot.com.troop.clickerbot.ThreadController;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.screencapture.MediaProjectionScreenCapture;
 import clickerbot.com.troop.clickerbot.touch.NativeTouchHandler;
@@ -16,18 +18,28 @@ import clickerbot.com.troop.clickerbot.tt2.tasks.LevelSwordMasterTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.PrestigeTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.RandomTapTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.TaskFactory;
-import clickerbot.com.troop.clickerbot.tt2.tasks.test.ParseSkilllvlTest;
 
 /**
  * Main class that handels all Stuff
  */
-public class TT2Bot extends AbstractBot
+public class TT2Bot implements ThreadController.TickInterface
 {
+
+    public interface UpdateUi
+    {
+        void updatePrestigeTime(String time);
+        void updateImage(Bitmap bitmap);
+    }
+
+    private UpdateUi updateUi;
+
     private static final String TAG = TT2Bot.class.getSimpleName();
     //private final ClanQuest clanQuest;
 
     //Interface to the FakeTouchInput
     private TouchInterface touchInput;
+
+    private ThreadController threadController;
 
     /**
      * Holds the tasks to execute
@@ -35,6 +47,8 @@ public class TT2Bot extends AbstractBot
      */
     private HashMap<Class, ExecuterTask> executerTaskHashMap;
 
+
+    private BotSettings botSettings;
 
     /**
      * handels everything releated about skills
@@ -118,8 +132,8 @@ public class TT2Bot extends AbstractBot
      */
     public TT2Bot(Context context, BotSettings botSettings, MediaProjectionScreenCapture mediaProjectionScreenCapture)
     {
-        super(context,botSettings,mediaProjectionScreenCapture);
-
+        this.botSettings = botSettings;
+        threadController =new ThreadController(context, mediaProjectionScreenCapture,this);
         touchInput = new NativeTouchHandler(botSettings.inputPath,botSettings.mouseInput);
 
         randomTaps = new RandomTaps(this,botSettings,touchInput);
@@ -139,9 +153,17 @@ public class TT2Bot extends AbstractBot
 
         //create the different tasks
         executerTaskHashMap = new TaskFactory().getTasksmap(this,heros,skills,prestige,fairy,boss,autoLevelBos,randomTaps,collectDailyReward);
-        mediaProjectionScreenCapture.setScreenCaptureCallBack(this::onScreenCapture);
+        //mediaProjectionScreenCapture.setScreenCaptureCallBack(this::onScreenCapture);
 
         Log.d(TAG,"TT2Bot()");
+    }
+
+    public MediaProjectionScreenCapture getScreeCapture() {
+        return threadController.getScreeCapture();
+    }
+
+    public Context getContext() {
+        return threadController.getContext();
     }
 
     /**
@@ -150,7 +172,7 @@ public class TT2Bot extends AbstractBot
      */
     public void executeTask(Class task)
     {
-        execute(executerTaskHashMap.get(task));
+        threadController.execute(executerTaskHashMap.get(task));
     }
 
     /**
@@ -158,7 +180,14 @@ public class TT2Bot extends AbstractBot
      * @param task
      */
     public void putFirstAndExecuteTask(Class task) {
-        putFirstAndExecute(executerTaskHashMap.get(task));
+        threadController.putFirstAndExecute(executerTaskHashMap.get(task));
+    }
+
+    public void clearExecuterQueue(){ threadController.clearExecuterQueue(); }
+
+    public boolean getIsRunning()
+    {
+        return threadController.getIsRunning();
     }
 
     /**
@@ -168,7 +197,7 @@ public class TT2Bot extends AbstractBot
      */
     public void putTaskAtPos(Class task, int pos)
     {
-        putAtPos(executerTaskHashMap.get(task),pos);
+        threadController.putAtPos(executerTaskHashMap.get(task),pos);
     }
 
     /**
@@ -178,7 +207,7 @@ public class TT2Bot extends AbstractBot
      */
     public boolean containsTask(Class task)
     {
-        return containsT(executerTaskHashMap.get(task));
+        return threadController.containsT(executerTaskHashMap.get(task));
     }
 
     /**
@@ -202,7 +231,8 @@ public class TT2Bot extends AbstractBot
         lastTestExecuted = 0;
         touchInput.start();
         startTime = System.currentTimeMillis();
-        super.start();
+        WaitLock.resetWaitLocks();
+        threadController.start();
     }
 
     /**
@@ -210,11 +240,14 @@ public class TT2Bot extends AbstractBot
      */
     public void stop()
     {
+        if (updateUi != null)
+            updateUi.updatePrestigeTime("Stopping");
         Log.d(TAG,"stop");
-        super.stop();
+        threadController.stop();
         touchInput.stop();
         Log.d(TAG,"######################################stopped");
-
+        if (updateUi != null)
+            updateUi.updatePrestigeTime("Stopped");
     }
 
     /**
@@ -223,7 +256,7 @@ public class TT2Bot extends AbstractBot
      * @param tickCounter how often it has triggered
      */
     @Override
-    void onTick(long tickCounter) {
+    public void onTick(long tickCounter) {
         //as first action on start run the InitTask
         if (tickCounter == 1) {
            executeTask(InitTask.class);
@@ -267,13 +300,13 @@ public class TT2Bot extends AbstractBot
         if (botSettings.bossFailedCount >0)
             out += "BossFailed:" + boss.getBossFailedCounter()+"/"+ botSettings.bossFailedCount + "\n";
 
-        out += "Do: " + getActiveTaskName();
+        out += "Do: " + threadController.getActiveTaskName();
         UpdatePrestigeTime(out);
         lastUiUpdate = System.currentTimeMillis();
     }
 
     @Override
-    void onScreenParserTick() {
+    public void onScreenParserTick() {
         if (!WaitLock.clanquest.get()) {
             sceneTransitionChecker.checkIfRdyToExecute();
             subMenuOpenChecker.checkIfRdyToExecute();
@@ -359,16 +392,30 @@ public class TT2Bot extends AbstractBot
         return rand.nextInt(20) + 20 + Coordinates.crazy_touch_pos.y;
     }
 
-
-
-    /**
-     * gets repeating called by the Screencapture
-     * after a new frame is availible, reccomend not to hook in and do stuff there because
-     * it slowdown the frame copy
-     */
-    @Override
-    public void onScreenCapture() {
-        //UpdateImage(getScreeCapture().getBitmap());
-
+    public void setUpdateUiCallBack(UpdateUi updateUiCallBack)
+    {
+        this.updateUi = updateUiCallBack;
     }
+
+    public void UpdatePrestigeTime(String out)
+    {
+        if (updateUi != null)
+        {
+            updateUi.updatePrestigeTime(out);
+        }
+    }
+
+    public void UpdateImage(Bitmap bitmap)
+    {
+        if (updateUi != null)
+        {
+            updateUi.updateImage(bitmap);
+        }
+    }
+
+    public void resetTickCounter()
+    {
+        threadController.resetTickCounter();
+    }
+
 }

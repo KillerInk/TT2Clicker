@@ -1,18 +1,16 @@
-package clickerbot.com.troop.clickerbot.tt2;
+package clickerbot.com.troop.clickerbot;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.util.Log;
 
-import clickerbot.com.troop.clickerbot.IBot;
 import clickerbot.com.troop.clickerbot.executer.Executer;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.screencapture.MediaProjectionScreenCapture;
 import clickerbot.com.troop.clickerbot.screencapture.ScreenCaptureCallBack;
 
-public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
+public class ThreadController implements IBot ,ScreenCaptureCallBack
 {
-    private final static String TAG = AbstractBot.class.getSimpleName();
+    private final static String TAG = ThreadController.class.getSimpleName();
     private volatile boolean doWork = false;
 
     private long threadstarttime;
@@ -20,7 +18,6 @@ public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
     private long lastTick = 0;
     private volatile boolean isBaseThreadRunning = false;
     private volatile boolean isScreenParserRunning = false;
-    protected final BotSettings botSettings;
     protected MediaProjectionScreenCapture mediaProjectionScreenCapture;
     private Context context;
 
@@ -32,41 +29,31 @@ public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
     //handel screenParsing
     private Thread screenParserThread;
 
-    public interface UpdateUi
-    {
-        void updatePrestigeTime(String time);
-        void updateImage(Bitmap bitmap);
-    }
+    @Override
+    public void onScreenCapture() {
 
-    private UpdateUi updateUi;
-
-    public void setUpdateUiCallBack(UpdateUi updateUiCallBack)
-    {
-        this.updateUi = updateUiCallBack;
-    }
-
-    public void UpdatePrestigeTime(String out)
-    {
-        if (updateUi != null)
-        {
-            updateUi.updatePrestigeTime(out);
-        }
-    }
-
-    public void UpdateImage(Bitmap bitmap)
-    {
-        if (updateUi != null)
-        {
-            updateUi.updateImage(bitmap);
-        }
     }
 
 
-    public AbstractBot(Context context,BotSettings botSettings, MediaProjectionScreenCapture mediaProjectionScreenCapture){
-        this.botSettings = botSettings;
+
+
+    public interface TickInterface
+    {
+        void onTick(long tickCounter);
+        void onScreenParserTick();
+    }
+
+
+    private TickInterface tickInterface;
+
+
+
+
+    public ThreadController(Context context, MediaProjectionScreenCapture mediaProjectionScreenCapture, TickInterface tickInterface){
         this.mediaProjectionScreenCapture = mediaProjectionScreenCapture;
         executer = new Executer();
         this.context = context;
+        this.tickInterface = tickInterface;
     }
 
     @Override
@@ -128,9 +115,10 @@ public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
             while (doWork && !Thread.currentThread().isInterrupted())
             {
                 tickCounter++;
-                onTick(tickCounter);
+                if (tickInterface != null)
+                    tickInterface.onTick(tickCounter);
                 try {
-                    Thread.sleep(botSettings.mainLooperSleepTime);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -145,7 +133,8 @@ public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
             isScreenParserRunning = true;
             while (doWork && !Thread.currentThread().isInterrupted())
             {
-                onScreenParserTick();
+                if (tickInterface != null)
+                    tickInterface.onScreenParserTick();
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
@@ -165,8 +154,7 @@ public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
         baseThread.interrupt();
         screenParserThread.interrupt();
         Log.d(TAG,"Stopping");
-        if (updateUi != null)
-            updateUi.updatePrestigeTime("Stopping");
+
         while (isBaseThreadRunning || isScreenParserRunning) {
             try {
                 Thread.sleep(100);
@@ -179,13 +167,12 @@ public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
         Log.d(TAG,"Stopped threads, stopping mediaprojection");
         mediaProjectionScreenCapture.stop();
         try {
-            Thread.sleep(botSettings.mainLooperSleepTime);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         Log.d(TAG,"Stopped mediaprojection");
-        if (updateUi != null)
-            updateUi.updatePrestigeTime("Stopped");
+
         executer.clear();
         resetTickCounter();
     }
@@ -195,6 +182,4 @@ public abstract class AbstractBot implements IBot ,ScreenCaptureCallBack
         tickCounter = 0;
     }
 
-    abstract void onTick(long tickCounter);
-    abstract void onScreenParserTick();
 }
