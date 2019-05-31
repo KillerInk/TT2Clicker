@@ -32,7 +32,16 @@
                 android:background="@drawable/border"
                 custom:header_txt="Activate Skills only when above set %, set to 0 to always activate"
                 custom:setting_default="0"
-                custom:settingkey_id="@string/maxskillpercentage" />
+                custom:settingkey_id="@string/maxskillpercentage" >
+
+            </clickerbot.com.troop.clickerbot.views.LongEditText>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                custom:srcCompat="@drawable/hs" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -71,7 +80,13 @@
                 custom:setting_defaults="false"
                 custom:settingkey_ids="@string/useHs" />
 
-        <LinearLayout
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                custom:srcCompat="@drawable/ds" />
+
+            <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -108,7 +123,13 @@
                 custom:setting_defaults="false"
                 custom:settingkey_ids="@string/useDS" />
 
-        <LinearLayout
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                custom:srcCompat="@drawable/hom" />
+
+            <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -144,7 +165,13 @@
                 custom:setting_defaults="false"
                 custom:settingkey_ids="@string/useHom" />
 
-        <LinearLayout
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                custom:srcCompat="@drawable/fs" />
+
+            <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -178,7 +205,14 @@
                 android:text="UseFS"
                 custom:setting_defaults="false"
                 custom:settingkey_ids="@string/useFS" />
-        <LinearLayout
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                custom:srcCompat="@drawable/wc" />
+
+            <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -213,7 +247,14 @@
                 android:text="UseWC"
                 custom:setting_defaults="false"
                 custom:settingkey_ids="@string/useWC" />
-        <LinearLayout
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                custom:srcCompat="@drawable/sc" />
+
+            <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"

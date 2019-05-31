@@ -11,6 +11,7 @@
         android:layout_margin="@dimen/overall_margin"
         android:background="@drawable/border"
         android:text="MouseInput. Disable on Memu > 6.0.X"
+        android:textColor="#000000"
         custom:setting_defaults="true"
         custom:settingkey_ids="@string/mouseinput" />
 
@@ -21,7 +22,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="/dev/input/event6"
-        />
+        android:textColor="#000000" />
 
     <ScrollView
         android:layout_width="match_parent"
