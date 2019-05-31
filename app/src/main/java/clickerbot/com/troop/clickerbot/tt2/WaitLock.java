@@ -17,6 +17,16 @@ public class WaitLock
     public static AtomicBoolean clanquest = new AtomicBoolean();
     public static AtomicBoolean prestige = new AtomicBoolean();
 
+    public static void resetWaitLocks()
+    {
+        errorDetected.set(false);
+        fairyWindowDetected.set(false);
+        sceneTransition.set(false);
+        flashzip.set(false);
+        clanquest.set(false);
+        prestige.set(false);
+    }
+
     /**
      * manly used to detect failed taps that opened a unwanted window.
      * tells all listner to wait till its false
