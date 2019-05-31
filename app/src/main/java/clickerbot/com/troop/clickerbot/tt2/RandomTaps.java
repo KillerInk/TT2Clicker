@@ -107,7 +107,7 @@ public class RandomTaps extends Item {
                 WaitLock.waitForFlashZip();
                 touchInput.tap(points.get(i),30);
                 WaitLock.checkForErrorAndWait();
-                Thread.sleep(botSettings.clickSleepTime);
+                Thread.sleep(50);
                 WaitLock.checkForErrorAndWait();
             }
             Thread.sleep(100);

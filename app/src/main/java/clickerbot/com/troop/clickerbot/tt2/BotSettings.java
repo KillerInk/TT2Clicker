@@ -118,27 +118,6 @@ public class BotSettings {
     public final boolean runTests;
 
     /**
-     * time how often the mainLoop should trigger in ms
-     */
-    public final long mainLooperSleepTime;
-    /**
-     * time how often a screenCapture should trigger
-     */
-    public final long captureFrameSleepTime;
-    /**
-     * the delay between clicks for random and crazy taps
-     * if its to fast it can happen that the rootshells get flooded and die.
-     * for 1 shell you should take a value around 120-150ms.
-     * with using more shells you can decrase the time
-     */
-    public final long clickSleepTime;
-
-    /**
-     * number of shells that get created to run random and crazy taps
-     */
-    public final long shellcount;
-
-    /**
      * time after that the first 6 heros gets leveld
      */
     public final  long levelTop9HeroTime;
@@ -195,10 +174,6 @@ public class BotSettings {
         timeToPrestige = sharedPreferences.getLong(context.getString(R.string.prestigetime),60)*60*1000;
         randomTimeToPrestige = sharedPreferences.getLong(context.getString(R.string.prestigerandomtime),10);
         bossFailedCount = sharedPreferences.getLong(context.getString(R.string.prestigeafterbossfail),3);
-        mainLooperSleepTime = sharedPreferences.getLong(context.getString(R.string.mainLooperSleep),500);
-        captureFrameSleepTime = sharedPreferences.getLong(context.getString(R.string.captureFrameSleep),800);
-        clickSleepTime = sharedPreferences.getLong(context.getString(R.string.clicksleeptime),80);
-        shellcount = sharedPreferences.getLong(context.getString(R.string.shellcount),10) +1;
         swipeLength = sharedPreferences.getLong(context.getString(R.string.swipelength),100);
         levelTop9HeroTime = sharedPreferences.getLong(context.getString(R.string.levelherostime),120)*1000;
         levelAllHeroTime = sharedPreferences.getLong(context.getString(R.string.levelallherostime),9)*60*1000;
