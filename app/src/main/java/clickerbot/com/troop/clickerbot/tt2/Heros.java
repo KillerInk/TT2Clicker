@@ -178,8 +178,8 @@ public class Heros extends Menu {
             Log.d(TAG, "task canceld:" + task.cancelTask);
         }
         if (canlevel) {
-            canlevel = Menu.MenuOpen.get() == true || Menu.getMenuState() == MenuState.maximise;
-            Log.d(TAG, "MenuOPen:" + Menu.MenuOpen);
+            canlevel =  Menu.getMenuState() != MenuState.closed;
+            Log.d(TAG, "MenuOPen:" + Menu.getMenuState());
         }
         return canlevel;
     }

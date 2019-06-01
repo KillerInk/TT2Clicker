@@ -96,12 +96,12 @@ public class RandomTaps extends Item {
      */
     public void tapOnPoints(List<Point> points, ExecuterTask task)
     {
-        if (points == null )
+        if (points == null  || Menu.getMenuState() != Menu.MenuState.closed)
             return;
         try {
             for (int i=0; i < points.size(); i++)
             {
-                if (task.cancelTask)
+                if (task.cancelTask || Menu.getMenuState() != Menu.MenuState.closed)
                     return;
                 WaitLock.checkForErrorAndWait();
                 WaitLock.waitForFlashZip();

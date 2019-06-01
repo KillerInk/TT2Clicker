@@ -33,7 +33,7 @@ public class SceneTransitionChecker extends Menu {
             if(howOftenDetected > 3) {
                 //Log.d(TAG, "scene Transition color:" + color + " expectedcolor:" + shopButtonColor);
                 howOftenDetected++;
-                if (System.currentTimeMillis() - lastTap > 200 && !Menu.MenuOpen.get()) {
+                if (System.currentTimeMillis() - lastTap > 200 && Menu.getMenuState() == MenuState.closed) {
                     lastTap = System.currentTimeMillis();
                     doSingelTap(new Point(bot.getRandomX(), bot.getRandomY()), "sceneTransition");
                 }

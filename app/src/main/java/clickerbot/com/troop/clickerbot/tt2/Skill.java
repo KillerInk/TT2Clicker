@@ -113,7 +113,7 @@ public class Skill {
 
     public void detectSkillState()
     {
-        if (!Menu.MenuOpen.get() && Menu.getMenuState() != Menu.MenuState.maximise) {
+        if (Menu.getMenuState() == Menu.MenuState.closed) {
             int color = bot.getScreeCapture().getColor(getSkillColorPoint());
             SkillState state;
             if (color == COLOR_RDY_SKILL)
@@ -155,7 +155,7 @@ public class Skill {
 
     public void activateSkill()
     {
-        if (skillState != SkillState.locked && skillState != SkillState.active && skillState != SkillState.outOfMana && !Menu.MenuOpen.get() && Menu.getMenuState() != Menu.MenuState.maximise)
+        if (skillState != SkillState.locked && skillState != SkillState.active && skillState != SkillState.outOfMana && Menu.getMenuState() == Menu.MenuState.closed)
         {
             WaitLock.checkForErrorAndWait();
             if (WaitLock.clanquest.get())

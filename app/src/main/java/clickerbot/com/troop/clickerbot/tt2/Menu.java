@@ -16,7 +16,7 @@ import clickerbot.com.troop.clickerbot.tt2.tasks.MenuCloseTask;
 public abstract class Menu extends Item
 {
     private final String TAG = Menu.class.getSimpleName();
-    public static AtomicBoolean MenuOpen = new AtomicBoolean(false);
+
 
     private final int menuOpenCloseDelay = 1000;
     ArrayList<Integer> maxButtonColors;
@@ -98,8 +98,7 @@ public abstract class Menu extends Item
     {
         int color = bot.getScreeCapture().getColor(menuOpenCheckPoint);
         if (!WaitLock.sceneTransition.get() && !WaitLock.fairyWindowDetected.get() && !WaitLock.clanquest.get()) {
-            MenuOpen.set(color == colorMenuOpen);
-            if (MenuOpen.get() && !menuTaskRunning && menuState == MenuState.closed) {
+            if ((isMenuOpen() || isMenuMaximized()) && !menuTaskRunning && menuState == MenuState.closed) {
                 menuTaskRunning = true;
                 bot.putFirstAndExecuteTask(MenuCloseTask.class);
             }
@@ -123,7 +122,6 @@ public abstract class Menu extends Item
         }
         WaitLock.checkForErrorAndWait();
         if (!isMenuOpen() && !isMenuMaximized()) {
-            MenuOpen.set(false);
             menuState = MenuState.closed;
         }
         menuTaskRunning = false;
@@ -159,11 +157,9 @@ public abstract class Menu extends Item
             }
         }
         if (isMenuOpen()) {
-            MenuOpen.set(true);
             setMenuState(MenuState.open);
         }
         if (isMenuMaximized()) {
-            MenuOpen.set(true);
             setMenuState(MenuState.maximise);
         }
         try {
@@ -189,7 +185,6 @@ public abstract class Menu extends Item
             e.printStackTrace();
         }
         if (!isMenuOpen() && !isMenuMaximized()) {
-            MenuOpen.set(false);
             setMenuState(MenuState.closed);
         }
     }

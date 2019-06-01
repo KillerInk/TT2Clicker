@@ -7,6 +7,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import clickerbot.com.troop.clickerbot.ColorUtils;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.ClanQuestTask;
@@ -49,11 +50,11 @@ public class ClanQuest extends Menu {
 
     @Override
     boolean checkIfRdyToExecute() {
-        if(botSettings.autoClanQuest && System.currentTimeMillis() - lastPrestigeCheck > 1000 && !Menu.MenuOpen.get() && !WaitLock.sceneTransition.get()) {
+        if(botSettings.autoClanQuest && System.currentTimeMillis() - lastPrestigeCheck > 1000 && Menu.getMenuState() == MenuState.closed && !WaitLock.sceneTransition.get()) {
             lastPrestigeCheck = System.currentTimeMillis();
             WaitLock.checkForErrorAndWait();
             int color = bot.getScreeCapture().getColor(cq_button_color_pos);
-            if (Color.red(color) > 120 && Color.red(color) < 140 && !WaitLock.sceneTransition.get() && !WaitLock.fairyWindowDetected.get()) {
+            if (ColorUtils.redIsInRange(color,120,140)  && !WaitLock.sceneTransition.get() && !WaitLock.fairyWindowDetected.get()) {
                 howOftenDetected++;
                 if(howOftenDetected > 2) {
                     howOftenDetected = 0;

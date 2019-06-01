@@ -112,11 +112,11 @@ public class FlashZip extends Menu {
 
     public void checkFlashZipAreasAndTap()
     {
-        if (Menu.MenuOpen.get())
+        if (Menu.getMenuState() != MenuState.closed)
             return;
         for (int i =0; i< FLASH_ZIP_Areas.length; i++)
         {
-            if (bot.getScreeCapture().getColor(FLASH_ZIP_Areas[i]) == flashZipColor && !Menu.MenuOpen.get() && Menu.getMenuState() != MenuState.maximise) {
+            if (bot.getScreeCapture().getColor(FLASH_ZIP_Areas[i]) == flashZipColor && Menu.getMenuState() == MenuState.closed) {
                 WaitLock.lockFlashZip(true);
                 doSingelTap(FLASH_ZIP_Areas[i],"flashzip");
                 WaitLock.lockFlashZip(false);

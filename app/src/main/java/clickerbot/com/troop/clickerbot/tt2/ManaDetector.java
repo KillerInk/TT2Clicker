@@ -44,7 +44,7 @@ public class ManaDetector extends Menu
         int i = manaBarPosMAX_X;
         while (i > 0)
         {
-            if (!Menu.MenuOpen.get() && Menu.getMenuState() != Menu.MenuState.maximise) {
+            if (Menu.getMenuState() == MenuState.closed) {
                 int color = bot.getScreeCapture().getColor(new Point(i, manaBarPos_Y));
                 if (color == Color.WHITE) {
                     manaPercentage = (int)((double)i / (double)manaBarPosMAX_X * 100);

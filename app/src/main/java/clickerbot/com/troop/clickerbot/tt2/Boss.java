@@ -59,7 +59,11 @@ public class Boss extends Menu {
 
     public void checkIfActiveBossFight()
     {
-        if (WaitLock.fairyWindowDetected.get() || WaitLock.sceneTransition.get() || WaitLock.errorDetected.get() || WaitLock.clanquest.get())
+        if (WaitLock.fairyWindowDetected.get()
+                || WaitLock.sceneTransition.get()
+                || WaitLock.errorDetected.get()
+                || WaitLock.clanquest.get()
+                || Menu.getMenuState() != MenuState.closed)
             return;
         int color = bot.getScreeCapture().getColor(Coordinates.fightBossButton_Color);
         if (color ==  bossFightActiveColor)

@@ -29,7 +29,7 @@ public class CollectDailyReward extends Menu {
 
     @Override
     boolean checkIfRdyToExecute() {
-        if (System.currentTimeMillis() - lastDailyCheck > 1000 && !Menu.MenuOpen.get() && !WaitLock.sceneTransition.get())
+        if (System.currentTimeMillis() - lastDailyCheck > 1000 && Menu.getMenuState() == MenuState.closed && !WaitLock.sceneTransition.get())
         {
             lastDailyCheck = System.currentTimeMillis();
             WaitLock.checkForErrorAndWait();
