@@ -60,8 +60,15 @@ public class Heros extends Menu {
                 lastAllHerosLeveld = System.currentTimeMillis();
                 lastTop6HerosLeveld = System.currentTimeMillis();
             }
-            if (boss.getBossState() != Boss.BossState.BossFightActive && timeOver()) {
-                Log.v(TAG, "level Top6 Heros");
+            if (boss.getBossState() != Boss.BossState.BossFightActive && timeOver() && !botSettings.lvlHerosWhileInBossFight) {
+                Log.v(TAG, "level Top Heros");
+                bot.executeTask(LevelTopHerosTask.class);
+                lastTop6HerosLeveld = System.currentTimeMillis();
+                return true;
+            }
+            else if (timeOver() && botSettings.lvlHerosWhileInBossFight)
+            {
+                Log.v(TAG, "level Top Heros");
                 bot.executeTask(LevelTopHerosTask.class);
                 lastTop6HerosLeveld = System.currentTimeMillis();
                 return true;

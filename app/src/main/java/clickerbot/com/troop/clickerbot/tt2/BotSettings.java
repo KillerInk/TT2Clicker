@@ -66,6 +66,8 @@ public class BotSettings {
      * autmatic level up heros
      */
     public final boolean autoLvlHeros;
+
+    public final boolean lvlHerosWhileInBossFight;
     /**
      * automatic level up skills
      * need later to add specfic wich skill should get level about how many levels
@@ -160,6 +162,7 @@ public class BotSettings {
         autoLvlBos = sharedPreferences.getBoolean(context.getString(R.string.autobos),true);
         autoClanQuest = sharedPreferences.getBoolean(context.getString(R.string.autoqc),false);
         autoLvlHeros = sharedPreferences.getBoolean(context.getString(R.string.autolvlheros),false);
+        lvlHerosWhileInBossFight = sharedPreferences.getBoolean(context.getString(R.string.lvlheroswhileinbossfight),false);
         autoLvlSkills = sharedPreferences.getBoolean(context.getString(R.string.autolvlskills),false);
         clickOnFairys = sharedPreferences.getBoolean(context.getString(R.string.clickonfairyadds),false);
         acceptFairyAdds = sharedPreferences.getBoolean(context.getString(R.string.acceptfairyadds),false);

@@ -17,6 +17,7 @@
     <string name="after_boss_failed">after_boss_failed</string>
     <string name="autoTap">autoTap</string>
     <string name="autolvlheros">autolvlheros</string>
+    <string name="lvlheroswhileinbossfight">lvlheroswhileinbossfight</string>
     <string name="mouseinput">mouseinput</string>
     <string name="autolvlskills">autolvlskills</string>
     <string name="clickonfairyadds">clickonfairyadds</string>
