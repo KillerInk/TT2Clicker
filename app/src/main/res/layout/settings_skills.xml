@@ -289,6 +289,12 @@
                 custom:setting_defaults="false"
                 custom:settingkey_ids="@string/useSC" />
 
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                custom:srcCompat="@drawable/aaw" />
+
             <clickerbot.com.troop.clickerbot.views.SettingsSwitch
                 android:id="@+id/useAAW"
                 android:layout_width="match_parent"
@@ -298,6 +304,12 @@
                 android:text="use AstralAwakening"
                 custom:setting_defaults="false"
                 custom:settingkey_ids="@string/useaaw" />
+
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                custom:srcCompat="@drawable/co" />
 
             <clickerbot.com.troop.clickerbot.views.SettingsSwitch
                 android:id="@+id/useCO"
@@ -309,6 +321,12 @@
                 custom:setting_defaults="false"
                 custom:settingkey_ids="@string/useco" />
 
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                custom:srcCompat="@drawable/phom" />
+
             <clickerbot.com.troop.clickerbot.views.SettingsSwitch
                 android:id="@+id/usephom"
                 android:layout_width="match_parent"
@@ -318,6 +336,12 @@
                 android:text="use Heart of Midas (PHOM)"
                 custom:setting_defaults="false"
                 custom:settingkey_ids="@string/usephom" />
+
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                custom:srcCompat="@drawable/flashzip" />
 
             <clickerbot.com.troop.clickerbot.views.SettingsSwitch
                 android:id="@+id/useFLashZip"
