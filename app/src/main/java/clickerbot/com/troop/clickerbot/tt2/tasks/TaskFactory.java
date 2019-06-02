@@ -7,6 +7,7 @@ import clickerbot.com.troop.clickerbot.tt2.BOS;
 import clickerbot.com.troop.clickerbot.tt2.Boss;
 import clickerbot.com.troop.clickerbot.tt2.ClanQuest;
 import clickerbot.com.troop.clickerbot.tt2.CollectDailyReward;
+import clickerbot.com.troop.clickerbot.tt2.CollectInBoxRewward;
 import clickerbot.com.troop.clickerbot.tt2.Fairy;
 import clickerbot.com.troop.clickerbot.tt2.Heros;
 import clickerbot.com.troop.clickerbot.tt2.Prestige;
@@ -16,7 +17,16 @@ import clickerbot.com.troop.clickerbot.tt2.TT2Bot;
 
 public class TaskFactory {
 
-    public HashMap<Class, ExecuterTask> getTasksmap(TT2Bot bot, Heros heros, Skills skills, Prestige prestige, Fairy fairy, Boss boss, BOS bos, RandomTaps randomTaps, CollectDailyReward reward)
+    public HashMap<Class, ExecuterTask> getTasksmap(TT2Bot bot,
+                                                    Heros heros,
+                                                    Skills skills,
+                                                    Prestige prestige,
+                                                    Fairy fairy,
+                                                    Boss boss,
+                                                    BOS bos,
+                                                    RandomTaps randomTaps,
+                                                    CollectDailyReward reward,
+                                                    CollectInBoxRewward inBoxRewward)
     {
         HashMap<Class, ExecuterTask> tasksmap = new HashMap<>();
         tasksmap.put(InitTask.class,new InitTask(bot));
@@ -32,6 +42,7 @@ public class TaskFactory {
         //tasksmap.put(ClanQuestTask.class,new ClanQuestTask(clanQuest));
         tasksmap.put(AutoLevelBOSTask.class,new AutoLevelBOSTask(bos));
         tasksmap.put(CollectDailyTask.class, new CollectDailyTask(reward));
+        tasksmap.put(CollectInboxRewardTask.class, new CollectInboxRewardTask(inBoxRewward));
         return tasksmap;
     }
 

@@ -124,6 +124,8 @@ public class TT2Bot implements ThreadController.TickInterface
      */
     private CollectDailyReward collectDailyReward;
 
+    private CollectInBoxRewward collectInBoxRewward;
+
     /**
      *
      * @param context from the Application
@@ -150,9 +152,10 @@ public class TT2Bot implements ThreadController.TickInterface
         manaDetector = new ManaDetector(this,botSettings,touchInput);
         skills = new Skills(this,botSettings, touchInput, manaDetector);
         collectDailyReward = new CollectDailyReward(this,botSettings,touchInput);
+        collectInBoxRewward = new CollectInBoxRewward(this,botSettings,touchInput);
 
         //create the different tasks
-        executerTaskHashMap = new TaskFactory().getTasksmap(this,heros,skills,prestige,fairy,boss,autoLevelBos,randomTaps,collectDailyReward);
+        executerTaskHashMap = new TaskFactory().getTasksmap(this,heros,skills,prestige,fairy,boss,autoLevelBos,randomTaps,collectDailyReward,collectInBoxRewward);
         //mediaProjectionScreenCapture.setScreenCaptureCallBack(this::onScreenCapture);
 
         Log.d(TAG,"TT2Bot()");
@@ -322,6 +325,7 @@ public class TT2Bot implements ThreadController.TickInterface
         }
         manaDetector.checkIfRdyToExecute();
         collectDailyReward.checkIfRdyToExecute();
+        collectInBoxRewward.checkIfRdyToExecute();
     }
 
     private String getTimeString(int dif)
