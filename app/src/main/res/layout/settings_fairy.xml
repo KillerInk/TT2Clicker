@@ -6,68 +6,76 @@
     android:layout_margin="@dimen/overall_margin"
     android:orientation="vertical">
 
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/clickOnFairys"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Click On Fairys"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/clickonfairyadds" />
 
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/autotap"
+        android:id="@+id/isVip"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
         android:layout_margin="@dimen/overall_margin"
         android:background="@drawable/border"
-        android:text="Auto Tap"
+        android:text="is Vip Fairy, no adds"
         custom:setting_defaults="false"
-        custom:settingkey_ids="@string/autoTap" />
-
-    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/autoLvlSwordMaster"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/settingitem_height"
-        android:layout_margin="@dimen/overall_margin"
-        android:background="@drawable/border"
-        android:text="Auto level Swormaster"
-        custom:setting_defaults="false"
-        custom:settingkey_ids="@string/autolvlswordmaster" />
-
-    <clickerbot.com.troop.clickerbot.views.LongEditText
-        android:id="@+id/levelswordmastertime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/overall_margin"
-        android:background="@drawable/border"
-        custom:header_txt="Level SworMaster every XX min"
-        custom:setting_default="3"
-        custom:settingkey_id="@string/levelswordmastertime" />
-
-    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/autoCollectEgg"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/settingitem_height"
-        android:layout_margin="@dimen/overall_margin"
-        android:background="@drawable/border"
-        android:text="Auto collect Eggs"
-        custom:setting_defaults="false"
-        custom:settingkey_ids="@string/autocollectegg" />
-
-    <!--<clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/autoQc"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/settingitem_height"
-        android:layout_margin="@dimen/overall_margin"
-        android:background="@drawable/border"
-        android:text="Auto Clan Quest"
-        custom:setting_defaults="false"
-        custom:settingkey_ids="@string/autoqc" />-->
-
+        custom:settingkey_ids="@string/acceptfairyadds" />
 
 
     <clickerbot.com.troop.clickerbot.views.SettingsSwitch
-        android:id="@+id/runTests"
+        android:id="@+id/collectDiasFairy"
         android:layout_width="match_parent"
         android:layout_height="@dimen/settingitem_height"
         android:layout_margin="@dimen/overall_margin"
         android:background="@drawable/border"
-        android:text="Run Tests instead of botting,ONLY FOR DEVELOPING!"
+        android:text="Collect Diamant Fairy"
         custom:setting_defaults="false"
-        custom:settingkey_ids="@string/runtests" />
+        custom:settingkey_ids="@string/collectdiasFairy" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/collectSkillsFairy"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Collect Skills Fairy"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/collectskillsFairy" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/collectGoldFairy"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Collect Gold Fairy"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/collectGoldFairy" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/collectReduceGoldFairy"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Collect Reduce Gold Fairy"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/collectReduceGoldFairy" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/collectManaFairy"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Collect Mana Fairy"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/collectManaFairy" />
 
 
 </LinearLayout>

@@ -59,6 +59,11 @@ public class ShellInputEventHandler implements TouchInterface {
         }
     }
 
+    @Override
+    public void backButton() {
+
+    }
+
     private RootShell getShell()
     {
         RootShell shell = rootShells[lastShell++];

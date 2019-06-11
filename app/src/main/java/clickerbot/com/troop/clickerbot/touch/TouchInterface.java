@@ -10,4 +10,5 @@ public interface TouchInterface {
     void close();
     void start();
     void stop();
+    void backButton();
 }

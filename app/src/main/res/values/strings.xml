@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Clickerbot</string>
+    <string name="collectdiasFairy">collectdiasfairy</string>
+    <string name="collectskillsFairy">collectskillsfairy</string>
+    <string name="collectGoldFairy">collectgoldfairy</string>
+    <string name="collectReduceGoldFairy">collectreducegoldfairy</string>
+    <string name="collectManaFairy">collectmanafairy</string>
 </resources>

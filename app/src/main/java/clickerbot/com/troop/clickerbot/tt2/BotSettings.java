@@ -80,7 +80,7 @@ public class BotSettings {
     /**
      * accept fairy adds, should get used with VIP!
      */
-    public final boolean acceptFairyAdds;
+    public final boolean isVipFairy;
     /**
      * do auto prestige
      */
@@ -143,6 +143,12 @@ public class BotSettings {
 
     public final int skillManaLimit;
 
+    public final boolean collectGoldFairy;
+    public final boolean collectReduceGoldFairy;
+    public final boolean collectManaFairy;
+    public final boolean collectSkillsFairy;
+    public final boolean collectDiasFairy;
+
     public BotSettings(SharedPreferences sharedPreferences,Context context)
     {
         useHS = sharedPreferences.getBoolean(context.getString(R.string.useHs),false);
@@ -159,13 +165,13 @@ public class BotSettings {
         unlockSC = sharedPreferences.getBoolean(context.getString(R.string.unlockSC),false);
         doAutoTap = sharedPreferences.getBoolean(context.getString(R.string.autoTap),false);
         mouseInput = sharedPreferences.getBoolean(context.getString(R.string.mouseinput),true);
-        autoLvlBos = sharedPreferences.getBoolean(context.getString(R.string.autobos),true);
+        autoLvlBos = sharedPreferences.getBoolean(context.getString(R.string.autobos),false);
         autoClanQuest = sharedPreferences.getBoolean(context.getString(R.string.autoqc),false);
         autoLvlHeros = sharedPreferences.getBoolean(context.getString(R.string.autolvlheros),false);
         lvlHerosWhileInBossFight = sharedPreferences.getBoolean(context.getString(R.string.lvlheroswhileinbossfight),false);
         autoLvlSkills = sharedPreferences.getBoolean(context.getString(R.string.autolvlskills),false);
         clickOnFairys = sharedPreferences.getBoolean(context.getString(R.string.clickonfairyadds),false);
-        acceptFairyAdds = sharedPreferences.getBoolean(context.getString(R.string.acceptfairyadds),false);
+        isVipFairy = sharedPreferences.getBoolean(context.getString(R.string.acceptfairyadds),false);
         autoPrestige = sharedPreferences.getBoolean(context.getString(R.string.auto_prestige),false);
         autoLvlSwordMaster = sharedPreferences.getBoolean(context.getString(R.string.autolvlswordmaster),false);
         useAAW = sharedPreferences.getBoolean(context.getString(R.string.useaaw),false);
@@ -190,6 +196,12 @@ public class BotSettings {
         scMaxLvl = sharedPreferences.getLong(context.getString(R.string.scmaxlvl),0);
         skillManaLimit = (int)sharedPreferences.getLong(context.getString(R.string.maxskillpercentage),0);
         inputPath = sharedPreferences.getString(context.getString(R.string.inputpath),"/dev/input/event6");
+
+        collectGoldFairy = sharedPreferences.getBoolean(context.getString(R.string.collectGoldFairy),false);
+        collectReduceGoldFairy = sharedPreferences.getBoolean(context.getString(R.string.collectReduceGoldFairy),false);
+        collectSkillsFairy = sharedPreferences.getBoolean(context.getString(R.string.collectskillsFairy),false);
+        collectManaFairy = sharedPreferences.getBoolean(context.getString(R.string.collectManaFairy),false);
+        collectDiasFairy = sharedPreferences.getBoolean(context.getString(R.string.collectdiasFairy),false);
         Log.i(TAG, "Skills used HS:" + useHS + " DS:" + useDS+" Hom:"+useHOM+" FS:" + useFS + " WC:"+useWC +" SC: "+useSC);
         Log.i(TAG,"auto lvl heros:" + autoLvlHeros + " auto Tap:" + doAutoTap + " auto lvl skills"+ autoLvlSkills);
         Log.i(TAG, "time to prestige ms:" + timeToPrestige + " bossfailed:" + bossFailedCount);

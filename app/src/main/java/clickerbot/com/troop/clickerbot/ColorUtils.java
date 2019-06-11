@@ -1,6 +1,7 @@
 package clickerbot.com.troop.clickerbot;
 
 import android.graphics.Color;
+import android.util.Log;
 
 public class ColorUtils {
 
@@ -64,5 +65,10 @@ public class ColorUtils {
         if (r +10 > g && r -10 < g && r+10 > b && r-10 < b)
             return true;
         return  false;
+    }
+
+    public static String logColor(int color)
+    {
+       return  "R:" + Color.red(color) + " G:" + Color.green(color) + " B:"+Color.blue(color);
     }
 }

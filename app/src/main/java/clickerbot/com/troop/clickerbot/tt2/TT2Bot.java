@@ -315,7 +315,11 @@ public class TT2Bot implements ThreadController.TickInterface
             subMenuOpenChecker.checkIfRdyToExecute();
         }
 
-        fairy.checkIfFairyWindowOpen();
+        try {
+            fairy.checkIfFairyWindowOpen();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         heros.checkIfMenuOpen();
         if (botSettings.useFlashZip)
             flashZip.checkFlashZipAreasAndTap();

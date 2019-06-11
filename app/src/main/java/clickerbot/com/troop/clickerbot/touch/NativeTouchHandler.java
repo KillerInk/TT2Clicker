@@ -20,6 +20,7 @@ import static clickerbot.com.troop.clickerbot.CmdBuilder.DOWN;
 import static clickerbot.com.troop.clickerbot.CmdBuilder.EV_ABS;
 import static clickerbot.com.troop.clickerbot.CmdBuilder.EV_KEY;
 import static clickerbot.com.troop.clickerbot.CmdBuilder.EV_SYN;
+import static clickerbot.com.troop.clickerbot.CmdBuilder.KEY_BACK;
 import static clickerbot.com.troop.clickerbot.CmdBuilder.SYN_MT_REPORT;
 import static clickerbot.com.troop.clickerbot.CmdBuilder.SYN_REPORT;
 import static clickerbot.com.troop.clickerbot.CmdBuilder.UP;
@@ -143,6 +144,19 @@ public class NativeTouchHandler implements TouchInterface {
     @Override
     public void stop() {
 
+    }
+
+    @Override
+    public void backButton() {
+        nativeTouch.sendEvent(EV_KEY, KEY_BACK,DOWN);
+        nativeTouch.sendEvent(EV_SYN, SYN_MT_REPORT,0);
+        try {
+            Thread.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        nativeTouch.sendEvent(EV_KEY, KEY_BACK,UP);
+        nativeTouch.sendEvent(EV_SYN, SYN_MT_REPORT,0);
     }
 
     private boolean sendMTpressure = false;
