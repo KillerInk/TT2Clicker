@@ -148,10 +148,13 @@ public class NativeTouchHandler implements TouchInterface {
 
     @Override
     public void backButton() {
+        nativeTouch.sendEvent(EV_ABS, ABS_MT_TRACKING_ID, CmdBuilder.maxint);
+        nativeTouch.sendEvent(EV_ABS, ABS_MT_SLOT,0);
+        nativeTouch.sendEvent(EV_SYN, SYN_REPORT,0);
         nativeTouch.sendEvent(EV_KEY, KEY_BACK,DOWN);
         nativeTouch.sendEvent(EV_SYN, SYN_MT_REPORT,0);
         try {
-            Thread.sleep(1);
+            Thread.sleep(30);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

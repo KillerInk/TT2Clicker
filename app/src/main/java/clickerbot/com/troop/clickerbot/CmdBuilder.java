@@ -25,7 +25,7 @@ public class CmdBuilder
     public final static int ABS_MT_ORIENTATION	=0x34;	/* Ellipse orientation */
     public final static int ABS_MT_POSITION_X	=    0x35;	/* Center X touch position */
     public final static int ABS_MT_POSITION_Y	=    0x36;	/* Center Y touch position */
-    public final static int KEY_BACK	=   0x116;
+    public final static int KEY_BACK	=   158;//0x116;
     //        #define ABS_MT_TOOL_TYPE	    0x37	/* Type of touching device */
 //        #define ABS_MT_BLOB_ID		0x38	/* Group a set of packets as a blob */
     public final static int ABS_MT_TRACKING_ID = 0x39;	/* Unique ID of initiated contact */

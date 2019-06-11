@@ -37,7 +37,7 @@ public class RandomTaps extends Item {
 
     @Override
     public void init(ExecuterTask task) {
-        int startTapPoints = 40;
+        int startTapPoints = 60;
         if (botSettings.useFlashZip || botSettings.useAAW)
             startTapPoints -=30;
         if (botSettings.doAutoTap)
@@ -110,7 +110,7 @@ public class RandomTaps extends Item {
                 Thread.sleep(50);
                 WaitLock.checkForErrorAndWait();
             }
-            Thread.sleep(100);
+            Thread.sleep(50);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

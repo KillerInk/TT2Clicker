@@ -11,6 +11,7 @@ import java.util.Random;
 import clickerbot.com.troop.clickerbot.ColorUtils;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
+import clickerbot.com.troop.clickerbot.tt2.tasks.TapOnFairyVipWindowTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.TapOnFairysTask;
 
 public class Fairy extends Menu {
@@ -94,56 +95,75 @@ public class Fairy extends Menu {
         int color2 = bot.getScreeCapture().getColor(fairyColorAccept); // -13981229
         // Log.v(TAG,"checkIfFairyWindowOpen color accept " + ColorUtils.getColorString(color2));
         // Log.d(TAG, "fairy window open: "  + (ColorUtils.redEquals(color,251) && ColorUtils.blueIsInRange(color2,194,262)));
-        if (ColorUtils.redEquals(color,117) && ColorUtils.blueIsInRange(color2,189,262))// <<<<<<<< DIFF
+        if (ColorUtils.redEquals(color,117) && ColorUtils.blueIsInRange(color2,189,262) && !WaitLock.fairyWindowDetected.get())// <<<<<<<< DIFF
         {
-            WaitLock.lockFairyWindow(true);
+            //WaitLock.lockFairyWindow(true);
             howOftenDetected++;
             if(howOftenDetected > 2) {
                 howOftenDetected = 0;
 
-                if (isDiasFairy() && botSettings.collectDiasFairy) {
-                    Log.d(TAG, "Dias Fairy detected");
-                    acceptFairyAndHandelAdds();
-                }
-                else if (isGoldFairy() && botSettings.collectGoldFairy) {
-                    Log.d(TAG, "Gold Fairy detected");
-                    acceptFairyAndHandelAdds();
-                }
-                else if (isManaFairy() && botSettings.collectManaFairy) {
-                    Log.d(TAG, "Mana Fairy detected");
-                    acceptFairyAndHandelAdds();
-                }
-                else if (isReduceGoldFairy() && botSettings.collectReduceGoldFairy) {
-                    Log.d(TAG, "ReduceGold Fairy detected");
-                    acceptFairyAndHandelAdds();
-                }
-                else if (isSkillFairy() && botSettings.collectSkillsFairy) {
-                    Log.d(TAG, "Skill Fairy detected");
-                    acceptFairyAndHandelAdds();
-                }
-                else
-                {
-                    doSingelTap(decline_Pos,"decline fairy add");
-                }
-
+                if (!bot.containsTask(TapOnFairyVipWindowTask.class))
+                    bot.putFirstAndExecuteTask(TapOnFairyVipWindowTask.class);
             }
             //bot.putFirstAndExecuteTask(TapOnFairyVipWindowTask.class);
         }
         else {
-            WaitLock.lockFairyWindow(false);
             if (howOftenDetected > 0)
                 howOftenDetected--;
         }
     }
 
+    public void collectFairyAd(ExecuterTask task) throws InterruptedException {
+        WaitLock.lockFairyWindow(true);
+        if (isDiasFairy() && botSettings.collectDiasFairy) {
+            Log.d(TAG, "Dias Fairy detected");
+            acceptFairyAndHandelAdds();
+        }
+        else if (isGoldFairy() && botSettings.collectGoldFairy) {
+            Log.d(TAG, "Gold Fairy detected");
+            acceptFairyAndHandelAdds();
+        }
+        else if (isManaFairy() && botSettings.collectManaFairy) {
+            Log.d(TAG, "Mana Fairy detected");
+            acceptFairyAndHandelAdds();
+        }
+        else if (isReduceGoldFairy() && botSettings.collectReduceGoldFairy) {
+            Log.d(TAG, "ReduceGold Fairy detected");
+            acceptFairyAndHandelAdds();
+        }
+        else if (isSkillFairy() && botSettings.collectSkillsFairy) {
+            Log.d(TAG, "Skill Fairy detected");
+            acceptFairyAndHandelAdds();
+        }
+        else
+        {
+            doSingelTap(decline_Pos,"decline fairy add");
+        }
+        Thread.sleep(1000);
+        WaitLock.lockFairyWindow(false);
+    }
+
+    private int collectColor = Color.argb(255,40,167,209);
+    private Point collectColor_Pos = new Point(239,592);
+
     private void acceptFairyAndHandelAdds() throws InterruptedException {
         doSingelTap(accept_Pos,"accept fairy add");
         if (!botSettings.isVipFairy)
         {
-            Thread.sleep(31000);
+            Log.d(TAG, "Wait for ad end");
+            Thread.sleep(33000);
+            Log.d(TAG, "PressBack");
             touchInput.backButton();
-            Thread.sleep(1000);
-            doSingelTap(new Point(239,604),"Collect");
+            Thread.sleep(2000);
+            int loopbreaker = 0;
+            while (bot.getScreeCapture().getColor(collectColor_Pos) != collectColor && loopbreaker < 8) {
+                loopbreaker++;
+                Log.d(TAG, "PressBack");
+                touchInput.backButton();
+                Thread.sleep(2000);
+            }
+            Log.d(TAG, "Click collect");
+            doSingelTap(collectColor_Pos,"Collect");
         }
     }
 
@@ -176,9 +196,9 @@ public class Fairy extends Menu {
         return isColorFromPos(manaColor1_Pos, manaColor2_Pos, manaColor1, manaColor2);
     }
 
-    private int diasColor1 = Color.argb(255,59,230,244);
+    private int diasColor1 = Color.argb(255,244,244,244);
     private Point diasColor1_Pos = new Point(249,382);
-    private int diasColor2 = Color.argb(255,130,45,8);
+    private int diasColor2 = Color.argb(255,181,216,249);
     private Point diasColor2_Pos = new Point(265,423);
 
     private boolean isDiasFairy()

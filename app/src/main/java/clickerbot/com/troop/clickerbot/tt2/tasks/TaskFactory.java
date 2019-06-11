@@ -43,6 +43,7 @@ public class TaskFactory {
         tasksmap.put(AutoLevelBOSTask.class,new AutoLevelBOSTask(bos));
         tasksmap.put(CollectDailyTask.class, new CollectDailyTask(reward));
         tasksmap.put(CollectInboxRewardTask.class, new CollectInboxRewardTask(inBoxRewward));
+        tasksmap.put(TapOnFairyVipWindowTask.class, new TapOnFairyVipWindowTask(fairy));
         return tasksmap;
     }
 

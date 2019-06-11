@@ -13,6 +13,10 @@ public class TapOnFairyVipWindowTask extends ExecuterTask {
 
     @Override
     public void doTask() {
-        fairy.tapOnFairyVipWindow();
+        try {
+            fairy.collectFairyAd(this);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
