@@ -33,6 +33,10 @@ public class Fairy extends Menu {
     private int howOftenDetected;
     private RandomTaps randomTaps;
 
+    private boolean fairyTaskIsRunning = false;
+
+    private long lastFairyAdCollectRun;
+
 
     public Fairy(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell,RandomTaps randomTaps) {
         super(ibot, botSettings, rootShell);
@@ -46,6 +50,7 @@ public class Fairy extends Menu {
                 fairyTaps.add(new Point(400, getRandomFairyY()));
             }
         }
+        lastFairyAdCollectRun = System.currentTimeMillis();
     }
 
     @Override
@@ -61,6 +66,7 @@ public class Fairy extends Menu {
             else
                 fairyTaps.add(decline_Pos);
         }
+        lastFairyAdCollectRun = System.currentTimeMillis();
     }
 
     @Override
@@ -90,6 +96,8 @@ public class Fairy extends Menu {
     }
 
     public void checkIfFairyWindowOpen() throws InterruptedException {
+        if (fairyTaskIsRunning || System.currentTimeMillis() - lastFairyAdCollectRun  < 5000)
+            return;
         int color = bot.getScreeCapture().getColor(fairyColorDecline);//-294644
         // Log.v(TAG,"checkIfFairyWindowOpen color decline " + ColorUtils.getColorString(color));
         int color2 = bot.getScreeCapture().getColor(fairyColorAccept); // -13981229
@@ -114,6 +122,9 @@ public class Fairy extends Menu {
     }
 
     public void collectFairyAd(ExecuterTask task) throws InterruptedException {
+        if (System.currentTimeMillis() - lastFairyAdCollectRun < 5000)
+            return;
+        fairyTaskIsRunning = true;
         WaitLock.lockFairyWindow(true);
         if (isDiasFairy() && botSettings.collectDiasFairy) {
             Log.d(TAG, "Dias Fairy detected");
@@ -140,7 +151,9 @@ public class Fairy extends Menu {
             doSingelTap(decline_Pos,"decline fairy add");
         }
         Thread.sleep(1000);
+        lastFairyAdCollectRun = System.currentTimeMillis();
         WaitLock.lockFairyWindow(false);
+        fairyTaskIsRunning = false;
     }
 
     private int collectColor = Color.argb(255,40,167,209);
@@ -151,19 +164,29 @@ public class Fairy extends Menu {
         if (!botSettings.isVipFairy)
         {
             Log.d(TAG, "Wait for ad end");
-            Thread.sleep(33000);
+            for (int i= 0; i< 40; i++)
+            {
+                Thread.sleep(1000);
+                Log.d(TAG, "Waited " + i + "sec");
+            }
             Log.d(TAG, "PressBack");
             touchInput.backButton();
+            Thread.sleep(30);
             Thread.sleep(2000);
             int loopbreaker = 0;
-            while (bot.getScreeCapture().getColor(collectColor_Pos) != collectColor && loopbreaker < 8) {
+            int color = bot.getScreeCapture().getColor(collectColor_Pos);
+            while (color != collectColor && loopbreaker < 8) {
                 loopbreaker++;
-                Log.d(TAG, "PressBack");
-                touchInput.backButton();
                 Thread.sleep(2000);
+                Log.d(TAG,"Wait again " + loopbreaker *2 +"sec");
+                color = bot.getScreeCapture().getColor(collectColor_Pos);
             }
             Log.d(TAG, "Click collect");
             doSingelTap(collectColor_Pos,"Collect");
+            Thread.sleep(1000);
+            color = bot.getScreeCapture().getColor(collectColor_Pos);
+            if (color == collectColor)
+                doSingelTap(collectColor_Pos,"Collect");
         }
     }
 
