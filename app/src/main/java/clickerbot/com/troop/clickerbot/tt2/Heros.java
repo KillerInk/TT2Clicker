@@ -4,6 +4,8 @@ import android.graphics.Point;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import clickerbot.com.troop.clickerbot.ColorUtils;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
@@ -21,7 +23,7 @@ public class Heros extends Menu {
 
     private final int hero_click_X = 424;
     private final int hero_color_X = 470;
-    private final int[] hero_Y_coordinates = new int[]{
+    private Integer[] hero_Y_coordinates = new Integer[]{
             134,
             214,
             289,
@@ -94,6 +96,7 @@ public class Heros extends Menu {
         gotToTopMaximised(task);
         WaitLock.checkForErrorAndWait();
         Thread.sleep(300);
+        hero_Y_coordinates = getHero_Y_coordinates();
         for (int i = 0; i< hero_Y_coordinates.length; i++)
         {
             WaitLock.checkForErrorAndWait();
@@ -129,6 +132,7 @@ public class Heros extends Menu {
         Thread.sleep(300);
         int loopbreaker = 0;
         while (!isMenuTopMaximisedReached() && breakCondition(loopbreaker,5,task)) {
+            hero_Y_coordinates = getHero_Y_coordinates();
             for (int i = 0; i < hero_Y_coordinates.length; i++) {
                 WaitLock.checkForErrorAndWait();
                 levelhero(new Point(hero_color_X, hero_Y_coordinates[i]), new Point(hero_click_X, hero_Y_coordinates[i]), task, 1);
@@ -207,5 +211,40 @@ public class Heros extends Menu {
             canlvl = true;
         Log.v(TAG,"canLevelHero "+heroid+": " + canlvl + " " +ColorUtils.getColorString(color));
         return canlvl;
+    }
+
+    private Integer[] getHero_Y_coordinates()
+    {
+        List<Integer> list =new ArrayList<>();
+        int[] colors = bot.getScreeCapture().getColorFromOneVerticalLine(hero_color_X,50,760);
+        int start = 0;
+        int end =50;
+        boolean waitforstart = true;
+        boolean lastColorWasGray = true;
+        int t = 0;
+        while(t < colors.length)
+        {
+            if (t == 0 && !ColorUtils.isGray(colors[t])) {
+                waitforstart = false;
+                lastColorWasGray = false;
+                start = 0;
+            }
+            else if (waitforstart && !ColorUtils.isGray(colors[t]) && lastColorWasGray)
+            {
+                waitforstart = false;
+                lastColorWasGray = false;
+                start = t;
+            }
+            else if (!waitforstart && !lastColorWasGray && ColorUtils.isGray(colors[t]))
+            {
+                waitforstart = true;
+                lastColorWasGray = true;
+                int dif = (start +(t - start) /2)+50;
+                list.add(dif);
+            }
+            t++;
+        }
+
+        return list.toArray(new Integer[list.size()]);
     }
 }

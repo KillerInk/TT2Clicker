@@ -195,6 +195,23 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
         return color;
     }
 
+
+    public int[] getColorFromOneVerticalLine(int x, int start_y, int end_y)
+    {
+        int[] arr = null;
+        synchronized (bitmapLOCK) {
+            if (inputbmp != null && inputbmp.getWidth() > 0 && inputbmp.getHeight() > 0){
+                arr = new int[(end_y - start_y)+1];
+                int i = 0;
+                for (int y = start_y; y < end_y; y++)
+                {
+                    arr[i++] = inputbmp.getPixel(x, y);
+                }
+            }
+        }
+        return arr;
+    }
+
     @Override
     public void onImageAvailable(ImageReader reader) {
         frames++;
