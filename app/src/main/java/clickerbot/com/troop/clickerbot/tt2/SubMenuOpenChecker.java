@@ -30,30 +30,32 @@ public class SubMenuOpenChecker extends Menu {
         int color2 = bot.getScreeCapture().getColor(skill_sub_menu_point);
         int color3 = bot.getScreeCapture().getColor(cq_close_button_click_pos);
         int color4 = bot.getScreeCapture().getColor(profile_close_button_click_pos);
-        if (!WaitLock.prestige.get()){
-        //window from hero menu and clicked on a hero
-        if (color == hero_sub_menu_color) {
-            WaitLock.lockError(true);
-            doSingelTap(hero_sub_menu_point,"Random Touch opened Hero Submenu");
-        }
-        //window from swordmaster menu and clicked on a skill
-        else if (color2 == hero_sub_menu_color) {
-            WaitLock.lockError(true);
-            doSingelTap(skill_sub_menu_point,"Random Touch opened Skill Submenu");
-        }
-        else if (!WaitLock.clanquest.get() && color3 == hero_sub_menu_color)
-        {
-            doSingelTap(cq_close_button_click_pos,"Close cq window");
-        }
-        //window from swordmaster menu and clicked on swordmaster
-        else if (color4 == hero_sub_menu_color)
-        {
-            doSingelTap(profile_close_button_click_pos,"Random Touch opened profile Submenu");
-        }
-        else
-        {
-            WaitLock.lockError(false);
-        }
+        if (!WaitLock.prestige.get() && !WaitLock.fairyWindowDetected.get()){
+            //window from hero menu and clicked on a hero
+            if (color == hero_sub_menu_color) {
+                WaitLock.lockError(true);
+                doSingelTap(hero_sub_menu_point,"Random Touch opened Hero Submenu");
+            }
+            //window from swordmaster menu and clicked on a skill
+            else if (color2 == hero_sub_menu_color) {
+                WaitLock.lockError(true);
+                doSingelTap(skill_sub_menu_point,"Random Touch opened Skill Submenu");
+            }
+            else if (!WaitLock.clanquest.get() && color3 == hero_sub_menu_color)
+            {
+                WaitLock.lockError(true);
+                doSingelTap(cq_close_button_click_pos,"Close cq window");
+            }
+            //window from swordmaster menu and clicked on swordmaster
+            else if (color4 == hero_sub_menu_color)
+            {
+                WaitLock.lockError(true);
+                doSingelTap(profile_close_button_click_pos,"Random Touch opened profile Submenu");
+            }
+            else
+            {
+                WaitLock.lockError(false);
+            }
         }
         return false;
     }
