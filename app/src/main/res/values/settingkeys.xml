@@ -51,4 +51,6 @@
     <string name="levelallheroscount">levelallheroscount</string>
     <string name="levelswordmastertime">levelswordmastertime</string>
     <string name="inputpath">inputpath</string>
+
+    <string name="lvlartifacts">lvlArtifacts</string>
 </resources>

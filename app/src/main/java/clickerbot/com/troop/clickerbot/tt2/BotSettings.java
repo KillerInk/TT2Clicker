@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import clickerbot.com.troop.clickerbot.R;
 
 public class BotSettings {
@@ -149,6 +152,9 @@ public class BotSettings {
     public final boolean collectSkillsFairy;
     public final boolean collectDiasFairy;
 
+    public final List<Artifacts> artifactsListToLvl;
+    public final boolean levelArtifacts;
+
     public BotSettings(SharedPreferences sharedPreferences,Context context)
     {
         useHS = sharedPreferences.getBoolean(context.getString(R.string.useHs),false);
@@ -205,6 +211,128 @@ public class BotSettings {
         Log.i(TAG, "Skills used HS:" + useHS + " DS:" + useDS+" Hom:"+useHOM+" FS:" + useFS + " WC:"+useWC +" SC: "+useSC);
         Log.i(TAG,"auto lvl heros:" + autoLvlHeros + " auto Tap:" + doAutoTap + " auto lvl skills"+ autoLvlSkills);
         Log.i(TAG, "time to prestige ms:" + timeToPrestige + " bossfailed:" + bossFailedCount);
+
+
+        levelArtifacts = sharedPreferences.getBoolean(context.getString(R.string.lvlartifacts),false);
+        artifactsListToLvl = new ArrayList<>();
+        if(levelArtifacts)
+        {
+            if (sharedPreferences.getBoolean(context.getString(R.string.lvlbookofshadows),false))
+                artifactsListToLvl.add(Artifacts.BookOfShadows);
+            if (sharedPreferences.getBoolean(context.getString(R.string.lvlchargedcard),false))
+                artifactsListToLvl.add(Artifacts.ChargedCard);
+            if (sharedPreferences.getBoolean(context.getString(R.string.lvlstof),false))
+                artifactsListToLvl.add(Artifacts.StonesOfValrunes);
+            if (sharedPreferences.getBoolean(context.getString(R.string.lvlchestofcontentment),false))
+                artifactsListToLvl.add(Artifacts.ChestOfContentment);
+            if (sharedPreferences.getBoolean(context.getString(R.string.lvlheroicshield),false))
+                artifactsListToLvl.add(Artifacts.HeroicShield);
+            if (sharedPreferences.getBoolean(context.getString(R.string.lvlbookofprophecy),false))
+                artifactsListToLvl.add(Artifacts.BookOfProphecy);
+            if (sharedPreferences.getBoolean(context.getString(R.string.lvlkhrysosbowl),false))
+                artifactsListToLvl.add(Artifacts.KhrysosBowl);
+            if (sharedPreferences.getBoolean(context.getString(R.string.lvlzakyntoscoin),false))
+                artifactsListToLvl.add(Artifacts.ZakynthosCoin);
+            if (sharedPreferences.getBoolean(context.getString(R.string.lvlgreatfaymedallion),false))
+                artifactsListToLvl.add(Artifacts.GreatFayMedallion);
+            if (sharedPreferences.getBoolean(context.getString(R.string.lvlnekosculpture),false))
+                artifactsListToLvl.add(Artifacts.NekoSculpture);
+            if (sharedPreferences.getBoolean(context.getString(R.string.lvlcoinofebizu),false))
+                artifactsListToLvl.add(Artifacts.CoinsOfEbizu);
+            if (sharedPreferences.getBoolean(context.getString(R.string.lvlbronzecompass),false))
+                artifactsListToLvl.add(Artifacts.TheBronzedCompass);
+            if (sharedPreferences.getBoolean(context.getString(R.string.evergrowingstack),false))
+                artifactsListToLvl.add(Artifacts.EvergrowingStack);
+            if (sharedPreferences.getBoolean(context.getString(R.string.FluteOfTheSoloist),false))
+                artifactsListToLvl.add(Artifacts.FluteOfTheSoloist);
+            if (sharedPreferences.getBoolean(context.getString(R.string.HeavenlySword),false))
+                artifactsListToLvl.add(Artifacts.HeavenlySword);
+            if (sharedPreferences.getBoolean(context.getString(R.string.DivineRetribution),false))
+                artifactsListToLvl.add(Artifacts.DivineRetribution);
+            if (sharedPreferences.getBoolean(context.getString(R.string.DrunkenHammer),false))
+                artifactsListToLvl.add(Artifacts.DrunkenHammer);
+            if (sharedPreferences.getBoolean(context.getString(R.string.SamosekSword),false))
+                artifactsListToLvl.add(Artifacts.SamosekSword);
+            if (sharedPreferences.getBoolean(context.getString(R.string.TheRetaliator),false))
+                artifactsListToLvl.add(Artifacts.TheRetaliator);
+            if (sharedPreferences.getBoolean(context.getString(R.string.StryfesPace),false))
+                artifactsListToLvl.add(Artifacts.StryfesPace);
+            if (sharedPreferences.getBoolean(context.getString(R.string.HerosBlade),false))
+                artifactsListToLvl.add(Artifacts.HerosBlade);
+            if (sharedPreferences.getBoolean(context.getString(R.string.TheSwordOfStorms),false))
+                artifactsListToLvl.add(Artifacts.TheSwordOfStorms);
+            if (sharedPreferences.getBoolean(context.getString(R.string.FuriesBow),false))
+                artifactsListToLvl.add(Artifacts.FuriesBow);
+            if (sharedPreferences.getBoolean(context.getString(R.string.CharmOfTheAncient),false))
+                artifactsListToLvl.add(Artifacts.CharmOfTheAncient);
+            if (sharedPreferences.getBoolean(context.getString(R.string.TinyTitanTree),false))
+                artifactsListToLvl.add(Artifacts.TinyTitanTree);
+            if (sharedPreferences.getBoolean(context.getString(R.string.HelmOfHermes),false))
+                artifactsListToLvl.add(Artifacts.HelmOfHermes);
+            if (sharedPreferences.getBoolean(context.getString(R.string.FruitOfEden),false))
+                artifactsListToLvl.add(Artifacts.FruitOfEden);
+            if (sharedPreferences.getBoolean(context.getString(R.string.InfluentialElixir),false))
+                artifactsListToLvl.add(Artifacts.InfluentialElixir);
+            if (sharedPreferences.getBoolean(context.getString(R.string.ORyansCharm),false))
+                artifactsListToLvl.add(Artifacts.ORyansCharm);
+            if (sharedPreferences.getBoolean(context.getString(R.string.HeartOfStorms),false))
+                artifactsListToLvl.add(Artifacts.HeartOfStorms);
+            if (sharedPreferences.getBoolean(context.getString(R.string.ApolloOrb),false))
+                artifactsListToLvl.add(Artifacts.ApolloOrb);
+            if (sharedPreferences.getBoolean(context.getString(R.string.EaringsOfPortara),false))
+                artifactsListToLvl.add(Artifacts.EaringsOfPortara);
+            if (sharedPreferences.getBoolean(context.getString(R.string.AvianFeather),false))
+                artifactsListToLvl.add(Artifacts.AvianFeather);
+            if (sharedPreferences.getBoolean(context.getString(R.string.CorruptedRuneHeart),false))
+                artifactsListToLvl.add(Artifacts.CorruptedRuneHeart);
+            if (sharedPreferences.getBoolean(context.getString(R.string.DurendalSword),false))
+                artifactsListToLvl.add(Artifacts.DurendalSword);
+            if (sharedPreferences.getBoolean(context.getString(R.string.HelheimSkull),false))
+                artifactsListToLvl.add(Artifacts.HelheimSkull);
+            if (sharedPreferences.getBoolean(context.getString(R.string.OathsBurden),false))
+                artifactsListToLvl.add(Artifacts.OathsBurden);
+            if (sharedPreferences.getBoolean(context.getString(R.string.CrownOfConstellation),false))
+                artifactsListToLvl.add(Artifacts.CrownOfConstellation);
+            if (sharedPreferences.getBoolean(context.getString(R.string.TitaniasSceptre),false))
+                artifactsListToLvl.add(Artifacts.TitaniasSceptre);
+            if (sharedPreferences.getBoolean(context.getString(R.string.FaginsGrip),false))
+                artifactsListToLvl.add(Artifacts.FaginsGrip);
+            if (sharedPreferences.getBoolean(context.getString(R.string.RingOfCallisto),false))
+                artifactsListToLvl.add(Artifacts.RingOfCallisto);
+            if (sharedPreferences.getBoolean(context.getString(R.string.BladeOfDamocles),false))
+                artifactsListToLvl.add(Artifacts.BladeOfDamocles);
+            if (sharedPreferences.getBoolean(context.getString(R.string.HelmetOfMadness),false))
+                artifactsListToLvl.add(Artifacts.HelmetOfMadness);
+            if (sharedPreferences.getBoolean(context.getString(R.string.TitaniumPlating),false))
+                artifactsListToLvl.add(Artifacts.TitaniumPlating);
+            if (sharedPreferences.getBoolean(context.getString(R.string.MoonlightBracelet),false))
+                artifactsListToLvl.add(Artifacts.MoonlightBracelet);
+            if (sharedPreferences.getBoolean(context.getString(R.string.AmethystStaff),false))
+                artifactsListToLvl.add(Artifacts.AmethystStaff);
+            if (sharedPreferences.getBoolean(context.getString(R.string.SwordOfTheRoyals),false))
+                artifactsListToLvl.add(Artifacts.SwordOfTheRoyals);
+            if (sharedPreferences.getBoolean(context.getString(R.string.SpearitsVigil),false))
+                artifactsListToLvl.add(Artifacts.SpearitsVigil);
+            if (sharedPreferences.getBoolean(context.getString(R.string.SigilsOfJudgement),false))
+                artifactsListToLvl.add(Artifacts.SigilsOfJudgement);
+            if (sharedPreferences.getBoolean(context.getString(R.string.FoliageOfTheKeeper),false))
+                artifactsListToLvl.add(Artifacts.FoliageOfTheKeeper);
+            if (sharedPreferences.getBoolean(context.getString(R.string.InvadersGjalarhorn),false))
+                artifactsListToLvl.add(Artifacts.InvadersGjalarhorn);
+            if (sharedPreferences.getBoolean(context.getString(R.string.TitansMask),false))
+                artifactsListToLvl.add(Artifacts.TitansMask);
+            if (sharedPreferences.getBoolean(context.getString(R.string.RoyalToxin),false))
+                artifactsListToLvl.add(Artifacts.RoyalToxin);
+            if (sharedPreferences.getBoolean(context.getString(R.string.LaborersPendant),false))
+                artifactsListToLvl.add(Artifacts.LaborersPendant);
+            if (sharedPreferences.getBoolean(context.getString(R.string.BringerOfRagnarok),false))
+                artifactsListToLvl.add(Artifacts.BringerOfRagnarok);
+            if (sharedPreferences.getBoolean(context.getString(R.string.ParchmentOfForesight),false))
+                artifactsListToLvl.add(Artifacts.ParchmentOfForesight);
+            if (sharedPreferences.getBoolean(context.getString(R.string.ElixirOfEden),false))
+                artifactsListToLvl.add(Artifacts.ElixirOfEden);
+
+        }
 
     }
 

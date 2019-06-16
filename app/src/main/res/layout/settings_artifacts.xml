@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/overall_margin"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/lvlArtifacts"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level Artifacts after Prestige"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/lvlartifacts" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/lvlBookOfShadows"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level Book Of Shadows"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/lvlbookofshadows" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/lvlChargedCard"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level Charged Card"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/lvlchargedcard" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/lvlstof"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level Stone Of Valrunes"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/lvlstof" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/lvlchestofcontment"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level Chest of Contentment"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/lvlchestofcontentment" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/lvlheroicshiled"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level Heroic Shield"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/lvlheroicshield" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/lvlbookofprophecy"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level Book of Prophecy"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/lvlbookofprophecy" />
+
+            <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/lvlkrysosbowl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level Khrysos Bowl"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/lvlkhrysosbowl" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/lvlzakynthoscoin"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level Zakynthos Coin"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/lvlzakyntoscoin" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/lvlgreatfaymedallion"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level Great Fay Medallion"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/lvlgreatfaymedallion" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/lvlnekosculpure"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level Neko Sculpture"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/lvlnekosculpture" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/coinofebizu"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level Coin Of Ebizu"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/lvlcoinofebizu" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/bronzecompass"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level Bronze Compass"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/lvlbronzecompass" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/evergrowingstack"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level Evergrowing Stack"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/evergrowingstack" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/FluteOfTheSoloist"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level FluteOfTheSoloist"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/FluteOfTheSoloist" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/HeavenlySword"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level HeavenlySword"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/HeavenlySword" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/DivineRetribution"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level DivineRetribution"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/DivineRetribution" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/DrunkenHammer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level DrunkenHammer"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/DrunkenHammer" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/SamosekSword"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level SamosekSword"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/SamosekSword" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/TheRetaliator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level TheRetaliator"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/TheRetaliator" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/StryfesPace"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level StryfesPace"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/StryfesPace" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/HerosBlade"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level HerosBlade"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/HerosBlade" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/TheSwordOfStorms"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level TheSwordOfStorms"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/TheSwordOfStorms" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/FuriesBow"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level FuriesBow"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/FuriesBow" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/CharmOfTheAncient"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level CharmOfTheAncient"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/CharmOfTheAncient" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/TinyTitanTree"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level TinyTitanTree"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/TinyTitanTree" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/HelmOfHermes"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level HelmOfHermes"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/HelmOfHermes" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/FruitOfEden"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level FruitOfEden"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/FruitOfEden" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/InfluentialElixir"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level InfluentialElixir"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/InfluentialElixir" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/ORyansCharm"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level ORyansCharm"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/ORyansCharm" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/HeartOfStorms"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level HeartOfStorms"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/HeartOfStorms" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/ApolloOrb"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level ApolloOrb"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/ApolloOrb" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/EaringsOfPortara"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level EaringsOfPortara"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/EaringsOfPortara" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/AvianFeather"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level AvianFeather"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/AvianFeather" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/CorruptedRuneHeart"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level CorruptedRuneHeart"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/CorruptedRuneHeart" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/DurendalSword"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level DurendalSword"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/DurendalSword" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/HelheimSkull"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level HelheimSkull"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/HelheimSkull" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/OathsBurden"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level OathsBurden"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/OathsBurden" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/CrownOfConstellation"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level CrownOfConstellation"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/CrownOfConstellation" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/TitaniasSceptre"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level TitaniasSceptre"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/TitaniasSceptre" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/FaginsGrip"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level FaginsGrip"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/FaginsGrip" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/RingOfCallisto"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level RingOfCallisto"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/RingOfCallisto" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/BladeOfDamocles"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level BladeOfDamocles"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/BladeOfDamocles" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/HelmetOfMadness"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level HelmetOfMadness"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/HelmetOfMadness" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/TitaniumPlating"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level TitaniumPlating"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/TitaniumPlating" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/MoonlightBracelet"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level MoonlightBracelet"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/MoonlightBracelet" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/AmethystStaff"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level AmethystStaff"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/AmethystStaff" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/SwordOfTheRoyals"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level SwordOfTheRoyals"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/SwordOfTheRoyals" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/SpearitsVigil"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level SpearitsVigil"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/SpearitsVigil" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/TheCobaltPlate"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level TheCobaltPlate"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/TheCobaltPlate" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/SigilsOfJudgement"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level SigilsOfJudgement"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/SigilsOfJudgement" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/FoliageOfTheKeeper"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level FoliageOfTheKeeper"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/FoliageOfTheKeeper" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/InvadersGjalarhorn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level InvadersGjalarhorn"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/InvadersGjalarhorn" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/TitansMask"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level TitansMask"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/TitansMask" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/RoyalToxin"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level RoyalToxin"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/RoyalToxin" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/LaborersPendant"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level LaborersPendant"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/LaborersPendant" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/BringerOfRagnarok"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level BringerOfRagnarok"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/BringerOfRagnarok" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/ParchmentOfForesight"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level ParchmentOfForesight"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/ParchmentOfForesight" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/ElixirOfEden"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Level ElixirOfEden"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/ElixirOfEden" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
