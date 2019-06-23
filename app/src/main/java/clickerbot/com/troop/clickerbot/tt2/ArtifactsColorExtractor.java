@@ -41,64 +41,66 @@ public class ArtifactsColorExtractor extends Menu {
         super(ibot, botSettings, rootShell);
         artifacts = Artifacts.values();
         artifactImgs = new Bitmap[58];
-        artifactImgs[0] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._0);
-        artifactImgs[1] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._1);
-        artifactImgs[2] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._2);
-        artifactImgs[3] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._3);
-        artifactImgs[4] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._4);
-        artifactImgs[5] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._5);
-        artifactImgs[6] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._6);
-        artifactImgs[7] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._7);
-        artifactImgs[8] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._8);
-        artifactImgs[9] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._9);
-        artifactImgs[10] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._10);
-        artifactImgs[11] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._11);
-        artifactImgs[12] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._12);
-        artifactImgs[13] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._13);
-        artifactImgs[14] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._14);
-        artifactImgs[15] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._15);
-        artifactImgs[16] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._16);
-        artifactImgs[17] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._17);
-        artifactImgs[18] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._18);
-        artifactImgs[19] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._19);
-        artifactImgs[20] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._20);
-        artifactImgs[21] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._21);
-        artifactImgs[22] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._22);
-        artifactImgs[23] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._23);
-        artifactImgs[24] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._24);
-        artifactImgs[25] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._25);
-        artifactImgs[26] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._26);
-        artifactImgs[27] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._27);
-        artifactImgs[28] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._28);
-        artifactImgs[29] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._29);
-        artifactImgs[30] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._30);
-        artifactImgs[31] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._31);
-        artifactImgs[32] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._32);
-        artifactImgs[33] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._33);
-        artifactImgs[34] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._34);
-        artifactImgs[35] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._35);
-        artifactImgs[36] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._36);
-        artifactImgs[37] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._37);
-        artifactImgs[38] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._38);
-        artifactImgs[39] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._39);
-        artifactImgs[40] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._40);
-        artifactImgs[41] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._41);
-        artifactImgs[42] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._42);
-        artifactImgs[43] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._43);
-        artifactImgs[44] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._44);
-        artifactImgs[45] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._45);
-        artifactImgs[46] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._46);
-        artifactImgs[47] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._47);
-        artifactImgs[48] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._48);
-        artifactImgs[49] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._49);
-        artifactImgs[50] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._50);
-        artifactImgs[51] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._51);
-        artifactImgs[52] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._52);
-        artifactImgs[53] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._53);
-        artifactImgs[54] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._54);
-        artifactImgs[55] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._55);
-        artifactImgs[56] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._56);
-        artifactImgs[57] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._57);
+        BitmapFactory.Options bitopt=new BitmapFactory.Options();
+        bitopt.inScaled = false;
+        artifactImgs[0] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._0,bitopt);
+        artifactImgs[1] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._1,bitopt);
+        artifactImgs[2] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._2,bitopt);
+        artifactImgs[3] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._3,bitopt);
+        artifactImgs[4] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._4,bitopt);
+        artifactImgs[5] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._5,bitopt);
+        artifactImgs[6] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._6,bitopt);
+        artifactImgs[7] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._7,bitopt);
+        artifactImgs[8] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._8,bitopt);
+        artifactImgs[9] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._9,bitopt);
+        artifactImgs[10] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._10,bitopt);
+        artifactImgs[11] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._11,bitopt);
+        artifactImgs[12] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._12,bitopt);
+        artifactImgs[13] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._13,bitopt);
+        artifactImgs[14] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._14,bitopt);
+        artifactImgs[15] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._15,bitopt);
+        artifactImgs[16] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._16,bitopt);
+        artifactImgs[17] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._17,bitopt);
+        artifactImgs[18] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._18,bitopt);
+        artifactImgs[19] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._19,bitopt);
+        artifactImgs[20] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._20,bitopt);
+        artifactImgs[21] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._21,bitopt);
+        artifactImgs[22] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._22,bitopt);
+        artifactImgs[23] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._23,bitopt);
+        artifactImgs[24] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._24,bitopt);
+        artifactImgs[25] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._25,bitopt);
+        artifactImgs[26] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._26,bitopt);
+        artifactImgs[27] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._27,bitopt);
+        artifactImgs[28] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._28,bitopt);
+        artifactImgs[29] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._29,bitopt);
+        artifactImgs[30] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._30,bitopt);
+        artifactImgs[31] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._31,bitopt);
+        artifactImgs[32] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._32,bitopt);
+        artifactImgs[33] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._33,bitopt);
+        artifactImgs[34] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._34,bitopt);
+        artifactImgs[35] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._35,bitopt);
+        artifactImgs[36] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._36,bitopt);
+        artifactImgs[37] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._37,bitopt);
+        artifactImgs[38] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._38,bitopt);
+        artifactImgs[39] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._39,bitopt);
+        artifactImgs[40] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._40,bitopt);
+        artifactImgs[41] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._41,bitopt);
+        artifactImgs[42] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._42,bitopt);
+        artifactImgs[43] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._43,bitopt);
+        artifactImgs[44] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._44,bitopt);
+        artifactImgs[45] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._45,bitopt);
+        artifactImgs[46] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._46,bitopt);
+        artifactImgs[47] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._47,bitopt);
+        artifactImgs[48] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._48,bitopt);
+        artifactImgs[49] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._49,bitopt);
+        artifactImgs[50] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._50,bitopt);
+        artifactImgs[51] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._51,bitopt);
+        artifactImgs[52] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._52,bitopt);
+        artifactImgs[53] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._53,bitopt);
+        artifactImgs[54] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._54,bitopt);
+        artifactImgs[55] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._55,bitopt);
+        artifactImgs[56] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._56,bitopt);
+        artifactImgs[57] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._57,bitopt);
 
     }
 
@@ -187,14 +189,14 @@ public class ArtifactsColorExtractor extends Menu {
 
     private Artifacts findArtifact(Bitmap input, int filetodif)
     {
-        int[] matches = new int[58];
+        double[] matches = new double[58];
         for (int i =0; i< artifactImgs.length; i++)
         {
             matches[i] = findMatch(input, i);
         }
         writeMatch(matches,filetodif);
         int bestmatchpos = 0;
-        int bestmatch = 0;
+        double bestmatch = 0;
         for (int i =0; i< matches.length; i++)
         {
             if (bestmatch < matches[i]) {
@@ -208,8 +210,8 @@ public class ArtifactsColorExtractor extends Menu {
         return artifacts[bestmatchpos];
     }
 
-    private final int reduceRangeToLookUp = 1;
-    private int findMatch(Bitmap input, int imgtodiff)
+    private final int reduceRangeToLookUp = 0;
+    private double findMatch(Bitmap input, int imgtodiff)
     {
         int matchcount = 0;
         int matchcount_1 = 0;
@@ -217,36 +219,22 @@ public class ArtifactsColorExtractor extends Menu {
         int width = artifactImgs[imgtodiff].getWidth() -reduceRangeToLookUp;
         int height = artifactImgs[imgtodiff].getHeight() -reduceRangeToLookUp;
         Bitmap lookupMap = artifactImgs[imgtodiff];
+        int y_center = height/2;
+        int[] pixelYCenterLine = bot.getScreeCapture().getColorFromOneHorizontalLine(input,y_center, reduceRangeToLookUp,width);
+        int[] pixelYCenterLineMinus1 = bot.getScreeCapture().getColorFromOneHorizontalLine(input,y_center -1, reduceRangeToLookUp,width);
+        int[] pixelYCenterLinePlus1 = bot.getScreeCapture().getColorFromOneHorizontalLine(input,y_center +1, reduceRangeToLookUp,width);
+        int[] lookupYCenterLine = bot.getScreeCapture().getColorFromOneHorizontalLine(lookupMap,y_center,reduceRangeToLookUp,width);
 
-       /* Bitmap lookupscale = scale(lookupMap,lookupMap.getWidth()/2,lookupMap.getHeight()/2);
-        Bitmap inputscale = scale(input,lookupMap.getWidth()/2,lookupMap.getHeight()/2);
+        for (int x = 0; x < width;x++)
+        {
+            if (pixIsInRange(lookupYCenterLine[x] , pixelYCenterLine[x]))
+                matchcount++;
+            if (pixIsInRange(lookupYCenterLine[x] ,pixelYCenterLineMinus1[x]))
+                matchcount1++;
+            if (pixIsInRange(lookupYCenterLine[x] , pixelYCenterLinePlus1[x]))
+                matchcount_1++;
+        }
 
-        for(int y = 1; y < inputscale.getHeight()-1;y++)
-        {
-            for (int x = 0; x < inputscale.getWidth();x++)
-            {
-                if (inputscale.getPixel(x,y) ==  lookupscale.getPixel(x,y))
-                    matchcount++;
-                if(inputscale.getPixel(x,y-1) ==  lookupscale.getPixel(x,y))
-                    matchcount_1++;
-                if(inputscale.getPixel(x,y+1) ==  lookupscale.getPixel(x,y))
-                    matchcount1++;
-            }
-        }
-*/
-        for(int y = reduceRangeToLookUp; y < height;y++)
-        {
-            for (int x = reduceRangeToLookUp; x < width;x++)
-            {
-                if(pixIsInRange(input.getPixel(x,y), lookupMap.getPixel(x,y)))
-                    matchcount++;
-                /*if(pixIsInRange(input.getPixel(x,y-1), lookupMap.getPixel(x,y)))
-                    matchcount_1++;
-                if(pixIsInRange(input.getPixel(x,y+1), lookupMap.getPixel(x,y)))
-                    matchcount1++;*/
-            }
-        }
-        //Log.d(TAG,"matches:" + matchcount+" / " + matchcount1 +" / " +matchcount_1);
         int max = 0;
         if (matchcount > max)
             max = matchcount;
@@ -255,7 +243,18 @@ public class ArtifactsColorExtractor extends Menu {
         if (matchcount_1 > max)
             max = matchcount_1;
         return max;
+    }
 
+    private void saveHorizontalLine(int[] pixels, int img, int part)
+    {
+        Bitmap.Config config = Bitmap.Config.ARGB_8888;
+        Bitmap map = Bitmap.createBitmap(pixels,pixels.length,1,config);
+        saveBitmap(map, "/sdcard/Pictures/" + img + "_" +part + ".png");
+    }
+
+    private void logPixel(int[] match)
+    {
+        Log.d(TAG, match[0] + " " + match[1] + " " + match[2] + " " + match[3] + " " + match[4]);
     }
 
     private boolean check9x9PixelInRange(int x, int y, int y2, Bitmap input, Bitmap lookupMap)
@@ -280,8 +279,6 @@ public class ArtifactsColorExtractor extends Menu {
         green = Color.green(dif);
         blue = Color.blue(dif);
 
-       if (red < 20 && blue < 20 && green < 20)
-            return false;
         return ColorUtils.colorIsInRange(input,red-range, red+range,green-range,green+range,blue-range,blue+range);
 
     }
@@ -377,7 +374,7 @@ public class ArtifactsColorExtractor extends Menu {
         }
     }
 
-    private void writeMatch(int[] matcharray, int filetodif)
+    private void writeMatch(double[] matcharray, int filetodif)
     {
         try {
             if (filetodif < artifacts.length)

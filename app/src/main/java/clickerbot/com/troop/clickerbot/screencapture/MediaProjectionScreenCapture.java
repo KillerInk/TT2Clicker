@@ -201,7 +201,7 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
         int[] arr = null;
         synchronized (bitmapLOCK) {
             if (inputbmp != null && inputbmp.getWidth() > 0 && inputbmp.getHeight() > 0){
-                arr = new int[(end_y - start_y)+1];
+                arr = new int[(end_y - start_y)];
                 int i = 0;
                 for (int y = start_y; y < end_y; y++)
                 {
@@ -210,6 +210,27 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
             }
         }
         return arr;
+    }
+
+    public int[] getColorFromOneHorizontalLine(Bitmap map,int y, int start_x, int end_x)
+    {
+        int[] arr = null;
+        synchronized (bitmapLOCK) {
+            if (map != null && map.getWidth() > 0 && map.getHeight() > 0){
+                arr = new int[(end_x - start_x)];
+                int i = 0;
+                for (int x = start_x; x < end_x; x++)
+                {
+                    arr[i++] = map.getPixel(x, y);
+                }
+            }
+        }
+        return arr;
+    }
+
+    public int[] getColorFromOneHorizontalLine(int y, int start_x, int end_x)
+    {
+        return getColorFromOneHorizontalLine(inputbmp,y,start_x,end_x);
     }
 
     @Override
