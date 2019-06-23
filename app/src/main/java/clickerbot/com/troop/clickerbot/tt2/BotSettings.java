@@ -165,6 +165,10 @@ public class BotSettings {
     public final List<Artifacts> artifactsListToLvl;
     public final boolean levelArtifacts;
 
+    public final int tapOnBooksOfShadowsCount;
+    public final int tapSTierCount;
+    public final int tapATierCount;
+
     public BotSettings(SharedPreferences sharedPreferences,Context context)
     {
         useHS = sharedPreferences.getBoolean(context.getString(R.string.useHs),false);
@@ -235,6 +239,9 @@ public class BotSettings {
 
 
         levelArtifacts = sharedPreferences.getBoolean(context.getString(R.string.lvlartifacts),false);
+        tapOnBooksOfShadowsCount = (int)sharedPreferences.getLong(context.getString(R.string.taponbookofshadows),25);
+        tapSTierCount = (int)sharedPreferences.getLong(context.getString(R.string.lvlstierarti),6);
+        tapATierCount = (int)sharedPreferences.getLong(context.getString(R.string.lvlatierarti),1);
         artifactsListToLvl = new ArrayList<>();
         if(levelArtifacts)
         {

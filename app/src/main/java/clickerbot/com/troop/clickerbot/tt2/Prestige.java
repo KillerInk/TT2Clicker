@@ -12,6 +12,7 @@ import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.AutoLevelBOSTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.InitTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.PrestigeTask;
+import clickerbot.com.troop.clickerbot.tt2.tasks.test.ExtractArtifactsImageTask;
 
 
 public class Prestige extends Menu {
@@ -141,6 +142,8 @@ public class Prestige extends Menu {
             boss.resetBossFailedCounter();
             if (botSettings.autoLvlBos)
                 bot.executeTask(AutoLevelBOSTask.class);
+            else if(botSettings.levelArtifacts)
+                bot.executeTask(ExtractArtifactsImageTask.class);
             bot.executeTask(InitTask.class);
             WaitLock.prestige.set(false);
         }

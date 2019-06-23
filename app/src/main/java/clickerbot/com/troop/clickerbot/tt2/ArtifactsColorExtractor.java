@@ -138,7 +138,7 @@ public class ArtifactsColorExtractor extends Menu {
                     //saveBitmap(artifactImg, "/sdcard/Pictures/" + artifactsProcessed + "_" +artifact + ".png");
 
                     artifactsProcessed++;
-                    if (artifact == Artifacts.ElixirOfEden)
+                    if (artifact == botSettings.artifactsListToLvl.get(botSettings.artifactsListToLvl.size()-1))
                         lastArtifactReached = true;
                 }
             }
@@ -172,7 +172,7 @@ public class ArtifactsColorExtractor extends Menu {
                     //saveBitmap(artifactImg, "/sdcard/Pictures/" + artifactsProcessed + "_" +artifact + ".png");
 
                     artifactsProcessed++;
-                    if (artifact == Artifacts.BookOfShadows)
+                    if (artifact == botSettings.artifactsListToLvl.get(0))
                         lastArtifactReached = true;
                 }
             }
@@ -184,22 +184,32 @@ public class ArtifactsColorExtractor extends Menu {
             else
                 artifcatsYPosList.clear();
         }
-
+        closeArtifactMenu(task);
+        Thread.sleep(500);
     }
 
     public void levelArtifact(List<Point> artifcatsYPosList, Artifacts artifact, int i, int height) throws InterruptedException {
         if (!artifactsleveld.contains(artifact) && botSettings.artifactsListToLvl.contains(artifact)) {
             Point tapPoint = new Point(click_X, artifcatsYPosList.get(i).x + height / 2);
             switch (artifact.tier) {
+                case SS:
+                    for (int tap = 0; tap < botSettings.tapOnBooksOfShadowsCount; tap++) {
+                        doLongerSingelTap(tapPoint, TAG);
+                        Thread.sleep(100);
+                    }
+                    break;
                 case S:
-                    for (int tap = 0; tap < 6; tap++) {
+                    for (int tap = 0; tap < botSettings.tapSTierCount; tap++) {
                         doLongerSingelTap(tapPoint, TAG);
                         Thread.sleep(100);
                     }
                     break;
                 case A:
                 case F:
-                    doLongerSingelTap(tapPoint, TAG);
+                    for (int tap = 0; tap < botSettings.tapATierCount; tap++) {
+                        doLongerSingelTap(tapPoint, TAG);
+                        Thread.sleep(100);
+                    }
                     Thread.sleep(100);
                     break;
             }

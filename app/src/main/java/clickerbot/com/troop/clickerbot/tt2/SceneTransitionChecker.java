@@ -28,7 +28,6 @@ public class SceneTransitionChecker extends Menu {
         int color =bot.getScreeCapture().getColor(shopbuttonColorPos);
         if (color != shopButtonColor && color != 0) {
             howOftenDetected++;
-            Log.d(TAG,"Scene Transition detected");
             WaitLock.lockSceneTransition(true);
             if(howOftenDetected > 3) {
                 //Log.d(TAG, "scene Transition color:" + color + " expectedcolor:" + shopButtonColor);

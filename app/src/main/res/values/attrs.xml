@@ -10,4 +10,5 @@
         <attr name="setting_defaults" format="boolean"/>
     </declare-styleable>
 
+    <string name="lvlatierarti">lvlatierarti</string>
 </resources>

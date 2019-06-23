@@ -1,7 +1,7 @@
 package clickerbot.com.troop.clickerbot.tt2;
 
 public enum Artifacts {
-    BookOfShadows(Tier.S),
+    BookOfShadows(Tier.SS),
     ChargedCard(Tier.A),
     StonesOfValrunes(Tier.S),
     ChestOfContentment(Tier.A),
@@ -71,8 +71,9 @@ public enum Artifacts {
 
     public enum Tier
     {
+        SS,
         S,
         A,
-        F;
+        F,
     }
 }
