@@ -6,6 +6,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import clickerbot.com.troop.clickerbot.ColorUtils;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
@@ -15,32 +16,29 @@ import clickerbot.com.troop.clickerbot.tt2.tasks.ClanQuestTask;
 public class ClanQuest extends Menu {
 
     private final String TAG = ClanQuest.class.getSimpleName();
-    private final Point cq_button_color_pos = new Point(72,21);
-    private final Point cq_button_click_pos = new Point(80,26);
 
-    private final Point cq_clanchat_button_color_pos = new Point(80,736);
-    private final Point cq_clanchat_button_click_pos = new Point(103,725);
-    private final Point cq_clanchat_is_button__color_pos = new Point(102,713);
-    private final int cq_clanchat_is_button__color = Color.argb(255,55,55,72);
+    private final Point boss_head_pos = new Point(235,280);
+    private final Point boss_body_pos = new Point(235,408);
 
+    private final Point boss_leftshoulder_pos = new Point(60,285);
+    private final Point boss_rightshoulder_pos = new Point(410,285);
 
-    private final Point cq_fight_button_click_pos = new Point(319,735);
+    private final Point boss_leftarm_pos = new Point(50,450);
+    private final Point boss_rightarm_pos = new Point(420,450);
+
+    private final Point boss_leftfoot_pos = new Point(150,570);
+    private final Point boss_righfoot_pos = new Point(320,570);
+
     private final Point cq_fight_timer_color_pos = new Point(83,50);
     private final Point cq_fight_timer_color_pos2 = new Point(84,50);
-    private final int cq_fight_timer_color = Color.argb(255,164,164,164);
-    private final int cq_clanchat_bossfight_rdy = Color.argb(255,127,148,154);
-
-    private final Point cq_close_button_click_pos = new Point(415,47);
-    private final int cq_close_button_click_color = Color.argb(255,69,56,48);
-    private long lastPrestigeCheck;
-
-    private final Point clanbossHP_color_Pos = new Point(174,330);
 
     private int howOftenDetected = 0;
+    private final Random rand;
 
     public ClanQuest(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
         super(ibot, botSettings, rootShell);
         howOftenDetected = 0;
+        rand = new Random();
     }
 
     @Override
@@ -50,20 +48,6 @@ public class ClanQuest extends Menu {
 
     @Override
     boolean checkIfRdyToExecute() {
-        if(botSettings.autoClanQuest && System.currentTimeMillis() - lastPrestigeCheck > 1000 && Menu.getMenuState() == MenuState.closed && !WaitLock.sceneTransition.get()) {
-            lastPrestigeCheck = System.currentTimeMillis();
-            WaitLock.checkForErrorAndWait();
-            int color = bot.getScreeCapture().getColor(cq_button_color_pos);
-            if (ColorUtils.redIsInRange(color,120,140)  && !WaitLock.sceneTransition.get() && !WaitLock.fairyWindowDetected.get()) {
-                howOftenDetected++;
-                if(howOftenDetected > 2) {
-                    howOftenDetected = 0;
-                    bot.executeTask(ClanQuestTask.class);
-                }
-            }
-            else if (howOftenDetected > 0)
-                howOftenDetected--;
-        }
         return false;
     }
 
@@ -71,64 +55,9 @@ public class ClanQuest extends Menu {
         //tap on cq and open clanchat
         Log.d(TAG,"Open ClanChat");
         WaitLock.clanquest.set(true);
-        int loopbreaker = 0;
-        while (!isClanChatOpen() && !executerTask.cancelTask && loopbreaker < 10) {
-            loopbreaker++;
-            WaitLock.checkForErrorAndWait();
-            doLongerSingelTap(cq_button_click_pos,"Open ClanChat " + loopbreaker);
-            Thread.sleep(2000);
-            WaitLock.checkForErrorAndWait();
-        }
-        if (loopbreaker == 9)
-        {
-            WaitLock.clanquest.set(false);
-            return;
-        }
 
-        if (!isClanQuestRdy() || executerTask.cancelTask) {
-            WaitLock.clanquest.set(false);
-            return;
-        }
-        Log.d(TAG,"ClanChat Open, open ClanQuest");
-        //open cq window
-        loopbreaker = 0;
-        while (!isFightButton()&& !executerTask.cancelTask && loopbreaker < 10) {
-            loopbreaker++;
-            WaitLock.checkForErrorAndWait();
-            doLongerSingelTap(cq_clanchat_button_click_pos,"ClanChat Open, open ClanQuest " + loopbreaker);
-            Thread.sleep(2000);
-            WaitLock.checkForErrorAndWait();
-        }
-        if (loopbreaker == 9)
-        {
-            WaitLock.clanquest.set(false);
-            return;
-        }
-
-        if (!bossHaveHp() || executerTask.cancelTask)
-        {
-            WaitLock.clanquest.set(false);
-            return;
-        }
-        Log.d(TAG,"ClanQuest Open, boss have hp");
-        //start finaly clanquest
-        loopbreaker = 0;
-        while (isFightButton()&& !executerTask.cancelTask && loopbreaker < 10)
-        {
-            loopbreaker++;
-            WaitLock.checkForErrorAndWait();
-            doLongerSingelTap(cq_fight_button_click_pos,"ClanQuest Open, click on Fight " + loopbreaker);
-            Thread.sleep(1000);
-            WaitLock.checkForErrorAndWait();
-        }
-
-        if (loopbreaker == 9)
-        {
-            WaitLock.clanquest.set(false);
-            return;
-        }
         //wait for battle to start
-        loopbreaker = 0;
+        int loopbreaker = 0;
         while (isTimerRunning() && !isTimerStarted()&& !executerTask.cancelTask && loopbreaker < 15)
         {
             loopbreaker++;
@@ -140,18 +69,33 @@ public class ClanQuest extends Menu {
 
         Log.d(TAG,"CreateRandomTaps prepare for FIght");
         List<Point> randomTaps = new ArrayList();
-        for (int i = 0; i< 40; i++)
-        {
-            randomTaps.add(new Point(bot.getRandomX(),bot.getRandomY()));
+        for(int i = 0; i< 4; i++) {
+            if (botSettings.clickOnBossHead)
+                randomTaps.add(boss_head_pos);
+            if (botSettings.clickOnBossBody)
+                randomTaps.add(boss_body_pos);
+            if (botSettings.clickOnBossLeftShoulder)
+                randomTaps.add(boss_leftshoulder_pos);
+            if (botSettings.clickOnBossRightShoulder)
+                randomTaps.add(boss_rightshoulder_pos);
+            if (botSettings.clickOnBossLeftArm)
+                randomTaps.add(boss_leftarm_pos);
+            if (botSettings.clickOnBossRightArm)
+                randomTaps.add(boss_rightarm_pos);
+            if (botSettings.clickOnBossLeftFoot)
+                randomTaps.add(boss_leftfoot_pos);
+            if (botSettings.clickOnBossRightFoot)
+                randomTaps.add(boss_righfoot_pos);
         }
 
+
         long start = System.currentTimeMillis();
-        while (System.currentTimeMillis() -start < 31000)
+        while (System.currentTimeMillis() -start < 31000 && !Thread.interrupted() && !executerTask.cancelTask)
         {
             try {
                 for (int i = 0; i < randomTaps.size(); i++) {
-                    touchInput.tap(randomTaps.get(i), 30);
-                    Thread.sleep(25);
+                    touchInput.tap(getRandomPoint(randomTaps.get(i)), 20);
+                    Thread.sleep(10);
                 }
                 Thread.sleep(30);
             } catch (InterruptedException e) {
@@ -159,30 +103,9 @@ public class ClanQuest extends Menu {
             }
         }
         Log.d(TAG,"Fight is over, wait for ClanQuest Close");
-        //wait till we are back to cq window
-        loopbreaker =0;
-        while (!isCloseWindow()&& !executerTask.cancelTask && loopbreaker < 15)
-        {
-            loopbreaker++;
-            doLongerSingelTap(new Point(bot.getRandomX(),bot.getRandomY()),"Fight is over, wait for ClanQuest Close " + loopbreaker);
-            Thread.sleep(200);
-        }
-        //close cq and chat
-        Log.d(TAG,"Back to normal state");
+
         WaitLock.clanquest.set(false);
-    }
-
-
-    private boolean isClanChatOpen()
-    {
-        int color = bot.getScreeCapture().getColor(cq_clanchat_is_button__color_pos);
-        return color == cq_clanchat_is_button__color;
-    }
-
-    private boolean isClanQuestRdy()
-    {
-        int color = bot.getScreeCapture().getColor(cq_clanchat_button_color_pos);
-        return Color.red(color)> 230 || color == cq_clanchat_bossfight_rdy;
+        bot.stop();
     }
 
     private boolean isTimerRunning()
@@ -197,21 +120,17 @@ public class ClanQuest extends Menu {
         return  Color.red(color) < 90 && Color.blue(color) < 90 && Color.green(color)< 90;
     }
 
-    private boolean isFightButton()
+    private int getRandomX(int x)
     {
-        int color = bot.getScreeCapture().getColor(cq_fight_button_click_pos);
-        return Color.red(color) == 255 && Color.blue(color) == 255 && Color.green(color) == 255;
+        return rand.nextInt(10) + 10 +x;
     }
 
-    private boolean isCloseWindow()
-    {
-        int color = bot.getScreeCapture().getColor(cq_close_button_click_pos);
-        return color == cq_close_button_click_color;
+    private int getRandomY(int y) {
+        return rand.nextInt(10) + 10 + y;
     }
 
-    private boolean bossHaveHp()
+    private Point getRandomPoint(Point p)
     {
-        int color = bot.getScreeCapture().getColor(clanbossHP_color_Pos);
-        return Color.red(color) > 90;
+        return new Point(getRandomX(p.x),getRandomY(p.y));
     }
 }

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/overall_margin"
+    android:orientation="vertical">
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/clickenablecq"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Enable Clanquest"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/enableclanquest" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/clickonhead"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="click on Head"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/clickonhead" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/clickonbody"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="click on Body"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/clickonbody" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/clickonleftshoulder"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="click on left Shoulder"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/clickonlefshoulder" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/clickonrightshoulder"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="click on right Shoulder"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/clickonrightshoulder" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/clickonleftarm"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="click on left Arm"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/clickonleftarm" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/clickonrightarm"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="click on right Arm"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/clickonrightarm" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/clickonleftfoot"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="click on left Foot"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/clickonleftfoot" />
+
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/clickonrightfoot"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="click on right Foot"
+        custom:setting_defaults="false"
+        custom:settingkey_ids="@string/clickonrightfoot" />
+
+</LinearLayout>

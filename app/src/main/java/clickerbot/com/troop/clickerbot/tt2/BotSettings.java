@@ -152,6 +152,16 @@ public class BotSettings {
     public final boolean collectSkillsFairy;
     public final boolean collectDiasFairy;
 
+    public final boolean enableClanQuest;
+    public final boolean clickOnBossHead;
+    public final boolean clickOnBossBody;
+    public final boolean clickOnBossLeftShoulder;
+    public final boolean clickOnBossRightShoulder;
+    public final boolean clickOnBossLeftArm;
+    public final boolean clickOnBossRightArm;
+    public final boolean clickOnBossLeftFoot;
+    public final boolean clickOnBossRightFoot;
+
     public final List<Artifacts> artifactsListToLvl;
     public final boolean levelArtifacts;
 
@@ -208,6 +218,17 @@ public class BotSettings {
         collectSkillsFairy = sharedPreferences.getBoolean(context.getString(R.string.collectskillsFairy),false);
         collectManaFairy = sharedPreferences.getBoolean(context.getString(R.string.collectManaFairy),false);
         collectDiasFairy = sharedPreferences.getBoolean(context.getString(R.string.collectdiasFairy),false);
+
+
+        enableClanQuest = sharedPreferences.getBoolean(context.getString(R.string.enableclanquest),false);
+        clickOnBossHead = sharedPreferences.getBoolean(context.getString(R.string.clickonhead),false);
+        clickOnBossBody = sharedPreferences.getBoolean(context.getString(R.string.clickonbody),false);
+        clickOnBossLeftArm = sharedPreferences.getBoolean(context.getString(R.string.clickonleftarm),false);
+        clickOnBossRightArm = sharedPreferences.getBoolean(context.getString(R.string.clickonrightarm),false);
+        clickOnBossLeftShoulder = sharedPreferences.getBoolean(context.getString(R.string.clickonlefshoulder),false);
+        clickOnBossRightShoulder = sharedPreferences.getBoolean(context.getString(R.string.clickonrightshoulder),false);
+        clickOnBossLeftFoot = sharedPreferences.getBoolean(context.getString(R.string.clickonleftfoot),false);
+        clickOnBossRightFoot = sharedPreferences.getBoolean(context.getString(R.string.clickonrightfoot),false);
         Log.i(TAG, "Skills used HS:" + useHS + " DS:" + useDS+" Hom:"+useHOM+" FS:" + useFS + " WC:"+useWC +" SC: "+useSC);
         Log.i(TAG,"auto lvl heros:" + autoLvlHeros + " auto Tap:" + doAutoTap + " auto lvl skills"+ autoLvlSkills);
         Log.i(TAG, "time to prestige ms:" + timeToPrestige + " bossfailed:" + bossFailedCount);

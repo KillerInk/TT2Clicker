@@ -29,7 +29,8 @@ public class TaskFactory {
                                                     RandomTaps randomTaps,
                                                     CollectDailyReward reward,
                                                     CollectInBoxRewward inBoxRewward,
-                                                    ArtifactsColorExtractor artifactsColorExtractor)
+                                                    ArtifactsColorExtractor artifactsColorExtractor,
+                                                    ClanQuest clanQuest)
     {
         HashMap<Class, ExecuterTask> tasksmap = new HashMap<>();
         tasksmap.put(InitTask.class,new InitTask(bot));
@@ -42,7 +43,7 @@ public class TaskFactory {
         tasksmap.put(TapOnFairysTask.class,new TapOnFairysTask(fairy));
         tasksmap.put(MenuCloseTask.class,new MenuCloseTask(heros));
         tasksmap.put(ClickOnBossFightTask.class,new ClickOnBossFightTask(boss));
-        //tasksmap.put(ClanQuestTask.class,new ClanQuestTask(clanQuest));
+        tasksmap.put(ClanQuestTask.class,new ClanQuestTask(clanQuest));
         tasksmap.put(AutoLevelBOSTask.class,new AutoLevelBOSTask(bos));
         tasksmap.put(CollectDailyTask.class, new CollectDailyTask(reward));
         tasksmap.put(CollectInboxRewardTask.class, new CollectInboxRewardTask(inBoxRewward));

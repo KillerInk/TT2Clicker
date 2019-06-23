@@ -12,6 +12,7 @@ import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.screencapture.MediaProjectionScreenCapture;
 import clickerbot.com.troop.clickerbot.touch.NativeTouchHandler;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
+import clickerbot.com.troop.clickerbot.tt2.tasks.ClanQuestTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.CrazyTapTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.InitTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.LevelSwordMasterTask;
@@ -35,7 +36,7 @@ public class TT2Bot implements ThreadController.TickInterface
     private UpdateUi updateUi;
 
     private static final String TAG = TT2Bot.class.getSimpleName();
-    //private final ClanQuest clanQuest;
+    private final ClanQuest clanQuest;
 
     //Interface to the FakeTouchInput
     private TouchInterface touchInput;
@@ -150,7 +151,7 @@ public class TT2Bot implements ThreadController.TickInterface
         flashZip = new FlashZip(this,botSettings,touchInput);
         subMenuOpenChecker = new SubMenuOpenChecker(this,botSettings,touchInput);
         sceneTransitionChecker = new SceneTransitionChecker(this,botSettings,touchInput);
-        //clanQuest = new ClanQuest(this,botSettings,touchInput);
+        clanQuest = new ClanQuest(this,botSettings,touchInput);
         autoLevelBos = new BOS(this,botSettings,touchInput);
         manaDetector = new ManaDetector(this,botSettings,touchInput);
         skills = new Skills(this,botSettings, touchInput, manaDetector);
@@ -159,7 +160,7 @@ public class TT2Bot implements ThreadController.TickInterface
         artifactsColorExtractor = new ArtifactsColorExtractor(this,botSettings,touchInput);
 
         //create the different tasks
-        executerTaskHashMap = new TaskFactory().getTasksmap(this,heros,skills,prestige,fairy,boss,autoLevelBos,randomTaps,collectDailyReward,collectInBoxRewward, artifactsColorExtractor);
+        executerTaskHashMap = new TaskFactory().getTasksmap(this,heros,skills,prestige,fairy,boss,autoLevelBos,randomTaps,collectDailyReward,collectInBoxRewward, artifactsColorExtractor,clanQuest);
         //mediaProjectionScreenCapture.setScreenCaptureCallBack(this::onScreenCapture);
 
         Log.d(TAG,"TT2Bot()");
@@ -240,6 +241,8 @@ public class TT2Bot implements ThreadController.TickInterface
         startTime = System.currentTimeMillis();
         WaitLock.resetWaitLocks();
         threadController.start();
+        if (botSettings.enableClanQuest)
+            executeTask(ClanQuestTask.class);
     }
 
     /**
@@ -264,32 +267,29 @@ public class TT2Bot implements ThreadController.TickInterface
      */
     @Override
     public void onTick(long tickCounter) {
-        //as first action on start run the InitTask
-        if (tickCounter == 1) {
-           executeTask(InitTask.class);
-        }
-        else if (botSettings.runTests) // runs only if test are activated in devsettings. can get used to test a new feature
-        {
-            executeTests();
-        }
-        else {
-            if(!prestige.checkIfRdyToExecute())
+        if (!botSettings.enableClanQuest) {
+            //as first action on start run the InitTask
+            if (tickCounter == 1) {
+                executeTask(InitTask.class);
+            } else if (botSettings.runTests) // runs only if test are activated in devsettings. can get used to test a new feature
             {
-                if (System.currentTimeMillis() - lastUiUpdate > 300) {
-                    //update the timer, bossfail counter and the currently executed task
-                    sendToUi();
-                }
-                //clanQuest.checkIfRdyToExecute();
-                swordMasterRdyToExecute();
-                heros.checkIfRdyToExecute();
-                if (System.currentTimeMillis() - lastRandomTapActivated > runRandomTapActivator){
-                    executeTask(RandomTapTask.class);
-                    fairy.executeTapFairys();
-                    lastRandomTapActivated = System.currentTimeMillis();
-                }
-                else if (botSettings.doAutoTap)
-                {
-                    executeTask(CrazyTapTask.class);
+                executeTests();
+            } else {
+                if (!prestige.checkIfRdyToExecute()) {
+                    if (System.currentTimeMillis() - lastUiUpdate > 300) {
+                        //update the timer, bossfail counter and the currently executed task
+                        sendToUi();
+                    }
+                    //clanQuest.checkIfRdyToExecute();
+                    swordMasterRdyToExecute();
+                    heros.checkIfRdyToExecute();
+                    if (System.currentTimeMillis() - lastRandomTapActivated > runRandomTapActivator) {
+                        executeTask(RandomTapTask.class);
+                        fairy.executeTapFairys();
+                        lastRandomTapActivated = System.currentTimeMillis();
+                    } else if (botSettings.doAutoTap) {
+                        executeTask(CrazyTapTask.class);
+                    }
                 }
             }
         }
@@ -317,7 +317,7 @@ public class TT2Bot implements ThreadController.TickInterface
         if (!WaitLock.clanquest.get()) {
             sceneTransitionChecker.checkIfRdyToExecute();
             subMenuOpenChecker.checkIfRdyToExecute();
-        }
+
 
         try {
             fairy.checkIfFairyWindowOpen();
@@ -334,6 +334,7 @@ public class TT2Bot implements ThreadController.TickInterface
         manaDetector.checkIfRdyToExecute();
         collectDailyReward.checkIfRdyToExecute();
         collectInBoxRewward.checkIfRdyToExecute();
+        }
     }
 
     private String getTimeString(int dif)

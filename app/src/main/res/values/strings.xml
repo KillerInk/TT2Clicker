@@ -63,4 +63,12 @@
     <string name="BringerOfRagnarok">BringerOfRagnarok</string>
     <string name="ParchmentOfForesight">ParchmentOfForesight</string>
     <string name="ElixirOfEden">ElixirOfEden</string>
+    <string name="clickonhead">cliconhead</string>
+    <string name="clickonbody">clickonbody</string>
+    <string name="clickonleftarm">clickonleftarm</string>
+    <string name="clickonrightarm">clickonrightarm</string>
+    <string name="clickonleftfoot">clickonleftfoot</string>
+    <string name="clickonrightfoot">clickonrightfoot</string>
+    <string name="clickonlefshoulder">clickonlefshoulder</string>
+    <string name="clickonrightshoulder">clickonrightshoulder</string>
 </resources>

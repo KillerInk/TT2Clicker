@@ -44,6 +44,7 @@ public class SettingsFragment extends Fragment {
         adapter.addFragment(BaseSettingFragment.getFragment(R.layout.settings_fairy), "Fairy");
         adapter.addFragment(BaseSettingFragment.getFragment(R.layout.settings_artifacts),"Artifacts");
         adapter.addFragment(DevSettingFragment.getFragment(R.layout.settings_dev),"Input");
+        adapter.addFragment(BaseSettingFragment.getFragment(R.layout.settings_clanquest),"ClanQuest");
         viewPager.setOffscreenPageLimit(adapter.getCount());
         viewPager.setAdapter(adapter);
     }
