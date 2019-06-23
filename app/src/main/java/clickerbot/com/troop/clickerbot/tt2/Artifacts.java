@@ -62,6 +62,7 @@ public enum Artifacts {
 
 
     public Tier tier;
+    public long colorSum;
 
     private Artifacts(Tier tier)
     {

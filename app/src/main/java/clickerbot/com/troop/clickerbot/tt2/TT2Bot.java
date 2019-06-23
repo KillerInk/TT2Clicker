@@ -18,6 +18,7 @@ import clickerbot.com.troop.clickerbot.tt2.tasks.LevelSwordMasterTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.PrestigeTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.RandomTapTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.TaskFactory;
+import clickerbot.com.troop.clickerbot.tt2.tasks.test.ExtractArtifactsImageTask;
 
 /**
  * Main class that handels all Stuff
@@ -126,6 +127,8 @@ public class TT2Bot implements ThreadController.TickInterface
 
     private CollectInBoxRewward collectInBoxRewward;
 
+    private ArtifactsColorExtractor artifactsColorExtractor;
+
     /**
      *
      * @param context from the Application
@@ -153,9 +156,10 @@ public class TT2Bot implements ThreadController.TickInterface
         skills = new Skills(this,botSettings, touchInput, manaDetector);
         collectDailyReward = new CollectDailyReward(this,botSettings,touchInput);
         collectInBoxRewward = new CollectInBoxRewward(this,botSettings,touchInput);
+        artifactsColorExtractor = new ArtifactsColorExtractor(this,botSettings,touchInput);
 
         //create the different tasks
-        executerTaskHashMap = new TaskFactory().getTasksmap(this,heros,skills,prestige,fairy,boss,autoLevelBos,randomTaps,collectDailyReward,collectInBoxRewward);
+        executerTaskHashMap = new TaskFactory().getTasksmap(this,heros,skills,prestige,fairy,boss,autoLevelBos,randomTaps,collectDailyReward,collectInBoxRewward, artifactsColorExtractor);
         //mediaProjectionScreenCapture.setScreenCaptureCallBack(this::onScreenCapture);
 
         Log.d(TAG,"TT2Bot()");
@@ -354,8 +358,8 @@ public class TT2Bot implements ThreadController.TickInterface
 
     private long lastTestExecuted;
     private void executeTests() {
-        if (System.currentTimeMillis() - lastTestExecuted > 20000) {
-            executeTask(PrestigeTask.class);
+        if (System.currentTimeMillis() - lastTestExecuted > 120000) {
+            executeTask(ExtractArtifactsImageTask.class);
             lastTestExecuted = System.currentTimeMillis();
         }
     }

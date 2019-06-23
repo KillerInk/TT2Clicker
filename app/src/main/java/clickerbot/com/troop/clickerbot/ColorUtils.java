@@ -5,6 +5,12 @@ import android.util.Log;
 
 public class ColorUtils {
 
+    public static boolean colorIsInRange(int color, int red_min, int red_max, int green_min, int green_max, int blue_min, int blue_max)
+    {
+        return  redIsInRange(color, red_min,red_max) && greenIsInRange(color,green_min,green_max) && blueIsInRange(color, blue_min,blue_max);
+
+    }
+
     public static boolean blueIsInRange(int color,int min, int max)
     {
         int blue = Color.blue(color);

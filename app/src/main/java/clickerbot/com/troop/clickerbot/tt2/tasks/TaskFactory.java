@@ -3,6 +3,7 @@ package clickerbot.com.troop.clickerbot.tt2.tasks;
 import java.util.HashMap;
 
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
+import clickerbot.com.troop.clickerbot.tt2.ArtifactsColorExtractor;
 import clickerbot.com.troop.clickerbot.tt2.BOS;
 import clickerbot.com.troop.clickerbot.tt2.Boss;
 import clickerbot.com.troop.clickerbot.tt2.ClanQuest;
@@ -14,6 +15,7 @@ import clickerbot.com.troop.clickerbot.tt2.Prestige;
 import clickerbot.com.troop.clickerbot.tt2.RandomTaps;
 import clickerbot.com.troop.clickerbot.tt2.Skills;
 import clickerbot.com.troop.clickerbot.tt2.TT2Bot;
+import clickerbot.com.troop.clickerbot.tt2.tasks.test.ExtractArtifactsImageTask;
 
 public class TaskFactory {
 
@@ -26,7 +28,8 @@ public class TaskFactory {
                                                     BOS bos,
                                                     RandomTaps randomTaps,
                                                     CollectDailyReward reward,
-                                                    CollectInBoxRewward inBoxRewward)
+                                                    CollectInBoxRewward inBoxRewward,
+                                                    ArtifactsColorExtractor artifactsColorExtractor)
     {
         HashMap<Class, ExecuterTask> tasksmap = new HashMap<>();
         tasksmap.put(InitTask.class,new InitTask(bot));
@@ -44,6 +47,7 @@ public class TaskFactory {
         tasksmap.put(CollectDailyTask.class, new CollectDailyTask(reward));
         tasksmap.put(CollectInboxRewardTask.class, new CollectInboxRewardTask(inBoxRewward));
         tasksmap.put(TapOnFairyVipWindowTask.class, new TapOnFairyVipWindowTask(fairy));
+        tasksmap.put(ExtractArtifactsImageTask.class, new ExtractArtifactsImageTask(artifactsColorExtractor));
         return tasksmap;
     }
 

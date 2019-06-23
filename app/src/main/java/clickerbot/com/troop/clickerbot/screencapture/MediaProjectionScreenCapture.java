@@ -236,4 +236,16 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
         if (img != null)
             img.close();
     }
+
+    public Bitmap getBitmapFromPos(int x, int y, int width, int height) throws InterruptedException {
+        Bitmap retBit = null;
+        synchronized (bitmapLOCK) {
+            if (inputbmp == null || inputbmp.getWidth() == 0 || inputbmp.getHeight() == 0)
+                bitmapLOCK.wait(1000);
+            if (inputbmp != null && inputbmp.getWidth() > 0 && inputbmp.getHeight() > 0) {
+                retBit = Bitmap.createBitmap(inputbmp,x,y,width,height);
+            }
+        }
+        return retBit;
+    }
 }

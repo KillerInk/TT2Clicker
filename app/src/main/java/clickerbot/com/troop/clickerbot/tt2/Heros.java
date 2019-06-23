@@ -22,7 +22,7 @@ public class Heros extends Menu {
     private int lvlAllHerosRunCount = 0;
 
     private final int hero_click_X = 424;
-    private final int hero_color_X = 470;
+    public static final int hero_color_X = 470;
     private Integer[] hero_Y_coordinates = new Integer[]{
             134,
             214,
