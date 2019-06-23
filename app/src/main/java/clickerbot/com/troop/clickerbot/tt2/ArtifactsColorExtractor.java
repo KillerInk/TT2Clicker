@@ -1,20 +1,13 @@
 package clickerbot.com.troop.clickerbot.tt2;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.renderscript.Allocation;
-import android.renderscript.Element;
-import android.renderscript.RenderScript;
-import android.renderscript.ScriptIntrinsicBlur;
 import android.util.Log;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,11 +28,14 @@ public class ArtifactsColorExtractor extends Menu {
 
     private Bitmap artifactImgs[];
     private Artifacts[] artifacts;
-    FileOutputStream stringWriter;
+    private List<Artifacts> artifactsleveld;
+
+    private final int click_X = 424;
 
     public ArtifactsColorExtractor(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
         super(ibot, botSettings, rootShell);
         artifacts = Artifacts.values();
+        artifactsleveld = new ArrayList<>();
         artifactImgs = new Bitmap[58];
         BitmapFactory.Options bitopt=new BitmapFactory.Options();
         bitopt.inScaled = false;
@@ -120,71 +116,95 @@ public class ArtifactsColorExtractor extends Menu {
             maximiseMenu(task);
         gotToTopMaximised(task);
         Thread.sleep(400);
-       List<Point> artifcatsYPosList = getArtifactPositions();
-       Bitmap artifactImg;
-       int artifactsProcessed = 0;
-       List<Long> sumsList = new ArrayList<>();
+        List<Point> artifcatsYPosList = getArtifactPositionsFromTop();
+        Bitmap artifactImg;
+        int artifactsProcessed = 0;
+        Artifacts artifact;
+        boolean lastArtifactReached = false;
+        //scroll from top to bottom and level artifacts
+        while (artifcatsYPosList.size() > 0 && !task.cancelTask)
+        {
+            for (int i = 0; i < artifcatsYPosList.size(); i++)
+            {
+                int width = 57;
+                int height = artifcatsYPosList.get(i).y -artifcatsYPosList.get(i).x;
+                //Log.d(TAG,"WxH:" + width +"x"+height);
+                if (height >= 57) {
+                    artifactImg = bot.getScreeCapture().getBitmapFromPos(x_start, artifcatsYPosList.get(i).x, width, 56);
 
-       try {
-           stringWriter = new FileOutputStream("/sdcard/Pictures/match.txt");
+                    artifact = findArtifact(artifactImg,artifactsProcessed);
+                    levelArtifact(artifcatsYPosList, artifact, i, height);
+                    Log.d(TAG,artifactsProcessed + " Found " + artifact);
+                    //saveBitmap(artifactImg, "/sdcard/Pictures/" + artifactsProcessed + "_" +artifact + ".png");
 
+                    artifactsProcessed++;
+                    if (artifact == Artifacts.ElixirOfEden)
+                        lastArtifactReached = true;
+                }
+            }
+            if (!lastArtifactReached) {
+                swipeDownMaximised();
+                Thread.sleep(500);
+                artifcatsYPosList = getArtifactPositionsFromTop();
+            }
+            else
+                artifcatsYPosList.clear();
+        }
 
-           while (artifcatsYPosList.size() > 0)
-           {
-               for (int i = 0; i < artifcatsYPosList.size(); i++)
-               {
-                   int width = 57;
-                   int height = artifcatsYPosList.get(i).y -artifcatsYPosList.get(i).x;
-                    //Log.d(TAG,"WxH:" + width +"x"+height);
-                    if (height >= 57) {
-                        artifactImg = bot.getScreeCapture().getBitmapFromPos(x_start, artifcatsYPosList.get(i).x, width, 56);
+        artifactsleveld.clear();
+        lastArtifactReached =false;
+        artifcatsYPosList = getArtifactPositionsFromTop();
+        //scroll from bottom to top
+        while (artifcatsYPosList.size() > 0 && !task.cancelTask)
+        {
+            for (int i = artifcatsYPosList.size()-1; i >= 0; i--)
+            {
+                int width = 57;
+                int height = artifcatsYPosList.get(i).y -artifcatsYPosList.get(i).x;
+                //Log.d(TAG,"WxH:" + width +"x"+height);
+                if (height >= 57)
+                {
+                    artifactImg = bot.getScreeCapture().getBitmapFromPos(x_start, artifcatsYPosList.get(i).x, width, 56);
 
-                        Artifacts artifact = findArtifact(artifactImg,artifactsProcessed);
-                        Log.d(TAG,artifactsProcessed + " Found " + artifact);
-                        saveBitmap(artifactImg, "/sdcard/Pictures/" + artifactsProcessed + "_" +artifact + ".png");
+                    artifact = findArtifact(artifactImg,artifactsProcessed);
+                    levelArtifact(artifcatsYPosList, artifact, i, height);
+                    Log.d(TAG,artifactsProcessed + " Found " + artifact);
+                    //saveBitmap(artifactImg, "/sdcard/Pictures/" + artifactsProcessed + "_" +artifact + ".png");
 
-                        /*long colorsum = getColorSum(blur(artifactImg,bot.getContext()));
-                        if (!sumsList.contains(colorsum)) {
-                            saveBitmap(artifactImg, "/sdcard/Pictures/" + artifactsProcessed + ".png");
-                            Log.d(TAG, "save img from arti:" + artifactsProcessed + " Colorsum =" + colorsum);
-                            sumsList.add(colorsum);
-                        else
-                        {
-                            Log.d(TAG, "Have this already added:" + artifactsProcessed + " Colorsum =" + colorsum);
-                        }*/
-                        artifactsProcessed++;
-                    }
-               }
-               swipeDownMaximised();
-               Thread.sleep(500);
-               artifcatsYPosList = getArtifactPositions();
-           }
-       }
-       catch (Exception ex)
-       {
-           ex.printStackTrace();
-       }
-       finally {
-           stringWriter.close();
-       }
+                    artifactsProcessed++;
+                    if (artifact == Artifacts.BookOfShadows)
+                        lastArtifactReached = true;
+                }
+            }
+            if (!lastArtifactReached) {
+                swipeUpMaximised();
+                Thread.sleep(500);
+                artifcatsYPosList = getArtifactPositionsFromTop();
+            }
+            else
+                artifcatsYPosList.clear();
+        }
 
     }
 
-
-
-    private long getColorSum(Bitmap bitmap)
-    {
-        long sum =0;
-        for (int y =0; y < bitmap.getHeight(); y++) {
-            for (int x = 0; x < bitmap.getWidth(); x++) {
-                //sum += getGray(bitmap.getPixel(x,y)) ;
-                sum += bitmap.getPixel(x,y);
-                //sum += (bitmap.getPixel(x,y)+bitmap.getPixel(x+1,y)+bitmap.getPixel(x+1,y+1)+bitmap.getPixel(x,y+1))/4;
+    public void levelArtifact(List<Point> artifcatsYPosList, Artifacts artifact, int i, int height) throws InterruptedException {
+        if (!artifactsleveld.contains(artifact) && botSettings.artifactsListToLvl.contains(artifact)) {
+            Point tapPoint = new Point(click_X, artifcatsYPosList.get(i).x + height / 2);
+            switch (artifact.tier) {
+                case S:
+                    for (int tap = 0; tap < 6; tap++) {
+                        doLongerSingelTap(tapPoint, TAG);
+                        Thread.sleep(100);
+                    }
+                    break;
+                case A:
+                case F:
+                    doLongerSingelTap(tapPoint, TAG);
+                    Thread.sleep(100);
+                    break;
             }
+            artifactsleveld.add(artifact);
         }
-        double retsum = sum / 1000000 ;
-        return Math.round(retsum);
-
     }
 
     private Artifacts findArtifact(Bitmap input, int filetodif)
@@ -194,7 +214,6 @@ public class ArtifactsColorExtractor extends Menu {
         {
             matches[i] = findMatch(input, i);
         }
-        writeMatch(matches,filetodif);
         int bestmatchpos = 0;
         double bestmatch = 0;
         for (int i =0; i< matches.length; i++)
@@ -290,30 +309,7 @@ public class ArtifactsColorExtractor extends Menu {
         return newBitmap;
     }
 
-    private int getGray(int color)
-    {
-        return (Color.red(color) + Color.green(color) + Color.blue(color)) /3 ;
-    }
-
-    private Bitmap blur(Bitmap image, Context context) {
-        final float BITMAP_SCALE = 0.1f;
-        final float BLUR_RADIUS = 3f;
-        int width = Math.round(image.getWidth() * BITMAP_SCALE);
-        int height = Math.round(image.getHeight() * BITMAP_SCALE);
-        Bitmap inputBitmap = Bitmap.createScaledBitmap(image, width, height, false);
-        Bitmap outputBitmap = Bitmap.createBitmap(inputBitmap);
-        RenderScript rs = RenderScript.create(context);
-        ScriptIntrinsicBlur theIntrinsic = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
-        Allocation tmpIn = Allocation.createFromBitmap(rs, inputBitmap);
-        Allocation tmpOut = Allocation.createFromBitmap(rs, outputBitmap);
-        theIntrinsic.setRadius(BLUR_RADIUS);
-        theIntrinsic.setInput(tmpIn);
-        theIntrinsic.forEach(tmpOut);
-        tmpOut.copyTo(outputBitmap);
-        return outputBitmap;
-    }
-
-    private List<Point> getArtifactPositions()
+    private List<Point> getArtifactPositionsFromTop()
     {
         boolean waitforstart = true;
         boolean lastColorWasGray = true;
@@ -344,11 +340,6 @@ public class ArtifactsColorExtractor extends Menu {
         return list;
     }
 
-    private boolean isColorInRange(int color)
-    {
-        return ColorUtils.colorIsInRange(color,54,130,46,116,40,107);
-    }
-
     private void saveBitmap(Bitmap bitmap,String path){
         if(bitmap!=null){
             try {
@@ -371,29 +362,6 @@ public class ArtifactsColorExtractor extends Menu {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    private void writeMatch(double[] matcharray, int filetodif)
-    {
-        try {
-            if (filetodif < artifacts.length)
-                stringWriter.write((filetodif +"######" + "\n").getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        for (int i =0; i< matcharray.length; i++)
-        {
-            try {
-                stringWriter.write((i +" " +artifacts[i] + " " + matcharray[i] + "\n").getBytes());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        try {
-            stringWriter.write(("\n").getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }
