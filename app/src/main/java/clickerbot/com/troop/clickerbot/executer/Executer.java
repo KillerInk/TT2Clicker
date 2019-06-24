@@ -33,14 +33,15 @@ public class Executer {
 
         exeThread = new Thread(()->{
             running = true;
-            while (doWork && !Thread.currentThread().isInterrupted())
+            while (doWork)
             {
+                try {
                      run = runnableLinkedList.pollFirst();
                      if (run != null) {
                          Log.i(TAG, "run:  " + run.getClass().getSimpleName());
                          run.run();
                      }
-                try {
+
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -90,6 +91,7 @@ public class Executer {
                 return;
             if (run != null)
                 run.cancelTask = true;
+            exeThread.interrupt();
             runnableLinkedList.addFirst(executerTask);
         }
         catch (NullPointerException ex)
