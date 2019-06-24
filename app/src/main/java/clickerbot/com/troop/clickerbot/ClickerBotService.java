@@ -49,17 +49,21 @@ public class ClickerBotService extends Service
             {
                 if (tt2Bot.getIsRunning())
                 {
+                    Log.d(TAG,"stop bot");
                     tt2Bot.stop();
                     while (tt2Bot.getIsRunning()) {
                         try {
+                            Log.d(TAG,"Wait for bot to stop");
                             Thread.sleep(100);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     }
                 }
-                else
+                else {
+                    Log.d(TAG,"starting bot");
                     tt2Bot.start();
+                }
                 callCount = 0;
             }
         }
@@ -112,6 +116,7 @@ public class ClickerBotService extends Service
                 ,ClickerBotActivity.mResultCode
                 ,serviceView.getSurfaceView()
                 ,mScreenDensity);
+        mediaProjectionScreenCapture.start();
 
         BotSettings botSettings = new BotSettings(preferences, getApplicationContext());
         tt2Bot = new TT2Bot(getApplicationContext(),botSettings,mediaProjectionScreenCapture);
@@ -136,6 +141,8 @@ public class ClickerBotService extends Service
         super.onDestroy();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         preferences.edit().putBoolean(botRunningSettingKey,tt2Bot.getIsRunning());
+        Log.d(TAG, "on destroy");
+        mediaProjectionScreenCapture.stop();
         if (tt2Bot.getIsRunning()) {
             tt2Bot.stop();
         }

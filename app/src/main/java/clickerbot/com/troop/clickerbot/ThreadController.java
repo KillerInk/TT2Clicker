@@ -107,7 +107,6 @@ public class ThreadController implements IBot ,ScreenCaptureCallBack
         doWork = true;
         tickCounter =0;
         Log.d(TAG, "start");
-        mediaProjectionScreenCapture.start();
         executer.start();
         baseThread = new Thread(()->{
             threadstarttime = System.currentTimeMillis();
@@ -165,7 +164,7 @@ public class ThreadController implements IBot ,ScreenCaptureCallBack
         baseThread = null;
         screenParserThread = null;
         Log.d(TAG,"Stopped threads, stopping mediaprojection");
-        mediaProjectionScreenCapture.stop();
+
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
