@@ -167,7 +167,8 @@ public class ArtifactsColorExtractor extends Menu {
                     artifactImg = bot.getScreeCapture().getBitmapFromPos(x_start, artifcatsYPosList.get(i).x, width, 56);
 
                     artifact = findArtifact(artifactImg,artifactsProcessed);
-                    levelArtifact(artifcatsYPosList, artifact, i, height);
+                    if (artifact != Artifacts.Unkown)
+                        levelArtifact(artifcatsYPosList, artifact, i, height);
                     Log.d(TAG,artifactsProcessed + " Found " + artifact);
                     //saveBitmap(artifactImg, "/sdcard/Pictures/" + artifactsProcessed + "_" +artifact + ".png");
 
@@ -236,6 +237,8 @@ public class ArtifactsColorExtractor extends Menu {
                 bestmatchpos = i;
         }
         Log.d(TAG,"BestMatch/Pos:" + bestmatch+"/"+bestmatchpos);
+        if (bestmatch < 20)
+            bestmatchpos = artifacts.length-1;
         return artifacts[bestmatchpos];
     }
 
@@ -245,6 +248,8 @@ public class ArtifactsColorExtractor extends Menu {
         int matchcount = 0;
         int matchcount_1 = 0;
         int matchcount1 = 0;
+        int matchcount_2 = 0;
+        int matchcount2 = 0;
         int width = artifactImgs[imgtodiff].getWidth() -reduceRangeToLookUp;
         int height = artifactImgs[imgtodiff].getHeight() -reduceRangeToLookUp;
         Bitmap lookupMap = artifactImgs[imgtodiff];
@@ -252,6 +257,8 @@ public class ArtifactsColorExtractor extends Menu {
         int[] pixelYCenterLine = bot.getScreeCapture().getColorFromOneHorizontalLine(input,y_center, reduceRangeToLookUp,width);
         int[] pixelYCenterLineMinus1 = bot.getScreeCapture().getColorFromOneHorizontalLine(input,y_center -1, reduceRangeToLookUp,width);
         int[] pixelYCenterLinePlus1 = bot.getScreeCapture().getColorFromOneHorizontalLine(input,y_center +1, reduceRangeToLookUp,width);
+        int[] pixelYCenterLineMinus2 = bot.getScreeCapture().getColorFromOneHorizontalLine(input,y_center -2, reduceRangeToLookUp,width);
+        int[] pixelYCenterLinePlus2 = bot.getScreeCapture().getColorFromOneHorizontalLine(input,y_center +2, reduceRangeToLookUp,width);
         int[] lookupYCenterLine = bot.getScreeCapture().getColorFromOneHorizontalLine(lookupMap,y_center,reduceRangeToLookUp,width);
 
         for (int x = 0; x < width;x++)
@@ -262,6 +269,11 @@ public class ArtifactsColorExtractor extends Menu {
                 matchcount1++;
             if (pixIsInRange(lookupYCenterLine[x] , pixelYCenterLinePlus1[x]))
                 matchcount_1++;
+
+            if (pixIsInRange(lookupYCenterLine[x] ,pixelYCenterLineMinus2[x]))
+                matchcount2++;
+            if (pixIsInRange(lookupYCenterLine[x] , pixelYCenterLinePlus2[x]))
+                matchcount_2++;
         }
 
         int max = 0;
@@ -271,6 +283,10 @@ public class ArtifactsColorExtractor extends Menu {
             max = matchcount1;
         if (matchcount_1 > max)
             max = matchcount_1;
+        if (matchcount2 > max)
+            max = matchcount2;
+        if (matchcount_2 > max)
+            max = matchcount_2;
         return max;
     }
 

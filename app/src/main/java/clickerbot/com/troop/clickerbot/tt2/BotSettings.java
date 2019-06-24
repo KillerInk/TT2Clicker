@@ -341,6 +341,8 @@ public class BotSettings {
                 artifactsListToLvl.add(Artifacts.SwordOfTheRoyals);
             if (sharedPreferences.getBoolean(context.getString(R.string.SpearitsVigil),false))
                 artifactsListToLvl.add(Artifacts.SpearitsVigil);
+            if (sharedPreferences.getBoolean(context.getString(R.string.TheCobaltPlate),false))
+                artifactsListToLvl.add(Artifacts.TheCobaltPlate);
             if (sharedPreferences.getBoolean(context.getString(R.string.SigilsOfJudgement),false))
                 artifactsListToLvl.add(Artifacts.SigilsOfJudgement);
             if (sharedPreferences.getBoolean(context.getString(R.string.FoliageOfTheKeeper),false))

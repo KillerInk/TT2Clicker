@@ -58,7 +58,8 @@ public enum Artifacts {
     LaborersPendant(Tier.A),
     BringerOfRagnarok(Tier.A),
     ParchmentOfForesight(Tier.A),
-    ElixirOfEden(Tier.A);
+    ElixirOfEden(Tier.A),
+    Unkown(Tier.F);
 
 
     public Tier tier;
