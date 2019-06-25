@@ -2,6 +2,7 @@ package clickerbot.com.troop.clickerbot.tt2;
 
 import android.graphics.Color;
 import android.graphics.Point;
+import android.os.Handler;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -54,17 +55,13 @@ public class ClanQuest extends Menu {
     public void doCQ(ExecuterTask executerTask) throws InterruptedException {
         //tap on cq and open clanchat
         Log.d(TAG,"Open ClanChat");
+        bot.UpdatePrestigeTime("Start ClanQuest Tap");
         WaitLock.clanquest.set(true);
 
         //wait for battle to start
         int loopbreaker = 0;
-        while (isTimerRunning() && !isTimerStarted()&& !executerTask.cancelTask && loopbreaker < 15)
-        {
-            loopbreaker++;
-            Log.d(TAG,"Wait for battel to start");
-            Thread.sleep(200);
-        }
-        Log.d(TAG,"Fight is starting");
+        int sleep = 0;
+
         //fight boss
 
         Log.d(TAG,"CreateRandomTaps prepare for FIght");
@@ -88,7 +85,16 @@ public class ClanQuest extends Menu {
                 randomTaps.add(boss_righfoot_pos);
         }
 
-
+        while (isTimerRunning() && !isTimerStarted()&& !executerTask.cancelTask && loopbreaker < 15)
+        {
+            loopbreaker++;
+            Log.d(TAG,"Wait for battel to start");
+            Thread.sleep(100);
+            sleep+=200;
+            bot.UpdatePrestigeTime("Wait for Battle:" + sleep/1000);
+        }
+        Log.d(TAG,"Fight is starting");
+        bot.UpdatePrestigeTime("Fight!");
         long start = System.currentTimeMillis();
         while (System.currentTimeMillis() -start < 31000 && !Thread.interrupted() && !executerTask.cancelTask)
         {
@@ -103,9 +109,11 @@ public class ClanQuest extends Menu {
             }
         }
         Log.d(TAG,"Fight is over, wait for ClanQuest Close");
-
+        bot.UpdatePrestigeTime("Fight is over");
         WaitLock.clanquest.set(false);
-        bot.stop();
+        bot.UpdatePrestigeTime("Stopped");
+        new Handler(bot.getContext().getMainLooper()).post(()->bot.stop());
+        bot.UpdatePrestigeTime("Stopped");
     }
 
     private boolean isTimerRunning()

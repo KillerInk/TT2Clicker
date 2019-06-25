@@ -269,7 +269,6 @@ public class ArtifactsColorExtractor extends Menu {
                 matchcount1++;
             if (pixIsInRange(lookupYCenterLine[x] , pixelYCenterLinePlus1[x]))
                 matchcount_1++;
-
             if (pixIsInRange(lookupYCenterLine[x] ,pixelYCenterLineMinus2[x]))
                 matchcount2++;
             if (pixIsInRange(lookupYCenterLine[x] , pixelYCenterLinePlus2[x]))

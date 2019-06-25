@@ -2,6 +2,7 @@ package clickerbot.com.troop.clickerbot.tt2;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.annotation.MainThread;
 import android.util.Log;
 
 import java.util.HashMap;
@@ -141,7 +142,7 @@ public class TT2Bot implements ThreadController.TickInterface
         this.botSettings = botSettings;
         threadController =new ThreadController(context, mediaProjectionScreenCapture,this);
         touchInput = new NativeTouchHandler(botSettings.inputPath,botSettings.mouseInput);
-
+        touchInput.start();
         randomTaps = new RandomTaps(this,botSettings,touchInput);
         boss = new Boss(this,botSettings, touchInput);
 
@@ -237,7 +238,6 @@ public class TT2Bot implements ThreadController.TickInterface
         Log.d(TAG,"start");
         randomTaps.createRandomTaps();
         lastTestExecuted = 0;
-        touchInput.start();
         startTime = System.currentTimeMillis();
         WaitLock.resetWaitLocks();
         threadController.start();
@@ -254,7 +254,6 @@ public class TT2Bot implements ThreadController.TickInterface
             updateUi.updatePrestigeTime("Stopping");
         Log.d(TAG,"stop");
         threadController.stop();
-        touchInput.stop();
         Log.d(TAG,"######################################stopped");
         if (updateUi != null)
             updateUi.updatePrestigeTime("Stopped");
@@ -293,6 +292,7 @@ public class TT2Bot implements ThreadController.TickInterface
                 }
             }
         }
+
     }
 
     private void sendToUi() {
@@ -314,26 +314,28 @@ public class TT2Bot implements ThreadController.TickInterface
 
     @Override
     public void onScreenParserTick() {
-        if (!WaitLock.clanquest.get()) {
-            sceneTransitionChecker.checkIfRdyToExecute();
-            subMenuOpenChecker.checkIfRdyToExecute();
+        if (!botSettings.enableClanQuest) {
+            if (!WaitLock.clanquest.get()) {
+                sceneTransitionChecker.checkIfRdyToExecute();
+                subMenuOpenChecker.checkIfRdyToExecute();
 
 
-        try {
-            fairy.checkIfFairyWindowOpen();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        heros.checkIfMenuOpen();
-        if (botSettings.useFlashZip)
-            flashZip.checkFlashZipAreasAndTap();
-        if (System.currentTimeMillis() - startTime > 30000) {
-            skills.checkIfRdyToExecute();
-            boss.checkIfActiveBossFight();
-        }
-        manaDetector.checkIfRdyToExecute();
-        collectDailyReward.checkIfRdyToExecute();
-        collectInBoxRewward.checkIfRdyToExecute();
+                try {
+                    fairy.checkIfFairyWindowOpen();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                heros.checkIfMenuOpen();
+                if (botSettings.useFlashZip)
+                    flashZip.checkFlashZipAreasAndTap();
+                if (System.currentTimeMillis() - startTime > 30000) {
+                    skills.checkIfRdyToExecute();
+                    boss.checkIfActiveBossFight();
+                }
+                manaDetector.checkIfRdyToExecute();
+                collectDailyReward.checkIfRdyToExecute();
+                collectInBoxRewward.checkIfRdyToExecute();
+            }
         }
     }
 
@@ -361,6 +363,7 @@ public class TT2Bot implements ThreadController.TickInterface
     private void executeTests() {
         if (System.currentTimeMillis() - lastTestExecuted > 120000) {
             executeTask(ExtractArtifactsImageTask.class);
+            //executeTask(ClanQuestTask.class);
             lastTestExecuted = System.currentTimeMillis();
         }
     }
