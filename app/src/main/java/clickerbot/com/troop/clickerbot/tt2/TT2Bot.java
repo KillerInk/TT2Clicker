@@ -3,6 +3,7 @@ package clickerbot.com.troop.clickerbot.tt2;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.MainThread;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.HashMap;
@@ -241,6 +242,7 @@ public class TT2Bot implements ThreadController.TickInterface
         startTime = System.currentTimeMillis();
         WaitLock.resetWaitLocks();
         threadController.start();
+        Log.d(TAG, "clanquest: " + botSettings.enableClanQuest);
         if (botSettings.enableClanQuest)
             executeTask(ClanQuestTask.class);
     }
@@ -297,12 +299,19 @@ public class TT2Bot implements ThreadController.TickInterface
 
     private void sendToUi() {
         long now = System.currentTimeMillis();
-        long dif =  (prestige.getTimeSinceLastPrestige()+ prestige.getRandomTimeToPrestige() - now)/1000;
-        String out;
-        if (prestige.getTimeSinceLastPrestige() + prestige.getRandomTimeToPrestige() > now)
-            out = "Prestige:" +getTimeString((int)dif)+"\n";
+        String out = new String();
+        if (botSettings.timeToPrestige > 0) {
+            long dif = (prestige.getTimeSinceLastPrestige() + prestige.getRandomTimeToPrestige() - now) / 1000;
+
+            if (prestige.getTimeSinceLastPrestige() + prestige.getRandomTimeToPrestige() > now)
+                out = "Prestige:" + getTimeString((int) dif) + "\n";
+            else
+                out = "Prestige: It's time\n";
+        }
         else
-            out = "Prestige: It's time\n";
+        {
+            out = "Run: " + getTimeString((now - startTime)/1000) + "\n";
+        }
         //Log.d(TAG, out);
         if (botSettings.bossFailedCount >0)
             out += "BossFailed:" + boss.getBossFailedCounter()+"/"+ botSettings.bossFailedCount + "\n";
@@ -339,7 +348,7 @@ public class TT2Bot implements ThreadController.TickInterface
         }
     }
 
-    private String getTimeString(int dif)
+    private String getTimeString(long dif)
     {
         int hour = ((int)dif / 60) / 60;
         int min = (int)(dif - (hour*60*60)) / 60;
