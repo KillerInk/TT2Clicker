@@ -85,7 +85,7 @@ public class ClanQuest extends Menu {
                 randomTaps.add(boss_righfoot_pos);
         }
 
-        while (isTimerRunning() && !isTimerStarted()&& !executerTask.cancelTask && loopbreaker < 15)
+        while (isTimerRunning() && !isTimerStarted()&& !executerTask.cancelTask && loopbreaker < 30)
         {
             loopbreaker++;
             Log.d(TAG,"Wait for battel to start");

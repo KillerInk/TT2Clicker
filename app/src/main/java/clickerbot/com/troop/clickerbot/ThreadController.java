@@ -126,6 +126,7 @@ public class ThreadController implements IBot ,ScreenCaptureCallBack
             isBaseThreadRunning = false;
         }
         );
+        Log.d(TAG, "start basethread");
         baseThread.start();
 
         screenParserThread = new Thread(() -> {
@@ -143,6 +144,7 @@ public class ThreadController implements IBot ,ScreenCaptureCallBack
             isScreenParserRunning = false;
             Log.d(TAG,"stopped screenParserThread");
         });
+        Log.d(TAG, "start screenparserthread");
         screenParserThread.start();
     }
 

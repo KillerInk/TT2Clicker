@@ -45,6 +45,7 @@ public class Executer {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                    run = null;
                 }
             }
             running = false;
@@ -67,6 +68,7 @@ public class Executer {
             }
         }
         runnableLinkedList.clear();
+        run = null;
         Log.d(TAG, "Stopped Queue size:" + runnableLinkedList.size());
     }
 
