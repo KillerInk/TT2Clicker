@@ -152,8 +152,10 @@ public class ThreadController implements IBot ,ScreenCaptureCallBack
     public void stop() {
         this.doWork = false;
         executer.stop();
-        baseThread.interrupt();
-        screenParserThread.interrupt();
+        if (baseThread != null)
+            baseThread.interrupt();
+        if (screenParserThread != null)
+            screenParserThread.interrupt();
         Log.d(TAG,"Stopping");
 
         while (isBaseThreadRunning || isScreenParserRunning) {
