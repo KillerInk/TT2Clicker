@@ -169,6 +169,8 @@ public class BotSettings {
     public final int tapSTierCount;
     public final int tapATierCount;
 
+    public final long timeToSwitchToNextBodyPart;
+
     public BotSettings(SharedPreferences sharedPreferences,Context context)
     {
         useHS = sharedPreferences.getBoolean(context.getString(R.string.useHs),false);
@@ -225,6 +227,7 @@ public class BotSettings {
 
 
         enableClanQuest = sharedPreferences.getBoolean(context.getString(R.string.enableclanquest),false);
+        timeToSwitchToNextBodyPart = sharedPreferences.getLong(context.getString(R.string.switchtonextbodypart),600);
         clickOnBossHead = sharedPreferences.getBoolean(context.getString(R.string.clickonhead),false);
         clickOnBossBody = sharedPreferences.getBoolean(context.getString(R.string.clickonbody),false);
         clickOnBossLeftArm = sharedPreferences.getBoolean(context.getString(R.string.clickonleftarm),false);

@@ -66,7 +66,7 @@ public class ClanQuest extends Menu {
 
         Log.d(TAG,"CreateRandomTaps prepare for FIght");
         List<Point> randomTaps = new ArrayList();
-        for(int i = 0; i< 4; i++) {
+        /*for(int i = 0; i< 4; i++) {
             if (botSettings.clickOnBossHead)
                 randomTaps.add(boss_head_pos);
             if (botSettings.clickOnBossBody)
@@ -83,8 +83,24 @@ public class ClanQuest extends Menu {
                 randomTaps.add(boss_leftfoot_pos);
             if (botSettings.clickOnBossRightFoot)
                 randomTaps.add(boss_righfoot_pos);
-        }
+        }*/
 
+        if (botSettings.clickOnBossHead)
+            randomTaps.add(boss_head_pos);
+        if (botSettings.clickOnBossBody)
+            randomTaps.add(boss_body_pos);
+        if (botSettings.clickOnBossLeftShoulder)
+            randomTaps.add(boss_leftshoulder_pos);
+        if (botSettings.clickOnBossRightShoulder)
+            randomTaps.add(boss_rightshoulder_pos);
+        if (botSettings.clickOnBossLeftArm)
+            randomTaps.add(boss_leftarm_pos);
+        if (botSettings.clickOnBossRightArm)
+            randomTaps.add(boss_rightarm_pos);
+        if (botSettings.clickOnBossLeftFoot)
+            randomTaps.add(boss_leftfoot_pos);
+        if (botSettings.clickOnBossRightFoot)
+            randomTaps.add(boss_righfoot_pos);
         while (isTimerRunning() && !isTimerStarted()&& !executerTask.cancelTask && loopbreaker < 30)
         {
             loopbreaker++;
@@ -96,9 +112,21 @@ public class ClanQuest extends Menu {
         Log.d(TAG,"Fight is starting");
         bot.UpdatePrestigeTime("Fight!");
         long start = System.currentTimeMillis();
+        long switchToNextPartTime = start;
+        int partcounter = 0;
+        Point active_click = randomTaps.get(0);
         while (System.currentTimeMillis() -start < 31000 && !Thread.interrupted() && !executerTask.cancelTask)
         {
-            try {
+            if (System.currentTimeMillis() - switchToNextPartTime > botSettings.timeToSwitchToNextBodyPart)
+            {
+                switchToNextPartTime = System.currentTimeMillis();
+                active_click = randomTaps.get(partcounter++);
+                if (partcounter == randomTaps.size())
+                    partcounter = 0;
+            }
+
+            touchInput.tap(getRandomPoint(active_click),20);
+           /* try {
                 for (int i = 0; i < randomTaps.size(); i++) {
                     touchInput.tap(getRandomPoint(randomTaps.get(i)), 20);
                     Thread.sleep(10);
@@ -106,7 +134,7 @@ public class ClanQuest extends Menu {
                 Thread.sleep(30);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
         Log.d(TAG,"Fight is over, wait for ClanQuest Close");
         bot.UpdatePrestigeTime("Fight is over");
