@@ -25,8 +25,8 @@ public class Fairy extends Menu {
     private final int minYFairyPos = 110;
     private final int maxYFairyPos = 181;
 
-    private Point fairyColorDecline = new Point(35,580); // <<<<<<<< DIFF
-    private Point fairyColorAccept = new Point(313 ,591); // <<<<<<<< DIFF
+    private Point fairyColorDecline = new Point(203,606); // <<<<<<<< DIFF
+    private Point fairyColorAccept = new Point(422 ,605); // <<<<<<<< DIFF
 
     private final Point accept_Pos = new Point(313 ,591); // <<<<<<<< DIFF
     private final Point decline_Pos = new Point(200 ,630);
@@ -103,7 +103,7 @@ public class Fairy extends Menu {
         int color2 = bot.getScreeCapture().getColor(fairyColorAccept); // -13981229
         // Log.v(TAG,"checkIfFairyWindowOpen color accept " + ColorUtils.getColorString(color2));
         // Log.d(TAG, "fairy window open: "  + (ColorUtils.redEquals(color,251) && ColorUtils.blueIsInRange(color2,194,262)));
-        if (ColorUtils.redEquals(color,117) && ColorUtils.blueIsInRange(color2,189,262) && !WaitLock.fairyWindowDetected.get())// <<<<<<<< DIFF
+        if (ColorUtils.redEquals(color,251) && ColorUtils.blueIsInRange(color2,189,262) && !WaitLock.fairyWindowDetected.get())// <<<<<<<< DIFF
         {
             //WaitLock.lockFairyWindow(true);
             howOftenDetected++;
