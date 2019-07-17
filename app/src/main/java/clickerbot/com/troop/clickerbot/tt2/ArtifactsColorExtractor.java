@@ -24,7 +24,7 @@ public class ArtifactsColorExtractor extends Menu {
     private final int x_end = 66;
 
     private final int colortofind = -8227733; //Color.argb(255,130,160,107);
-    private final int colortofind_x_lookup = 11;
+    private final int colortofind_x_lookup = 469;
 
     private Bitmap artifactImgs[];
     private Artifacts[] artifacts;
@@ -110,6 +110,39 @@ public class ArtifactsColorExtractor extends Menu {
         return false;
     }
 
+
+    public void extractArtifactImages(ExecuterTask task) throws IOException, InterruptedException {
+        openArtifactMenu(task);
+        if (!isMenuMaximized())
+            maximiseMenu(task);
+        gotToTopMaximised(task);
+        Thread.sleep(400);
+        List<Point> artifcatsYPosList = getArtifactPositionsFromTop();
+        Bitmap artifactImg;
+        int artifactsProcessed = 0;
+        Artifacts artifact;
+        //scroll from top to bottom and level artifacts
+        while (artifcatsYPosList.size() > 0 && !task.cancelTask) {
+            for (int i = 0; i < artifcatsYPosList.size(); i++) {
+                int width = 50;
+                int height = artifcatsYPosList.get(i).y - artifcatsYPosList.get(i).x;
+                //Log.d(TAG,"WxH:" + width +"x"+height);
+                if (height >= 57) {
+                    artifactImg = bot.getScreeCapture().getBitmapFromPos(x_start, artifcatsYPosList.get(i).x+3, width, 50);
+
+                    artifact = findArtifact(artifactImg, artifactsProcessed);
+                    Log.d(TAG, artifactsProcessed + " Found " + artifact);
+                    saveBitmap(artifactImg, "/sdcard/Pictures/" + artifactsProcessed + "_" +artifact + ".png");
+
+                    artifactsProcessed++;
+                }
+            }
+            swipeDownMaximised();
+            Thread.sleep(500);
+            artifcatsYPosList = getArtifactPositionsFromTop();
+        }
+    }
+
     public void extractColors(ExecuterTask task) throws IOException, InterruptedException {
         openArtifactMenu(task);
         if (!isMenuMaximized())
@@ -126,11 +159,11 @@ public class ArtifactsColorExtractor extends Menu {
         {
             for (int i = 0; i < artifcatsYPosList.size(); i++)
             {
-                int width = 57;
+                int width = 50;
                 int height = artifcatsYPosList.get(i).y -artifcatsYPosList.get(i).x;
                 //Log.d(TAG,"WxH:" + width +"x"+height);
                 if (height >= 57) {
-                    artifactImg = bot.getScreeCapture().getBitmapFromPos(x_start, artifcatsYPosList.get(i).x, width, 56);
+                    artifactImg = bot.getScreeCapture().getBitmapFromPos(x_start, artifcatsYPosList.get(i).x+3, width, 50);
 
                     artifact = findArtifact(artifactImg,artifactsProcessed);
                     levelArtifact(artifcatsYPosList, artifact, i, height);
@@ -151,7 +184,9 @@ public class ArtifactsColorExtractor extends Menu {
                 artifcatsYPosList.clear();
         }
 
+
         artifactsleveld.clear();
+        Thread.sleep(500);
         lastArtifactReached =false;
         artifcatsYPosList = getArtifactPositionsFromTop();
         //scroll from bottom to top
@@ -179,7 +214,7 @@ public class ArtifactsColorExtractor extends Menu {
             }
             if (!lastArtifactReached) {
                 swipeUpMaximised();
-                Thread.sleep(500);
+                Thread.sleep(600);
                 artifcatsYPosList = getArtifactPositionsFromTop();
             }
             else
@@ -242,7 +277,7 @@ public class ArtifactsColorExtractor extends Menu {
         return artifacts[bestmatchpos];
     }
 
-    private final int reduceRangeToLookUp = 0;
+    private int reduceRangeToLookUp = 0;
     private double findMatch(Bitmap input, int imgtodiff)
     {
         int matchcount = 0;
@@ -337,28 +372,29 @@ public class ArtifactsColorExtractor extends Menu {
     private List<Point> getArtifactPositionsFromTop()
     {
         boolean waitforstart = true;
-        boolean lastColorWasGray = true;
         int start = 0;
         List<Point> list =new ArrayList<>();
         int[] colors = bot.getScreeCapture().getColorFromOneVerticalLine(colortofind_x_lookup,50,760);
         int t = 1;
-        while(t < colors.length)
+        while(t < colors.length-1)
         {
             //if (waitforstart && isColorInRange(colors[t-1]) && !isColorInRange(colors[t]) && lastColorWasGray)
-            if (waitforstart && colors[t-1] == colortofind && colors[t] != colortofind && lastColorWasGray)
+            if (waitforstart && !isPurple(colors[t-1])  && isPurple(colors[t]))
             {
-                //Log.d(TAG, "Start: t-1:" + ColorUtils.logColor(colors[t-1]) + " t:" + ColorUtils.logColor(colors[t]) + " color to find:" + ColorUtils.logColor(colortofind));
+                Log.d(TAG, "X "+ t +" Start: t-1:" + ColorUtils.logColor(colors[t-1]) + " t:" + ColorUtils.logColor(colors[t]));
                 waitforstart = false;
-                lastColorWasGray = false;
                 start = t;
             }
             //else if (!waitforstart && !lastColorWasGray && isColorInRange(colors[t]) && !isColorInRange(colors[t-1]))
-            else if (!waitforstart && !lastColorWasGray && colors[t] == colortofind && colors[t-1] != colortofind)
+            else if (!waitforstart&& isPurple(colors[t]) && !isPurple(colors[t+1]))
             {
-                //Log.d(TAG, "End: t-1:" + ColorUtils.logColor(colors[t-1]) + " t:" + ColorUtils.logColor(colors[t]) + " color to find:" + ColorUtils.logColor(colortofind));
+                Log.d(TAG,  "X "+ t +" End: t1:" + ColorUtils.logColor(colors[t]) + " t+1:" + ColorUtils.logColor(colors[t+1]));
                 waitforstart = true;
-                lastColorWasGray = true;
                 list.add(new Point(start+51, t+51));
+            }
+            else if (!waitforstart && !isPurple(colors[t-1])  && isPurple(colors[t]) )
+            {
+                start = t;
             }
             t++;
         }
@@ -389,4 +425,15 @@ public class ArtifactsColorExtractor extends Menu {
             }
         }
     }
+
+    private boolean isPurple(int color)
+    {
+        boolean inrange = ColorUtils.colorIsInRange(color, 147,156,117,128,197,216);
+        //Log.v(TAG, "isPurple: " + inrange + " " +ColorUtils.logColor(color));
+        return inrange;
+    }
+
+
+
+
 }
