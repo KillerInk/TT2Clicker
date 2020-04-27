@@ -2,8 +2,6 @@ package clickerbot.com.troop.clickerbot.tt2;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.annotation.MainThread;
-import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.HashMap;

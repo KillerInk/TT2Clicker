@@ -44,7 +44,7 @@ public abstract class Menu extends Item
 
     public final Point MenuMaxButtonColorPosition = new Point(335,518);
     public final Point MenuMaximisedMaxButtonColorPosition = new Point(335,60);
-    private int colorMenuOpen = Color.argb(255,84,76,76);
+    private int colorMenuOpen = Color.argb(255,85,80,81);
     private Point menuOpenCheckPoint = new Point(471,449);
     private Point menuMaximizedCheckPoint = new Point(471,12);
     private boolean menuTaskRunning = false;

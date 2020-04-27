@@ -11,7 +11,7 @@ public class SceneTransitionChecker extends Menu {
 
     private final String TAG  = SceneTransitionChecker.class.getSimpleName();
     private final Point shopbuttonColorPos = new Point(479,799);
-    private final int shopButtonColor = Color.argb(255,60,130,134);
+    private final int shopButtonColor = -12680574;//Color.argb(255,61,130,132);
     private long lastTap =0;
     private int howOftenDetected;
     public SceneTransitionChecker(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
