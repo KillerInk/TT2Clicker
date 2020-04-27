@@ -255,12 +255,14 @@ public abstract class Menu extends Item
     }
 
     public void gotToTopMaximised(ExecuterTask task) throws IOException, InterruptedException {
-        while (!isMenuTopMaximisedReached() && !task.cancelTask && Menu.getMenuState() == MenuState.maximise) {
+        int loopbreaker = 0;
+        while (/*!isMenuTopMaximisedReached() &&*/ breakCondition(loopbreaker,5,task) && !task.cancelTask && Menu.getMenuState() == MenuState.maximise) {
             WaitLock.checkForErrorAndWait();
             swipeUpMaximised();
             WaitLock.checkForErrorAndWait();
             Thread.sleep(300);
             WaitLock.checkForErrorAndWait();
+            loopbreaker++;
         }
         Thread.sleep(100);
     }
@@ -296,6 +298,24 @@ public abstract class Menu extends Item
         Thread.sleep(1000);
         swipeDown();
         Thread.sleep(1000);
+    }
+
+    protected boolean breakCondition(int loopbreaker, int loopbreakerMax, ExecuterTask task)
+    {
+        boolean canlevel = true;
+        if (canlevel) {
+            canlevel = loopbreaker < loopbreakerMax;
+            Log.d(TAG, "loopbreak not triggered:" + canlevel);
+        }
+        if (canlevel) {
+            canlevel = task.cancelTask != true;
+            Log.d(TAG, "task canceld:" + task.cancelTask);
+        }
+        if (canlevel) {
+            canlevel =  Menu.getMenuState() != MenuState.closed;
+            Log.d(TAG, "MenuOPen:" + Menu.getMenuState());
+        }
+        return canlevel;
     }
 
 }

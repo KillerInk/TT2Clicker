@@ -131,7 +131,7 @@ public class Heros extends Menu {
         WaitLock.checkForErrorAndWait();
         Thread.sleep(300);
         int loopbreaker = 0;
-        while (!isMenuTopMaximisedReached() && breakCondition(loopbreaker,5,task)) {
+        while (/*!isMenuTopMaximisedReached() && */breakCondition(loopbreaker,5,task)) {
             hero_Y_coordinates = getHero_Y_coordinates();
             for (int i = 0; i < hero_Y_coordinates.length; i++) {
                 WaitLock.checkForErrorAndWait();
@@ -142,6 +142,7 @@ public class Heros extends Menu {
             Thread.sleep(300);
             WaitLock.checkForErrorAndWait();
             swipeUpMaximised();
+            loopbreaker++;
         }
         Thread.sleep(300);
         WaitLock.checkForErrorAndWait();
@@ -177,23 +178,7 @@ public class Heros extends Menu {
         return canlevel;
     }
 
-    private boolean breakCondition(int loopbreaker, int loopbreakerMax, ExecuterTask task)
-    {
-        boolean canlevel = true;
-        if (canlevel) {
-            canlevel = loopbreaker < loopbreakerMax;
-            Log.d(TAG, "loopbreak not triggered:" + canlevel);
-        }
-        if (canlevel) {
-            canlevel = task.cancelTask != true;
-            Log.d(TAG, "task canceld:" + task.cancelTask);
-        }
-        if (canlevel) {
-            canlevel =  Menu.getMenuState() != MenuState.closed;
-            Log.d(TAG, "MenuOPen:" + Menu.getMenuState());
-        }
-        return canlevel;
-    }
+
 
     private void tapOnHero(int times,Point point) throws IOException, InterruptedException {
         for (int i = 0; i< times;i++) {
