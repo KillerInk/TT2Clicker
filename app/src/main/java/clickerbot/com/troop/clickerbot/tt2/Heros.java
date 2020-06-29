@@ -196,7 +196,7 @@ public class Heros extends Menu {
     private Integer[] getHero_Y_coordinates()
     {
         List<Integer> list =new ArrayList<>();
-        int[] colors = bot.getScreeCapture().getColorFromOneVerticalLine(hero_color_X,50,760);
+        int[] colors = bot.getScreeCapture().getColorFromOneVerticalLine(hero_color_X,50,764);
         int start = 0;
         int end =50;
         boolean waitforstart = true;
