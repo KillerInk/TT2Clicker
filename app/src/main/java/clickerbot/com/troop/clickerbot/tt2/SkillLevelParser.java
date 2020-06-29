@@ -25,22 +25,22 @@ public class SkillLevelParser {
     {
         Bitmap map = bot.getScreeCapture().getBitmap().copy(bot.getScreeCapture().getBitmap().getConfig(),false);
         Log.d(TAG,"HS");
-        int hslvl = getLevel(228,map);
+        int hslvl = getLevel(334,map);
         hs.setSkillLvl(hslvl);
         Log.d(TAG,"DS");
-        int dslvl = getLevel(303,map);
+        int dslvl = getLevel(409,map);
         ds.setSkillLvl(dslvl);
         Log.d(TAG,"HOM");
-        int homlvl = getLevel(379,map);
+        int homlvl = getLevel(485,map);
         hom.setSkillLvl(homlvl);
         Log.d(TAG,"FS");
-        int fslvl = getLevel(454,map);
+        int fslvl = getLevel(561,map);
         fs.setSkillLvl(fslvl);
         Log.d(TAG,"WC");
-        int wclvl = getLevel(530,map);
+        int wclvl = getLevel(636,map);
         wc.setSkillLvl(wclvl);
         Log.d(TAG,"SC");
-        int sclvl = getLevel(605,map);
+        int sclvl = getLevel(712,map);
         sc.setSkillLvl(sclvl);
         map.recycle();
         Log.d(TAG,"hs:" + hslvl +" ds:"+dslvl+" hom:"+ homlvl +" fs:" +fslvl +" wc:"+wclvl + " sc:"+sclvl);

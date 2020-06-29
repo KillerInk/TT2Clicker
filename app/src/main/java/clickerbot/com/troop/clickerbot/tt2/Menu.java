@@ -6,7 +6,6 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import clickerbot.com.troop.clickerbot.ColorUtils;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
@@ -54,31 +53,16 @@ public abstract class Menu extends Item
     private final Point swipeTopPointMaximised =  new Point(200, 129);
     private final Point swipeBottomPointMaximised = new Point(200, 729);
 
+    //background color from menu when swipe moved down top items
+    private final int colorMenuTopReached = Color.argb(255,32,32,41);
+    private final  Point checkPoint_colorMenuTopReached = new Point(77,189);
+    private final  Point checkPoint_colorMenuTopReached2 = new Point(77,199);
+    private final  Point checkPoint_colorMenuBottomReached = new Point(40,757);
+    private final  Point checkPoint_colorMenuBottomReached2 = new Point(40,747);
+
     public Menu(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
         super(ibot, botSettings, rootShell);
         maxButtonColors = getMaxButtonColors();
-    }
-
-    public boolean isMenuTopReached()
-    {
-        int color = bot.getScreeCapture().getColor(MenuMaxButtonColorPosition);
-        boolean yep = false;
-
-        if (maxButtonColors.contains(color))
-            yep = true;
-        Log.d(TAG, "isMenuTopReached: "+ yep + " " + ColorUtils.getColorString(color));
-        return yep;
-    }
-
-    public boolean isMenuTopMaximisedReached()
-    {
-        int color = bot.getScreeCapture().getColor(MenuMaximisedMaxButtonColorPosition);
-        boolean yep = false;
-
-        if (maxButtonColors.contains(color))
-            yep = true;
-        Log.d(TAG, "isMenuTopReached: "+ yep + " " + ColorUtils.getColorString(color));
-        return yep;
     }
 
     private ArrayList<Integer> getMaxButtonColors()
@@ -256,9 +240,36 @@ public abstract class Menu extends Item
 
     public void gotToTopMaximised(ExecuterTask task) throws IOException, InterruptedException {
         int loopbreaker = 0;
-        while (/*!isMenuTopMaximisedReached() &&*/ breakCondition(loopbreaker,5,task) && !task.cancelTask && Menu.getMenuState() == MenuState.maximise) {
+        boolean istop = false;
+        while (!istop && breakCondition(loopbreaker,12,task) && !task.cancelTask && Menu.getMenuState() == MenuState.maximise) {
             WaitLock.checkForErrorAndWait();
-            swipeUpMaximised();
+            //swipeUpMaximised();
+            touchInput.swipeVertical(swipeTopPointMaximised,swipeBottomPointMaximised, false);
+            int color = bot.getScreeCapture().getColor(checkPoint_colorMenuTopReached);
+            int color2 = bot.getScreeCapture().getColor(checkPoint_colorMenuTopReached2);
+            if (color == colorMenuTopReached && color2 == colorMenuTopReached)
+                istop = true;
+            touchInput.releaseTouch();
+            WaitLock.checkForErrorAndWait();
+            Thread.sleep(300);
+            WaitLock.checkForErrorAndWait();
+            loopbreaker++;
+        }
+        Thread.sleep(100);
+    }
+
+    public void gotToBottomMaximised(ExecuterTask task) throws IOException, InterruptedException {
+        int loopbreaker = 0;
+        boolean istop = false;
+        while (!istop && breakCondition(loopbreaker,12,task) && !task.cancelTask && Menu.getMenuState() == MenuState.maximise) {
+            WaitLock.checkForErrorAndWait();
+            //swipeUpMaximised();
+            touchInput.swipeVertical(swipeBottomPointMaximised ,swipeTopPointMaximised, false);
+            int color = bot.getScreeCapture().getColor(checkPoint_colorMenuBottomReached);
+            int color2 = bot.getScreeCapture().getColor(checkPoint_colorMenuBottomReached);
+            if (color == colorMenuTopReached && color2 == colorMenuTopReached)
+                istop = true;
+            touchInput.releaseTouch();
             WaitLock.checkForErrorAndWait();
             Thread.sleep(300);
             WaitLock.checkForErrorAndWait();
@@ -268,20 +279,20 @@ public abstract class Menu extends Item
     }
 
     public void swipeDown() throws IOException, InterruptedException {
-        touchInput.swipeVertical(swipeBottomPoint,swipeTopPoint);
+        touchInput.swipeVertical(swipeBottomPoint,swipeTopPoint, true);
     }
 
     public void swipeUp() throws InterruptedException, IOException {
-        touchInput.swipeVertical(swipeTopPoint,swipeBottomPoint);
+        touchInput.swipeVertical(swipeTopPoint,swipeBottomPoint, true);
 
     }
 
     public void swipeDownMaximised() throws IOException, InterruptedException {
-        touchInput.swipeVertical(swipeBottomPointMaximised,swipeTopPointMaximised);
+        touchInput.swipeVertical(swipeBottomPointMaximised,swipeTopPointMaximised, true);
     }
 
     public void swipeUpMaximised() throws InterruptedException, IOException {
-        touchInput.swipeVertical(swipeTopPointMaximised,swipeBottomPointMaximised);
+        touchInput.swipeVertical(swipeTopPointMaximised,swipeBottomPointMaximised, true);
 
     }
 

@@ -5,10 +5,18 @@ import android.util.Log;
 
 public class ColorUtils {
 
+    private final static String TAG = ColorUtils.class.getSimpleName();
+    private static boolean doLog = false;
+
     public static boolean colorIsInRange(int color, int red_min, int red_max, int green_min, int green_max, int blue_min, int blue_max)
     {
         return  redIsInRange(color, red_min,red_max) && greenIsInRange(color,green_min,green_max) && blueIsInRange(color, blue_min,blue_max);
 
+    }
+
+    private static void log(String t)
+    {
+        Log.d(TAG, t);
     }
 
     public static boolean blueIsInRange(int color,int min, int max)
@@ -16,6 +24,8 @@ public class ColorUtils {
         int blue = Color.blue(color);
         if (blue >= min && blue <= max)
             return true;
+        if (doLog)
+            log("Blue: " + blue + " Range:" +min +"/"+max);
         return false;
     }
 
@@ -24,6 +34,8 @@ public class ColorUtils {
         int red = Color.red(color);
         if (red >= min && red <= max)
             return true;
+        if (doLog)
+            log("Red: " + red + " Range:" +min +"/"+max);
         return false;
     }
 
@@ -32,6 +44,8 @@ public class ColorUtils {
         int green = Color.green(color);
         if (green >= min && green <= max)
             return true;
+        if (doLog)
+            log("Green: " + green + " Range:" +min +"/"+max);
         return false;
     }
 

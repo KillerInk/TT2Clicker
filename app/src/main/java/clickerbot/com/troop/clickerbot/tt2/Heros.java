@@ -121,13 +121,8 @@ public class Heros extends Menu {
         if(!isMenuMaximized())
             maximiseMenu(task);
         WaitLock.checkForErrorAndWait();
-        for (int i=0; i < 6; i++) {
-            if (task.cancelTask)
-                return;
-            WaitLock.checkForErrorAndWait();
-            swipeDownMaximised();
-            WaitLock.checkForErrorAndWait();
-        }
+        gotToBottomMaximised(task);
+
         WaitLock.checkForErrorAndWait();
         Thread.sleep(300);
         int loopbreaker = 0;

@@ -23,18 +23,18 @@ public class SwipeTest extends ExecuterTask {
         try {
             touchInterface.tap(Coordinates.Menu_Heros,30);
             Thread.sleep(1000);
-            touchInterface.swipeVertical(new Point(240,707),new Point(240,556));
+            touchInterface.swipeVertical(new Point(240,707),new Point(240,556), true);
             Thread.sleep(100);
-            touchInterface.swipeVertical(new Point(240,707),new Point(240,556));
+            touchInterface.swipeVertical(new Point(240,707),new Point(240,556), true);
             /*Thread.sleep(100);
             touchInterface.swipeVertical(new Point(240,707),new Point(240,556));*/
 
             Thread.sleep(2000);
-            touchInterface.swipeVertical(new Point(240,556),new Point(240,707));
+            touchInterface.swipeVertical(new Point(240,556),new Point(240,707), true);
             Thread.sleep(100);
-            touchInterface.swipeVertical(new Point(240,556),new Point(240,707));
+            touchInterface.swipeVertical(new Point(240,556),new Point(240,707), true);
             Thread.sleep(100);
-            touchInterface.swipeVertical(new Point(240,556),new Point(240,707));
+            touchInterface.swipeVertical(new Point(240,556),new Point(240,707), true);
            /* Thread.sleep(2000);
             touchInterface.tap(Coordinates.Menu_Close);*/
         } catch (InterruptedException e) {

@@ -91,10 +91,11 @@ public class NativeTouchHandler implements TouchInterface {
      * 		touchUp 0
      * @param from
      * @param to
+     * @param releaseTouch
      * @throws InterruptedException
      */
     @Override
-    public void swipeVertical(Point from, Point to) throws InterruptedException {
+    public void swipeVertical(Point from, Point to, boolean releaseTouch) throws InterruptedException {
         synchronized (touchLock) {
             Log.d(TAG,"swipeVertical(from:" + from.toString() + " to:" +to.toString() +")");
             Thread.sleep(2);
@@ -120,15 +121,22 @@ public class NativeTouchHandler implements TouchInterface {
                     Thread.sleep(0,20);
                 }
             }
-
-            Thread.sleep(600);
-            touchUp(to,swipeID);
-            //updatePosition(to, swipeID);
             lastPoint = to;
-            Thread.sleep(500);
-
+            Thread.sleep(600);
+            if (releaseTouch)
+                releaseTouch();
         }
 
+    }
+
+    @Override
+    public void releaseTouch() {
+        try {
+            touchUp(lastPoint,swipeID);
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

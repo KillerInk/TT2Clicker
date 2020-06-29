@@ -43,9 +43,9 @@ public class ClickTestActivity extends AppCompatActivity {
         nativeTouchHandler.start();
         nativeTouchHandler.tap(new Point(240,71),30);
         Thread.sleep(1000);
-        nativeTouchHandler.swipeVertical(new Point(200,782), new Point(200,546));
+        nativeTouchHandler.swipeVertical(new Point(200,782), new Point(200,546), true);
         Thread.sleep(1000);
-        nativeTouchHandler.swipeVertical(new Point(200,546), new Point(200,782));
+        nativeTouchHandler.swipeVertical(new Point(200,546), new Point(200,782), true);
         nativeTouchHandler.stop();
         nativeTouchHandler.close();
     }

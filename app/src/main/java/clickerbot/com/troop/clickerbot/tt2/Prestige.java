@@ -24,11 +24,14 @@ public class Prestige extends Menu {
     private long timeSinceLastPrestige = 0;
     private Boss boss;
 
-    private final Point prestigeMenuButton = new Point(401,734);
-    private final Point prestigeButton = new Point(239,630);
-    private final Point prestigeButton_color_pos = new Point(292,617);
-    private final Point prestigeAcceptButton = new Point(326,539);
-    private final Point prestigeAcceptButton_color = new Point(326,525);
+    //Prestige button inside the hero menu, under the hero level button and over heavenly strike ( yellow)
+    private final Point prestigeButtonSwordMasterMenu_pos = new Point(401,240);
+    //Prestige button inside the prestige submenu that appear after the prestige button from hero menu got clicked (light blue)
+    private final Point prestigeButtonSubMenu_pos = new Point(240,706);
+    //Position to check  if the prestige submenu got open, if the color at this postion is light blue, the submenu is open
+    private final Point prestigeSubmenuButton_color_pos = new Point(240,707);
+    private final Point prestigeAcceptButton = new Point(326,574);
+    private final Point prestigeAcceptButton_color = new Point(326,573);
     private Random random;
 
 
@@ -100,23 +103,25 @@ public class Prestige extends Menu {
             openSwordMasterMenu(task);
             if (!isMenuMaximized())
                 maximiseMenu(task);
-            for (int i =0; i < 5; i++)
-                swipeDownMaximised();
+            gotToTopMaximised(task);
 
             int loopbreaker = 0;
 
-            while(!checkPrestigButton() && !Thread.currentThread().isInterrupted() && !task.cancelTask && loopbreaker  < 10) {
+            Log.d(TAG, "Press Hero menu Prestige Button");
+            while(!checkIfPrestigeSubMenuIsOpen() && !Thread.currentThread().isInterrupted() && !task.cancelTask && loopbreaker  < 10) {
                 loopbreaker++;
-                doLongerSingelTap(new Point(prestigeMenuButton.x -3 +random.nextInt(6),prestigeMenuButton.y -3 +random.nextInt(6)),"on Prestige Menu Button");
+                doLongerSingelTap(new Point(prestigeButtonSwordMasterMenu_pos.x -3 +random.nextInt(6), prestigeButtonSwordMasterMenu_pos.y -3 +random.nextInt(6)),"on Prestige Menu Button");
                 Thread.sleep(600);
             }
             loopbreaker = 0;
+            Log.d(TAG, "Press Prestige Submenu Prestige button");
             while (!checkPrestigAcceptColor() && !Thread.currentThread().isInterrupted()&& !task.cancelTask && loopbreaker  < 5) {
                 loopbreaker++;
-                doLongerSingelTap(prestigeButton,"on Prestige Button");
+                doLongerSingelTap(prestigeButtonSubMenu_pos,"on Prestige Button");
                 Thread.sleep(600);
             }
             loopbreaker = 0;
+            Log.d(TAG, "Press Prestige Submenu Accept Prestige button");
             while (checkPrestigAcceptColor()&& !Thread.currentThread().isInterrupted()&& !task.cancelTask && loopbreaker  < 5) {
                 loopbreaker++;
                 Thread.sleep(600);
@@ -155,9 +160,9 @@ public class Prestige extends Menu {
         return Color.blue(color)> 200;
     }
 
-    private boolean checkPrestigButton()
+    private boolean checkIfPrestigeSubMenuIsOpen()
     {
-        int color = bot.getScreeCapture().getColor(prestigeButton_color_pos);
+        int color = bot.getScreeCapture().getColor(prestigeSubmenuButton_color_pos);
         return Color.blue(color)> 200;
     }
 

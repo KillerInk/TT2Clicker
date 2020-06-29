@@ -39,7 +39,9 @@ public class ArtifactsColorExtractor extends Menu {
         artifactImgs = new Bitmap[58];
         BitmapFactory.Options bitopt=new BitmapFactory.Options();
         bitopt.inScaled = false;
-        artifactImgs[0] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._0,bitopt);
+        artifactImgs[0] = BitmapFactory.decodeResource(ibot.getContext().getResources(),
+                R.drawable._0,
+                bitopt);
         artifactImgs[1] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._1,bitopt);
         artifactImgs[2] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._2,bitopt);
         artifactImgs[3] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._3,bitopt);
@@ -126,7 +128,7 @@ public class ArtifactsColorExtractor extends Menu {
             for (int i = 0; i < artifcatsYPosList.size(); i++) {
                 int width = 50;
                 int height = artifcatsYPosList.get(i).y - artifcatsYPosList.get(i).x;
-                //Log.d(TAG,"WxH:" + width +"x"+height);
+                Log.d(TAG,"WxH:" + width +"x"+height);
                 if (height >= 57) {
                     artifactImg = bot.getScreeCapture().getBitmapFromPos(x_start, artifcatsYPosList.get(i).x+3, width, 50);
 
@@ -272,7 +274,7 @@ public class ArtifactsColorExtractor extends Menu {
                 bestmatchpos = i;
         }
         Log.d(TAG,"BestMatch/Pos:" + bestmatch+"/"+bestmatchpos);
-        if (bestmatch < 20)
+        if (bestmatch < 10)
             bestmatchpos = artifacts.length-1;
         return artifacts[bestmatchpos];
     }
@@ -428,7 +430,7 @@ public class ArtifactsColorExtractor extends Menu {
 
     private boolean isPurple(int color)
     {
-        boolean inrange = ColorUtils.colorIsInRange(color, 147,156,117,128,197,216);
+        boolean inrange = ColorUtils.colorIsInRange(color, 108,168,92,168,117,207);
         //Log.v(TAG, "isPurple: " + inrange + " " +ColorUtils.logColor(color));
         return inrange;
     }

@@ -30,9 +30,13 @@ public class ShellInputEventHandler implements TouchInterface {
     }
 
     @Override
-    public void swipeVertical(Point from, Point to) throws InterruptedException, IOException {
+    public void swipeVertical(Point from, Point to, boolean releaseTouch) throws InterruptedException, IOException {
         RootShell shell = getShell();
         shell.swipeFromTo(from.x,from.y,to.x,to.y);
+    }
+
+    @Override
+    public void releaseTouch() {
     }
 
     @Override

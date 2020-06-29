@@ -6,16 +6,12 @@ import android.util.Log;
 import clickerbot.com.troop.clickerbot.executer.Executer;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.screencapture.MediaProjectionScreenCapture;
-import clickerbot.com.troop.clickerbot.screencapture.ScreenCaptureCallBack;
 
-public class ThreadController implements IBot ,ScreenCaptureCallBack
+public class ThreadController implements IBot
 {
     private final static String TAG = ThreadController.class.getSimpleName();
     private volatile boolean doWork = false;
-
-    private long threadstarttime;
     private long tickCounter = 0;
-    private long lastTick = 0;
     private volatile boolean isBaseThreadRunning = false;
     private volatile boolean isScreenParserRunning = false;
     protected MediaProjectionScreenCapture mediaProjectionScreenCapture;
@@ -28,14 +24,6 @@ public class ThreadController implements IBot ,ScreenCaptureCallBack
     private Thread baseThread;
     //handel screenParsing
     private Thread screenParserThread;
-
-    @Override
-    public void onScreenCapture() {
-
-    }
-
-
-
 
     public interface TickInterface
     {
@@ -109,7 +97,6 @@ public class ThreadController implements IBot ,ScreenCaptureCallBack
         Log.d(TAG, "start");
         executer.start();
         baseThread = new Thread(()->{
-            threadstarttime = System.currentTimeMillis();
             isBaseThreadRunning = true;
             while (doWork && !Thread.currentThread().isInterrupted())
             {

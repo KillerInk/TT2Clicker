@@ -8,7 +8,7 @@ import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 
 public class BOS extends Menu {
-    private final Point bos_click_pos = new Point(400,214);
+    private final Point bos_click_pos = new Point(400,250);
     public BOS(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
         super(ibot, botSettings, rootShell);
     }

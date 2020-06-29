@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.TextureView;
 
 import java.nio.ByteBuffer;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailableListener {
     private final String TAG = MediaProjectionScreenCapture.class.getSimpleName();
@@ -29,11 +30,11 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
     private static int mResultCode;
     private int mScreenDensity;
     private Bitmap inputbmp;
-    private ScreenCaptureCallBack screenCaptureCallBack;
     private long frames;
     private ImageReader imageReader;
     private HandlerThread mBackgroundThread;
     protected Handler mBackgroundHandler;
+    private LinkedBlockingQueue<Image> blockingQueue;
 
     public MediaProjectionScreenCapture(Context context,Intent mediaProjectionResult, int mResultCode, TextureView surfaceView, int mScreenDensity)
     {
@@ -45,7 +46,7 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
         inputbmp = Bitmap.createBitmap(480,800,Bitmap.Config.ARGB_8888);
         imageReader = ImageReader.newInstance(480,800,PixelFormat.RGBA_8888,5);
         imageReader.setOnImageAvailableListener(this,mBackgroundHandler);
-
+        blockingQueue = new LinkedBlockingQueue<>(5);
         this.mScreenDensity =mScreenDensity;
         create();
 
@@ -74,21 +75,9 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
         mBackgroundHandler = null;
     }
 
-
-    public void setScreenCaptureCallBack(ScreenCaptureCallBack captureCallBack)
-    {
-        this.screenCaptureCallBack = captureCallBack;
-    }
-
-
     public void start()
     {
-        //surfaceView.getSurfaceTexture().setDefaultBufferSize(480,800);
-
-
-
         startScreenCapture();
-        //surfaceView.setVisibility(View.GONE);
     }
 
     public void stop()
@@ -100,12 +89,15 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
     {
         tearDownMediaProjection();
         imageReader.close();
+        Image img;
+        while ((img = blockingQueue.poll()) != null)
+            img.close();
+        blockingQueue.clear();
         destroy();
     }
 
     private void setUpMediaProjection() {
         mMediaProjection = mMediaProjectionManager.getMediaProjection(mResultCode, mediaProjectionResult);
-
     }
 
     private void tearDownMediaProjection() {
@@ -146,51 +138,28 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
     private Object bitmapLOCK =new Object();
     public Bitmap getBitmap()
     {
-        /*synchronized (bitmapLOCK) {
-            inputbmp = surfaceView.getBitmap();
-        }*/
+        getBitmapFromQueue();
         Log.v(TAG,"getBitmap w:" + inputbmp.getWidth() +" h:" + inputbmp.getHeight());
         return inputbmp;
     }
 
-    public void waitForNextFrame(int framesToWait) throws InterruptedException {
-        captureframe = lastFrame;
-        synchronized (bitmapLOCK) {
-            if (captureframe+framesToWait >= lastFrame)
-                bitmapLOCK.wait();
-        }
-    }
-
-    long lastFrame;
-    long captureframe;
     public int getColor(Point p)
     {
         int color =0;
-        //captureframe = lastFrame;
-        synchronized (bitmapLOCK) {
-           /* if (captureframe+1 > lastFrame) {
-                try {
-                    bitmapLOCK.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }*/
-            /*Log.v(TAG,"getColor w:" + inputbmp.getWidth() +" h:" + inputbmp.getHeight());*/
-            if (inputbmp != null && inputbmp.getWidth() > 0 && inputbmp.getHeight() > 0)
-                color = inputbmp.getPixel(p.x, p.y);
-            //if this case happen something went wrong while copy the buffer to the bitmap
-            //or it got never filled
-            if (color == 0)
-            {
-                Log.d(TAG ,"Requested COLOR = 0 wait()");
-                try {
-                    bitmapLOCK.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                color = inputbmp.getPixel(p.x, p.y);
+        getBitmapFromQueue();
+        if (inputbmp != null && inputbmp.getWidth() > 0 && inputbmp.getHeight() > 0)
+            color = inputbmp.getPixel(p.x, p.y);
+        //if this case happen something went wrong while copy the buffer to the bitmap
+        //or it got never filled
+        if (color == 0)
+        {
+            Log.d(TAG ,"Requested COLOR = 0 wait()");
+            try {
+                bitmapLOCK.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-
+            color = inputbmp.getPixel(p.x, p.y);
         }
         return color;
     }
@@ -199,14 +168,13 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
     public int[] getColorFromOneVerticalLine(int x, int start_y, int end_y)
     {
         int[] arr = null;
-        synchronized (bitmapLOCK) {
-            if (inputbmp != null && inputbmp.getWidth() > 0 && inputbmp.getHeight() > 0){
-                arr = new int[(end_y - start_y)];
-                int i = 0;
-                for (int y = start_y; y < end_y; y++)
-                {
-                    arr[i++] = inputbmp.getPixel(x, y);
-                }
+        getBitmapFromQueue();
+        if (inputbmp != null && inputbmp.getWidth() > 0 && inputbmp.getHeight() > 0){
+            arr = new int[(end_y - start_y)];
+            int i = 0;
+            for (int y = start_y; y < end_y; y++)
+            {
+                arr[i++] = inputbmp.getPixel(x, y);
             }
         }
         return arr;
@@ -215,14 +183,12 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
     public int[] getColorFromOneHorizontalLine(Bitmap map,int y, int start_x, int end_x)
     {
         int[] arr = null;
-        synchronized (bitmapLOCK) {
-            if (map != null && map.getWidth() > 0 && map.getHeight() > 0){
-                arr = new int[(end_x - start_x)];
-                int i = 0;
-                for (int x = start_x; x < end_x; x++)
-                {
-                    arr[i++] = map.getPixel(x, y);
-                }
+        if (map != null && map.getWidth() > 0 && map.getHeight() > 0){
+            arr = new int[(end_x - start_x)];
+            int i = 0;
+            for (int x = start_x; x < end_x; x++)
+            {
+                arr[i++] = map.getPixel(x, y);
             }
         }
         return arr;
@@ -235,37 +201,38 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
 
     @Override
     public void onImageAvailable(ImageReader reader) {
-        frames++;
-        Image img = reader.acquireLatestImage();
-        if (true) {
-            if (reader != null) {
-
-                if (img != null) {
-                    ByteBuffer byteBuffer = img.getPlanes()[0].getBuffer();
-                    synchronized (bitmapLOCK) {
-                        inputbmp.copyPixelsFromBuffer(byteBuffer);
-                        lastFrame++;
-                        bitmapLOCK.notify();
-                    }
-
-                    /*if (screenCaptureCallBack != null)
-                        screenCaptureCallBack.onScreenCapture();*/
-                }
-            }
-            frames = 0;
+        Image img;
+        if (blockingQueue.remainingCapacity() == 1) {
+            img = blockingQueue.poll();
+            if (img!=null)
+                img.close();
         }
+        frames++;
+        img = reader.acquireLatestImage();
         if (img != null)
-            img.close();
+            try {
+                blockingQueue.put(img);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+    }
+
+    private Bitmap getBitmapFromQueue()
+    {
+        Image img = blockingQueue.poll();
+        if (img == null)
+            return null;
+        ByteBuffer byteBuffer = img.getPlanes()[0].getBuffer();
+        inputbmp.copyPixelsFromBuffer(byteBuffer);
+        img.close();
+        return inputbmp;
     }
 
     public Bitmap getBitmapFromPos(int x, int y, int width, int height) throws InterruptedException {
         Bitmap retBit = null;
-        synchronized (bitmapLOCK) {
-            if (inputbmp == null || inputbmp.getWidth() == 0 || inputbmp.getHeight() == 0)
-                bitmapLOCK.wait(1000);
-            if (inputbmp != null && inputbmp.getWidth() > 0 && inputbmp.getHeight() > 0) {
-                retBit = Bitmap.createBitmap(inputbmp,x,y,width,height);
-            }
+        getBitmapFromQueue();
+        if (inputbmp != null && inputbmp.getWidth() > 0 && inputbmp.getHeight() > 0) {
+            retBit = Bitmap.createBitmap(inputbmp,x,y,width,height);
         }
         return retBit;
     }

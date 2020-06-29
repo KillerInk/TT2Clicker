@@ -48,18 +48,23 @@ public class Skill {
     private int skillLvl;
     private int maxLVL;
 
-    private final Point Menu_HSPos = new Point(408,232);
-    private final Point Menu_HSPos_color = new Point(470,232);
-    private final Point Menu_DSPos = new Point(408,310);
-    private final Point Menu_DSPos_color = new Point(470,310);
-    private final Point Menu_HOMPos = new Point(408,385);
-    private final Point Menu_HOMPos_color = new Point(470,385);
-    private final Point Menu_FSMPos = new Point(408,459);
-    private final Point Menu_FSMPos_color = new Point(470,459);
-    private final Point Menu_WCMPos = new Point(408,537);
-    private final Point Menu_WCMPos_color = new Point(470,537);
-    private final Point Menu_SCMPos = new Point(408,614);
-    private final Point Menu_SCMPos_color = new Point(470,614);
+    private final Point Menu_HSPos = new Point(408,341);
+    private final Point Menu_HSPos_color = new Point(470,341);
+
+    private final Point Menu_DSPos = new Point(408,418);
+    private final Point Menu_DSPos_color = new Point(470,418);
+
+    private final Point Menu_HOMPos = new Point(408,497);
+    private final Point Menu_HOMPos_color = new Point(470,497);
+
+    private final Point Menu_FSMPos = new Point(408,570);
+    private final Point Menu_FSMPos_color = new Point(470,570);
+
+    private final Point Menu_WCMPos = new Point(408,652);
+    private final Point Menu_WCMPos_color = new Point(470,652);
+
+    private final Point Menu_SCMPos = new Point(408,722);
+    private final Point Menu_SCMPos_color = new Point(470,722);
 
     public SkillState getSkillState()
     {
