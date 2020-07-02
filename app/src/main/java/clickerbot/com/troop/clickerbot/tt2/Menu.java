@@ -241,7 +241,7 @@ public abstract class Menu extends Item
     public void gotToTopMaximised(ExecuterTask task) throws IOException, InterruptedException {
         int loopbreaker = 0;
         boolean istop = false;
-        while (!istop && breakCondition(loopbreaker,12,task) && !task.cancelTask && Menu.getMenuState() == MenuState.maximise) {
+        while (!istop && breakCondition(loopbreaker,15,task) && !task.cancelTask && Menu.getMenuState() == MenuState.maximise) {
             WaitLock.checkForErrorAndWait();
             //swipeUpMaximised();
             touchInput.swipeVertical(swipeTopPointMaximised,swipeBottomPointMaximised, false);

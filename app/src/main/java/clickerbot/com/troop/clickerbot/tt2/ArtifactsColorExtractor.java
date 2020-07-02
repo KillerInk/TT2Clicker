@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import clickerbot.com.troop.clickerbot.ColorUtils;
-import clickerbot.com.troop.clickerbot.R;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 
@@ -22,7 +21,6 @@ public class ArtifactsColorExtractor extends Menu {
     private final int x_start = 9;
     private final int x_end = 66;
 
-    private final int colortofind = -8227733; //Color.argb(255,130,160,107);
     private final int colortofind_x_lookup = 469;
 
     private Bitmap artifactImgs[];
@@ -119,12 +117,14 @@ public class ArtifactsColorExtractor extends Menu {
 
                     artifact = findArtifact(artifactImg,artifactsProcessed);
                     levelArtifact(artifcatsYPosList, artifact, i, height);
-                    Log.d(TAG,artifactsProcessed + " Found " + artifact);
+                    Log.d(TAG,artifactsProcessed + " Found " + artifact + " Size:" +artifactsleveld.size());
                     //saveBitmap(artifactImg, "/sdcard/Pictures/" + artifactsProcessed + "_" +artifact + ".png");
 
                     artifactsProcessed++;
-                    if (artifact == botSettings.artifactsListToLvl.get(botSettings.artifactsListToLvl.size()-1))
+                    if (artifact == botSettings.artifactsListToLvl.get(botSettings.artifactsListToLvl.size()-1)){
                         lastArtifactReached = true;
+                        Log.d(TAG,"Last artifact reached");
+                    }
                 }
             }
             if (!lastArtifactReached) {
@@ -156,7 +156,7 @@ public class ArtifactsColorExtractor extends Menu {
                     artifact = findArtifact(artifactImg,artifactsProcessed);
                     if (artifact != Artifacts.Unkown)
                         levelArtifact(artifcatsYPosList, artifact, i, height);
-                    Log.d(TAG,artifactsProcessed + " Found " + artifact);
+                    Log.d(TAG,artifactsProcessed + " Found " + artifact +  " Size:" +artifactsleveld.size());
                     //saveBitmap(artifactImg, "/sdcard/Pictures/" + artifactsProcessed + "_" +artifact + ".png");
 
                     artifactsProcessed++;
@@ -210,7 +210,7 @@ public class ArtifactsColorExtractor extends Menu {
         double[] matches = new double[artifactImgs.length];
         for (int i =0; i< artifactImgs.length; i++)
         {
-            matches[i] = findMatch(input, i);
+            matches[i] = match(input, artifactImgs[i]);
         }
         int bestmatchpos = 0;
         double bestmatch = 0;
@@ -224,56 +224,39 @@ public class ArtifactsColorExtractor extends Menu {
                 bestmatchpos = i;
         }
         Log.d(TAG,"BestMatch/Pos:" + bestmatch+"/"+bestmatchpos);
-        if (bestmatch < 10)
+        if (bestmatch < 80)
             bestmatchpos = artifacts.length-1;
         return artifacts[bestmatchpos];
     }
 
-    private int reduceRangeToLookUp = 0;
-    private double findMatch(Bitmap input, int imgtodiff)
+    private double match(Bitmap input, Bitmap imagetomatch)
     {
-        int matchcount = 0;
-        int matchcount_1 = 0;
-        int matchcount1 = 0;
-        int matchcount_2 = 0;
-        int matchcount2 = 0;
-        int width = artifactImgs[imgtodiff].getWidth() -reduceRangeToLookUp;
-        int height = artifactImgs[imgtodiff].getHeight() -reduceRangeToLookUp;
-        Bitmap lookupMap = artifactImgs[imgtodiff];
-        int y_center = height/2;
-        int[] pixelYCenterLine = bot.getScreeCapture().getColorFromOneHorizontalLine(input,y_center, reduceRangeToLookUp,width);
-        int[] pixelYCenterLineMinus1 = bot.getScreeCapture().getColorFromOneHorizontalLine(input,y_center -1, reduceRangeToLookUp,width);
-        int[] pixelYCenterLinePlus1 = bot.getScreeCapture().getColorFromOneHorizontalLine(input,y_center +1, reduceRangeToLookUp,width);
-        int[] pixelYCenterLineMinus2 = bot.getScreeCapture().getColorFromOneHorizontalLine(input,y_center -2, reduceRangeToLookUp,width);
-        int[] pixelYCenterLinePlus2 = bot.getScreeCapture().getColorFromOneHorizontalLine(input,y_center +2, reduceRangeToLookUp,width);
-        int[] lookupYCenterLine = bot.getScreeCapture().getColorFromOneHorizontalLine(lookupMap,y_center,reduceRangeToLookUp,width);
-
-        for (int x = 0; x < width;x++)
+        double max_match = 0;
+        for (int i = -4; i < 5; i ++)
         {
-            if (pixIsInRange(lookupYCenterLine[x] , pixelYCenterLine[x]))
-                matchcount++;
-            if (pixIsInRange(lookupYCenterLine[x] ,pixelYCenterLineMinus1[x]))
-                matchcount1++;
-            if (pixIsInRange(lookupYCenterLine[x] , pixelYCenterLinePlus1[x]))
-                matchcount_1++;
-            if (pixIsInRange(lookupYCenterLine[x] ,pixelYCenterLineMinus2[x]))
-                matchcount2++;
-            if (pixIsInRange(lookupYCenterLine[x] , pixelYCenterLinePlus2[x]))
-                matchcount_2++;
+            double match = match(input,imagetomatch,i);
+            if (match > max_match)
+                max_match = match;
         }
+        return max_match;
+    }
 
-        int max = 0;
-        if (matchcount > max)
-            max = matchcount;
-        if (matchcount1 > max)
-            max = matchcount1;
-        if (matchcount_1 > max)
-            max = matchcount_1;
-        if (matchcount2 > max)
-            max = matchcount2;
-        if (matchcount_2 > max)
-            max = matchcount_2;
-        return max;
+    private double match(Bitmap input, Bitmap imagetomatch, int shiftY)
+    {
+        int matchCount = 0;
+        int pixinput;
+        int pixmatch;
+        for (int x = 7; x < input.getWidth() - 7;x++) {
+            for (int y = 7; y < input.getHeight() - 7; y++) {
+                if (y >= imagetomatch.getHeight())
+                    return 0;
+                pixinput = input.getPixel(x,y+shiftY);
+                pixmatch = imagetomatch.getPixel(x,y);
+                if (pixIsInRange(pixinput,pixmatch))
+                    matchCount++;
+            }
+        }
+        return matchCount;
     }
 
     private void saveHorizontalLine(int[] pixels, int img, int part)
@@ -288,31 +271,11 @@ public class ArtifactsColorExtractor extends Menu {
         Log.d(TAG, match[0] + " " + match[1] + " " + match[2] + " " + match[3] + " " + match[4]);
     }
 
-    private boolean check9x9PixelInRange(int x, int y, int y2, Bitmap input, Bitmap lookupMap)
-    {
-        return      pixIsInRange(input.getPixel(x,y), lookupMap.getPixel(x,y2))
-                &&  pixIsInRange(input.getPixel(x-1,y), lookupMap.getPixel(x-1,y2))
-                &&  pixIsInRange(input.getPixel(x+1,y), lookupMap.getPixel(x+1,y2))
-                &&  pixIsInRange(input.getPixel(x,y+1), lookupMap.getPixel(x,y2+1))
-                &&  pixIsInRange(input.getPixel(x-1,y+1), lookupMap.getPixel(x-1,y2+1))
-                &&  pixIsInRange(input.getPixel(x+1,y+1), lookupMap.getPixel(x+1,y2+1))
-                &&  pixIsInRange(input.getPixel(x,y-1), lookupMap.getPixel(x,y2-1))
-                &&  pixIsInRange(input.getPixel(x-1,y-1), lookupMap.getPixel(x-1,y2-1))
-                &&  pixIsInRange(input.getPixel(x+1,y-1), lookupMap.getPixel(x+1,y2-1));
-    }
-
     private boolean pixIsInRange(int input, int dif)
     {
-        return ColorUtils.colorIsIn1ProcentRange(input,dif);
+        return ColorUtils.colorIsInRange(input,dif,3);
         //return ColorUtils.colorIsInRange(input,red-range, red+range,green-range,green+range,blue-range,blue+range);
 
-    }
-
-    public static Bitmap scale(Bitmap realImage,int newwidth, int newheight) {
-
-        Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, newwidth,
-                newheight, true);
-        return newBitmap;
     }
 
     private List<Point> getArtifactPositionsFromTop()
@@ -327,14 +290,14 @@ public class ArtifactsColorExtractor extends Menu {
             //if (waitforstart && isColorInRange(colors[t-1]) && !isColorInRange(colors[t]) && lastColorWasGray)
             if (waitforstart && !isPurple(colors[t-1])  && isPurple(colors[t]))
             {
-                Log.d(TAG, "X "+ t +" Start: t-1:" + ColorUtils.logColor(colors[t-1]) + " t:" + ColorUtils.logColor(colors[t]));
+                //Log.d(TAG, "X "+ t +" Start: t-1:" + ColorUtils.logColor(colors[t-1]) + " t:" + ColorUtils.logColor(colors[t]));
                 waitforstart = false;
                 start = t;
             }
             //else if (!waitforstart && !lastColorWasGray && isColorInRange(colors[t]) && !isColorInRange(colors[t-1]))
             else if (!waitforstart&& isPurple(colors[t]) && !isPurple(colors[t+1]))
             {
-                Log.d(TAG,  "X "+ t +" End: t1:" + ColorUtils.logColor(colors[t]) + " t+1:" + ColorUtils.logColor(colors[t+1]));
+                //Log.d(TAG,  "X "+ t +" End: t1:" + ColorUtils.logColor(colors[t]) + " t+1:" + ColorUtils.logColor(colors[t+1]));
                 waitforstart = true;
                 list.add(new Point(start+51, t+51));
             }

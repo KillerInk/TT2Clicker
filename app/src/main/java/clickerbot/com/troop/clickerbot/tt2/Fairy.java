@@ -208,7 +208,7 @@ public class Fairy extends Menu {
         int c2 = bot.getScreeCapture().getColor(two);
         Log.d(TAG, "Color1Input: " + ColorUtils.logColor(c1) + " Color1Set: " + ColorUtils.logColor(color1));
         Log.d(TAG, "Color2Input: " + ColorUtils.logColor(c2) + " Color2Set: " + ColorUtils.logColor(color2));
-        if (ColorUtils.colorIsIn1ProcentRange(color1,c1) && ColorUtils.colorIsIn1ProcentRange(color2,c2))
+        if (ColorUtils.colorIsInRange(color1,c1,10) && ColorUtils.colorIsInRange(color2,c2,10))
             return true;
         return  false;
     }
@@ -244,7 +244,7 @@ public class Fairy extends Menu {
 
     private int skillColor1 = Color.argb(255,155,74,193);
     private Point skillColor1_Pos = new Point(343,354);
-    private int skillColor2 = Color.argb(255,130,193,116);
+    private int skillColor2 = Color.argb(255,130,117,116);
     private Point skillColor2_Pos = new Point(339,246);
 
     private boolean isSkillFairy()
