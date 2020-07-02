@@ -364,6 +364,10 @@ public class BotSettings {
                 artifactsListToLvl.add(Artifacts.ParchmentOfForesight);
             if (sharedPreferences.getBoolean(context.getString(R.string.ElixirOfEden),false))
                 artifactsListToLvl.add(Artifacts.ElixirOfEden);
+            if (sharedPreferences.getBoolean(context.getString(R.string.StickyFruit),false))
+                artifactsListToLvl.add(Artifacts.StrangeFruit);
+            if (sharedPreferences.getBoolean(context.getString(R.string.HadesOrb),false))
+                artifactsListToLvl.add(Artifacts.HadesOrb);
 
         }
 

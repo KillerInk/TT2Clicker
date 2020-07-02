@@ -2,7 +2,6 @@ package clickerbot.com.troop.clickerbot.tt2;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.util.Log;
 
@@ -36,71 +35,22 @@ public class ArtifactsColorExtractor extends Menu {
         super(ibot, botSettings, rootShell);
         artifacts = Artifacts.values();
         artifactsleveld = new ArrayList<>();
-        artifactImgs = new Bitmap[58];
+
         BitmapFactory.Options bitopt=new BitmapFactory.Options();
         bitopt.inScaled = false;
-        artifactImgs[0] = BitmapFactory.decodeResource(ibot.getContext().getResources(),
-                R.drawable._0,
-                bitopt);
-        artifactImgs[1] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._1,bitopt);
-        artifactImgs[2] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._2,bitopt);
-        artifactImgs[3] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._3,bitopt);
-        artifactImgs[4] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._4,bitopt);
-        artifactImgs[5] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._5,bitopt);
-        artifactImgs[6] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._6,bitopt);
-        artifactImgs[7] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._7,bitopt);
-        artifactImgs[8] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._8,bitopt);
-        artifactImgs[9] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._9,bitopt);
-        artifactImgs[10] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._10,bitopt);
-        artifactImgs[11] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._11,bitopt);
-        artifactImgs[12] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._12,bitopt);
-        artifactImgs[13] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._13,bitopt);
-        artifactImgs[14] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._14,bitopt);
-        artifactImgs[15] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._15,bitopt);
-        artifactImgs[16] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._16,bitopt);
-        artifactImgs[17] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._17,bitopt);
-        artifactImgs[18] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._18,bitopt);
-        artifactImgs[19] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._19,bitopt);
-        artifactImgs[20] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._20,bitopt);
-        artifactImgs[21] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._21,bitopt);
-        artifactImgs[22] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._22,bitopt);
-        artifactImgs[23] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._23,bitopt);
-        artifactImgs[24] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._24,bitopt);
-        artifactImgs[25] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._25,bitopt);
-        artifactImgs[26] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._26,bitopt);
-        artifactImgs[27] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._27,bitopt);
-        artifactImgs[28] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._28,bitopt);
-        artifactImgs[29] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._29,bitopt);
-        artifactImgs[30] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._30,bitopt);
-        artifactImgs[31] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._31,bitopt);
-        artifactImgs[32] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._32,bitopt);
-        artifactImgs[33] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._33,bitopt);
-        artifactImgs[34] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._34,bitopt);
-        artifactImgs[35] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._35,bitopt);
-        artifactImgs[36] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._36,bitopt);
-        artifactImgs[37] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._37,bitopt);
-        artifactImgs[38] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._38,bitopt);
-        artifactImgs[39] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._39,bitopt);
-        artifactImgs[40] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._40,bitopt);
-        artifactImgs[41] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._41,bitopt);
-        artifactImgs[42] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._42,bitopt);
-        artifactImgs[43] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._43,bitopt);
-        artifactImgs[44] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._44,bitopt);
-        artifactImgs[45] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._45,bitopt);
-        artifactImgs[46] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._46,bitopt);
-        artifactImgs[47] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._47,bitopt);
-        artifactImgs[48] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._48,bitopt);
-        artifactImgs[49] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._49,bitopt);
-        artifactImgs[50] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._50,bitopt);
-        artifactImgs[51] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._51,bitopt);
-        artifactImgs[52] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._52,bitopt);
-        artifactImgs[53] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._53,bitopt);
-        artifactImgs[54] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._54,bitopt);
-        artifactImgs[55] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._55,bitopt);
-        artifactImgs[56] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._56,bitopt);
-        artifactImgs[57] = BitmapFactory.decodeResource(ibot.getContext().getResources(), R.drawable._57,bitopt);
-
+        Artifacts[] values = Artifacts.values();
+        artifactImgs = new Bitmap[values.length-1];
+        for (int i = 0; i < values.length-1;i++)
+        {
+            artifactImgs[i] = getArtifactImage(ibot, values[i].image_id, bitopt);
+        }
     }
+
+    private Bitmap getArtifactImage(TT2Bot ibot, int id, BitmapFactory.Options bitopt)
+    {
+        return BitmapFactory.decodeResource(ibot.getContext().getResources(), id,bitopt);
+    }
+
 
     @Override
     void init(ExecuterTask task) {
@@ -257,7 +207,7 @@ public class ArtifactsColorExtractor extends Menu {
 
     private Artifacts findArtifact(Bitmap input, int filetodif)
     {
-        double[] matches = new double[58];
+        double[] matches = new double[artifactImgs.length];
         for (int i =0; i< artifactImgs.length; i++)
         {
             matches[i] = findMatch(input, i);
@@ -351,16 +301,10 @@ public class ArtifactsColorExtractor extends Menu {
                 &&  pixIsInRange(input.getPixel(x+1,y-1), lookupMap.getPixel(x+1,y2-1));
     }
 
-    private final int range = 5;
-
-    private int red,green,blue;
     private boolean pixIsInRange(int input, int dif)
     {
-        red = Color.red(dif);
-        green = Color.green(dif);
-        blue = Color.blue(dif);
-
-        return ColorUtils.colorIsInRange(input,red-range, red+range,green-range,green+range,blue-range,blue+range);
+        return ColorUtils.colorIsIn1ProcentRange(input,dif);
+        //return ColorUtils.colorIsInRange(input,red-range, red+range,green-range,green+range,blue-range,blue+range);
 
     }
 

@@ -794,6 +794,52 @@
                     android:text="Level ApolloOrb"
                     custom:setting_defaults="false"
                     custom:settingkey_ids="@string/ApolloOrb" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:background="@drawable/border">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/settingitem_height"
+                    android:layout_weight="1"
+                    custom:srcCompat="@drawable/_58" />
+
+                <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+                    android:id="@+id/StickyFruit"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/settingitem_height"
+                    android:layout_margin="@dimen/overall_margin"
+                    android:layout_weight="1"
+                    android:text="Level StickyFruit"
+                    custom:setting_defaults="false"
+                    custom:settingkey_ids="@string/StickyFruit" />
+            </LinearLayout>
+
+         <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:background="@drawable/border">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/settingitem_height"
+                    android:layout_weight="1"
+                    custom:srcCompat="@drawable/_59" />
+
+                <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+                    android:id="@+id/HadesOrb"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/settingitem_height"
+                    android:layout_margin="@dimen/overall_margin"
+                    android:layout_weight="1"
+                    android:text="Level HadesOrb"
+                    custom:setting_defaults="false"
+                    custom:settingkey_ids="@string/HadesOrb" />
             </LinearLayout>
 
             <LinearLayout
