@@ -21,6 +21,9 @@ import java.nio.ByteBuffer;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailableListener {
+
+    private final static int MAX_IMAGES = 8;
+
     private final String TAG = MediaProjectionScreenCapture.class.getSimpleName();
     private MediaProjection mMediaProjection;
     private VirtualDisplay mVirtualDisplay;
@@ -44,9 +47,9 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
         this.mResultCode = mResultCode;
         this.surfaceView = surfaceView;
         inputbmp = Bitmap.createBitmap(480,800,Bitmap.Config.ARGB_8888);
-        imageReader = ImageReader.newInstance(480,800,PixelFormat.RGBA_8888,5);
+        imageReader = ImageReader.newInstance(480,800,PixelFormat.RGBA_8888,MAX_IMAGES);
         imageReader.setOnImageAvailableListener(this,mBackgroundHandler);
-        blockingQueue = new LinkedBlockingQueue<>(5);
+        blockingQueue = new LinkedBlockingQueue<>(MAX_IMAGES);
         this.mScreenDensity =mScreenDensity;
         create();
 
@@ -135,7 +138,6 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
         mVirtualDisplay = null;
     }
 
-    private Object bitmapLOCK =new Object();
     public Bitmap getBitmap()
     {
         getBitmapFromQueue();
@@ -154,13 +156,9 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
         if (color == 0)
         {
             Log.d(TAG ,"Requested COLOR = 0 wait()");
-            try {
-                bitmapLOCK.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             color = inputbmp.getPixel(p.x, p.y);
         }
+
         return color;
     }
 
