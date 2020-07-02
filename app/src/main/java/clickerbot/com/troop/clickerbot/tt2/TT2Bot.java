@@ -16,10 +16,9 @@ import clickerbot.com.troop.clickerbot.tt2.tasks.ClanQuestTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.CrazyTapTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.InitTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.LevelSwordMasterTask;
-import clickerbot.com.troop.clickerbot.tt2.tasks.PrestigeTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.RandomTapTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.TaskFactory;
-import clickerbot.com.troop.clickerbot.tt2.tasks.test.ExtractArtifactsImageTask;
+import clickerbot.com.troop.clickerbot.tt2.tasks.ExtractArtifactsImageTask;
 
 /**
  * Main class that handels all Stuff
@@ -178,9 +177,10 @@ public class TT2Bot implements ThreadController.TickInterface
      * add a new task to the executer queue
      * @param task
      */
-    public void executeTask(Class task)
+    public TT2Bot executeTask(Class task)
     {
         threadController.execute(executerTaskHashMap.get(task));
+        return this;
     }
 
     /**

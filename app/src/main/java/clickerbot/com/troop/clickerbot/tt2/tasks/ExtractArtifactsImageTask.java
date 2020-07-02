@@ -1,4 +1,4 @@
-package clickerbot.com.troop.clickerbot.tt2.tasks.test;
+package clickerbot.com.troop.clickerbot.tt2.tasks;
 
 import java.io.IOException;
 

@@ -15,7 +15,6 @@ import clickerbot.com.troop.clickerbot.tt2.Prestige;
 import clickerbot.com.troop.clickerbot.tt2.RandomTaps;
 import clickerbot.com.troop.clickerbot.tt2.Skills;
 import clickerbot.com.troop.clickerbot.tt2.TT2Bot;
-import clickerbot.com.troop.clickerbot.tt2.tasks.test.ExtractArtifactsImageTask;
 
 public class TaskFactory {
 
