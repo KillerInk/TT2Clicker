@@ -11,7 +11,32 @@ public class ColorUtils {
     public static boolean colorIsInRange(int color, int red_min, int red_max, int green_min, int green_max, int blue_min, int blue_max)
     {
         return  redIsInRange(color, red_min,red_max) && greenIsInRange(color,green_min,green_max) && blueIsInRange(color, blue_min,blue_max);
+    }
 
+    public static boolean colorIsIn1ProcentRange(int baseColor, int inputcolor)
+    {
+        int b_red = Color.red(baseColor);
+        int b_green = Color.green(baseColor);
+        int b_blue = Color.blue(baseColor);
+
+        int i_red = Color.red(inputcolor);
+        int i_green = Color.green(inputcolor);
+        int i_blue = Color.blue(inputcolor);
+
+        if (colorsin1procentRange(b_red,i_red)
+        && colorsin1procentRange(b_green,i_green)
+        && colorsin1procentRange(b_blue,i_blue))
+            return true;
+        return false;
+    }
+
+    private static boolean colorsin1procentRange(int baseColor, int inputcolor)
+    {
+        int b_red_min = baseColor - 3;
+        int b_red_max = baseColor + 3;
+        if (inputcolor >= b_red_min && inputcolor <= b_red_max)
+            return true;
+        return false;
     }
 
     private static void log(String t)
