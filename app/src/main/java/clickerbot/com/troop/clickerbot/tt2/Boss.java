@@ -2,6 +2,7 @@ package clickerbot.com.troop.clickerbot.tt2;
 
 
 import android.graphics.Color;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -56,6 +57,8 @@ public class Boss extends Menu {
     private int bossFightActiveColor = Color.argb(255,69,85,89);
     private int bossFightFailedColor = Color.argb(255,239,114,16);
 
+    private int bossStateNoneFightDetected = 0;
+
 
     public void checkIfActiveBossFight()
     {
@@ -68,9 +71,12 @@ public class Boss extends Menu {
         int color = bot.getScreeCapture().getColor(Coordinates.fightBossButton_Color);
         if (color ==  bossFightActiveColor)
         {
-            if (bossState == BossState.NoneFight && bossFailedCounter.get() > 0)
-                    bossFailedCounter.getAndDecrement();
+            if (bossState == BossState.NoneFight && bossFailedCounter.get() > 0) {
+                bossFailedCounter.getAndDecrement();
+                Log.d(TAG,"Reduce boss failed counter");
+            }
             setBossState(BossState.BossFightActive);
+
             //Log.i(TAG, "bossFightActiveColor Wait for next fail: true");
 
         }
@@ -79,7 +85,7 @@ public class Boss extends Menu {
             if (bossState == BossState.BossFightActive && bossFailedCounter.get() < botSettings.bossFailedCount)
                     bossFailedCounter.getAndIncrement();
             setBossState(BossState.BossFightFailed);
-
+            Log.d(TAG,"Increase boss failed counter ,level up heros and swordmaster");
             if (!bot.containsTask(ClickOnBossFightTask.class)) {
                 //Log.i(TAG, "bossFightFailedColor Wait for next fail: false");
                 if (botSettings.autoLvlSwordMaster) {
@@ -98,9 +104,18 @@ public class Boss extends Menu {
                 && bossState != BossState.NoneFight
                 && !WaitLock.fairyWindowDetected.get()
                 && !WaitLock.sceneTransition.get()
-                && !WaitLock.errorDetected.get())
+                && !WaitLock.errorDetected.get()
+                && Menu.getMenuState() == MenuState.closed
+        )
         {
-            setBossState(BossState.NoneFight);
+
+
+            bossStateNoneFightDetected++;
+            if (bossStateNoneFightDetected > 4) {
+                Log.d(TAG,"Boss state none fight");
+                setBossState(BossState.NoneFight);
+                bossStateNoneFightDetected = 0;
+            }
         }
         //Log.v(TAG,"isActiveBossFight: "+ bossState.toString() + " " + ColorUtils.getColorString(color));
 

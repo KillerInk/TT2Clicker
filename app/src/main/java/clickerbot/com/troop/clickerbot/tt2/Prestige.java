@@ -12,7 +12,7 @@ import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.AutoLevelBOSTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.InitTask;
 import clickerbot.com.troop.clickerbot.tt2.tasks.PrestigeTask;
-import clickerbot.com.troop.clickerbot.tt2.tasks.test.ExtractArtifactsImageTask;
+import clickerbot.com.troop.clickerbot.tt2.tasks.ExtractArtifactsImageTask;
 
 
 public class Prestige extends Menu {
