@@ -2,8 +2,8 @@ package clickerbot.com.troop.clickerbot.test;
 
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Button;
 
 import java.io.IOException;

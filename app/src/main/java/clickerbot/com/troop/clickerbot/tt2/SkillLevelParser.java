@@ -58,6 +58,4 @@ public class SkillLevelParser {
         }
         return 0;
     }
-
-
 }
