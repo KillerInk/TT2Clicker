@@ -2,6 +2,7 @@ package clickerbot.com.troop.clickerbot.tt2;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.util.Log;
 
@@ -335,9 +336,10 @@ public class ArtifactsColorExtractor extends Menu {
         }
     }
 
+    private final int purple = Color.argb(255,130,130, 160);
     private boolean isPurple(int color)
     {
-        boolean inrange = ColorUtils.colorIsInRange(color, 108,168,92,168,117,207);
+        boolean inrange = ColorUtils.colorIsInRange(color,purple,40);//ColorUtils.colorIsInRange(color, 108,168,92,168,117,207);
         //Log.v(TAG, "isPurple: " + inrange + " " +ColorUtils.logColor(color));
         return inrange;
     }
