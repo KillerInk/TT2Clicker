@@ -1,6 +1,7 @@
 package clickerbot.com.troop.clickerbot.tt2;
 import android.graphics.Bitmap;
 import android.util.Log;
+
 import clickerbot.com.troop.clickerbot.bmptxtparser.ParseTxtFromBmp;
 
 public class SkillLevelParser {
@@ -28,7 +29,7 @@ public class SkillLevelParser {
         int hslvl = getLevel(334,map);
         hs.setSkillLvl(hslvl);
         Log.d(TAG,"DS");
-        int dslvl = getLevel(409,map);
+        int dslvl = getLevel(410,map);
         ds.setSkillLvl(dslvl);
         Log.d(TAG,"HOM");
         int homlvl = getLevel(485,map);
@@ -58,4 +59,5 @@ public class SkillLevelParser {
         }
         return 0;
     }
+
 }

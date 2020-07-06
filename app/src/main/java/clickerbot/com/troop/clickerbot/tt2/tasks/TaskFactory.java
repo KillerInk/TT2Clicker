@@ -13,8 +13,10 @@ import clickerbot.com.troop.clickerbot.tt2.Fairy;
 import clickerbot.com.troop.clickerbot.tt2.Heros;
 import clickerbot.com.troop.clickerbot.tt2.Prestige;
 import clickerbot.com.troop.clickerbot.tt2.RandomTaps;
+import clickerbot.com.troop.clickerbot.tt2.SkillLevelParser;
 import clickerbot.com.troop.clickerbot.tt2.Skills;
 import clickerbot.com.troop.clickerbot.tt2.TT2Bot;
+import clickerbot.com.troop.clickerbot.tt2.tasks.test.ParseSkilllvlTest;
 
 public class TaskFactory {
 
@@ -48,6 +50,7 @@ public class TaskFactory {
         tasksmap.put(CollectInboxRewardTask.class, new CollectInboxRewardTask(inBoxRewward));
         tasksmap.put(TapOnFairyVipWindowTask.class, new TapOnFairyVipWindowTask(fairy));
         tasksmap.put(ExtractArtifactsImageTask.class, new ExtractArtifactsImageTask(artifactsColorExtractor));
+        tasksmap.put(ParseSkilllvlTest.class, new ParseSkilllvlTest(skills));
         return tasksmap;
     }
 

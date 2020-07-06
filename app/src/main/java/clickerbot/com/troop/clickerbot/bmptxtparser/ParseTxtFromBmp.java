@@ -86,7 +86,16 @@ public class ParseTxtFromBmp {
     private void printarrs(boolean[] bitmap)
     {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(" \nbitmap                patch0                patch1                patch2                patch3                patch4                "+
+        stringBuilder.append(" \ninput\n");
+        for (int y = 0; y < 11; y++) {
+            for (int x = 0; x < 8; x++) {
+                stringBuilder.append(getChar(bitmap[(width / 2) * y + x]) + ",");
+            }
+            stringBuilder.append("\n");
+        }
+        Log.d(TAG, stringBuilder.toString());
+        stringBuilder = new StringBuilder();
+        stringBuilder.append(" \npatch0                patch1                patch2                patch3                patch4                "+
                 "patch5                patch6                patch7                patch8                patch9\n");
         for (int y = 0; y < 11; y++)
         {
