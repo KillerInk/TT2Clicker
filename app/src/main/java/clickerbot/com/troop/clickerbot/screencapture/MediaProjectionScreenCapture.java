@@ -22,7 +22,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailableListener {
 
-    private final static int MAX_IMAGES = 8;
+    private final static int MAX_IMAGES = 20;
 
     private final String TAG = MediaProjectionScreenCapture.class.getSimpleName();
     private MediaProjection mMediaProjection;
