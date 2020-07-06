@@ -26,14 +26,14 @@ public class ArtifactsColorExtractor extends Menu {
 
     private Bitmap artifactImgs[];
     private Artifacts[] artifacts;
-    private List<Artifacts> artifactsleveld;
+    //private List<Artifacts> artifactsleveld;
 
     private final int click_X = 424;
 
     public ArtifactsColorExtractor(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
         super(ibot, botSettings, rootShell);
         artifacts = Artifacts.values();
-        artifactsleveld = new ArrayList<>();
+        //artifactsleveld = new ArrayList<>();
 
         BitmapFactory.Options bitopt=new BitmapFactory.Options();
         bitopt.inScaled = false;
@@ -81,7 +81,7 @@ public class ArtifactsColorExtractor extends Menu {
                 if (height >= 57) {
                     artifactImg = bot.getScreeCapture().getBitmapFromPos(x_start, artifcatsYPosList.get(i).x+3, width, 50);
 
-                    artifact = findArtifact(artifactImg, artifactsProcessed);
+                    artifact = findArtifact(artifactImg);
                     Log.d(TAG, artifactsProcessed + " Found " + artifact);
                     saveBitmap(artifactImg, "/sdcard/Pictures/" + artifactsProcessed + "_" +artifact + ".png");
 
@@ -101,6 +101,7 @@ public class ArtifactsColorExtractor extends Menu {
         gotToTopMaximised(task);
         Thread.sleep(400);
         List<Point> artifcatsYPosList = getArtifactPositionsFromTop();
+        List<Artifacts> artifactsleveld = new ArrayList<>();
         Bitmap artifactImg;
         int artifactsProcessed = 0;
         Artifacts artifact;
@@ -116,8 +117,8 @@ public class ArtifactsColorExtractor extends Menu {
                 if (height >= 57) {
                     artifactImg = bot.getScreeCapture().getBitmapFromPos(x_start, artifcatsYPosList.get(i).x+3, width, 50);
 
-                    artifact = findArtifact(artifactImg,artifactsProcessed);
-                    levelArtifact(artifcatsYPosList, artifact, i, height);
+                    artifact = findArtifact(artifactImg);
+                    levelArtifact(artifcatsYPosList, artifact, i, height,artifactsleveld);
                     Log.d(TAG,artifactsProcessed + " Found " + artifact + " Size:" +artifactsleveld.size());
                     //saveBitmap(artifactImg, "/sdcard/Pictures/" + artifactsProcessed + "_" +artifact + ".png");
 
@@ -154,9 +155,9 @@ public class ArtifactsColorExtractor extends Menu {
                 {
                     artifactImg = bot.getScreeCapture().getBitmapFromPos(x_start, artifcatsYPosList.get(i).x, width, 56);
 
-                    artifact = findArtifact(artifactImg,artifactsProcessed);
+                    artifact = findArtifact(artifactImg);
                     if (artifact != Artifacts.Unkown)
-                        levelArtifact(artifcatsYPosList, artifact, i, height);
+                        levelArtifact(artifcatsYPosList, artifact, i, height, artifactsleveld);
                     Log.d(TAG,artifactsProcessed + " Found " + artifact +  " Size:" +artifactsleveld.size());
                     //saveBitmap(artifactImg, "/sdcard/Pictures/" + artifactsProcessed + "_" +artifact + ".png");
 
@@ -177,7 +178,7 @@ public class ArtifactsColorExtractor extends Menu {
         Thread.sleep(500);
     }
 
-    public void levelArtifact(List<Point> artifcatsYPosList, Artifacts artifact, int i, int height) throws InterruptedException {
+    public void levelArtifact(List<Point> artifcatsYPosList, Artifacts artifact, int i, int height, List<Artifacts> artifactsleveld) throws InterruptedException {
         if (!artifactsleveld.contains(artifact) && botSettings.artifactsListToLvl.contains(artifact)) {
             Point tapPoint = new Point(click_X, artifcatsYPosList.get(i).x + height / 2);
             switch (artifact.tier) {
@@ -206,7 +207,7 @@ public class ArtifactsColorExtractor extends Menu {
         }
     }
 
-    private Artifacts findArtifact(Bitmap input, int filetodif)
+    private Artifacts findArtifact(Bitmap input)
     {
         double[] matches = new double[artifactImgs.length];
         for (int i =0; i< artifactImgs.length; i++)
@@ -225,8 +226,8 @@ public class ArtifactsColorExtractor extends Menu {
                 bestmatchpos = i;
         }
         Log.d(TAG,"BestMatch/Pos:" + bestmatch+"/"+bestmatchpos);
-        if (bestmatch < 80)
-            bestmatchpos = artifacts.length-1;
+        if (bestmatch < 400)
+            return Artifacts.Unkown;
         return artifacts[bestmatchpos];
     }
 
