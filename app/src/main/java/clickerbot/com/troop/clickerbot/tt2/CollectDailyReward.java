@@ -3,6 +3,7 @@ package clickerbot.com.troop.clickerbot.tt2;
 import android.graphics.Color;
 import android.graphics.Point;
 
+import clickerbot.com.troop.clickerbot.ColorUtils;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.CollectDailyTask;
@@ -12,9 +13,9 @@ public class CollectDailyReward extends Menu {
     private final String TAG = CollectDailyReward.class.getSimpleName();
     private long lastDailyCheck;
     private Point present_colorPos = new Point(32,186);
-    private int presentColor = Color.argb(255,206,206,206);
+    private int presentColor = Color.argb(255,104,104,104);
     private Point bottomButton_colorPos = new Point(30,198);
-    private int bottomButtontColor = -15451051;
+    private int bottomButtontColor = Color.argb(255,44,85,111);
 
     private Point dailyRewardsCollectButton_Pos = new Point(243,546);
 
@@ -35,7 +36,8 @@ public class CollectDailyReward extends Menu {
             WaitLock.checkForErrorAndWait();
             int color = bot.getScreeCapture().getColor(present_colorPos);
             int color2 = bot.getScreeCapture().getColor(bottomButton_colorPos);
-            if (color == presentColor && color2 == bottomButtontColor)
+
+            if (ColorUtils.colorIsInRange(color,presentColor,8) && ColorUtils.colorIsInRange(color2,bottomButtontColor,8))
                 bot.executeTask(CollectDailyTask.class);
         }
         return false;
