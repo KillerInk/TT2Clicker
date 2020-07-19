@@ -247,7 +247,7 @@ public abstract class Menu extends Item
             touchInput.swipeVertical(swipeTopPointMaximised,swipeBottomPointMaximised, false);
             int color = bot.getScreeCapture().getColor(checkPoint_colorMenuTopReached);
             int color2 = bot.getScreeCapture().getColor(checkPoint_colorMenuTopReached2);
-            if (color == colorMenuTopReached && color2 == colorMenuTopReached)
+            if (ColorUtils.colorIsInRange(color,colorMenuTopReached,5) && ColorUtils.colorIsInRange(color2,colorMenuTopReached,5))
                 istop = true;
             touchInput.releaseTouch();
             WaitLock.checkForErrorAndWait();
@@ -267,7 +267,7 @@ public abstract class Menu extends Item
             touchInput.swipeVertical(swipeBottomPointMaximised ,swipeTopPointMaximised, false);
             int color = bot.getScreeCapture().getColor(checkPoint_colorMenuBottomReached);
             int color2 = bot.getScreeCapture().getColor(checkPoint_colorMenuBottomReached);
-            if (color == colorMenuTopReached && color2 == colorMenuTopReached)
+            if (ColorUtils.colorIsInRange(color,colorMenuTopReached,5) && ColorUtils.colorIsInRange(color2,colorMenuTopReached,5))
                 istop = true;
             touchInput.releaseTouch();
             WaitLock.checkForErrorAndWait();

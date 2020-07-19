@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.util.Log;
 
+import clickerbot.com.troop.clickerbot.ColorUtils;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 
@@ -11,7 +12,7 @@ public class SceneTransitionChecker extends Menu {
 
     private final String TAG  = SceneTransitionChecker.class.getSimpleName();
     private final Point shopbuttonColorPos = new Point(479,799);
-    private final int shopButtonColor = -12680574;//Color.argb(255,61,130,132);
+    private final int shopButtonColor =-12746108; //Color.argb(255,62,130,130);
     private long lastTap =0;
     private int howOftenDetected;
     public SceneTransitionChecker(TT2Bot ibot, BotSettings botSettings, TouchInterface rootShell) {
@@ -26,7 +27,8 @@ public class SceneTransitionChecker extends Menu {
     @Override
     boolean checkIfRdyToExecute() {
         int color =bot.getScreeCapture().getColor(shopbuttonColorPos);
-        if (color != shopButtonColor && color != 0) {
+        //Log.d(TAG, ColorUtils.logColor(color) + " " + ColorUtils.logColor(shopButtonColor));
+        if (!ColorUtils.colorIsInRange(color,shopButtonColor,5) && color != 0) {
             howOftenDetected++;
             WaitLock.lockSceneTransition(true);
             if(howOftenDetected > 3) {

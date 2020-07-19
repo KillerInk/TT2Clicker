@@ -105,7 +105,7 @@ public class RandomTaps extends Item {
                     return;
                 WaitLock.checkForErrorAndWait();
                 WaitLock.waitForFlashZip();
-                touchInput.tap(points.get(i),30);
+                touchInput.tap(points.get(i),50);
                 WaitLock.checkForErrorAndWait();
                 Thread.sleep(50);
                 WaitLock.checkForErrorAndWait();

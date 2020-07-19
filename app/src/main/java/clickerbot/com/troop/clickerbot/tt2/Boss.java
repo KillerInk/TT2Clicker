@@ -7,6 +7,7 @@ import android.util.Log;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import clickerbot.com.troop.clickerbot.ColorUtils;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.ClickOnBossFightTask;
@@ -69,23 +70,23 @@ public class Boss extends Menu {
                 || Menu.getMenuState() != MenuState.closed)
             return;
         int color = bot.getScreeCapture().getColor(Coordinates.fightBossButton_Color);
-        if (color ==  bossFightActiveColor)
+        if (ColorUtils.colorIsInRange(color,bossFightActiveColor,5) )
         {
             if (bossState == BossState.NoneFight && bossFailedCounter.get() > 0) {
                 bossFailedCounter.getAndDecrement();
-                Log.d(TAG,"Reduce boss failed counter");
+                Log.d(TAG,"Reduce boss failed counter" + bossFailedCounter.get() );
             }
             setBossState(BossState.BossFightActive);
 
             //Log.i(TAG, "bossFightActiveColor Wait for next fail: true");
 
         }
-        else if(color == bossFightFailedColor)
+        else if(ColorUtils.colorIsInRange(color,bossFightFailedColor ,5) )
         {
             if (bossState == BossState.BossFightActive && bossFailedCounter.get() < botSettings.bossFailedCount)
                     bossFailedCounter.getAndIncrement();
             setBossState(BossState.BossFightFailed);
-            Log.d(TAG,"Increase boss failed counter ,level up heros and swordmaster");
+            Log.d(TAG,"Increase boss failed counter ,level up heros and swordmaster " + bossFailedCounter.get() );
             if (!bot.containsTask(ClickOnBossFightTask.class)) {
                 //Log.i(TAG, "bossFightFailedColor Wait for next fail: false");
                 if (botSettings.autoLvlSwordMaster) {
@@ -98,8 +99,8 @@ public class Boss extends Menu {
             }
 
         }
-        else if (color != bossFightActiveColor
-                && color != bossFightFailedColor
+        else if (!ColorUtils.colorIsInRange(color,bossFightActiveColor,5 )
+                && !ColorUtils.colorIsInRange(color,bossFightFailedColor,5)
                 && color != 0
                 && bossState != BossState.NoneFight
                 && !WaitLock.fairyWindowDetected.get()
@@ -111,7 +112,7 @@ public class Boss extends Menu {
 
 
             bossStateNoneFightDetected++;
-            if (bossStateNoneFightDetected > 4) {
+            if (bossStateNoneFightDetected > 8) {
                 Log.d(TAG,"Boss state none fight");
                 setBossState(BossState.NoneFight);
                 bossStateNoneFightDetected = 0;

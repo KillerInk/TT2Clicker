@@ -37,7 +37,7 @@ public class CollectDailyReward extends Menu {
             int color = bot.getScreeCapture().getColor(present_colorPos);
             int color2 = bot.getScreeCapture().getColor(bottomButton_colorPos);
 
-            if (ColorUtils.colorIsInRange(color,presentColor,8) && ColorUtils.colorIsInRange(color2,bottomButtontColor,8))
+            if (ColorUtils.colorIsInRange(color,presentColor,30) && ColorUtils.colorIsInRange(color2,bottomButtontColor,30))
                 bot.executeTask(CollectDailyTask.class);
         }
         return false;

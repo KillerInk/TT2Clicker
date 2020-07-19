@@ -337,15 +337,13 @@ public class ArtifactsColorExtractor extends Menu {
         }
     }
 
-    private final int purple = Color.argb(255,130,130, 160);
+    private final int purple = Color.argb(255,150,125, 199);
     private boolean isPurple(int color)
     {
-        boolean inrange = ColorUtils.colorIsInRange(color,purple,40);//ColorUtils.colorIsInRange(color, 108,168,92,168,117,207);
+        Log.d(TAG,ColorUtils.logColor(color) + "/"+ ColorUtils.logColor(purple));
+        boolean inrange = ColorUtils.colorIsInRange(color,purple,50);//ColorUtils.colorIsInRange(color, 108,168,92,168,117,207);
         //Log.v(TAG, "isPurple: " + inrange + " " +ColorUtils.logColor(color));
         return inrange;
     }
-
-
-
 
 }
