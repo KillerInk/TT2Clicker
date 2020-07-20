@@ -28,10 +28,12 @@ public class Prestige extends Menu {
     private final Point prestigeButtonSwordMasterMenu_pos = new Point(401,240);
     //Prestige button inside the prestige submenu that appear after the prestige button from hero menu got clicked (light blue)
     private final Point prestigeButtonSubMenu_pos = new Point(240,706);
+    private final Point prestigeButtonSubMenu_pos2 = new Point(240,739);
     //Position to check  if the prestige submenu got open, if the color at this postion is light blue, the submenu is open
     private final Point prestigeSubmenuButton_color_pos = new Point(240,707);
     private final Point prestigeAcceptButton = new Point(326,574);
     private final Point prestigeAcceptButton_color = new Point(326,573);
+    private final Point prestigeAcceptButton_color2 = new Point(326,608);
     private Random random;
 
 
@@ -108,28 +110,13 @@ public class Prestige extends Menu {
             int loopbreaker = 0;
 
             Log.d(TAG, "Press Hero menu Prestige Button");
-            while(!checkIfPrestigeSubMenuIsOpen() && !Thread.currentThread().isInterrupted() && !task.cancelTask && loopbreaker  < 10) {
-                loopbreaker++;
-                doLongerSingelTap(new Point(prestigeButtonSwordMasterMenu_pos.x -3 +random.nextInt(6), prestigeButtonSwordMasterMenu_pos.y -3 +random.nextInt(6)),"on Prestige Menu Button");
-                Thread.sleep(600);
-            }
+            clickOnPrestigeSwordMasterMenu(task, loopbreaker);
             loopbreaker = 0;
             Log.d(TAG, "Press Prestige Submenu Prestige button");
-            while (!checkPrestigAcceptColor() && !Thread.currentThread().isInterrupted()&& !task.cancelTask && loopbreaker  < 5) {
-                loopbreaker++;
-                doLongerSingelTap(prestigeButtonSubMenu_pos,"on Prestige Button");
-                Thread.sleep(600);
-            }
+            clickOnPrestigeSubmenuPrestigeButton(task, loopbreaker);
             loopbreaker = 0;
             Log.d(TAG, "Press Prestige Submenu Accept Prestige button");
-            while (checkPrestigAcceptColor()&& !Thread.currentThread().isInterrupted()&& !task.cancelTask && loopbreaker  < 5) {
-                loopbreaker++;
-                Thread.sleep(600);
-                doLongerSingelTap(prestigeAcceptButton,  "on Prestige accept Button");
-                Thread.sleep(600);
-                if (!checkPrestigAcceptColor())
-                    loopbreaker = 5;
-            }
+            clickOnSubSubMenuPrestigeButton(task, loopbreaker);
             Thread.sleep(15000);
             loopbreaker = 0;
             while (checkLoginInfoColor()&& !Thread.currentThread().isInterrupted()&& !task.cancelTask && loopbreaker  < 5) {
@@ -154,15 +141,61 @@ public class Prestige extends Menu {
         }
     }
 
+    public void clickOnSubSubMenuPrestigeButton(ExecuterTask task, int loopbreaker) throws InterruptedException {
+        while ((checkPrestigAcceptColor() || checkPrestigAcceptColorBottom()) && !Thread.currentThread().isInterrupted()&& !task.cancelTask && loopbreaker  < 5) {
+            loopbreaker++;
+            Thread.sleep(600);
+            if (checkPrestigAcceptColor())
+                doLongerSingelTap(prestigeAcceptButton,  "on Prestige accept Button");
+            else if (checkPrestigAcceptColorBottom())
+                doLongerSingelTap(prestigeAcceptButton_color2,  "on Prestige accept Button");
+            Thread.sleep(600);
+            if (!checkPrestigAcceptColor())
+                loopbreaker = 5;
+        }
+    }
+
+    public void clickOnPrestigeSubmenuPrestigeButton(ExecuterTask task, int loopbreaker) throws InterruptedException {
+        while ((!checkPrestigAcceptColor() || !checkPrestigAcceptColor2()) && !Thread.currentThread().isInterrupted()&& !task.cancelTask && loopbreaker  < 5) {
+            loopbreaker++;
+            if (checkPrestigAcceptColor())
+                doLongerSingelTap(prestigeButtonSubMenu_pos,"on Prestige Button");
+            else if (checkPrestigAcceptColor2())
+                doLongerSingelTap(prestigeButtonSubMenu_pos2,"on Prestige Button");
+            Thread.sleep(600);
+        }
+    }
+
+    public void clickOnPrestigeSwordMasterMenu(ExecuterTask task, int loopbreaker) throws InterruptedException {
+        while(!checkIfPrestigeSubMenuIsOpen() && !Thread.currentThread().isInterrupted() && !task.cancelTask && loopbreaker  < 10) {
+            loopbreaker++;
+            if (!checkIfPrestigeSubMenuIsOpen() && !checkPrestigAcceptColor2())
+                doLongerSingelTap(new Point(prestigeButtonSwordMasterMenu_pos.x -3 +random.nextInt(6), prestigeButtonSwordMasterMenu_pos.y -3 +random.nextInt(6)),"on Prestige Menu Button");
+            Thread.sleep(600);
+        }
+    }
+
     private boolean checkPrestigAcceptColor()
     {
         int color = bot.getScreeCapture().getColor(prestigeAcceptButton_color);
         return Color.blue(color)> 200;
     }
 
+    private boolean checkPrestigAcceptColorBottom()
+    {
+        int color = bot.getScreeCapture().getColor(prestigeAcceptButton_color2);
+        return Color.blue(color)> 200;
+    }
+
     private boolean checkIfPrestigeSubMenuIsOpen()
     {
         int color = bot.getScreeCapture().getColor(prestigeSubmenuButton_color_pos);
+        return Color.blue(color)> 200;
+    }
+
+    private boolean checkPrestigAcceptColor2()
+    {
+        int color = bot.getScreeCapture().getColor(prestigeButtonSubMenu_pos2);
         return Color.blue(color)> 200;
     }
 
