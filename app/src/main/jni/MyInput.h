@@ -8,6 +8,10 @@
 
 #include <cstdint>
 #include <android/log.h>
+#include <time.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <string.h>
 
 
 #define  LOG_TAG    "clickerbot.MyInput"
