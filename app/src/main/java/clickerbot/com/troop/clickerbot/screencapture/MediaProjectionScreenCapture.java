@@ -20,7 +20,7 @@ import android.view.TextureView;
 import java.nio.ByteBuffer;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailableListener {
+public class MediaProjectionScreenCapture extends AbstractScreenCapture implements ImageReader.OnImageAvailableListener {
 
     private final static int MAX_IMAGES = 20;
 
@@ -32,11 +32,9 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
     private static Intent mediaProjectionResult;
     private static int mResultCode;
     private int mScreenDensity;
-    private Bitmap inputbmp;
-    private long frames;
+    //private Bitmap inputbmp;
+    //private long frames;
     private ImageReader imageReader;
-    private HandlerThread mBackgroundThread;
-    protected Handler mBackgroundHandler;
     private LinkedBlockingQueue<Image> blockingQueue;
 
     public MediaProjectionScreenCapture(Context context,Intent mediaProjectionResult, int mResultCode, TextureView surfaceView, int mScreenDensity)
@@ -46,7 +44,7 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
         this.mediaProjectionResult = mediaProjectionResult;
         this.mResultCode = mResultCode;
         this.surfaceView = surfaceView;
-        inputbmp = Bitmap.createBitmap(480,800,Bitmap.Config.ARGB_8888);
+        //inputbmp = Bitmap.createBitmap(480,800,Bitmap.Config.ARGB_8888);
         imageReader = ImageReader.newInstance(480,800,PixelFormat.RGBA_8888,MAX_IMAGES);
         imageReader.setOnImageAvailableListener(this,mBackgroundHandler);
         blockingQueue = new LinkedBlockingQueue<>(MAX_IMAGES);
@@ -55,39 +53,18 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
 
     }
 
-    public void create()
-    {
-        Log.d(TAG,"startBackgroundThread" );
-        mBackgroundThread = new HandlerThread("");
-        mBackgroundThread.start();
-        mBackgroundHandler = new Handler(mBackgroundThread.getLooper());
-    }
-
-    public void destroy()
-    {
-        Log.d(TAG,"stopBackgroundThread");
-        if(mBackgroundThread == null)
-            return;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            mBackgroundThread.quitSafely();
-        }
-        else
-            mBackgroundThread.quit();
-
-        mBackgroundThread = null;
-        mBackgroundHandler = null;
-    }
-
     public void start()
     {
         startScreenCapture();
     }
 
+    @Override
     public void stop()
     {
         stopScreenCapture();
     }
 
+    @Override
     public void close()
     {
         tearDownMediaProjection();
@@ -138,6 +115,7 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
         mVirtualDisplay = null;
     }
 
+    /*@Override
     public Bitmap getBitmap()
     {
         getBitmapFromQueue();
@@ -145,6 +123,7 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
         return inputbmp;
     }
 
+    @Override
     public int getColor(Point p)
     {
         int color =0;
@@ -160,9 +139,10 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
         }
 
         return color;
-    }
+    }*/
 
 
+   /* @Override
     public int[] getColorFromOneVerticalLine(int x, int start_y, int end_y)
     {
         int[] arr = null;
@@ -178,6 +158,7 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
         return arr;
     }
 
+    @Override
     public int[] getColorFromOneHorizontalLine(Bitmap map,int y, int start_x, int end_x)
     {
         int[] arr = null;
@@ -190,12 +171,12 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
             }
         }
         return arr;
-    }
+    }*/
 
-    public int[] getColorFromOneHorizontalLine(int y, int start_x, int end_x)
+    /*public int[] getColorFromOneHorizontalLine(int y, int start_x, int end_x)
     {
         return getColorFromOneHorizontalLine(inputbmp,y,start_x,end_x);
-    }
+    }*/
 
     @Override
     public void onImageAvailable(ImageReader reader) {
@@ -205,7 +186,7 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
             if (img!=null)
                 img.close();
         }
-        frames++;
+        //frames++;
         img = reader.acquireLatestImage();
         if (img != null)
             try {
@@ -215,7 +196,7 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
             }
     }
 
-    private Bitmap getBitmapFromQueue()
+   /* private Bitmap getBitmapFromQueue()
     {
         Image img = blockingQueue.poll();
         if (img == null)
@@ -224,14 +205,29 @@ public class MediaProjectionScreenCapture implements ImageReader.OnImageAvailabl
         inputbmp.copyPixelsFromBuffer(byteBuffer);
         img.close();
         return inputbmp;
+    }*/
+
+    @Override
+    public Bitmap getBitmapFromQueue(Bitmap map)
+    {
+        Image img = blockingQueue.poll();
+        if (img == null)
+            return map;
+        ByteBuffer byteBuffer = img.getPlanes()[0].getBuffer();
+        if (byteBuffer != null && map != null)
+            map.copyPixelsFromBuffer(byteBuffer);
+        if (img != null)
+            img.close();
+        return map;
     }
 
-    public Bitmap getBitmapFromPos(int x, int y, int width, int height) throws InterruptedException {
+   /* @Override
+    public Bitmap getBitmapFromPos(int x, int y, int width, int height) {
         Bitmap retBit = null;
         getBitmapFromQueue();
         if (inputbmp != null && inputbmp.getWidth() > 0 && inputbmp.getHeight() > 0) {
             retBit = Bitmap.createBitmap(inputbmp,x,y,width,height);
         }
         return retBit;
-    }
+    }*/
 }

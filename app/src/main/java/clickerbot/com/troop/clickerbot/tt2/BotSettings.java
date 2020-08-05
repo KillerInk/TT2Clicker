@@ -171,8 +171,11 @@ public class BotSettings {
 
     public final long timeToSwitchToNextBodyPart;
 
+    public boolean useMediaProjectionScreenCapture;
+
     public BotSettings(SharedPreferences sharedPreferences,Context context)
     {
+        useMediaProjectionScreenCapture = sharedPreferences.getBoolean(context.getString(R.string.usemediaprojectionscreencapture),true);
         useHS = sharedPreferences.getBoolean(context.getString(R.string.useHs),false);
         useDS = sharedPreferences.getBoolean(context.getString(R.string.useDS),false);
         useHOM = sharedPreferences.getBoolean(context.getString(R.string.useHom),false);

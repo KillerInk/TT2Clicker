@@ -9,7 +9,7 @@ import java.util.Random;
 
 import clickerbot.com.troop.clickerbot.ThreadController;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
-import clickerbot.com.troop.clickerbot.screencapture.MediaProjectionScreenCapture;
+import clickerbot.com.troop.clickerbot.screencapture.ScreenCapture;
 import clickerbot.com.troop.clickerbot.touch.NativeTouchHandler;
 import clickerbot.com.troop.clickerbot.touch.TouchInterface;
 import clickerbot.com.troop.clickerbot.tt2.tasks.ClanQuestTask;
@@ -103,7 +103,7 @@ public class TT2Bot implements ThreadController.TickInterface
     /**
      * time after a randomtap gets executed
      */
-    private final int runRandomTapActivator = 1000;//ms
+    private final int runRandomTapActivator = 500;//ms
     /**
      * last time a randomtap got activated
      */
@@ -135,7 +135,7 @@ public class TT2Bot implements ThreadController.TickInterface
      * @param botSettings to apply
      * @param mediaProjectionScreenCapture to capture screenframes and get colors from it
      */
-    public TT2Bot(Context context, BotSettings botSettings, MediaProjectionScreenCapture mediaProjectionScreenCapture)
+    public TT2Bot(Context context, BotSettings botSettings, ScreenCapture mediaProjectionScreenCapture)
     {
         this.botSettings = botSettings;
         threadController =new ThreadController(context, mediaProjectionScreenCapture,this);
@@ -165,7 +165,7 @@ public class TT2Bot implements ThreadController.TickInterface
         Log.d(TAG,"TT2Bot()");
     }
 
-    public MediaProjectionScreenCapture getScreeCapture() {
+    public ScreenCapture getScreeCapture() {
         return threadController.getScreeCapture();
     }
 
@@ -321,6 +321,8 @@ public class TT2Bot implements ThreadController.TickInterface
 
     @Override
     public void onScreenParserTick() {
+        //UpdateImage(getScreeCapture().getBitmap());
+
         if (!botSettings.enableClanQuest) {
             if (!WaitLock.clanquest.get()) {
                 sceneTransitionChecker.checkIfRdyToExecute();

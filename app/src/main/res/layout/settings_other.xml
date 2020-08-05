@@ -69,5 +69,15 @@
         custom:setting_defaults="false"
         custom:settingkey_ids="@string/runtests" />
 
+    <clickerbot.com.troop.clickerbot.views.SettingsSwitch
+        android:id="@+id/useMediaProjection"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/settingitem_height"
+        android:layout_margin="@dimen/overall_margin"
+        android:background="@drawable/border"
+        android:text="Use MediaProjection to parse Screen if true, else pcap get used"
+        custom:setting_defaults="true"
+        custom:settingkey_ids="@string/usemediaprojectionscreencapture" />
+
 
 </LinearLayout>

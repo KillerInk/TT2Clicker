@@ -57,4 +57,5 @@
     <string name="taponbookofshadows">taponbookofshadows</string>
     <string name="lvlstierarti">lvlstierarti</string>
     <string name="switchtonextbodypart">switchtonextbodypart</string>
+    <string name="usemediaprojectionscreencapture">useMediaProjecitonScreenCapture</string>
 </resources>

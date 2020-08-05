@@ -18,6 +18,8 @@ import android.view.Gravity;
 import android.view.WindowManager;
 
 import clickerbot.com.troop.clickerbot.screencapture.MediaProjectionScreenCapture;
+import clickerbot.com.troop.clickerbot.screencapture.ScreenCapture;
+import clickerbot.com.troop.clickerbot.screencapture.ShellScreenCapture;
 import clickerbot.com.troop.clickerbot.tt2.BotSettings;
 import clickerbot.com.troop.clickerbot.tt2.TT2Bot;
 
@@ -34,7 +36,8 @@ public class ClickerBotService extends Service
     private TT2Bot tt2Bot;
     private static String botRunningSettingKey = "botRunning";
     private BotServiceView serviceView;
-    private MediaProjectionScreenCapture mediaProjectionScreenCapture;
+    private ScreenCapture screenCapture;
+    //private MediaProjectionScreenCapture mediaProjectionScreenCapture;
 
 
     private int mScreenDensity;
@@ -83,10 +86,10 @@ public class ClickerBotService extends Service
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
 
-        Log.d(TAG,"Register ACTION_MEDIA_BUTTON");
+        Log.d(TAG, "Register ACTION_MEDIA_BUTTON");
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.media.VOLUME_CHANGED_ACTION");
-        registerReceiver(broadcastReceiver,filter);
+        registerReceiver(broadcastReceiver, filter);
 
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
 
@@ -94,7 +97,7 @@ public class ClickerBotService extends Service
         windowManager.getDefaultDisplay().getMetrics(metrics);
         mScreenDensity = metrics.densityDpi;
 
-        serviceView =new BotServiceView(getApplicationContext());
+        serviceView = new BotServiceView(getApplicationContext());
         serviceView.setClickerBotService(this);
 
         WindowManager.LayoutParams paramsPrestigeView = new WindowManager.LayoutParams(
@@ -104,22 +107,33 @@ public class ClickerBotService extends Service
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
 
-        paramsPrestigeView.gravity = Gravity.TOP|Gravity.LEFT;
-        paramsPrestigeView.x = (metrics.widthPixels/2) - (convertDpiToPixel(150) + 5);
+        paramsPrestigeView.gravity = Gravity.TOP | Gravity.LEFT;
+        paramsPrestigeView.x = (metrics.widthPixels / 2) - (convertDpiToPixel(150) + 5);
         paramsPrestigeView.y = 0;
         //paramsPrestigeView.width = convertDpiToPixel(110);
         windowManager.addView(serviceView, paramsPrestigeView);
         serviceView.bringToFront();
 
-        mediaProjectionScreenCapture = new MediaProjectionScreenCapture(getApplicationContext()
-                ,ClickerBotActivity.mResultData
-                ,ClickerBotActivity.mResultCode
-                ,serviceView.getSurfaceView()
-                ,mScreenDensity);
-        mediaProjectionScreenCapture.start();
-
         BotSettings botSettings = new BotSettings(preferences, getApplicationContext());
-        tt2Bot = new TT2Bot(getApplicationContext(),botSettings,mediaProjectionScreenCapture);
+
+        if (botSettings.useMediaProjectionScreenCapture){
+            MediaProjectionScreenCapture mediaProjectionScreenCapture = new MediaProjectionScreenCapture(getApplicationContext()
+                        , ClickerBotActivity.mResultData
+                        , ClickerBotActivity.mResultCode
+                        , serviceView.getSurfaceView()
+                        , mScreenDensity);
+            mediaProjectionScreenCapture.start();
+            screenCapture = new ScreenCapture(mediaProjectionScreenCapture);
+        }
+        else
+        {
+            ShellScreenCapture shellScreenCapture = new ShellScreenCapture();
+            shellScreenCapture.start();
+            screenCapture = new ScreenCapture(shellScreenCapture);
+        }
+
+
+        tt2Bot = new TT2Bot(getApplicationContext(),botSettings,screenCapture);
         tt2Bot.setUpdateUiCallBack(new TT2Bot.UpdateUi() {
             @Override
             public void updatePrestigeTime(String time) {
@@ -142,12 +156,14 @@ public class ClickerBotService extends Service
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         preferences.edit().putBoolean(botRunningSettingKey,tt2Bot.getIsRunning());
         Log.d(TAG, "on destroy");
-        mediaProjectionScreenCapture.stop();
+        screenCapture.stop();
+        //mediaProjectionScreenCapture.stop();
         if (tt2Bot.getIsRunning()) {
             tt2Bot.stop();
         }
         tt2Bot.destroy();
-        mediaProjectionScreenCapture.close();
+        screenCapture.close();
+        //mediaProjectionScreenCapture.close();
         if (serviceView != null) windowManager.removeView(serviceView);
         unregisterReceiver(broadcastReceiver);
     }

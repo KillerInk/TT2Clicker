@@ -127,7 +127,7 @@ public class RootShell
 
 
 
-   /* private synchronized void captureScreen() throws IOException {
+    public synchronized void captureScreen() throws IOException {
         if (os != null) {
             //os.writeChars("screencap -p >/sdcard/screen.png\n");
             os.writeChars("screencap -p\n");
@@ -135,7 +135,7 @@ public class RootShell
         }
         else
             Log.d(TAG, "captureScreen outputstream is null");
-    }*/
+    }
 
     public void stopProcess()
     {

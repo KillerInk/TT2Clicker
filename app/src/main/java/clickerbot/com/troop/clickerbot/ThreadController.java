@@ -5,7 +5,7 @@ import android.util.Log;
 
 import clickerbot.com.troop.clickerbot.executer.Executer;
 import clickerbot.com.troop.clickerbot.executer.ExecuterTask;
-import clickerbot.com.troop.clickerbot.screencapture.MediaProjectionScreenCapture;
+import clickerbot.com.troop.clickerbot.screencapture.ScreenCapture;
 
 public class ThreadController implements IBot
 {
@@ -14,7 +14,7 @@ public class ThreadController implements IBot
     private long tickCounter = 0;
     private volatile boolean isBaseThreadRunning = false;
     private volatile boolean isScreenParserRunning = false;
-    protected MediaProjectionScreenCapture mediaProjectionScreenCapture;
+    protected ScreenCapture mediaProjectionScreenCapture;
     private Context context;
 
 
@@ -37,7 +37,7 @@ public class ThreadController implements IBot
 
 
 
-    public ThreadController(Context context, MediaProjectionScreenCapture mediaProjectionScreenCapture, TickInterface tickInterface){
+    public ThreadController(Context context, ScreenCapture mediaProjectionScreenCapture, TickInterface tickInterface){
         this.mediaProjectionScreenCapture = mediaProjectionScreenCapture;
         executer = new Executer();
         this.context = context;
@@ -86,7 +86,7 @@ public class ThreadController implements IBot
     }
 
     @Override
-    public MediaProjectionScreenCapture getScreeCapture() {
+    public ScreenCapture getScreeCapture() {
         return mediaProjectionScreenCapture;
     }
 
