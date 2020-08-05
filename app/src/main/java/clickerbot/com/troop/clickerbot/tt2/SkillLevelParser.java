@@ -24,7 +24,10 @@ public class SkillLevelParser {
 
     public void parseAllSkillLevels(Skill hs, Skill ds, Skill hom,Skill fs, Skill wc,Skill sc)
     {
-        Bitmap map = bot.getScreeCapture().getBitmap().copy(bot.getScreeCapture().getBitmap().getConfig(),false);
+        Bitmap scre = bot.getScreeCapture().getBitmap();
+        if (scre == null)
+            return;
+        Bitmap map = scre.copy(scre.getConfig(),false);
         Log.d(TAG,"HS");
         int hslvl = getLevel(334,map);
         hs.setSkillLvl(hslvl);
