@@ -110,8 +110,9 @@ public class Fairy extends Menu {
             if(howOftenDetected > 2) {
                 howOftenDetected = 0;
 
-                if (!bot.containsTask(TapOnFairyVipWindowTask.class))
-                    bot.putFirstAndExecuteTask(TapOnFairyVipWindowTask.class);
+                collectFairyAd(null);
+                //if (!bot.containsTask(TapOnFairyVipWindowTask.class))
+                //    bot.putFirstAndExecuteTask(TapOnFairyVipWindowTask.class);
             }
             //bot.putFirstAndExecuteTask(TapOnFairyVipWindowTask.class);
         }
@@ -122,7 +123,7 @@ public class Fairy extends Menu {
     }
 
     public void collectFairyAd(ExecuterTask task) throws InterruptedException {
-        if (System.currentTimeMillis() - lastFairyAdCollectRun < 5000)
+        if (System.currentTimeMillis() - lastFairyAdCollectRun < 3000)
             return;
         fairyTaskIsRunning = true;
         WaitLock.lockFairyWindow(true);
@@ -150,7 +151,7 @@ public class Fairy extends Menu {
         {
             doSingelTap(decline_Pos,"decline fairy add");
         }
-        Thread.sleep(1000);
+        Thread.sleep(500);
         lastFairyAdCollectRun = System.currentTimeMillis();
         WaitLock.lockFairyWindow(false);
         fairyTaskIsRunning = false;
